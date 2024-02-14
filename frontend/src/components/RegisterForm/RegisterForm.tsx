@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Button } from "../ui/button";
 
 type Inputs = {
   email: string;
@@ -20,29 +21,44 @@ export default function RegisterForm() {
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor="email">Mail</Label>
-      <Input type="email" {...register("email")} />
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center">
+      <div className="grid gap-4 grid-cols-2">
+        <div>
+          <Label htmlFor="email">Mail</Label>
+          <Input type="email" {...(register("email"), { required: true })} />
+          {errors.email && <span>This field is required</span>}
+        </div>
 
-      <Label htmlFor="email">Contrasena</Label>
-      <Input type="password" {...register("password")} />
+        <div>
+          <Label htmlFor="password">Contrasena</Label>
+          <Input type="password" {...(register("password"), { required: true })} />
+          {errors.password && <span>This field is required</span>}
+        </div>
+        <div>
+          <Label htmlFor="firstName">Nombre</Label>
+          <Input type="text" {...(register("firstName"), { required: true })} />
+          {errors.firstName && <span>This field is required</span>}
+        </div>
+        <div>
+          <Label htmlFor="lastName">Apellido</Label>
+          <Input type="text" {...(register("lastName"), { required: true })} />
+          {errors.lastName && <span>This field is required</span>}
+        </div>
+        <div>
+          <Label htmlFor="address">Direccion</Label>
+          <Input type="text" {...(register("address"), { required: true })} />
+          {errors.address && <span>This field is required</span>}
+        </div>
+        <div>
+          <Label htmlFor="phone">Contrasena</Label>
+          <Input type="tel" {...(register("phone"), { required: true })} />
+          {errors.phone && <span>This field is required</span>}
+        </div>
+      </div>
 
-      <Label htmlFor="email">Nombre</Label>
-      <Input type="text" {...register("firstName")} />
-
-      <Label htmlFor="email">Apellido</Label>
-      <Input type="text" {...register("lastName")} />
-
-      <Label htmlFor="email">Direccion</Label>
-      <Input type="text" {...register("address")} />
-
-      <Label htmlFor="phone">Contrasena</Label>
-      <Input type="tel" {...register("phone")} />
-
-      {/* <Input {...register("exampleRequired", { required: true })} /> */}
-      {/* {errors.exampleRequired && <span>This field is required</span>} */}
-
-      <input type="submit" />
+      <Button type="submit" className="mx-auto mt-3">
+        Registrarse
+      </Button>
     </form>
   );
 }
