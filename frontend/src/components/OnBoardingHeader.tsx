@@ -10,7 +10,7 @@ const OnBoardingHeader = () => {
         <Link to="#">Nosotros</Link>
       </div>
       <div className="flex gap-10">
-        <Button>Iniciar Sesión</Button>
+        <Button variant="outline">Iniciar Sesión</Button>
         <Button>Comenzar</Button>
       </div>
     </div>
