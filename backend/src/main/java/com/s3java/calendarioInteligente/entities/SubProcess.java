@@ -3,7 +3,7 @@ package com.s3java.calendarioInteligente.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "sub_process")
+@Table (name = "SUB_PROCESS")
 public class SubProcess {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,4 +14,28 @@ public class SubProcess {
 
     @Embedded
     private ProcessAttributes processAttributes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Process getProcess() {
+        return process;
+    }
+
+    public void setProcess(Process process) {
+        this.process = process;
+    }
+
+    public ProcessAttributes getProcessAttributes() {
+        return processAttributes;
+    }
+
+    public void setProcessAttributes(ProcessAttributes processAttributes) {
+        this.processAttributes = processAttributes;
+    }
 }

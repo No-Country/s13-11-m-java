@@ -30,6 +30,9 @@ public class Product {
     @OneToMany
     private List<Process> processes = new ArrayList<>();
 
+    @ManyToOne
+    private Company company;
+
     public Product() {
     }
 
@@ -42,6 +45,22 @@ public class Product {
         this.state = state;
         this.isActive = isActive;
         this.timeEstimatedCompletion = timeEstimatedCompletion;
+    }
+
+    public List<Process> getProcesses() {
+        return processes;
+    }
+
+    public void setProcesses(List<Process> processes) {
+        this.processes = processes;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Long getId() {
