@@ -155,6 +155,14 @@ fabric.properties
 !.idea/codeStyles
 !.idea/runConfigurations
 
+/target/
+*/target/**
+**/META-INF/
+!.mvn/wrapper/maven-wrapper.jar
+*.iml
+backend/Dockerfile
+backend/mvnw
+
 ### Java ###
 # Compiled class file
 *.class
