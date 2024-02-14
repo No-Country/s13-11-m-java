@@ -18,7 +18,7 @@ const Carousel: React.FC = () => {
     <div className="w-full">
       <OnboardingHeader />
       <Slider {...settings}>
-        <div cl>
+        <div >
           <div className="flex justify-center">
             <div className="flex justify-center items-start pt-32">
               <div className="flex flex-col w-1/4">
