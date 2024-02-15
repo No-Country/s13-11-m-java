@@ -1,7 +1,6 @@
 import Register from "@/pages/Register/Register";
 import { createBrowserRouter } from "react-router-dom";
-import OnBoarding from "../pages/OnBoarding"; // Ensure this is the default export
-
+import OnBoarding from "../pages/OnBoarding/OnBoarding";
 export const router = createBrowserRouter([
   {
     path: "/",
