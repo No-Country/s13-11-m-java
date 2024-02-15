@@ -1,5 +1,6 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,10 +17,12 @@ public class Company {
     @Embedded
     private CommonAttribute commonAttribute;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<User> employee = new ArrayList<>();
 
 
