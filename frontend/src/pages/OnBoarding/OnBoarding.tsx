@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./OnBoarding.css";
+import slideImage1 from "@/assets/slide_1.svg";
+import slideImage2 from "@/assets/slide_2.svg";
+import slideImage3 from "@/assets/slide_3.svg";
 
 const settings = {
   dots: true,
@@ -30,7 +33,7 @@ const Carousel: React.FC = () => {
                     precisos sobre tu producción real y te ayudará a compararla con los objetivos de tu empresa
                   </p>
                 </div>
-                <img className="pb-10" src="src/assets/slide_1.svg" alt="Man with calendar" />
+                <img className="pb-10" src={slideImage1} alt="Man with calendar" />
               </div>
             </div>
           </div>
@@ -44,7 +47,7 @@ const Carousel: React.FC = () => {
                   precisión.
                 </p>
               </div>
-              <img className="pb-10" src="src/assets/slide_2.svg" alt="Woman with calendar" />
+              <img className="pb-10" src={slideImage2} alt="Woman with calendar" />
             </div>
           </div>
           <div>
@@ -58,7 +61,7 @@ const Carousel: React.FC = () => {
                 </p>
                 <Button className="mt-10 mr-10 ">Empezar Ahora</Button>
               </div>
-              <img src="src/assets/slide_3.svg" alt="Man in front of a board" />
+              <img src={slideImage3} alt="Man in front of a board" />
             </div>
           </div>
         </Slider>
