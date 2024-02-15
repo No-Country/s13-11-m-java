@@ -29,7 +29,7 @@ const Carousel: React.FC = () => {
                     precisos sobre tu producción real y te ayudará a compararla con los objetivos de tu empresa
                   </p>
                 </div>
-                <img src="https://via.placeholder.com/700x400" alt="placeholder" />
+                <img className="pb-10" src="src/assets/slide_1.svg" alt="Man with calendar" />
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@ const Carousel: React.FC = () => {
                   precisión.
                 </p>
               </div>
-              <img src="https://via.placeholder.com/700x400" alt="placeholder" />
+              <img className="pb-10" src="src/assets/slide_2.svg" alt="Woman with calendar" />
             </div>
           </div>
           <div>
@@ -57,7 +57,7 @@ const Carousel: React.FC = () => {
                 </p>
                 <Button className="mt-10 mr-10 ">Empezar Ahora</Button>
               </div>
-              <img src="https://via.placeholder.com/700x400" alt="placeholder" />
+              <img  src="src/assets/slide_3.svg" alt="Man in front of a board" />
             </div>
           </div>
         </Slider>
