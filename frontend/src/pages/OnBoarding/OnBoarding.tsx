@@ -4,6 +4,7 @@ import OnboardingHeader from "../../components/OnBoardingHeader";
 import { Button } from "@/components/ui/button";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./OnBoarding.css";
 
 const settings = {
   dots: true,
