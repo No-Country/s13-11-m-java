@@ -7,6 +7,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import slideImage4 from "@/assets/login.svg";
 
 const Login: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const Login: React.FC = () => {
             alt="LOGO"
           />
           <p className="text-md m-10 text-white">Gestioná tu producción de manera inteligente y sencilla</p>
-          <img className="pb-5" src="src/assets/login.svg" alt="image-login" />
+          <img className="pb-5" src={slideImage4} alt="image-login" />
         </div>
         <div className="m-10 w-1/2">
           <h1 className="m-20 text-center text-lg outline-slate-800">Iniciar sesión</h1>
@@ -28,11 +29,11 @@ const Login: React.FC = () => {
           Contraseña
           <Input type="password" className="border-b-4 border-slate-800 text-slate-800 outline-current" />
           <Button className="align-center mr-10 mt-10 w-full  items-center">Iniciar sesión</Button>
-          <div className="flex-block m-10 flex">
-            <Link className="m-10" to="">
+          <div className=" m-10">
+            <Link className="m-10 block" to="/recovery_password">
               Olvidé mi contraseña
             </Link>
-            <Link className="m-10" to="/register">
+            <Link className="m-10 block" to="/register">
               ¿Aún no tenés cuenta? Regístrate
             </Link>
           </div>
