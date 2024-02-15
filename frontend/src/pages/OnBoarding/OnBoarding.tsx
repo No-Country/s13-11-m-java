@@ -58,7 +58,7 @@ const Carousel: React.FC = () => {
                 </p>
                 <Button className="mt-10 mr-10 ">Empezar Ahora</Button>
               </div>
-              <img  src="src/assets/slide_3.svg" alt="Man in front of a board" />
+              <img src="src/assets/slide_3.svg" alt="Man in front of a board" />
             </div>
           </div>
         </Slider>
