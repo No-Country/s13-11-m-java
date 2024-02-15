@@ -22,7 +22,7 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center">
-      <div className="grid gap-4 grid-cols-2">
+      <div className="grid grid-cols-2 gap-4 ">
         <div>
           <Label htmlFor="email">Mail</Label>
           <Input type="email" {...(register("email"), { required: true })} />
