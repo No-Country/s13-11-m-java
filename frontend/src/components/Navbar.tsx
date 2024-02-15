@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { FaRegBell } from "react-icons/fa6";
 import { InputSearch } from "./ui/inputSearch";
 
+
 const curdate = new Date().toLocaleDateString("es-ES", {
   year: "numeric",
   month: "long",
