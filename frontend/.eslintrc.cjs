@@ -44,5 +44,6 @@ module.exports = {
   plugins: ["@typescript-eslint", "react", "react-hooks"],
   rules: {
     "react/react-in-jsx-scope": "off", // Desactiva la regla de react-in-jsx-scope
+    "tailwindcss/no-custom-classname": "off",
   },
 };
