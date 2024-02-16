@@ -1,13 +1,13 @@
-import React from "react";
-import Slider from "react-slick";
-import OnboardingHeader from "../../components/OnBoardingHeader";
-import { Button } from "@/components/ui/button";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./OnBoarding.css";
 import slideImage1 from "@/assets/slide_1.svg";
 import slideImage2 from "@/assets/slide_2.svg";
 import slideImage3 from "@/assets/slide_3.svg";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { Button } from "@/components/ui/button";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import OnboardingHeader from "../../components/OnBoardingHeader";
+import "./OnBoarding.css";
 
 const settings = {
   dots: true,
@@ -22,6 +22,8 @@ const settings = {
 const Carousel: React.FC = () => {
   return (
     <div className="w-full">
+      <Sidebar />
+
       <OnboardingHeader />
       <div className="w-[98%] pt-10">
         <Slider {...settings}>
