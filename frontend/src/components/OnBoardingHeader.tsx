@@ -14,7 +14,7 @@ const OnBoardingHeader = () => {
         </Link>
       </div>
       <div className="flex gap-10">
-        <Button variant="outline">Iniciar Sesión</Button>
+        <Button variant="outline"><Link to="/login">Iniciar Sesión</Link></Button>
         <Button>Comenzar</Button>
       </div>
     </div>
