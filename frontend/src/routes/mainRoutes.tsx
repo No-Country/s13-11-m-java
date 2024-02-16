@@ -1,24 +1,33 @@
 import { createBrowserRouter } from "react-router-dom";
 import OnBoarding from "../pages/OnBoarding/OnBoarding";
-import Testing from "../pages/Testing/Testing";
 import NotFoundPage from "@/pages/NotFoundPage";
-import Login from "@/pages/Login/Login"
+import Login from "@/pages/Login/Login";
+import MainLayout from "@/layouts/MainLayout";
+import AuthLayout from "@/layouts/AuthLayout";
+
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <OnBoarding />,
-  },
-
-  {
-    path: "/test",
-    element: <Testing />,
-  },
-  {
-    path: "/login",
-    element: <Login/>
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <OnBoarding />,
+      },
+    ],
   },
   {
-    path: "*",
-    element: <NotFoundPage />,
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
+    ],
   },
 ]);
