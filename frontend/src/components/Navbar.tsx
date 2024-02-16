@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "./ui/button";
 import { FaRegBell } from "react-icons/fa6";
-import { InputSearch } from "./ui/inputSearch";
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
+import { InputSearch } from "./ui/inputSearch";
 
 const curdate = new Date().toLocaleDateString("es-ES", {
   year: "numeric",
@@ -39,7 +39,9 @@ function Navbar() {
           <Button variant="outline" asChild>
             <Link to="/login">Iniciar Sesión</Link>
           </Button>
-          <Button>Comenzar</Button>
+          <Button>
+            <Link to="/register">Comenzar</Link>
+          </Button>
         </div>
       ) : (
         <>
