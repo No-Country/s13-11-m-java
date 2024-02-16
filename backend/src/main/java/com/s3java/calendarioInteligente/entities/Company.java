@@ -17,11 +17,11 @@ public class Company {
     @Embedded
     private CommonAttribute commonAttribute;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @JsonManagedReference
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @JsonManagedReference
     private List<User> employee = new ArrayList<>();
 

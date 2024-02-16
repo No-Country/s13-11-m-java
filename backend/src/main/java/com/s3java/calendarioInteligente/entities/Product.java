@@ -29,7 +29,7 @@ public class Product {
     @Column(name = "time_estimated_completion")
     private String timeEstimatedCompletion;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
     @JsonManagedReference
     private List<Process> processes = new ArrayList<>();
 

@@ -20,7 +20,7 @@ public class Process {
     @JsonBackReference
     private Product product;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "process")
     @JsonManagedReference
     private List<SubProcess> subProcesses = new ArrayList<>();
 
