@@ -1,11 +1,13 @@
-import React from "react";
+import Navbar from "@/components/Navbar";
+import { Outlet } from "react-router-dom";
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
-
-const MainLayout = ({ children }: MainLayoutProps) => {
-  return <div>{children}</div>;
+const MainLayout = () => {
+  return (
+    <div className="container py-16">
+      <Navbar />
+      <Outlet />
+    </div>
+  );
 };
 
 export default MainLayout;
