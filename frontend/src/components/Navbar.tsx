@@ -18,15 +18,15 @@ const isLogin = false;
 
 function Navbar() {
   return (
-    <div className="fixed inset-x-0 top-0 mx-auto flex max-w-screen-xl items-center justify-between p-4">
+    <div className="fixed inset-x-0 top-0 z-50 mx-auto flex max-w-screen-xl items-center justify-between p-4">
       <h1 className="text-3xl">LOGO</h1>
       <div className="flex gap-10">
         {!isLogin ? (
           <>
-            <Link className="hover:underline" to="#">
+            <Link className="underline" to="#">
               Funciones
             </Link>
-            <Link className="hover:underline" to="#">
+            <Link className="underline" to="#">
               Nosotros
             </Link>
           </>
@@ -35,7 +35,7 @@ function Navbar() {
         )}
       </div>
       {!isLogin ? (
-        <div className="flex gap-10">
+        <div className="hidden gap-10 md:flex ">
           <Button variant="outline" asChild>
             <Link to="/login">Iniciar Sesión</Link>
           </Button>
