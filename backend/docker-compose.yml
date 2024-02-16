@@ -3,7 +3,6 @@ version: '3.9'
 services:
   java_app:
     container_name: java_app
-    image: calendariointeligente-java-app
     build: .
     ports:
       - "8080:8080"
@@ -13,14 +12,21 @@ services:
       - DATABASE_PASSWORD=postgres
     depends_on:
       - java_db
+    restart: always
   java_db:
     container_name: java_db
-    image: postgres:16
+    image: postgres:16-alpine
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+volumes:
+  data-postgres:
+
 
 
