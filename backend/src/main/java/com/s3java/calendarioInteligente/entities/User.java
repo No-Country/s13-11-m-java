@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.s3java.calendarioInteligente.roles.Role;
 import jakarta.persistence.*;
 
@@ -18,7 +19,9 @@ public class User {
     @Embedded
     private CommonAttribute commonAttribute;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
     private Company company;
 
     public Long getId() {

@@ -1,5 +1,7 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -27,10 +29,13 @@ public class Product {
     @Column(name = "time_estimated_completion")
     private String timeEstimatedCompletion;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    @JsonManagedReference
     private List<Process> processes = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
     private Company company;
 
     public Product() {

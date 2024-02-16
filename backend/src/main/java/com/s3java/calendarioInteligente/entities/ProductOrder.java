@@ -1,10 +1,9 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCT_ORDERS")
@@ -20,10 +19,14 @@ public class ProductOrder {
     @Column(name = "entry_date")
     private Date entryDate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product product;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    @JsonBackReference
     private Client client;
 
     public Long getId() {

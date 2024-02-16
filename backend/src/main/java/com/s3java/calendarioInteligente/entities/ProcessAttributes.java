@@ -2,7 +2,6 @@ package com.s3java.calendarioInteligente.entities;
 
 import jakarta.persistence.Embeddable;
 
-import java.nio.DoubleBuffer;
 
 @Embeddable
 public class ProcessAttributes {
