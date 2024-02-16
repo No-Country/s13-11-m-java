@@ -1,12 +1,10 @@
-import OnBoardingHeader from "@/components/OnBoardingHeader";
 import RegisterForm from "@/components/RegisterForm/RegisterForm";
 
 const Register = () => {
   return (
     <div className="h-screen w-full">
-      <OnBoardingHeader />
       <div className="h-[calc(100%-70px)] md:flex">
-        <section className="bg-primary flex-col items-center justify-center md:flex  md:w-1/3">
+        <section className="flex-col items-center justify-center bg-primary md:flex  md:w-1/3">
           <h1 className="mx-auto max-w-[80%] text-3xl text-white">
             Controlá tu producción, alcanzá tus metas: Tu socio digital de confianza.
           </h1>
