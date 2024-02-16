@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import OnboardingHeader from "../../components/OnBoardingHeader";
 import "./OnBoarding.css";
 
 const settings = {
@@ -23,9 +22,7 @@ const Carousel: React.FC = () => {
   return (
     <div className="w-full">
       <Sidebar />
-
-      <OnboardingHeader />
-      <div className="w-[98%] pt-10">
+      <div className="w-[98%]">
         <Slider {...settings}>
           <div>
             <div className="flex justify-center">
