@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import { RouterProvider } from "react-router-dom";
-import "./index.css";
-import { router } from "./routes/mainRoutes";
+
 import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
 import { store } from "./app/store";
+import { router } from "./routes/mainRoutes";
+
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
