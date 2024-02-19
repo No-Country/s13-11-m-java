@@ -1,64 +1,92 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "./ui/button";
-import { FaRegBell } from "react-icons/fa6";
-import { InputSearch } from "./ui/inputSearch";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const curdate = new Date().toLocaleDateString("es-ES", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+import { FaRegBell } from "react-icons/fa6";
 
-const userName = "John Doe";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button, ButtonProps } from "./ui/button";
+import { InputSearch } from "./ui/inputSearch";
 
-const isAdmin = true;
-const isDashboard = true;
-const isLogin = false;
+const navItems = [
+  {
+    title: "Funciones",
+    link: "#",
+  },
+  {
+    title: "Nosotros",
+    link: "#",
+  },
+];
+interface LogItem {
+  title: string;
+  link: string;
+  props?: ButtonProps;
+}
+
+const logItems: LogItem[] = [
+  {
+    title: "Iniciar Sesión",
+    link: "/login",
+    props: { variant: "outline" },
+  },
+  {
+    title: "Comenzar",
+    link: "#",
+  },
+];
 
 function Navbar() {
+  const [isLogin, setIsLogin] = React.useState(false);
+
+  const handleLogin = () => {
+    setIsLogin(!isLogin);
+  };
+
   return (
-    <div className="fixed inset-x-0 top-0 z-50 mx-auto flex max-w-screen-xl items-center justify-between p-4">
+    <header className="container sticky inset-x-0 top-0 z-50 flex items-center bg-background p-4">
       <h1 className="text-3xl">LOGO</h1>
-      <div className="flex gap-10">
-        {!isLogin ? (
-          <>
-            <Link className="underline" to="#">
-              Funciones
-            </Link>
-            <Link className="underline" to="#">
-              Nosotros
-            </Link>
-          </>
-        ) : (
-          <h3>{isDashboard ? curdate : ""}</h3>
+      <div className="flex grow justify-center">
+        {!isLogin && (
+          <div className="space-x-4">
+            {navItems.map((item, index) => (
+              <Button variant="link" key={index} className="text-base" asChild>
+                <Link to={item.link}>{item.title}</Link>
+              </Button>
+            ))}
+          </div>
         )}
       </div>
-      {!isLogin ? (
-        <div className="hidden gap-10 md:flex ">
-          <Button variant="outline" asChild>
-            <Link to="/login">Iniciar Sesión</Link>
+      {isLogin ? (
+        <div className="flex space-x-4">
+          <InputSearch className="w-60" type="search" placeholder="Buscar" />
+          <Button variant="ghost" size="icon">
+            <FaRegBell size={24} />
           </Button>
-          <Button>Comenzar</Button>
-        </div>
-      ) : (
-        <>
-          <div>
-            <InputSearch className="w-[300px]" type="search" placeholder="Buscar" />
-          </div>
-          <div className="flex items-center gap-6">
-            <Button variant="ghost" className="px-2">
-              <FaRegBell size={24} />
-            </Button>
-            <Avatar>
+          <div className="flex items-center">
+            <Avatar className="mr-4 cursor-pointer" onClick={handleLogin}>
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <h3>{isAdmin ? "Admin" : userName}</h3>
+            <h3>Admin</h3>
           </div>
-        </>
+        </div>
+      ) : (
+        <div className="space-x-4">
+          {logItems.map((item, index) => (
+            <Button
+              onClick={index === 1 ? handleLogin : undefined}
+              {...item.props}
+              className="text-base"
+              size="rounded-xl"
+              key={index}
+              asChild
+            >
+              <Link to={item.link}>{item.title}</Link>
+            </Button>
+          ))}
+        </div>
       )}
-    </div>
+    </header>
   );
 }
 
