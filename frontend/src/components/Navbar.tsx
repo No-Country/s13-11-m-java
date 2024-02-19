@@ -45,7 +45,9 @@ function Navbar() {
 
   return (
     <header className="container sticky inset-x-0 top-0 z-50 flex items-center bg-background p-4">
-      <h1 className="text-3xl">LOGO</h1>
+      <Link to="/">
+        <h1 className="text-3xl">LOGO</h1>
+      </Link>
       <div className="flex grow justify-end md:justify-center">
         {!isLogin && (
           <div className="space-x-4">
