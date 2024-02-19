@@ -7,7 +7,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, ButtonProps } from "./ui/button";
 import { InputSearch } from "./ui/inputSearch";
 
-const navItems = [
+interface Item {
+  title: string;
+  link: string;
+  props?: ButtonProps;
+}
+
+const navItems: Item[] = [
   {
     title: "Funciones",
     link: "#",
@@ -17,13 +23,8 @@ const navItems = [
     link: "#",
   },
 ];
-interface LogItem {
-  title: string;
-  link: string;
-  props?: ButtonProps;
-}
 
-const logItems: LogItem[] = [
+const logItems: Item[] = [
   {
     title: "Iniciar Sesión",
     link: "/login",
@@ -45,7 +46,7 @@ function Navbar() {
   return (
     <header className="container sticky inset-x-0 top-0 z-50 flex items-center bg-background p-4">
       <h1 className="text-3xl">LOGO</h1>
-      <div className="flex grow justify-center">
+      <div className="flex grow justify-end md:justify-center">
         {!isLogin && (
           <div className="space-x-4">
             {navItems.map((item, index) => (
@@ -71,7 +72,7 @@ function Navbar() {
           </div>
         </div>
       ) : (
-        <div className="space-x-4">
+        <div className="hidden space-x-4 md:block">
           {logItems.map((item, index) => (
             <Button
               onClick={index === 1 ? handleLogin : undefined}
