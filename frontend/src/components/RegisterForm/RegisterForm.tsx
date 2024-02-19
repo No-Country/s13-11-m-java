@@ -1,5 +1,5 @@
 import registerFormSchema, { type RegisterFormInputs } from "@/schemas/registerFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { Button } from "../ui/button";
@@ -13,7 +13,7 @@ export default function RegisterForm() {
     formState: { errors },
   } = useForm<RegisterFormInputs>({
     mode: "onTouched",
-    resolver: zodResolver(registerFormSchema),
+    // resolver: zodResolver(registerFormSchema),
   });
   const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => console.log(data);
 
@@ -21,7 +21,7 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mx-auto flex flex-col justify-center">
-      <div className=" grid w-[737px] grid-cols-2 gap-4 items-center">
+      <div className=" grid w-[737px] grid-cols-2 items-center gap-4">
         <div>
           <Label htmlFor="email">Mail</Label>
           <Input type="email" {...register("email")} className={inputStyle} />
