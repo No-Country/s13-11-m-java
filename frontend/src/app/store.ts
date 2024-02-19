@@ -1,15 +1,17 @@
-import { pokemonApi } from "@/api/apiSlice";
 import { counterSlice } from "@/features/sample1/sample1Slice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { configureStore } from "@reduxjs/toolkit";
+import authSlice from "@/features/auth/authSlice";
+import { authApi } from "@/api/auth";
 // ...
 
 export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
+    auth: authSlice,
+    [authApi.reducerPath]: authApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(pokemonApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
