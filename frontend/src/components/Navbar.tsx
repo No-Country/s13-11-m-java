@@ -61,7 +61,9 @@ function Navbar() {
       </div>
       {isLogin ? (
         <div className="flex space-x-4">
-          <InputSearch className="w-60" type="search" placeholder="Buscar" />
+          <div className="hidden md:block">
+            <InputSearch className="w-60" type="search" placeholder="Buscar" />
+          </div>
           <Button variant="ghost" size="icon">
             <FaRegBell size={24} />
           </Button>
@@ -70,7 +72,7 @@ function Navbar() {
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <h3>Admin</h3>
+            <h3 className="hidden md:block">Admin</h3>
           </div>
         </div>
       ) : (
