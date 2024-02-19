@@ -22,6 +22,7 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     @JsonBackReference
+    @Enumerated(EnumType.STRING)
     private Company company;
 
     public Long getId() {
