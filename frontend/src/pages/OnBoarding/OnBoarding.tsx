@@ -3,7 +3,7 @@ import Slider, { Settings } from "react-slick";
 
 import { Button } from "@/components/ui/button";
 
-import { carouselItems } from "./messages";
+import { carouselItems } from "./items";
 
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
