@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
+
 import Login from "@/pages/Login/Login";
 import NotFoundPage from "@/pages/NotFoundPage";
 import OnBoarding from "@/pages/OnBoarding/OnBoarding";
