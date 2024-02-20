@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { MdOutlineFilterAlt } from "react-icons/md";
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./select";
 
@@ -115,6 +116,7 @@ export function SelectOnlyColumns<TData, TValue>({
   return (
     <Select {...rest}>
       <SelectTrigger className="w-[180px]">
+        <MdOutlineFilterAlt className="h-6 w-6" />
         <SelectValue placeholder="Filtra por" />
       </SelectTrigger>
       <SelectContent>
