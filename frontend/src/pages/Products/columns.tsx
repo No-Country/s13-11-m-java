@@ -25,7 +25,7 @@ export const columns: ColumnDef<Product>[] = [
     header: "Estado",
     cell: ({ row }) => {
       const { progress, total } = row.original;
-      const variant = progress <= 0 ? "destructive" : progress < total ? "warning" : "success";
+      const variant = progress <= 0 ? "warning" : progress < total ? "destructive" : "success";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
