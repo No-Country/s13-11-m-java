@@ -10,6 +10,6 @@ public class ProductController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "hello sin docker-compose up --build ";
+        return "hello";
     }
 }
