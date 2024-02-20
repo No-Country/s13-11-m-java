@@ -10,6 +10,6 @@ public class ProductController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "hello actualizado ultima prueba de produccion ";
+        return "hello sin docker-compose up --build ";
     }
 }
