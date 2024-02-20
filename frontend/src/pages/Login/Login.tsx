@@ -1,22 +1,21 @@
-import { useLoginMutation } from "@/api/auth";
-import { useAppDispatch } from "@/app/hooks";
-import slideImage4 from "@/assets/login.svg";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { setCredentials } from "@/features/auth/authSlice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useLoginMutation } from "@/api/auth";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import slideImage4 from "@/assets/login.svg";
+
 const Login: React.FC = () => {
-  const [login] = useLoginMutation();
-  const dispatch = useAppDispatch();
+  const [login, { isLoading }] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleClick() {
     try {
-      const user = await login({ username, password }).unwrap();
-      dispatch(setCredentials(user));
+      await login({ username, password });
     } catch (error) {
       if (error instanceof Error) {
         alert(`Error ${error.message}`);
@@ -56,7 +55,7 @@ const Login: React.FC = () => {
               setPassword(event.target.value);
             }}
           />
-          <Button className="align-center mr-10 mt-10 w-full  items-center" onClick={handleClick}>
+          <Button disabled={isLoading} className="align-center mr-10 mt-10 w-full  items-center" onClick={handleClick}>
             Iniciar sesión
           </Button>
           <div className=" m-10">
