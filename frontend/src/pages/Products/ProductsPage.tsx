@@ -1,6 +1,6 @@
 import { Product, products } from "./data";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/ui/data-table";
 import React from "react";
 
 async function getData(): Promise<Product[]> {
