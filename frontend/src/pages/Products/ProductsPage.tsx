@@ -15,7 +15,7 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="pt-10">
       <DataTable columns={columns} data={data} />
     </div>
   );

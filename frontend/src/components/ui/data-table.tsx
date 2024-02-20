@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div>
       <h2 className="text-2xl">Productos</h2>
-      <div className="flex items-center py-4">
+      <div className="flex flex-col py-4 max-md:gap-2 md:flex-row">
         <SelectOnlyColumns
           columns={onlyVisibleColumns}
           defaultValue={selectedColumn}
@@ -54,8 +54,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           }}
         />
         <Input
-          placeholder={"Filtrar por"}
-          onChange={(event) => table.getColumn(selectedColumn)?.setFilterValue(event.target.value)}
+          value={(columnFilters.find((e) => e.id === selectedColumn)?.value as string) ?? ""}
+          placeholder={"Ingrese Valor"}
+          onChange={(event) => {
+            if (!selectedColumn) return;
+            table.getColumn(selectedColumn)?.setFilterValue(event.target.value);
+          }}
           className="max-w-sm"
         />
       </div>
@@ -86,7 +90,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  No hay Resultados.
                 </TableCell>
               </TableRow>
             )}
