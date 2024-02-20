@@ -10,7 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { BsThreeDotsVertical, BsTrash } from "react-icons/bs";
+import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
+import { MdOutlinePostAdd } from "react-icons/md";
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -64,9 +65,17 @@ export const columns: ColumnDef<Product>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Opciones</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Modificar producto</DropdownMenuItem>
-            <DropdownMenuItem>Agregar nota</DropdownMenuItem>
-            <DropdownMenuItem>Ver detalle</DropdownMenuItem>
+            <DropdownMenuItem>
+              <BsPencilSquare className="mr-2" />
+              Modificar producto
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <MdOutlinePostAdd className="mr-2" />
+              Agregar nota
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <BsFileEarmarkText className="mr-2" /> Ver detalle
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <BsTrash className="mr-2" /> Eliminar producto
