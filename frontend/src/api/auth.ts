@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/app/store";
+import { fetchErrorUtil } from "@/util/fetchError";
 
 export interface User {
   first_name: string;
@@ -36,14 +37,15 @@ export const fakeApi = createApi({
       // }),
       queryFn: async (args) => {
         const { username, password } = args;
-        if (username === "admin" || password === "admin") {
+        try {
+          if (!username || !password) throw new Error("Invalid credentials");
+          await new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
+          const json = await import("@/mocks/users/login.json");
           return {
-            data: (await import("@/mocks/users/login.json")).default,
+            data: json.default,
           };
-        } else {
-          return {
-            error: { status: 401, data: { message: "Invalid credentials" } },
-          };
+        } catch (error) {
+          return fetchErrorUtil(error);
         }
       },
     }),

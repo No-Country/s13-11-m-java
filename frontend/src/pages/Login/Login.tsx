@@ -15,11 +15,9 @@ const Login: React.FC = () => {
 
   async function handleClick() {
     try {
-      await login({ username, password });
+      await login({ username, password }).unwrap();
     } catch (error) {
-      if (error instanceof Error) {
-        alert(`Error ${error.message}`);
-      }
+      console.log(error);
     }
   }
   return (
