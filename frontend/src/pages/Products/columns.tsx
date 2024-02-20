@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 import { Product } from "./data";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -12,17 +12,39 @@ import {
 import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
+import { RxCaretSort } from "react-icons/rx";
+
+function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
+  return (
+    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      {name}
+      <RxCaretSort className="ml-2 h-4 w-4" />
+    </Button>
+  );
+}
 
 export const columns: ColumnDef<Product>[] = [
   {
     id: "name",
     accessorKey: "name",
-    header: "Nombre",
+    header: (prop) => ColumnSortButton("Nombre", prop),
+    meta: {
+      headerName: "Nombre",
+    },
   },
   {
     id: "progress",
-    accessorKey: "progress",
-    header: "Estado",
+    accessorKey: "state",
+    header: (prop) => ColumnSortButton("Estado", prop),
+    sortingFn: (rowA, rowB) => {
+      const { progress: progressA, total: totalA } = rowA.original;
+      const { progress: progressB, total: totalB } = rowB.original;
+
+      const progressPercentageA = (progressA / totalA) * 100;
+      const progressPercentageB = (progressB / totalB) * 100;
+
+      return progressPercentageA - progressPercentageB;
+    },
     cell: ({ row }) => {
       const { progress, total } = row.original;
       const variant = progress <= 0 ? "warning" : progress < total ? "destructive" : "success";
@@ -42,7 +64,12 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: "startDate",
     accessorKey: "startDate",
-    header: "Fecha Inicio",
+    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
+    sortingFn: (rowA, rowB) => {
+      const dateA = new Date(rowA.original.startDatetime);
+      const dateB = new Date(rowB.original.startDatetime);
+      return dateA.getTime() - dateB.getTime();
+    },
     cell: ({ row }) =>
       new Date(row.original.startDatetime).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
     meta: {
@@ -62,7 +89,10 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: "client",
     accessorKey: "client",
-    header: "Cliente",
+    header: (prop) => ColumnSortButton("Cliente", prop),
+    meta: {
+      headerName: "Cliente",
+    },
   },
   {
     id: "actions",

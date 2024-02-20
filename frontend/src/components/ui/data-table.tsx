@@ -8,6 +8,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -35,6 +36,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: { sorting, columnFilters },
   });
 
@@ -120,7 +122,7 @@ export function SelectOnlyColumns<TData, TValue>({
           <SelectLabel>Columnas</SelectLabel>
           {columns.map((column) => (
             <SelectItem key={column.id} value={column.accessorKey as string}>
-              {column.header as string}
+              {column.meta?.headerName}
             </SelectItem>
           ))}
         </SelectGroup>
