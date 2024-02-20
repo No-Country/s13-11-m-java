@@ -2,7 +2,7 @@ package com.s3java.calendarioInteligente.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.s3java.calendarioInteligente.roles.Role;
+import com.s3java.calendarioInteligente.utils.Role;
 import jakarta.persistence.*;
 
 @Entity
