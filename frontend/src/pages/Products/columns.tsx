@@ -15,12 +15,14 @@ import { MdOutlinePostAdd } from "react-icons/md";
 
 export const columns: ColumnDef<Product>[] = [
   {
+    id: "name",
     accessorKey: "name",
     header: "Nombre",
   },
   {
+    id: "progress",
     accessorKey: "progress",
-    header: "Progreso",
+    header: "Estado",
     cell: ({ row }) => {
       const { progress, total } = row.original;
       const variant = progress <= 0 ? "destructive" : progress < total ? "warning" : "success";
@@ -33,25 +35,40 @@ export const columns: ColumnDef<Product>[] = [
         </div>
       );
     },
+    meta: {
+      hidden: true,
+    },
   },
   {
-    accessorKey: "startDatetime",
+    id: "startDate",
+    accessorKey: "startDate",
     header: "Fecha Inicio",
     cell: ({ row }) =>
-      new Date(row.getValue("startDatetime")).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+      new Date(row.original.startDatetime).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+    meta: {
+      hidden: true,
+    },
   },
   {
-    accessorKey: "startDatetime",
+    id: "startTime",
+    accessorKey: "startTime",
     header: "Hora",
     cell: ({ row }) =>
-      new Date(row.getValue("startDatetime")).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      new Date(row.original.startDatetime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    meta: {
+      hidden: true,
+    },
   },
   {
+    id: "client",
     accessorKey: "client",
     header: "Cliente",
   },
   {
     id: "actions",
+    meta: {
+      hidden: true,
+    },
     enableHiding: false,
     cell: () => {
       return (
