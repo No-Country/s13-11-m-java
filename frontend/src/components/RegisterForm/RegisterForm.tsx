@@ -17,11 +17,12 @@ export default function RegisterForm() {
   });
   const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => console.log(data);
 
-  const inputStyle = "border-b-4 border-primary w-[320px]";
+  const inputStyle =
+    "border-0 border-b-2 border-b-primary w-[250px] lg:w-[280px] rounded-none focus:ring-0 ring-0 focus-visible:ring-ring-0 focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 px-0 focus:bg-blue-500/10";
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-auto flex flex-col justify-center">
-      <div className=" grid w-[737px] grid-cols-2 gap-4 items-center">
+    <form onSubmit={handleSubmit(onSubmit)} className="mx-auto flex max-w-3xl flex-col justify-center">
+      <div className="grid grid-cols-1 items-center gap-4 gap-x-14 md:grid-cols-2">
         <div>
           <Label htmlFor="email">Mail</Label>
           <Input type="email" {...register("email")} className={inputStyle} />
@@ -55,7 +56,7 @@ export default function RegisterForm() {
         </div>
       </div>
 
-      <Button type="submit" className="mx-auto mt-3 w-[720px] rounded-full">
+      <Button type="submit" className="mx-auto mt-12 w-full rounded-full">
         Registrarse
       </Button>
     </form>
