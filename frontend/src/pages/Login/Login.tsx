@@ -1,25 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useLoginMutation } from "@/api/auth";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import slideImage4 from "@/assets/login.svg";
 
 const Login: React.FC = () => {
-  const [login, { isLoading }] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleClick() {
-    try {
-      await login({ username, password }).unwrap();
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  async function handleClick() {}
   return (
     <>
       <div className="flex h-screen w-screen ">
@@ -53,7 +44,7 @@ const Login: React.FC = () => {
               setPassword(event.target.value);
             }}
           />
-          <Button disabled={isLoading} className="align-center mr-10 mt-10 w-full  items-center" onClick={handleClick}>
+          <Button className="align-center mr-10 mt-10 w-full  items-center" onClick={handleClick}>
             Iniciar sesión
           </Button>
           <div className=" m-10">
