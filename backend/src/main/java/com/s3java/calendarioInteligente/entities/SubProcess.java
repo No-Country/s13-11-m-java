@@ -13,7 +13,7 @@ public class SubProcess {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "process_id")
     @JsonBackReference
-    private Process process;
+    private ProductProcess productProcess;
 
     @Embedded
     private ProcessAttributes processAttributes;
@@ -26,12 +26,12 @@ public class SubProcess {
         this.id = id;
     }
 
-    public Process getProcess() {
-        return process;
+    public ProductProcess getProcess() {
+        return productProcess;
     }
 
-    public void setProcess(Process process) {
-        this.process = process;
+    public void setProcess(ProductProcess productProcess) {
+        this.productProcess = productProcess;
     }
 
     public ProcessAttributes getProcessAttributes() {

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PROCESSES")
-public class Process {
+public class ProductProcess {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class Process {
     @JsonBackReference
     private Product product;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "process")
+    @OneToMany(mappedBy = "productProcess", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonManagedReference
     private List<SubProcess> subProcesses = new ArrayList<>();
 

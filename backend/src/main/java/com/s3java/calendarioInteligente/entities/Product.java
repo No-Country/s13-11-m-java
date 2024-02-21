@@ -31,7 +31,7 @@ public class Product {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
     @JsonManagedReference
-    private List<Process> processes = new ArrayList<>();
+    private List<ProductProcess> productProcesses = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -52,12 +52,12 @@ public class Product {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
-    public List<Process> getProcesses() {
-        return processes;
+    public List<ProductProcess> getProcesses() {
+        return productProcesses;
     }
 
-    public void setProcesses(List<Process> processes) {
-        this.processes = processes;
+    public void setProcesses(List<ProductProcess> productProcesses) {
+        this.productProcesses = productProcesses;
     }
 
     public Company getCompany() {
