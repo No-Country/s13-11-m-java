@@ -24,7 +24,22 @@ export const api = createApi({
         }
       },
     }),
+    forgotPassword: builder.mutation<void, string>({
+      queryFn: async (email) => {
+        await simulateLoading();
+        if (email === authCredentials.email) {
+          return { data: undefined };
+        } else {
+          return {
+            error: {
+              status: 404,
+              data: { message: "User not found" },
+            },
+          };
+        }
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation } = api;
+export const { useLoginMutation, useForgotPasswordMutation } = api;

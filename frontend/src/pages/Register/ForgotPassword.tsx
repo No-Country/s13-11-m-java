@@ -7,21 +7,22 @@ import forgotPasswordSchema, { ForgotPasswordFormInputs } from "@/schemas/forgot
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { authCredentials } from "@/constants/api";
+import useAuth from "@/hooks/useAuth";
 const ForgotPassword2 = () => {
+  const { forgotPassword } = useAuth();
+
   const form = useForm<ForgotPasswordFormInputs>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
-      email: "",
+      email: authCredentials.email,
     },
   });
 
-  function onSubmit(values: ForgotPasswordFormInputs) {
-    console.log(values);
-  }
   return (
     <AuthTemplate image={ForgotPasswordImage}>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid max-w-3xl grid-cols-1 gap-4 space-y-4">
+        <form onSubmit={form.handleSubmit(forgotPassword)} className="grid max-w-3xl grid-cols-1 gap-4 space-y-4">
           <h2 className="text-4xl">¿Olvidaste tu contraseña?</h2>
           <p className="text-2xl">Ingresá tu mail para que podamos enviarte información de como recuperarla. </p>
           <FormField
