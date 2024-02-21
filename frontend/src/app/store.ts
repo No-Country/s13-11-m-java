@@ -1,15 +1,15 @@
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "@/features/auth/authSlice";
-import { fakeApi } from "@/api/auth";
+import { authApi } from "@/api/auth";
 // ...
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
-    [fakeApi.reducerPath]: fakeApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fakeApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
