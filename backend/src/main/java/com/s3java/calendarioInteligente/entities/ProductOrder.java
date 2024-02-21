@@ -2,6 +2,7 @@ package com.s3java.calendarioInteligente.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public class ProductOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_order_id")
     private Long id;
 
     @Column(name = "name")
@@ -19,15 +21,28 @@ public class ProductOrder {
     @Column(name = "entry_date")
     private Date entryDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    /*
+
+    @Column(name = "error_time")
+    private Double errorTime;
+
+    @Column(name = "initial_date")
+    private LocalDate initialDate;
+
+    @Column(name = "finish_est_date")
+    private LocalDate finishEstimatedDate;*/
+
+    @OneToOne
     @JoinColumn(name = "product_id")
-    @JsonBackReference
     private Product product;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     @JsonBackReference
+    @NotNull
     private Client client;
+
+
 
     public Long getId() {
         return id;
@@ -69,7 +84,14 @@ public class ProductOrder {
         this.client = client;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "ProductOrder{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", entryDate=" + entryDate +
+                ", product=" + product +
+                ", client=" + client +
+                '}';
+    }
 }

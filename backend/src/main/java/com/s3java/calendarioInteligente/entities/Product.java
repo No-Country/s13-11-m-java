@@ -38,6 +38,10 @@ public class Product {
     @JsonBackReference
     private Company company;
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.LAZY)
+    @JsonBackReference
+    private ProductOrder productOrder;
+
     public Product() {
     }
 
@@ -130,5 +134,13 @@ public class Product {
 
     public void setTimeEstimatedCompletion(String timeEstimatedCompletion) {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
+    }
+
+    public ProductOrder getProductOrder() {
+        return productOrder;
+    }
+
+    public void setProductOrder(ProductOrder productOrder) {
+        this.productOrder = productOrder;
     }
 }
