@@ -1,9 +1,13 @@
+import AuthNavbar from "@/components/AuthNavbar";
 import { Outlet } from "react-router-dom";
 
 const AuthLayout = () => {
   return (
     <div>
-      <Outlet />
+      <AuthNavbar />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };

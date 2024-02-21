@@ -1,31 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '@/app/store'
-import { User } from '@/data/user'
+import { createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../../app/store";
+import { api } from "@/app/services/api";
+import { User } from "@/app/services/api/types";
 
 type AuthState = {
-  user: User | null
-  //token: string | null
-}
+  user: User | null;
+  token: string | null;
+};
 
 const slice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: { user: null, token: null } as AuthState,
   reducers: {
-    setCredentials: (
-      state,
-      {
-        payload, //token
-      }: PayloadAction<User>,  //; token: string
-    ) => {
-      state.user = payload
-    //   state.token = token
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
     },
   },
-})
+  extraReducers: (builder) => {
+    builder.addMatcher(api.endpoints.login.matchFulfilled, (state, { payload }) => {
+      state.token = payload.token;
+      state.user = payload.user;
+    });
+  },
+});
 
-export const { setCredentials } = slice.actions
+export default slice.reducer;
 
-export default slice.reducer
+export const selectCurrentUser = (state: RootState) => state.auth.user;
 
-export const selectCurrentUser = (state: RootState ) => state.auth.user
+export const { logout } = slice.actions;

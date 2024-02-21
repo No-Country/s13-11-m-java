@@ -8,7 +8,7 @@ const registerFormSchema = z.object({
     .email({ message: "El correo electrónico no es válido" }),
   password: z
     .string()
-    .min(8, { message: "La contraseña debe tener al menos 8 caracteres" })
+    .min(6, { message: "La contraseña debe tener al menos 8 caracteres" })
     .max(255, { message: "La contraseña no puede tener más de 255 caracteres" }),
   firstName: z
     .string()

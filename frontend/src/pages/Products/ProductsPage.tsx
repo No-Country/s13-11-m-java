@@ -17,7 +17,7 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <div className="pt-10">
+    <div className="container pt-10">
       <div className="flex md:justify-between">
         <h2 className="text-2xl">Productos</h2>
         <Button size="rounded" className="px-6">

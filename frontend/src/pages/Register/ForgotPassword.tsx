@@ -1,25 +1,55 @@
+import AuthTemplate from "@/components/AuthTemplate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import ForgotPasswordImage from "@/assets/forgot_password.svg";
+import forgotPasswordSchema, { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
 
-const ForgotPassword = () => {
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { authCredentials } from "@/constants/api";
+import useAuth from "@/hooks/useAuth";
+const ForgotPassword2 = () => {
+  const { forgotPassword, isLoadingForgotPassword } = useAuth();
+
+  const form = useForm<ForgotPasswordFormInputs>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: authCredentials.email,
+    },
+  });
+
   return (
-    <div className="flex h-screen w-screen">
-      <div className="hidden w-1/3 items-center justify-center bg-primary lg:flex">
-        <img src="src/assets/forgot_password.svg" alt="" className="pl-6" />
-      </div>
-      <div className="mx-auto flex w-2/3 max-w-[510px] items-center justify-center text-start">
-        <div className="grid grid-cols-1 gap-4 text-center">
-          <img src="src/assets/forgot_password.svg" alt="" className="mx-auto lg:hidden" />
-          <h1 className="mx-auto text-2xl md:text-4xl">¿Olvidaste tu contraseña?</h1>
-          <p className="text-xl">Ingresá tu mail para que podamos enviarte información de como recuperarla. </p>
-          <Label htmlFor="email">Mail</Label>
-          <Input className="border-b-4 border-primary" />
-          <Button className="w-full rounded-full">Enviar</Button>
-        </div>
-      </div>
-    </div>
+    <AuthTemplate image={ForgotPasswordImage}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(forgotPassword)} className="grid max-w-3xl grid-cols-1 gap-4 space-y-4">
+          <h2 className="text-4xl">¿Olvidaste tu contraseña?</h2>
+          <p className="text-2xl">Ingresá tu mail para que podamos enviarte información de como recuperarla. </p>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                    placeholder="Ingresa tu email"
+                    type="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className="w-full rounded-full" disabled={isLoadingForgotPassword}>
+            Enviar
+          </Button>
+        </form>
+      </Form>
+    </AuthTemplate>
   );
 };
 
-export default ForgotPassword;
+export default ForgotPassword2;
