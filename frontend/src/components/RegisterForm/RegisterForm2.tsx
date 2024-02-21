@@ -1,31 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LoginFormInputs } from "@/schemas/loginFormSchema";
+import { registerCredentials } from "@/constants/api";
 import registerFormSchema, { RegisterFormInputs } from "@/schemas/registerFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-const RegisterForm2 = () => {
+interface RegisterFormProps {
+  onSubmit?: (values: RegisterFormInputs) => void;
+  loading?: boolean;
+}
+
+const RegisterForm2 = ({ loading, onSubmit }: RegisterFormProps) => {
   const form = useForm<RegisterFormInputs>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      address: "",
-      phone: "",
+      email: registerCredentials.email,
+      password: registerCredentials.password,
+      firstName: registerCredentials.firstName,
+      lastName: registerCredentials.lastName,
+      address: registerCredentials.address,
+      phone: registerCredentials.phone,
     },
   });
 
-  function onSubmit(values: LoginFormInputs) {
-    console.log(values);
+  function handleSubmit(values: RegisterFormInputs) {
+    onSubmit?.(values);
   }
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="mx-auto grid w-full max-w-3xl gap-x-12 space-y-8 pt-8 md:grid-cols-2"
       >
         <h2 className="text-4xl md:col-span-2">Creá tu cuenta</h2>
@@ -74,7 +79,7 @@ const RegisterForm2 = () => {
               <FormControl>
                 <Input
                   className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Ingresa tu contraseña"
+                  placeholder="Ingrese su nombre"
                   {...field}
                 />
               </FormControl>
@@ -91,7 +96,7 @@ const RegisterForm2 = () => {
               <FormControl>
                 <Input
                   className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Ingresa tu contraseña"
+                  placeholder="Ingrese su apellido"
                   {...field}
                 />
               </FormControl>
@@ -108,7 +113,7 @@ const RegisterForm2 = () => {
               <FormControl>
                 <Input
                   className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Ingresa tu contraseña"
+                  placeholder="Ingrese su dirección"
                   {...field}
                 />
               </FormControl>
@@ -125,7 +130,7 @@ const RegisterForm2 = () => {
               <FormControl>
                 <Input
                   className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Ingresa tu contraseña"
+                  placeholder="Ingrese su número de teléfono"
                   {...field}
                 />
               </FormControl>
@@ -134,7 +139,7 @@ const RegisterForm2 = () => {
           )}
         />
         <br />
-        <Button className="w-full md:col-span-2" type="submit" size="rounded">
+        <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
           Registrate
         </Button>
       </form>

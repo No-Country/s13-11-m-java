@@ -1,4 +1,4 @@
-import { apiUrl, authCredentials } from "@/constants/api";
+import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { LoginRequest, UserResponse } from "./types";
@@ -24,6 +24,23 @@ export const api = createApi({
         }
       },
     }),
+    register: builder.mutation<UserResponse, LoginRequest>({
+      queryFn: async (args) => {
+        const { email, password } = args;
+        await simulateLoading();
+        if (email === registerCredentials.email && password === registerCredentials.password) {
+          const json = await import("@/mocks/users/user.json");
+          return { data: json.default as UserResponse };
+        } else {
+          return {
+            error: {
+              status: 400,
+              data: { message: "Invalid data" },
+            },
+          };
+        }
+      },
+    }),
     forgotPassword: builder.mutation<void, string>({
       queryFn: async (email) => {
         await simulateLoading();
@@ -42,4 +59,4 @@ export const api = createApi({
   }),
 });
 
-export const { useLoginMutation, useForgotPasswordMutation } = api;
+export const { useLoginMutation, useForgotPasswordMutation, useRegisterMutation } = api;
