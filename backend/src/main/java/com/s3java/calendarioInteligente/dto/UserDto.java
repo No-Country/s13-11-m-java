@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.dto;
 
-import com.s3java.calendarioInteligente.roles.Role;
+
+import com.s3java.calendarioInteligente.utils.Role;
 
 public class UserDto {
 

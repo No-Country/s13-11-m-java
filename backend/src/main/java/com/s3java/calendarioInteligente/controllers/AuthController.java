@@ -20,12 +20,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/users")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -46,7 +48,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
                                           HttpServletResponse response) throws IOException, JSONException {
         try{

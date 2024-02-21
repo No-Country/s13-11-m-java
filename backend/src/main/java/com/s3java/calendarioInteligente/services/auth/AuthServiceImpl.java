@@ -4,7 +4,8 @@ import com.s3java.calendarioInteligente.dto.SignupRequest;
 import com.s3java.calendarioInteligente.dto.UserDto;
 import com.s3java.calendarioInteligente.entities.User;
 import com.s3java.calendarioInteligente.repositories.UserRepository;
-import com.s3java.calendarioInteligente.roles.Role;
+
+import com.s3java.calendarioInteligente.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
