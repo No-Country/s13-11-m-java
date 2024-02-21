@@ -10,6 +10,7 @@ import ConfirmEmail from "@/pages/Register/ConfirmEmail";
 import ErrorRegister from "@/pages/Register/ErrorRegister";
 import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
+import ProductsPage from "@/pages/Products/ProductsPage";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <OnBoarding />,
+      },
+      {
+        path: "/products",
+        element: <ProductsPage />,
       },
     ],
   },
