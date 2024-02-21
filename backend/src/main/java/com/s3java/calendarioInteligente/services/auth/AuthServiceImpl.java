@@ -16,15 +16,17 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private UserRepository userRepository;
 
+    /*
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
     public UserDto createUser(SignupRequest signUpRequest){
         User user = new User();
 
         user.getCommonAttribute().setEmail(signUpRequest.getEmail());
         user.getCommonAttribute().setName(signUpRequest.getName());
-        user.getCommonAttribute().setPassword(new BCryptPasswordEncoder().encode(signUpRequest.getPassword()));
+        //user.getCommonAttribute().setPassword(new BCryptPasswordEncoder().encode(signUpRequest.getPassword()));
+        user.getCommonAttribute().setPassword(signUpRequest.getPassword());
         user.setRole(Role.ROLE_EMPLOYEE);
         User createdUser = userRepository.save(user);
 

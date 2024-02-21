@@ -30,7 +30,7 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
+    //private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
@@ -40,8 +40,8 @@ public class AuthController {
 
     private final AuthService authService;
 
-    public AuthController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, UserRepository userRepository, JwtUtil jwtUtil, AuthService authService) {
-        this.authenticationManager = authenticationManager;
+    public AuthController( UserDetailsService userDetailsService, UserRepository userRepository, JwtUtil jwtUtil, AuthService authService) {
+        //this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
@@ -50,7 +50,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
-                                          HttpServletResponse response) throws IOException, JSONException {
+
+                                        HttpServletResponse response) throws IOException, JSONException {
+
+
+
+        /*
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                     authenticationRequest.getPassword()));
@@ -70,7 +75,7 @@ public class AuthController {
             );
 
             response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
-        }
+        }*/
     }
     @PostMapping("/register")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest){

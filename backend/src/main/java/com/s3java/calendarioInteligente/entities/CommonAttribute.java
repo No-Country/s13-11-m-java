@@ -1,15 +1,24 @@
 package com.s3java.calendarioInteligente.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class CommonAttribute {
 
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phone")
     private String phone;
 
+    @Column(name = "name")
     private String name;
 
     public String getEmail() {
