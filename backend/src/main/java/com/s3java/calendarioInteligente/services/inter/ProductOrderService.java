@@ -9,15 +9,15 @@ import java.util.List;
 
 @Service
 public interface ProductOrderService {
-    List<ProductOrderResponse> findAllProducts(Long companyId) throws Exception;
+    List<ProductOrderResponse> findAllProducts() throws Exception;
 
-    ProductOrderResponse findProductOrderById(Long productOrderId, Long companyId) throws Exception;
+    ProductOrderResponse findProductOrderById(Long productOrderId) throws Exception;
 
-    List<ProductOrderResponse> findProductOrdersByDate(LocalDate date, Long companyId) throws Exception;
+    List<ProductOrderResponse> findProductOrdersByDate(LocalDate date) throws Exception;
 
-    List<ProductOrderResponse> findProductOrdersByClientId(Long clientId, Long companyId) throws Exception;
+    List<ProductOrderResponse> findProductOrdersByClientId(Long clientId) throws Exception;
 
-    ProductOrderResponse createProductOrder(Long companyId, ProductOrderRequest productOrder) throws Exception;
+    ProductOrderResponse createProductOrder(ProductOrderRequest productOrder) throws Exception;
 
     ProductOrderResponse updateProductOrder(Long productOrderId, ProductOrderRequest productOrderDTO) throws Exception;
 

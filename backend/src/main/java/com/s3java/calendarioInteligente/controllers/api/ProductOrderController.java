@@ -30,18 +30,17 @@ public class ProductOrderController {
 
     }
 
-    @GetMapping("all/{companyId}")
-    @Operation(summary = "Get all orders by company ID", description = "Retrieve a list of product orders for a given company.")
+    @GetMapping("all")
+    @Operation(summary = "Get all orders", description = "Retrieve a list of product orders for a company.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<List<ProductOrderResponse>> getAllOrders(
-            @Parameter(description = "ID of the company")
-            @PathVariable Long companyId){
+    public ResponseEntity<List<ProductOrderResponse>> getAllOrders()
+            {
         try {
-            List<ProductOrderResponse> productOrders = productOrderService.findAllProducts(companyId);
+            List<ProductOrderResponse> productOrders = productOrderService.findAllProducts();
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
             return ResponseEntity.noContent().build();
@@ -49,41 +48,40 @@ public class ProductOrderController {
     }
 
 
-    @GetMapping("/orders/clients/{clientId}/company/{companyId}")
-    @Operation(summary = "Get all orders by client ID", description = "Retrieve a list of product orders for a given client and company.")
+    @GetMapping("/orders/clients/{clientId}")
+    @Operation(summary = "Get all orders by client ID",
+            description = "Retrieve a list of product orders for a given client")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<ProductOrderResponse>> getAllOrdersByClient(
-            @PathVariable Long companyId,
             @PathVariable Long clientId){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
-                    .findProductOrdersByClientId(companyId, clientId);
+                    .findProductOrdersByClientId(clientId);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
             return ResponseEntity.noContent().build();
         }
     }
 
-    @GetMapping("all/{companyId}/{date}")
-    @Operation(summary = "Get all orders by finish date", description = "Retrieve a list of product orders for a finish date.")
+    @GetMapping("all/{date}")
+    @Operation(summary = "Get all orders by finish date",
+            description = "Retrieve a list of product orders for a finish date.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByDate(
-            @Parameter(description = "ID of the company")
-            @PathVariable Long companyId,
             @Parameter(description = "date")
             @PathVariable LocalDate date
             ){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
-                    .findProductOrdersByDate(date, companyId);
+                    .findProductOrdersByDate(date);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
             return ResponseEntity.noContent().build();
@@ -98,22 +96,20 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<ProductOrderResponse> getOrder(
-            @Parameter(description = "ID of the company")
-            @PathVariable Long companyId,
             @Parameter(description = "ID of the order")
             @PathVariable Long orderID
 
     ){
         try {
-            ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderID, companyId);
+            ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderID);
             return ResponseEntity.ok().body(productOrder);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping("/create/{companyId}")
-    @Operation(summary = "Create order", description = "Retrieve a created product orders for a given company.")
+    @PostMapping("/create")
+    @Operation(summary = "Create order", description = "Retrieve a created product orders for a company.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders",
                     content = @Content(mediaType = "application/json",
@@ -122,13 +118,11 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<ProductOrderResponse> createOrder(
-            @Parameter(description = "ID of the company")
-            @PathVariable Long companyId,
             @RequestBody ProductOrderRequest productOrderDTO
 
     ){
         try {
-            ProductOrderResponse productOrder = productOrderService.createProductOrder(companyId, productOrderDTO);
+            ProductOrderResponse productOrder = productOrderService.createProductOrder(productOrderDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(productOrder);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -137,14 +131,13 @@ public class ProductOrderController {
 
 
     @PatchMapping("/update/{orderId}")
-    @Operation(summary = "Get all orders by company ID", description = "Retrieve a list of product orders for a given company.")
+    @Operation(summary = "", description = "")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<ProductOrderResponse> editOrder(
-            //@PathVariable Long companyId,
             @PathVariable Long orderId,
             @RequestBody  ProductOrderRequest productOrderDTO
     ){
