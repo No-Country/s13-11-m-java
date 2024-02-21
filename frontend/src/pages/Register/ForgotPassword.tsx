@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { authCredentials } from "@/constants/api";
 import useAuth from "@/hooks/useAuth";
 const ForgotPassword2 = () => {
-  const { forgotPassword } = useAuth();
+  const { forgotPassword, isLoadingForgotPassword } = useAuth();
 
   const form = useForm<ForgotPasswordFormInputs>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -43,7 +43,9 @@ const ForgotPassword2 = () => {
               </FormItem>
             )}
           />
-          <Button className="w-full rounded-full">Enviar</Button>
+          <Button className="w-full rounded-full" disabled={isLoadingForgotPassword}>
+            Enviar
+          </Button>
         </form>
       </Form>
     </AuthTemplate>
