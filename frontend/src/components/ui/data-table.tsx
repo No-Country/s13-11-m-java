@@ -48,7 +48,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
   return (
     <div>
-      <h2 className="text-2xl">Productos</h2>
       <div className="flex flex-col py-4 max-md:gap-2 md:flex-row">
         <SelectOnlyColumns
           columns={onlyVisibleColumns}
