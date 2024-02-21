@@ -16,17 +16,14 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private UserRepository userRepository;
 
-    /*
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
-
-    public UserDto createUser(SignupRequest signUpRequest){
+    public UserDto createUser(SignupRequest signupRequest){
         User user = new User();
 
-        user.getCommonAttribute().setEmail(signUpRequest.getEmail());
-        user.getCommonAttribute().setName(signUpRequest.getName());
-        //user.getCommonAttribute().setPassword(new BCryptPasswordEncoder().encode(signUpRequest.getPassword()));
-        user.getCommonAttribute().setPassword(signUpRequest.getPassword());
+        user.getCommonAttribute().setEmail(signupRequest.getEmail());
+        user.getCommonAttribute().setName(signupRequest.getName());
+        user.setCompany(signupRequest.getCompany());
+        user.getCommonAttribute().setPassword(signupRequest.getPassword());
+
         user.setRole(Role.ROLE_EMPLOYEE);
         User createdUser = userRepository.save(user);
 
@@ -36,9 +33,6 @@ public class AuthServiceImpl implements AuthService {
         return userDto;
     }
 
-    public Boolean hasUserWithEmail(String email){
-        return userRepository.findFirstByEmail(email).isPresent();
 
-    }
 
 }

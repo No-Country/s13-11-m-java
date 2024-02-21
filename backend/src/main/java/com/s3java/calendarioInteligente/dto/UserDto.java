@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.dto;
 
 
+import com.s3java.calendarioInteligente.entities.Company;
 import com.s3java.calendarioInteligente.utils.Role;
 
 public class UserDto {
@@ -8,6 +9,17 @@ public class UserDto {
     private Long id;
     private String email;
     private String name;
+
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     private Role userRole;
 
     public Long getId() {
