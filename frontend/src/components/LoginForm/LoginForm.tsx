@@ -5,33 +5,29 @@ import loginFormSchema, { LoginFormInputs } from "@/schemas/loginFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { linkItems } from "./items";
+import { authCredentials } from "@/constants/api";
 
-const linkItems = [
-  {
-    title: "Olvidé mi contraseña",
-    link: "/forgot-password",
-  },
-  {
-    title: "¿Aún no tenés cuenta? Registrate",
-    link: "/register",
-  },
-];
+interface LoginFormProps {
+  onSubmit?: (values: LoginFormInputs) => void;
+  loading?: boolean;
+}
 
-const LoginForm = () => {
+const LoginForm = ({ loading, onSubmit }: LoginFormProps) => {
   const form = useForm<LoginFormInputs>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: authCredentials.email,
+      password: authCredentials.password,
     },
   });
 
-  function onSubmit(values: LoginFormInputs) {
-    console.log(values);
+  function handleSubmit(values: LoginFormInputs) {
+    onSubmit?.(values);
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto w-full max-w-3xl space-y-8 pt-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="mx-auto w-full max-w-3xl space-y-8 pt-8">
         <h2 className="text-4xl">Iniciar sesión</h2>
         <FormField
           control={form.control}
@@ -69,7 +65,7 @@ const LoginForm = () => {
           )}
         />
         <br />
-        <Button className="w-full" type="submit" size="rounded">
+        <Button className="w-full" type="submit" size="rounded" disabled={loading}>
           Iniciar sesión
         </Button>
         <div className="flex flex-col">
