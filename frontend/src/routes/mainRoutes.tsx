@@ -13,6 +13,8 @@ import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
 import Login2 from "@/pages/Login2/Login2";
 import Register2 from "@/pages/Register2/Register2";
+import ConfirmEmailStep2 from "@/pages/Register2/ConfirmEmailStep2";
+import ForgotPassword2 from "@/pages/Register2/ForgotPassword2";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ export const router = createBrowserRouter([
       {
         path: "/confirm2",
         element: <ConfirmEmail2 />,
+      },
+      {
+        path: "/confirm-step-2",
+        element: <ConfirmEmailStep2 />,
+      },
+      {
+        path: "/forgotpass2",
+        element: <ForgotPassword2 />,
       },
       {
         path: "/forgotpass",
