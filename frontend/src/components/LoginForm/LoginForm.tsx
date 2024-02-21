@@ -32,7 +32,7 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto w-full max-w-3xl space-y-8 pt-8">
-        <h2 className="text-3xl">Iniciar sesión</h2>
+        <h2 className="text-4xl">Iniciar sesión</h2>
         <FormField
           control={form.control}
           name="email"

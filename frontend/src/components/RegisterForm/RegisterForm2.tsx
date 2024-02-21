@@ -28,7 +28,7 @@ const RegisterForm2 = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto grid w-full max-w-3xl gap-x-12 space-y-8 pt-8 md:grid-cols-2"
       >
-        <h2 className="text-3xl md:col-span-2">Creá tu cuenta</h2>
+        <h2 className="text-4xl md:col-span-2">Creá tu cuenta</h2>
         <FormField
           control={form.control}
           name="email"

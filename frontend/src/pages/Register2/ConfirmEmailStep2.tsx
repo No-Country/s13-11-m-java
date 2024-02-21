@@ -11,8 +11,8 @@ const ConfirmEmailStep2 = () => {
   return (
     <AuthTemplate image={checkEmailImage}>
       <div className="grid max-w-lg grid-cols-1 gap-3">
-        <h1 className="text-4xl">Revisá tu mail</h1>
-        <p className="text-xl md:text-2xl">Te enviamos un mail a mariagarcia@gmail.com para verificar tu cuenta.</p>
+        <h2 className="text-4xl">Revisá tu mail</h2>
+        <p className="text-2xl">Te enviamos un mail a mariagarcia@gmail.com para verificar tu cuenta.</p>
         <Button variant={"outline"}>
           <MdOutlineMail className="mr-2 text-lg text-blue-500" />
           Abrir Mail
@@ -24,7 +24,7 @@ const ConfirmEmailStep2 = () => {
           <PiMicrosoftOutlookLogo className="mr-2 text-lg text-blue-500" />
           Abrir Outlook
         </Button>
-        <Button asChild className="text-xl" variant="link">
+        <Button asChild variant="link">
           <Link to="#">
             <p>¿Hubo algún error?. Reenviar mail</p>
           </Link>

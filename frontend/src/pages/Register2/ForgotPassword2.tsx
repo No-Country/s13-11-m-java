@@ -23,7 +23,7 @@ const ForgotPassword2 = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid max-w-3xl grid-cols-1 gap-4 space-y-4">
           <h2 className="text-4xl">¿Olvidaste tu contraseña?</h2>
-          <p className="text-xl">Ingresá tu mail para que podamos enviarte información de como recuperarla. </p>
+          <p className="text-2xl">Ingresá tu mail para que podamos enviarte información de como recuperarla. </p>
           <FormField
             control={form.control}
             name="email"
