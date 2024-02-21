@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.services.impl;
 
-import com.s3java.calendarioInteligente.dto.ProductOrderDTO;
+import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
+import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
 import org.springframework.stereotype.Service;
 
@@ -12,32 +13,32 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 
     @Override
-    public List<ProductOrderDTO> findAllProducts(Long companyId) throws Exception {
+    public List<ProductOrderResponse> findAllProducts(Long companyId) throws Exception {
         return null;
     }
 
     @Override
-    public ProductOrderDTO findProductOrderById(Long productOrderId, Long companyId) throws Exception {
+    public ProductOrderResponse findProductOrderById(Long productOrderId, Long companyId) throws Exception {
         return null;
     }
 
     @Override
-    public List<ProductOrderDTO> findProductOrdersByDate(LocalDate date, Long companyId) throws Exception {
+    public List<ProductOrderResponse> findProductOrdersByDate(LocalDate date, Long companyId) throws Exception {
         return null;
     }
 
     @Override
-    public List<ProductOrderDTO> findProductOrdersByClientId(Long clientId, Long companyId) throws Exception {
+    public List<ProductOrderResponse> findProductOrdersByClientId(Long clientId, Long companyId) throws Exception {
         return null;
     }
 
     @Override
-    public ProductOrderDTO createProductOrder(Long companyId, ProductOrderDTO productOrder) throws Exception {
+    public ProductOrderResponse createProductOrder(Long companyId, ProductOrderRequest productOrder) throws Exception {
         return null;
     }
 
     @Override
-    public ProductOrderDTO updateProductOrder(Long productOrderId, ProductOrderDTO productOrderDTO) throws Exception {
+    public ProductOrderResponse updateProductOrder(Long productOrderId, ProductOrderRequest productOrderDTO) throws Exception {
         return null;
     }
 

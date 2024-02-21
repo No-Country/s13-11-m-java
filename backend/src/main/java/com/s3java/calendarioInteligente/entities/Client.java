@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -9,7 +10,7 @@ import jakarta.persistence.*;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded
@@ -17,7 +18,8 @@ public class Client {
 
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
+    @JoinColumn(name = "product_order_id")
     private ProductOrder productOrder;
 
     public Long getId() {

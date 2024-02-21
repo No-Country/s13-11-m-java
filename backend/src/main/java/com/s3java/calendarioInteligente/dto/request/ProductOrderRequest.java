@@ -1,62 +1,30 @@
-package com.s3java.calendarioInteligente.entities;
+package com.s3java.calendarioInteligente.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.s3java.calendarioInteligente.entities.Client;
+import com.s3java.calendarioInteligente.entities.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-@Entity
-@Table(name = "PRODUCT_ORDERS")
-public class ProductOrder {
+public class ProductOrderRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_order_id")
-    private Long id;
 
-    @Column(name = "name")
-    @NotNull
     private String name;
 
-    @Column(name = "entry_date")
-    private Date entryDate;
-
-
-    @Column(name = "error_time")
-    @NotNull
     private Double errorTime;
 
-    @Column(name = "photo_link")
     private String photoLink;
 
-    @Column(name = "initial_date")
-    @NotNull
     private LocalDate initialDate;
 
-    @Column(name = "finish_est_date")
     private LocalDate finishEstimatedDate;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "productOrder", cascade = CascadeType.ALL)
-    @NotNull
-    @JsonManagedReference
-    private Client client;
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private ClientRequest client;
 
     public String getName() {
         return name;
@@ -64,31 +32,6 @@ public class ProductOrder {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     public Double getErrorTime() {
@@ -123,12 +66,26 @@ public class ProductOrder {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public ClientRequest getClient() {
+        return client;
+    }
+
+    public void setClient(ClientRequest client) {
+        this.client = client;
+    }
+
     @Override
     public String toString() {
-        return "ProductOrder{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", entryDate=" + entryDate +
+        return "ProductOrderRequest{" +
+                "name='" + name + '\'' +
                 ", errorTime=" + errorTime +
                 ", photoLink='" + photoLink + '\'' +
                 ", initialDate=" + initialDate +
