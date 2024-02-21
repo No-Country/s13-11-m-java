@@ -11,6 +11,7 @@ import ErrorRegister from "@/pages/Register/ErrorRegister";
 import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
 import ProductsPage from "@/pages/Products/ProductsPage";
+import Dashboard from "@/pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <ProductsPage />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },
