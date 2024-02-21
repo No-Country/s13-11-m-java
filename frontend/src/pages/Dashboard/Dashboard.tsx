@@ -3,14 +3,38 @@ import { dataProcessPorcent } from "@/data/Dashboard/donuts/procesos.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { dataProcessQ2 } from "@/data/Dashboard/donuts/process.dataq2";
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement,
+} from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { options, data as barData } from "@/data/Dashboard/bar/bar.chart";
+import { optionsComparative, dataComparative } from "@/data/Dashboard/comparative/comparative.chart";
 import ProductsPage from "../Products/ProductsPage";
 import { Progress } from "@/components/ui/progress";
+import { Line } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  CategoryScale,
+  PointElement,
+  LineElement
+);
 
 const Dashboard = () => {
   return (
@@ -39,7 +63,9 @@ const Dashboard = () => {
             <Doughnut data={dataEmployee} />
             <Doughnut data={dataProcessQ2} />
           </div>
-          <div></div>
+          <div className="flex w-1/2">
+            <Line options={optionsComparative} data={dataComparative} />
+          </div>
         </div>
       </div>
     </>
