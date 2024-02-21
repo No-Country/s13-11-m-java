@@ -35,15 +35,15 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/confirm",
+        path: "/confirm-email",
         element: <ConfirmEmail />,
       },
       {
-        path: "/forgotpass",
+        path: "/forgot-password",
         element: <ForgotPassword />,
       },
       {
-        path: "/errorregister",
+        path: "/error-register",
         element: <ErrorRegister />,
       },
     ],
