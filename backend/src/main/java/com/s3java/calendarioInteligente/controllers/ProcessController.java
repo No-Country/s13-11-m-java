@@ -8,19 +8,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/process")
 public class ProcessController {
 
     @Autowired
     private ProcessServiceImpl processService;
 
-    @GetMapping("/test")
-    public String test(){
-        return "Test Process";
+    @GetMapping("/")
+    public ResponseEntity<?> getAllProcess(){
+        return processService.getAllProcess();
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> createProcess(@Valid @RequestBody ProductProcess process){
-        return processService.createProcess(process);
+
+    @GetMapping("/{processID}")
+    public ResponseEntity<?> getProcessByID(@PathVariable Long processID){
+        return processService.getProcessByID(processID);
     }
 }

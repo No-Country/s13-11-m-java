@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class ProcessServiceImpl  implements ProcessService {
@@ -17,7 +19,17 @@ public class ProcessServiceImpl  implements ProcessService {
 
 
     @Override
-    public ResponseEntity<?> createProcess(ProductProcess productProcess) {
-        return new ResponseEntity<>(processRepository.save(productProcess), HttpStatus.OK);
+    public ResponseEntity<?> getAllProcess() {
+        return new ResponseEntity<>(processRepository.findAll(), HttpStatus.OK);
+    }
+
+
+    @Override
+    public ResponseEntity<?> getProcessByID(Long processID) {
+        Optional<ProductProcess> foundProcess = processRepository.findById(processID);
+        if (foundProcess.isPresent()){
+            return new ResponseEntity<>(foundProcess.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("No process found", HttpStatus.NOT_FOUND);
     }
 }

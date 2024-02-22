@@ -5,5 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface ProcessService {
 
-    ResponseEntity<?> createProcess(ProductProcess process);
+    ResponseEntity<?> getAllProcess();
+    ResponseEntity<?> getProcessByID(Long processID);
 }
