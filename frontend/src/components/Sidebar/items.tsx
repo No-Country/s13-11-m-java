@@ -10,7 +10,7 @@ export const menuItems = [
   {
     icon: <MdOutlineCalendarMonth size={24} />,
     label: "Calendario",
-    href: "/calendar ",
+    href: "/calendar",
   },
   {
     icon: <MdOutlineDashboard size={24} />,

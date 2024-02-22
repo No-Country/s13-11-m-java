@@ -13,6 +13,10 @@ import ConfirmEmail from "@/pages/Register/ConfirmEmail";
 import ErrorRegister from "@/pages/Register/ErrorRegister";
 import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
+import Orders from "@/pages/Orders/Orders";
+import Calendar from "@/pages/Calendar/Calendar";
+import Employees from "@/pages/Employees/Employees";
+import Configuration from "@/pages/Configuration/Configuration";
 
 export const router = createBrowserRouter([
   {
@@ -34,8 +38,24 @@ export const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
+        path: "/calendar",
+        element: <Calendar />,
+      },
+      {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/employees",
+        element: <Employees />,
+      },
+      {
+        path: "/configuration",
+        element: <Configuration />,
       },
     ],
   },
