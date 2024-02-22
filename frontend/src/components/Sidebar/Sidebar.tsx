@@ -12,7 +12,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-50 h-max -translate-x-1/2 overflow-hidden rounded-lg bg-background shadow-2xl md:left-4 md:top-1/2 md:-translate-y-1/2 md:translate-x-0">
+    <div className="fixed bottom-4 left-1/2 z-50 h-max -translate-x-1/2 overflow-hidden rounded-lg border bg-background shadow-2xl md:left-4 md:top-1/2 md:-translate-y-1/2 md:translate-x-0">
       <nav className="flex max-md:space-x-4 max-md:px-6 md:flex-col md:space-y-4 md:py-6">
         {menuItems.map((item, index) => (
           <Button

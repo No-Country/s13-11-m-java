@@ -6,7 +6,7 @@ import {
   Chart as ChartJS,
   ArcElement,
   Tooltip,
-  Legend,
+  // Legend,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -27,7 +27,6 @@ import { products } from "../Products/data";
 ChartJS.register(
   ArcElement,
   Tooltip,
-  Legend,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -39,8 +38,8 @@ ChartJS.register(
 
 const Dashboard = () => {
   return (
-    <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-8 py-8 sm:grid-cols-2 md:grid-cols-3 md:pl-20 lg:grid-cols-4">
-      <div className="col-span-full h-full max-h-[26rem] rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
+    <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-8 py-8 sm:grid-cols-2 md:grid-cols-3 md:pl-20 xl:grid-cols-4">
+      <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
         <ScrollArea className="h-full whitespace-nowrap rounded-md border">
           <div className="flex">
             <DataTable columns={columns} data={products} />
@@ -63,19 +62,27 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        <Doughnut data={dataProcessPorcent} />
+        <div className="max-w-48">
+          <Doughnut data={dataProcessPorcent} />
+        </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        <Doughnut data={dataProcessQ} />
+        <div className="max-w-48">
+          <Doughnut data={dataProcessQ} />
+        </div>
       </div>
-      <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-lg:order-5 lg:col-span-2 lg:row-span-2">
-        <Line options={optionsComparative} data={dataComparative} style={{ width: "100%" }} />
+      <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-xl:order-5 xl:col-span-2 xl:row-span-2">
+        <Line options={optionsComparative} data={dataComparative} height={200} />
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        <Doughnut data={dataEmployee} />
+        <div className="max-w-48">
+          <Doughnut data={dataEmployee} />
+        </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        <Doughnut data={dataProcessQ2} />
+        <div className="max-w-48">
+          <Doughnut data={dataProcessQ2} />
+        </div>
       </div>
     </div>
   );
