@@ -3,6 +3,9 @@ package com.s3java.calendarioInteligente.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,21 +14,37 @@ import java.util.List;
 @Table(name = "PRODUCT")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
+    @Column(unique = true)
+    private String idUnico;
+
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String instruction;
+
+    @NotBlank
     private String description;
+
+    @NotNull
     @Column(name = "total_production")
     private Integer totalProduction;
 
     //  TODO: Ver si cambiar a ENUM (activo, en pausa, finalizado, cancelado)
+
+    @NotNull
     @Column(name = "state")
     private Boolean state;
+
+    @NotNull
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @NotBlank
     @Column(name = "time_estimated_completion")
     private String timeEstimatedCompletion;
 
@@ -41,8 +60,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, String instruction, String description, Integer totalProduction, Boolean state, Boolean isActive, String timeEstimatedCompletion) {
+    public Product(Long id, String idUnico, String name, String instruction, String description, Integer totalProduction, Boolean state, Boolean isActive, String timeEstimatedCompletion) {
         this.id = id;
+        this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
         this.description = description;
@@ -74,6 +94,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdUnico() {
+        return idUnico;
+    }
+
+    public void setIdUnico(String idUnico) {
+        this.idUnico = idUnico;
     }
 
     public String getName() {
