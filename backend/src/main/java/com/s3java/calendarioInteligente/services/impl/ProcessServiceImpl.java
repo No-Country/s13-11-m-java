@@ -18,6 +18,10 @@ public class ProcessServiceImpl  implements ProcessService {
     private ProcessRepository processRepository;
 
 
+    /*TODO: Analizar si hacer un objeto de respuesta, en ves de enviar el objeto de modelo.
+    Podría ayudar a la legibilidad del código también, y que se pueda editar fácil lo que se quiere devolver
+    */
+
     @Override
     public ResponseEntity<?> getAllProcess() {
         return new ResponseEntity<>(processRepository.findAll(), HttpStatus.OK);
@@ -30,6 +34,32 @@ public class ProcessServiceImpl  implements ProcessService {
         if (foundProcess.isPresent()){
             return new ResponseEntity<>(foundProcess.get(), HttpStatus.OK);
         }
+        ////TODO: Crear ProcessNotFoundException
         return new ResponseEntity<>("No process found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteByID(Long processID) {
+        try {
+            processRepository.deleteById(processID);
+            //Revisar si es necesario hacer un mensaje distinto
+            return new ResponseEntity<>("Process Deleted", HttpStatus.OK);
+        } catch (Exception e){
+            //TODO: Crear ProcessNotFoundException
+            return new ResponseEntity<>("Process Not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> updateByID(ProductProcess updatedProcess, Long processIDToUpdate) {
+        Optional<ProductProcess> foundProcess = processRepository.findById(processIDToUpdate);
+        if (foundProcess.isPresent()){
+            ProductProcess processToUpdate = foundProcess.get();
+
+            //Solo actualizo los atributos, lo de relaciones es de otro endpoints
+            processToUpdate.setProcessAttributes(updatedProcess.getProcessAttributes());
+            return new ResponseEntity<>(processRepository.save(processToUpdate), HttpStatus.OK);
+        }
+        return null;
     }
 }

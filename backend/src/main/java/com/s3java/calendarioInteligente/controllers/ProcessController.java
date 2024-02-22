@@ -24,4 +24,16 @@ public class ProcessController {
     public ResponseEntity<?> getProcessByID(@PathVariable Long processID){
         return processService.getProcessByID(processID);
     }
+
+    @DeleteMapping("/{processID}")
+    public ResponseEntity<?> deleteProcessByID(@PathVariable Long processID){
+        return processService.deleteByID(processID);
+    }
+
+    @PutMapping("/{processID}")
+    public ResponseEntity<?> updateProcessByID(@Valid @RequestBody ProductProcess updatedProcess, @PathVariable Long processID){
+        return processService.updateByID(updatedProcess, processID);
+    }
+
+    //TODO:
 }

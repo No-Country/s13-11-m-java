@@ -7,4 +7,6 @@ public interface ProcessService {
 
     ResponseEntity<?> getAllProcess();
     ResponseEntity<?> getProcessByID(Long processID);
+    ResponseEntity<?> deleteByID(Long processID);
+    ResponseEntity<?> updateByID(ProductProcess updatedProcess, Long processIDToUpdate);
 }
