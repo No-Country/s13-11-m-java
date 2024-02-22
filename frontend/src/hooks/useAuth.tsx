@@ -22,7 +22,7 @@ const useAuth = () => {
   const handleSubmit = async (values: LoginFormInputs) => {
     try {
       await login(values).unwrap();
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       console.error(error);
       alert("Error al iniciar sesión");
