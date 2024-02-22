@@ -1,4 +1,3 @@
-import Sidebar from "@/components/Sidebar/Sidebar";
 import { dataProcessPorcent } from "@/data/Dashboard/donuts/procesos.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { dataProcessQ2 } from "@/data/Dashboard/donuts/process.dataq2";
@@ -19,9 +18,12 @@ import { Doughnut } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { options, data as barData } from "@/data/Dashboard/bar/bar.chart";
 import { optionsComparative, dataComparative } from "@/data/Dashboard/comparative/comparative.chart";
-import ProductsPage from "../Products/ProductsPage";
 import { Progress } from "@/components/ui/progress";
 import { Line } from "react-chartjs-2";
+import { DataTable } from "@/components/ui/data-table";
+import { columns } from "../Products/columns";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { products } from "../Products/data";
 
 ChartJS.register(
   ArcElement,
@@ -38,37 +40,45 @@ ChartJS.register(
 
 const Dashboard = () => {
   return (
-    <>
-      <Sidebar />
-      <div className="m-5 flex w-full flex-wrap">
-        <div className="justify-content w-3/4 flex-wrap">
-          <ProductsPage />
-        </div>
-        <div className="flex w-1/4 flex-col justify-between">
-          <div className="mb-4 mt-8">
-            <h2 className="mb-4 mt-4 px-8 text-3xl">
-              <b>Progresos Activos</b>
-            </h2>
-            <label className="m-1 mb-4 mt-4 px-8 text-3xl">04</label>
-            <Progress value={33} />
+    <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+      <div className="col-span-full md:col-span-3 md:row-span-2">
+        <ScrollArea className="h-full whitespace-nowrap rounded-md border">
+          <div className="flex">
+            <DataTable columns={columns} data={products} />
           </div>
-          <div className="mb-4 mt-4">
-            <Bar options={options} data={barData} />
-          </div>
-        </div>
-        <div className="m-10 w-1/2 flex-wrap">
-          <div className="justify-content flex w-1/2 flex-nowrap">
-            <Doughnut data={dataProcessPorcent} />
-            <Doughnut data={dataProcessQ} />
-            <Doughnut data={dataEmployee} />
-            <Doughnut data={dataProcessQ2} />
-          </div>
-          <div className="flex w-1/2">
-            <Line options={optionsComparative} data={dataComparative} />
-          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
+      <div className="h-max rounded-2xl bg-background p-4 shadow-2xl">
+        <div>
+          <h2 className="mb-4 mt-4 px-8 text-3xl">
+            <b>Progresos Activos</b>
+          </h2>
+          <label className="m-1 mb-4 mt-4 px-8 text-3xl">04</label>
+          <Progress value={33} />
         </div>
       </div>
-    </>
+      <div className="h-max rounded-2xl bg-background p-4 shadow-2xl">
+        <div>
+          <Bar options={options} data={barData} />
+        </div>
+      </div>
+      <div className="rounded-2xl bg-background p-4 shadow-2xl">
+        <Doughnut data={dataProcessPorcent} />
+      </div>
+      <div className="rounded-2xl bg-background p-4 shadow-2xl">
+        <Doughnut data={dataProcessQ} />
+      </div>
+      <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-lg:order-5 lg:col-span-2 lg:row-span-2">
+        <Line options={optionsComparative} data={dataComparative} />
+      </div>
+      <div className="rounded-2xl bg-background p-4 shadow-2xl">
+        <Doughnut data={dataEmployee} />
+      </div>
+      <div className="rounded-2xl bg-background p-4 shadow-2xl">
+        <Doughnut data={dataProcessQ2} />
+      </div>
+    </div>
   );
 };
 
