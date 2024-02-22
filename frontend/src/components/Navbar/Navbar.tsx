@@ -12,7 +12,7 @@ function Navbar() {
   const { isLogin, user, logout } = useAuth();
 
   return (
-    <header className="sticky inset-x-0 top-0 z-50  bg-background p-4 shadow-xl">
+    <header className="sticky inset-x-0 top-0 z-50  bg-background p-4 shadow-sm">
       <div className="container flex items-center">
         <Link to="/">
           <h1 className="text-3xl">LOGO</h1>
