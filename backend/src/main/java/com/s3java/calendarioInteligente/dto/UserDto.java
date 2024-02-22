@@ -10,14 +10,14 @@ public class UserDto {
     private String email;
     private String name;
 
-    private Company company;
+    private String password;
 
-    public Company getCompany() {
-        return company;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     private Role userRole;
