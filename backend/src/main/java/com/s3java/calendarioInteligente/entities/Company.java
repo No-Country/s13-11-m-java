@@ -25,6 +25,10 @@ public class Company {
     @JsonManagedReference
     private List<User> employee = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @JsonManagedReference
+    private List<ProductOrder> productOrders = new ArrayList<>();
+
 
     public List<Product> getProducts() {
         return products;
@@ -59,5 +63,22 @@ public class Company {
         this.commonAttribute = commonAttribute;
     }
 
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
+    }
 
+    public void setProductOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", commonAttribute=" + commonAttribute +
+                ", products=" + products +
+                ", employee=" + employee +
+                ", productOrders=" + productOrders +
+                '}';
+    }
 }

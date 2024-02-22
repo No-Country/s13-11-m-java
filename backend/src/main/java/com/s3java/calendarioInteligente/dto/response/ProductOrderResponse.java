@@ -24,9 +24,9 @@ public class ProductOrderResponse {
 
     private LocalDate finishEstimatedDate;
 
-    private Product product;
+    private Long productId;
 
-    private Client client;
+    private Long clientId;
 
     public Long getId() {
         return id;
@@ -84,19 +84,35 @@ public class ProductOrderResponse {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 
-    public Product getProduct() {
-        return product;
+
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public Client getClient() {
-        return client;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductOrderResponse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", entryDate=" + entryDate +
+                ", errorTime=" + errorTime +
+                ", photoLink='" + photoLink + '\'' +
+                ", initialDate=" + initialDate +
+                ", finishEstimatedDate=" + finishEstimatedDate +
+                ", productId=" + productId +
+                ", clientId=" + clientId +
+                '}';
     }
 }

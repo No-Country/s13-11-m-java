@@ -1,0 +1,2 @@
+INSERT INTO PRODUCT (name, instruction, description, total_production, state, is_active, time_estimated_completion, company_id)
+VALUES ('Nombre del Producto', 'Instrucción del Producto', 'Descripción del Producto', 100, true, true, '2024-02-22', 1);

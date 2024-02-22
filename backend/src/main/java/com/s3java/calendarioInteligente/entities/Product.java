@@ -3,6 +3,7 @@ package com.s3java.calendarioInteligente.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class Product {
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.LAZY)
     @JsonBackReference
+    @Null
     private ProductOrder productOrder;
 
     public Product() {
@@ -142,5 +144,22 @@ public class Product {
 
     public void setProductOrder(ProductOrder productOrder) {
         this.productOrder = productOrder;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", instruction='" + instruction + '\'' +
+                ", description='" + description + '\'' +
+                ", totalProduction=" + totalProduction +
+                ", state=" + state +
+                ", isActive=" + isActive +
+                ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
+                ", processes=" + processes +
+                ", company=" + company +
+               // ", productOrder=" + productOrder +
+                '}';
     }
 }

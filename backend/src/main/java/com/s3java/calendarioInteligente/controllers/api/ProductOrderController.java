@@ -2,6 +2,7 @@ package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
+import com.s3java.calendarioInteligente.services.impl.ProductOrderServiceImpl;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,8 @@ public class ProductOrderController {
 
 
     private final ProductOrderService productOrderService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductOrderController.class);
 
 
     ProductOrderController(ProductOrderService productOrderService){
@@ -125,6 +130,7 @@ public class ProductOrderController {
             ProductOrderResponse productOrder = productOrderService.createProductOrder(productOrderDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(productOrder);
         } catch (Exception e) {
+            this.logger.error(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }

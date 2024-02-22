@@ -1,11 +1,5 @@
 package com.s3java.calendarioInteligente.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.s3java.calendarioInteligente.entities.Client;
-import com.s3java.calendarioInteligente.entities.Product;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -22,9 +16,9 @@ public class ProductOrderRequest {
 
     private LocalDate finishEstimatedDate;
 
-    private Product product;
+    private Long productId;
 
-    private ClientRequest client;
+    private Long clientId;
 
     public String getName() {
         return name;
@@ -66,20 +60,21 @@ public class ProductOrderRequest {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 
-    public Product getProduct() {
-        return product;
+
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public ClientRequest getClient() {
-        return client;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setClient(ClientRequest client) {
-        this.client = client;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     @Override
@@ -90,8 +85,8 @@ public class ProductOrderRequest {
                 ", photoLink='" + photoLink + '\'' +
                 ", initialDate=" + initialDate +
                 ", finishEstimatedDate=" + finishEstimatedDate +
-                ", product=" + product +
-                ", client=" + client +
+                ", productId=" + productId +
+                ", clientId=" + clientId +
                 '}';
     }
 }

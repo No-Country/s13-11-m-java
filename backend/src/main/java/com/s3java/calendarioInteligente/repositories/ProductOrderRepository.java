@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM product_order po WHERE po.company_id = :companyId")
+    @Query(nativeQuery = true, value = "SELECT * FROM product_order po WHERE po.company_id = :companyId AND po.is_active = true")
     List<ProductOrder> findAllProducts(@Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
@@ -21,15 +21,16 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
                                                         @Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM product_order po WHERE po.date = :date AND po.company_id = :companyId")
+            value = "SELECT * FROM product_order po WHERE po.date = :date AND po.company_id = :companyId AND po.is_active = true")
     List<ProductOrder> findProductOrdersByDate(@Param("date") LocalDate date,
                                                        @Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM product_order po WHERE po.client_id = :clientId AND po.company_id = :companyId")
+            value = "SELECT * FROM product_order po WHERE po.client_id = :clientId AND po.company_id = :companyId AND po.is_active = true")
     List<ProductOrder> findProductOrdersByClientId(@Param("clientId") Long clientId,
                                                            @Param("companyId") Long companyId);
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM product_order WHERE id = :productOrderId")
     void deleteProductOrder(@Param("productOrderId") Long productOrderId);
+
 }
