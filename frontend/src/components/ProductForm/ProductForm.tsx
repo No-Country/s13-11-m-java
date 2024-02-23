@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
+import ProcessModal from "./ProcessModal";
+import ProcessScroll from "./ProcessScroll";
 
 interface ProductFormProps {
   onSubmit?: (values: ProductFormInputs) => void;
@@ -15,15 +17,50 @@ interface ProductFormProps {
 const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
   const form = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
-    // name, createdDate, endDate, estimatedTime, subProcess, image, note
+    // _id, name, createdDate, estimatedTime, progressPercent, process, image, note
     defaultValues: {
-      name: "",
-      createdDate: "",
-      endDate: "",
-      estimatedTime: "",
-      subProcess: "",
-      image: "",
-      note: "",
+      process: [
+        {
+          name: "prueba form proceso",
+          timeframe: 2,
+          subProcess: [
+            { name: "subproceso", timeframe: 1 },
+            { name: "subproceso 2", timeframe: 3 },
+          ],
+        },
+        {
+          name: "prueba form proceso 2",
+          timeframe: 3,
+          subProcess: [
+            { name: "subproceso 3", timeframe: 1 },
+            { name: "subproceso 4", timeframe: 3 },
+          ],
+        },
+        {
+          name: "prueba form proceso 2",
+          timeframe: 3,
+          subProcess: [
+            { name: "subproceso 3", timeframe: 1 },
+            { name: "subproceso 4", timeframe: 3 },
+          ],
+        },
+        {
+          name: "prueba form proceso 2",
+          timeframe: 3,
+          subProcess: [
+            { name: "subproceso 3", timeframe: 1 },
+            { name: "subproceso 4", timeframe: 3 },
+          ],
+        },
+        {
+          name: "prueba form proceso 2",
+          timeframe: 3,
+          subProcess: [
+            { name: "subproceso 3", timeframe: 1 },
+            { name: "subproceso 4", timeframe: 3 },
+          ],
+        },
+      ],
     },
   });
 
@@ -31,28 +68,30 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
     onSubmit?.(values);
   }
 
+  const labelStyle = "text-[#606060]";
+  const boxStyle =
+    "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl">
-        <Button type="button" variant={"ghost"} className="mx-auto h-24 w-24  rounded-full bg-gray-200">
-          <FaCamera className="text-2xl" />
-        </Button>
-        <Button type="button" variant={"ghost"} className="mx-auto max-w-24">
-          Subir una foto
-        </Button>
-        <div className="w-full grid-flow-col grid-rows-3 space-x-6 space-y-8 md:grid">
+        <div className="max-auto flex flex-col items-center justify-center">
+          <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
+            <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
+              <FaCamera className="relative left-9 top-9 text-2xl" />
+            </div>
+            <p>Subir una foto</p>
+          </Button>
+        </div>
+        <div className="w-full grid-flow-col grid-rows-4 gap-x-12 space-y-8 md:grid">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="pl-4 pt-8">
-                <FormLabel>Nombre del producto</FormLabel>
+              <FormItem className="pt-8">
+                <FormLabel className={labelStyle}>Nombre del producto</FormLabel>
                 <FormControl>
-                  <Input
-                    className="rounded-none border-0 border-b-2 pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                    placeholder="Ingresa un nombre para el producto"
-                    {...field}
-                  />
+                  <Input className={boxStyle} placeholder="Ingresa un nombre para el producto" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,13 +102,9 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
             name="createdDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Fecha de creación</FormLabel>
+                <FormLabel className={labelStyle}>Fecha de creación</FormLabel>
                 <FormControl>
-                  <Input
-                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                    placeholder="Fecha de creacion"
-                    {...field}
-                  />
+                  <Input className={boxStyle} placeholder="Fecha de creacion" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -77,16 +112,25 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
           />
           <FormField
             control={form.control}
-            name="endDate"
+            name="_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Fecha de creación</FormLabel>
+                <FormLabel className={labelStyle}>ID interno</FormLabel>
                 <FormControl>
-                  <Input
-                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                    placeholder="Fecha de finalizacion"
-                    {...field}
-                  />
+                  <Input className={boxStyle} placeholder="Fecha de finalizacion" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="progressPercent"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className={labelStyle}>Índice de progreso</FormLabel>
+                <FormControl>
+                  <Input className={boxStyle} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -97,29 +141,43 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
             name="estimatedTime"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cantidad días/horas estimadas de producción</FormLabel>
+                <FormLabel className={labelStyle}>Cantidad días/horas estimadas de producción</FormLabel>
                 <FormControl>
-                  <Input
-                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                    placeholder="Ingresa un tiempo estimado"
-                    {...field}
-                  />
+                  <Input className={boxStyle} placeholder="Ingresa un tiempo estimado" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="border border-[#] bg-[#F5F6FA] text-[#A6A6A6]">+ Agregar subproceso</Button>
+          <FormField
+            control={form.control}
+            name="process"
+            render={({ field }) => (
+              <FormItem className="row-span-3">
+                <FormLabel className={labelStyle}>Procesos</FormLabel>
+                <FormControl>
+                  <div>
+                    <div className="mb-2 flex">
+                      <Input className={boxStyle} placeholder="Ingresa texto" />
+                      <ProcessModal />
+                    </div>
+                    {field.value.length > 0 && <ProcessScroll procesos={field.value} />}
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <FormField
           control={form.control}
           name="note"
           render={({ field }) => (
             <FormItem className="px-6 py-8">
-              <FormLabel>Notas</FormLabel>
+              <FormLabel className={labelStyle}>Notas</FormLabel>
               <FormControl>
                 <Textarea
-                  className="resize-none rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                  className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
                   placeholder="Agregar un comentario"
                   {...field}
                 />
