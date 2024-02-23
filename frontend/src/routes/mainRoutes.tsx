@@ -3,15 +3,20 @@ import { createBrowserRouter } from "react-router-dom";
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 
+import UserLayout from "@/layouts/UserLayout";
+import Dashboard from "@/pages/Dashboard/Dashboard";
 import Login from "@/pages/Login/Login";
 import NotFoundPage from "@/pages/NotFoundPage";
 import OnBoarding from "@/pages/OnBoarding/OnBoarding";
+import ProductsPage from "@/pages/Products/ProductsPage";
 import ConfirmEmail from "@/pages/Register/ConfirmEmail";
 import ErrorRegister from "@/pages/Register/ErrorRegister";
 import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
-import ProductsPage from "@/pages/Products/ProductsPage";
-import AddProduct from "@/pages/Products/AddProduct";
+import Orders from "@/pages/Orders/Orders";
+import Calendar from "@/pages/Calendar/Calendar";
+import Employees from "@/pages/Employees/Employees";
+import Configuration from "@/pages/Configuration/Configuration";
 
 export const router = createBrowserRouter([
   {
@@ -22,13 +27,35 @@ export const router = createBrowserRouter([
         path: "/",
         element: <OnBoarding />,
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <UserLayout />,
+    children: [
       {
         path: "/products",
         element: <ProductsPage />,
       },
       {
-        path: "/addproduct",
-        element: <AddProduct />,
+        path: "/calendar",
+        element: <Calendar />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/employees",
+        element: <Employees />,
+      },
+      {
+        path: "/configuration",
+        element: <Configuration />,
       },
     ],
   },
