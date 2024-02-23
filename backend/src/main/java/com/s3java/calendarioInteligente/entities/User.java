@@ -18,7 +18,7 @@ public class User {
     private Role role;
 
     @Embedded
-    private CommonAttribute commonAttribute = new CommonAttribute();
+    private CommonAttribute commonAttribute ;//= new CommonAttribute()
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")

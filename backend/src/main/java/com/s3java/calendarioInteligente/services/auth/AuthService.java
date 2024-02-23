@@ -6,5 +6,5 @@ import com.s3java.calendarioInteligente.dto.UserDto;
 public interface AuthService {
     UserDto createUser(SignupRequest signUpRequest);
 
-
+    Boolean hasUserWithEmail(String email);
 }
