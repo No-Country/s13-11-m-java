@@ -1,5 +1,4 @@
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
-import { Product } from "./data";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -13,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
+import { Product } from "@/app/services/api/types";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
@@ -37,23 +37,18 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
     sortingFn: (rowA, rowB) => {
-      const { progress: progressA, total: totalA } = rowA.original;
-      const { progress: progressB, total: totalB } = rowB.original;
+      const { active: activeA } = rowA.original;
+      const { active: activeB } = rowB.original;
 
-      const progressPercentageA = (progressA / totalA) * 100;
-      const progressPercentageB = (progressB / totalB) * 100;
-
-      return progressPercentageA - progressPercentageB;
+      return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const { progress, total } = row.original;
-      const variant = progress <= 0 ? "warning" : progress < total ? "destructive" : "success";
+      const { active } = row.original;
+      const variant = active ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">
-            {progress} / {total}
-          </span>
+          <span className="pl-2">{active ? "Activo" : "Inactivo"}</span>
         </div>
       );
     },
@@ -66,12 +61,12 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "startDate",
     header: (prop) => ColumnSortButton("Fecha Inicio", prop),
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.startDatetime);
-      const dateB = new Date(rowB.original.startDatetime);
+      const dateA = new Date(rowA.original.timeEstimatedCompletion);
+      const dateB = new Date(rowB.original.timeEstimatedCompletion);
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) =>
-      new Date(row.original.startDatetime).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+      new Date(row.original.timeEstimatedCompletion).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
     meta: {
       hidden: true,
     },
@@ -81,7 +76,7 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "startTime",
     header: "Hora",
     cell: ({ row }) =>
-      new Date(row.original.startDatetime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },

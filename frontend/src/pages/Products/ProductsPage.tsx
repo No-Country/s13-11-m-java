@@ -1,4 +1,3 @@
-import { Product, products } from "./data";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import React from "react";
@@ -8,18 +7,12 @@ import { MdAddCircle } from "react-icons/md";
 import SelectColumns from "@/components/ui/select-columns";
 import { Input } from "@/components/ui/input";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import { simulateLoading } from "@/utils/fakeUtils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import useProduct from "@/hooks/useProduct";
-
-async function getData(): Promise<Product[]> {
-  await simulateLoading();
-  return products;
-}
+import { Product } from "@/app/services/api/types";
 
 const ProductsPage = () => {
   const { products } = useProduct();
-  const [data, setData] = React.useState<Product[]>([]);
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -37,14 +30,6 @@ const ProductsPage = () => {
     const value = event.target.value;
     setColumnFilters(value ? [{ id: selectedColumn, value }] : []);
   };
-
-  React.useEffect(() => {
-    getData().then(setData);
-  }, []);
-
-  React.useEffect(() => {
-    console.log("products", products);
-  }, [products]);
 
   return (
     <div className="container pt-10">
@@ -72,7 +57,12 @@ const ProductsPage = () => {
       </div>
       <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
         <div className="flex">
-          <DataTable columns={columns} data={data} columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
+          <DataTable
+            columns={columns}
+            data={products}
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
+          />
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>

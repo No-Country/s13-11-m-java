@@ -62,7 +62,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/all.json");
-        return { data: json.default as unknown as AllProductsResponse };
+        return { data: json.default as AllProductsResponse };
       },
     }),
   }),

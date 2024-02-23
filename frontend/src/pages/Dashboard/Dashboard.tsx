@@ -22,7 +22,7 @@ import { Progress } from "@/components/ui/progress";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "../Products/columns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { products } from "../Products/data";
+import useProduct from "@/hooks/useProduct";
 
 ChartJS.register(
   ArcElement,
@@ -37,6 +37,9 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const { products } = useProduct();
+  console.log(products);
+
   return (
     <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-8 py-8 sm:grid-cols-2 md:grid-cols-3 md:pl-20 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
