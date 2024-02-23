@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,20 +29,20 @@ public class Product {
     @NotBlank
     private String instruction;
 
+    @Column(name = "CREATE_DATE")
+    private String createDate;
+
     @NotBlank
     private String description;
 
-    @NotNull
-    @Column(name = "total_production")
-    private Integer totalProduction;
 
     //  TODO: Ver si cambiar a ENUM (activo, en pausa, finalizado, cancelado)
 
-    @NotNull
+
     @Column(name = "state")
     private Boolean state;
 
-    @NotNull
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -60,13 +62,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String idUnico, String name, String instruction, String description, Integer totalProduction, Boolean state, Boolean isActive, String timeEstimatedCompletion) {
+
+    public Product(Long id, String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
         this.id = id;
         this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
         this.description = description;
-        this.totalProduction = totalProduction;
         this.state = state;
         this.isActive = isActive;
         this.timeEstimatedCompletion = timeEstimatedCompletion;
@@ -128,12 +130,14 @@ public class Product {
         this.description = description;
     }
 
-    public Integer getTotalProduction() {
-        return totalProduction;
+
+
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setTotalProduction(Integer totalProduction) {
-        this.totalProduction = totalProduction;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public Boolean getState() {
@@ -158,5 +162,10 @@ public class Product {
 
     public void setTimeEstimatedCompletion(String timeEstimatedCompletion) {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        this.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 }

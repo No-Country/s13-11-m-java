@@ -35,9 +35,8 @@ public class ProductController {
     @GetMapping("product-name/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name){
         Optional<Product> productOptional = productService.byName(name);
-        Optional<Product> productFilter = getProductFilter(name, productOptional);
         if(productOptional.isPresent()){
-            return ResponseEntity.ok(productFilter.get());
+            return ResponseEntity.ok(productOptional.get());
         }
         return ResponseEntity.notFound().build();
     }
@@ -62,6 +61,8 @@ public class ProductController {
                     .body(Collections
                             .singletonMap("mensaje", "Ya existe un producto con ese id unico"));
         }
+        product.setState(true);
+        product.setActive(true);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
 
@@ -84,12 +85,12 @@ public class ProductController {
             productDb.setIdUnico(product.getIdUnico());
             productDb.setName(product.getName());
             productDb.setActive(product.getActive());
-            productDb.setTotalProduction(product.getTotalProduction());
             productDb.setDescription(product.getDescription());
             productDb.setCompany(product.getCompany());
             productDb.setInstruction(product.getInstruction());
             productDb.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
             productDb.setState(product.getState());
+            productDb.setTimeEstimatedCompletion(product.getCreateDate());
             return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productDb));
         }
         return ResponseEntity.notFound().build();
@@ -107,17 +108,10 @@ public class ProductController {
 
     private static ResponseEntity<Map<String, String>> getResponseEntity(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
-        result.getFieldErrors().forEach(error -> {
-            errors.put(error.getField(), "El campo " + error.getField() + " " + error.getDefaultMessage());
-        });
+        result.getFieldErrors().forEach(error ->
+                errors.put(error.getField(), "El campo " + error.getField() + " " + error.getDefaultMessage())
+        );
         return ResponseEntity.badRequest().body(errors);
     }
 
-    private static Optional<Product> getProductFilter(String name, Optional<Product> productOptional) {
-        Optional<Product> productFilter = productOptional.filter
-                (product -> product.getName()
-                        .replaceAll("\\s", "")
-                        .equalsIgnoreCase(name.replaceAll("\\s", "")));
-        return productFilter;
-    }
 }
