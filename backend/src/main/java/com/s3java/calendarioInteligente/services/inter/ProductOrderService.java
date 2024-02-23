@@ -13,8 +13,6 @@ public interface ProductOrderService {
 
     ProductOrderResponse findProductOrderById(Long productOrderId) throws Exception;
 
-    List<ProductOrderResponse> findProductOrdersByDate(LocalDate date) throws Exception;
-
     List<ProductOrderResponse> findProductOrdersByClientId(Long clientId) throws Exception;
 
     ProductOrderResponse createProductOrder(ProductOrderRequest productOrder) throws Exception;
@@ -24,4 +22,9 @@ public interface ProductOrderService {
     void deleteProductOrder(Long productOrderId) throws Exception;
 
 
+    List<ProductOrderResponse> findProductOrdersByFinishDate(LocalDate date);
+
+    List<ProductOrderResponse> findProductOrdersByEntry(LocalDate entryDate);
+
+    List<ProductOrderResponse> findProductOrdersByInitialDate(LocalDate date);
 }

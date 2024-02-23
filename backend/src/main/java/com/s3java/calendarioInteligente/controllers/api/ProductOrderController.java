@@ -2,7 +2,6 @@ package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
-import com.s3java.calendarioInteligente.services.impl.ProductOrderServiceImpl;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -72,7 +71,7 @@ public class ProductOrderController {
         }
     }
 
-    @GetMapping("all/{date}")
+    @GetMapping("all/{date}/finish_date")
     @Operation(summary = "Get all orders by finish date",
             description = "Retrieve a list of product orders for a finish date.")
     @ApiResponses({
@@ -80,20 +79,62 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByDate(
+    public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByFinishDate(
             @Parameter(description = "date")
             @PathVariable LocalDate date
             ){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
-                    .findProductOrdersByDate(date);
+                    .findProductOrdersByFinishDate(date);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
             return ResponseEntity.noContent().build();
         }
     }
 
-    @GetMapping("/orderId")
+    @GetMapping("all/{date}/entry_date")
+    @Operation(summary = "Get all orders by entry date",
+            description = "Retrieve a list of product orders for a entry date.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
+            @ApiResponse(responseCode = "204", description = "No content available"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByEntryDate(
+            @Parameter(description = "date")
+            @PathVariable LocalDate date
+    ){
+        try {
+            List<ProductOrderResponse> productOrders = productOrderService
+                    .findProductOrdersByEntry(date);
+            return ResponseEntity.ok().body(productOrders);
+        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping("all/{date}/initial_date")
+    @Operation(summary = "Get all orders by initial date",
+            description = "Retrieve a list of product orders for a initial date.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
+            @ApiResponse(responseCode = "204", description = "No content available"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByInitialDate(
+            @Parameter(description = "date")
+            @PathVariable LocalDate date
+    ){
+        try {
+            List<ProductOrderResponse> productOrders = productOrderService
+                    .findProductOrdersByInitialDate(date);
+            return ResponseEntity.ok().body(productOrders);
+        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping("/{orderId}")
     @Operation(summary = "Get one order by order ID", description = "Retrieve a ProductOrder for a given id.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
@@ -102,11 +143,11 @@ public class ProductOrderController {
     })
     public ResponseEntity<ProductOrderResponse> getOrder(
             @Parameter(description = "ID of the order")
-            @PathVariable Long orderID
+            @PathVariable Long orderId
 
     ){
         try {
-            ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderID);
+            ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderId);
             return ResponseEntity.ok().body(productOrder);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -152,7 +193,7 @@ public class ProductOrderController {
                     .updateProductOrder(orderId, productOrderDTO);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
     }
 

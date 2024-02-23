@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "companies")
 public class Company {
 
     @Id
@@ -17,30 +17,25 @@ public class Company {
     @Embedded
     private CommonAttribute commonAttribute;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
-    @JsonManagedReference
-    private List<Product> products = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @JsonManagedReference
     private List<User> employee = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @Column(name = "product_orders_id")
     @JsonManagedReference
+
     private List<ProductOrder> productOrders = new ArrayList<>();
 
 
-    public List<Product> getProducts() {
-        return products;
-    }
+
 
     public List<User> getEmployee() {
         return employee;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+
 
     public void setEmployee(List<User> employee) {
         this.employee = employee;
@@ -76,7 +71,6 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", commonAttribute=" + commonAttribute +
-                ", products=" + products +
                 ", employee=" + employee +
                 ", productOrders=" + productOrders +
                 '}';

@@ -12,7 +12,6 @@ public class ProductOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_order_id")
     private Long id;
 
     @Column(name = "name")
@@ -50,7 +49,7 @@ public class ProductOrder {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     @JsonBackReference
     private Company company;

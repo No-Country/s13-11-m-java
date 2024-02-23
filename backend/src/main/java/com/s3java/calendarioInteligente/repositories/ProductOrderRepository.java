@@ -12,25 +12,35 @@ import java.util.Optional;
 
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM product_order po WHERE po.company_id = :companyId AND po.is_active = true")
+    @Query(nativeQuery = true, value = "SELECT * FROM product_orders po WHERE po.company_id = :companyId AND po.is_active = true")
     List<ProductOrder> findAllProducts(@Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM product_order po WHERE po.id = :productOrderId AND po.company_id = :companyId")
+            value = "SELECT * FROM product_orders po WHERE po.id = :productOrderId AND po.company_id = :companyId")
     Optional<ProductOrder> findProductOrderById(@Param("productOrderId") Long productOrderId,
                                                         @Param("companyId") Long companyId);
 
-    @Query(nativeQuery = true,
-            value = "SELECT * FROM product_order po WHERE po.date = :date AND po.company_id = :companyId AND po.is_active = true")
-    List<ProductOrder> findProductOrdersByDate(@Param("date") LocalDate date,
-                                                       @Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM product_order po WHERE po.client_id = :clientId AND po.company_id = :companyId AND po.is_active = true")
+            value = "SELECT * FROM product_orders po WHERE po.client_id = :clientId AND po.company_id = :companyId AND po.is_active = true")
     List<ProductOrder> findProductOrdersByClientId(@Param("clientId") Long clientId,
                                                            @Param("companyId") Long companyId);
     @Modifying
-    @Query(nativeQuery = true, value = "DELETE FROM product_order WHERE id = :productOrderId")
+    @Query(nativeQuery = true, value = "DELETE FROM product_orders WHERE id = :productOrderId")
     void deleteProductOrder(@Param("productOrderId") Long productOrderId);
 
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM product_orders po WHERE po.finish_est_date = :date AND po.company_id = :companyId AND po.is_active = true")
+    List<ProductOrder> findProductOrdersByFinishDate(@Param("date") LocalDate date,
+                                               @Param("companyId") Long companyId);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM product_orders po WHERE po.entry_date = :date AND po.company_id = :companyId AND po.is_active = true")
+    List<ProductOrder> findProductOrdersByEntryDate(@Param("date") LocalDate date,
+                                               @Param("companyId") Long companyId);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM product_orders po WHERE po.initial_est_date = :date AND po.company_id = :companyId AND po.is_active = true")
+    List<ProductOrder> findProductOrdersByInitialDate(@Param("date") LocalDate date,
+                                               @Param("companyId") Long companyId);
 }
