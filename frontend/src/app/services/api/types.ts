@@ -1,3 +1,25 @@
+export type AllProductsResponse = Product[];
+
+export type GetProductByNameRequest = string;
+export type GetProductByNameResponse = Product;
+
+export type GetProductByIdRequest = number;
+export type GetProductByIdResponse = Product;
+
+export type GetProductByUnicoIdRequest = string;
+export type GetProductByUnicoIdResponse = Product;
+
+export type UpdateProductRequest = Product;
+export type UpdateProductResponse = Product;
+
+export type CreateProductRequest = Product;
+export type CreateProductResponse = Product;
+
+export type DeleteProductRequest = number;
+export type DeleteProductResponse = number;
+
+export type GetOrdersResponse = Order[];
+
 export interface User {
   id: string;
   email: string;
@@ -23,26 +45,6 @@ export interface RegisterRequest {
   address: string;
   phone: string;
 }
-
-export type AllProductsResponse = Product[];
-
-export type GetProductByNameRequest = string;
-export type GetProductByNameResponse = Product;
-
-export type GetProductByIdRequest = number;
-export type GetProductByIdResponse = Product;
-
-export type GetProductByUnicoIdRequest = string;
-export type GetProductByUnicoIdResponse = Product;
-
-export type UpdateProductRequest = Product;
-export type UpdateProductResponse = Product;
-
-export type CreateProductRequest = Product;
-export type CreateProductResponse = Product;
-
-export type DeleteProductRequest = number;
-export type DeleteProductResponse = number;
 
 export interface Product {
   id: number;
@@ -102,4 +104,16 @@ export interface Employee {
   role: string;
   commonAttribute: CommonAttribute;
   company: string;
+}
+
+export interface Order {
+  id: number;
+  name: string;
+  entryDate: string;
+  errorTime: number;
+  photoLink: string;
+  initialDate: string;
+  finishEstimatedDate: string;
+  productId: number;
+  clientId: number;
 }

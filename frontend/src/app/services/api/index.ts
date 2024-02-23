@@ -17,6 +17,7 @@ import {
   CreateProductResponse,
   DeleteProductRequest,
   DeleteProductResponse,
+  GetOrdersResponse,
 } from "./types";
 import { RootState } from "@/app/store";
 
@@ -159,6 +160,16 @@ export const api = createApi({
         return { data: id };
       },
     }),
+
+    // endpoints de ordenes
+    getOrders: builder.query<GetOrdersResponse, void>({
+      // query: () => "orders/all",
+      queryFn: async () => {
+        await simulateLoading();
+        const json = await import("@/mocks/orders/all.json");
+        return { data: json.default as GetOrdersResponse };
+      },
+    }),
   }),
 });
 
@@ -173,4 +184,5 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useGetOrdersQuery,
 } = api;
