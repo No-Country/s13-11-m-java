@@ -1,0 +1,60 @@
+{
+  "id": 1,
+  "idUnico": "1",
+  "name": "Producto 1",
+  "instruction": "Instruccion 1",
+  "description": "Descripcion 1",
+  "totalProduction": 100,
+  "state": true,
+  "timeEstimatedCompletion": "2021-05-01T00:00:00.000Z",
+  "processes": [
+    {
+      "id": 1,
+      "product": "Producto 1",
+      "subProcesses": [
+        {
+          "id": 1,
+          "process": "Proceso 1",
+          "processAttributes": {
+            "name": "SubProceso 1",
+            "timeReal": 10,
+            "timeAverage": 10,
+            "timeMargin": 10,
+            "comment": "Comentario 1",
+            "state": true,
+            "active": true,
+            "counter": 0
+          }
+        }
+      ],
+      "processAttributes": {
+        "name": "Proceso 1",
+        "timeReal": 10,
+        "timeAverage": 10,
+        "timeMargin": 10,
+        "comment": "Comentario 1",
+        "state": true,
+        "active": true,
+        "counter": 0
+      }
+    }
+  ],
+  "company": {
+    "id": 1,
+    "commonAttribute": {
+      "email": "usuario@test.com"
+    },
+    "products": ["Producto 1"],
+    "employee": [
+      {
+        "id": 1,
+        "role": "Administrador",
+        "commonAttribute": {
+          "email": "admin@test.com"
+        },
+        "company": "Empresa 1"
+      }
+    ]
+  },
+  "active": true
+}
