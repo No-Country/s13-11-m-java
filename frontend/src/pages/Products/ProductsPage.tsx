@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { simulateLoading } from "@/utils/fakeUtils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import useProduct from "@/hooks/useProduct";
 
 async function getData(): Promise<Product[]> {
   await simulateLoading();
@@ -17,6 +18,7 @@ async function getData(): Promise<Product[]> {
 }
 
 const ProductsPage = () => {
+  const { products } = useProduct();
   const [data, setData] = React.useState<Product[]>([]);
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -39,6 +41,10 @@ const ProductsPage = () => {
   React.useEffect(() => {
     getData().then(setData);
   }, []);
+
+  React.useEffect(() => {
+    console.log("products", products);
+  }, [products]);
 
   return (
     <div className="container pt-10">

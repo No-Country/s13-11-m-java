@@ -1,7 +1,7 @@
 import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { LoginRequest, UserResponse } from "./types";
+import { LoginRequest, UserResponse, AllProductsResponse } from "./types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -56,7 +56,16 @@ export const api = createApi({
         }
       },
     }),
+    // endpoints de productos
+    getAllProducts: builder.query<AllProductsResponse, void>({
+      // query: () => "products/all",
+      queryFn: async () => {
+        await simulateLoading();
+        const json = await import("@/mocks/products/all.json");
+        return { data: json.default as unknown as AllProductsResponse };
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation, useForgotPasswordMutation, useRegisterMutation } = api;
+export const { useLoginMutation, useForgotPasswordMutation, useRegisterMutation, useGetAllProductsQuery } = api;
