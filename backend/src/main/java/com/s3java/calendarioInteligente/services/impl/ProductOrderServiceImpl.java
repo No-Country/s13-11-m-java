@@ -157,11 +157,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public List<ProductOrderResponse> findProductOrdersByFinishDate(String date) {
-        logger.info(" ---------------------- findProductOrdersByFinishDate ----------------- ");
         logger.debug(date);
         LocalDateTime dateConverted = DateUtils.converFromString(date);
-        logger.info(" ---------------------- findProductOrdersByFinishDate converted ----------------- ");
-        logger.debug(dateConverted.toString());
         List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByFinishDate(dateConverted, companyId);
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
     }
