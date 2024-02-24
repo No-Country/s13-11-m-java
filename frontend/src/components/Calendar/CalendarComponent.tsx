@@ -33,21 +33,22 @@ const events: MyEvent[] = [
 
 const CalendarComponent: React.FC = () => {
   return (
-    <div className="capitalize">
+    <div className="pb-14 capitalize">
       <Calendar
         localizer={localizer}
+        views={["month", "week", "day"]}
         events={events}
         defaultDate={moment().toDate()}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 800 }}
         messages={{
           next: "Siguiente",
           previous: "Anterior",
           today: "Hoy",
           month: "Mes",
-          week: "Semana",
-          day: "Día",
+          week: "Semanal",
+          day: "Diario",
         }}
       />
     </div>
