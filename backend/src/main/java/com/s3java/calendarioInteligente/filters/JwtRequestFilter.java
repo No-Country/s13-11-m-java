@@ -33,24 +33,39 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authorization");
-        String token = null;
-        String username = null;
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
+        try {
+        String token = getJwtFromHeader(request);
+        String username =  jwtUtil.extractUsername(token);
 
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
-            token = authHeader.substring(7);
-            username = jwtUtil.extractUsername(token);
-        }
-        if (username !=null && SecurityContextHolder.getContext().getAuthentication() == null){
+
+
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if(jwtUtil.validateToken(token, userDetails)) {
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null,
+                        userDetails.getAuthorities());
 
-            if (jwtUtil.validateToken(token, userDetails)){
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
-        filterChain.doFilter(request,response);
+
+    }catch (Exception e) {
+        logger.error("[] Error : " + e.getMessage());
     }
+		filterChain.doFilter(request, response);
+}
+
+private String getJwtFromHeader(@NonNull HttpServletRequest request) {
+    String header= request.getHeader("Authorization");
+    if(header != null && header.startsWith("Bearer ")) {
+        return header.substring(7);
+    }
+    return null;
+}
+
 }
