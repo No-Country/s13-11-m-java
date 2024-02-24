@@ -1,6 +1,8 @@
 package com.s3java.calendarioInteligente.services.impl;
 
+import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
+import com.s3java.calendarioInteligente.entities.SubProcess;
 import com.s3java.calendarioInteligente.repositories.ProcessRepository;
 import com.s3java.calendarioInteligente.services.inter.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -60,6 +63,22 @@ public class ProcessServiceImpl  implements ProcessService {
             processToUpdate.setProcessAttributes(updatedProcess.getProcessAttributes());
             return new ResponseEntity<>(processRepository.save(processToUpdate), HttpStatus.OK);
         }
-        return null;
+        //TODO: Añadir mejor manejo de excepciones
+        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<?> addSubProcessToProcess(SubProcess subProcess, Long processID) {
+        Optional<ProductProcess> foundProcess =  processRepository.findById(processID);
+        if (foundProcess.isPresent()) {
+            ProductProcess process = foundProcess.get();
+            List<SubProcess> subProcessList = process.getSubProcesses();
+            subProcessList.add(subProcess);
+            process.setSubProcesses(subProcessList);
+            subProcess.setProductProcess(process);
+            return new ResponseEntity<>(processRepository.save(process), HttpStatus.OK);
+        }
+        //TODO: Añadir mejor manejo de excepciones
+        return new ResponseEntity<>("Process Not Found", HttpStatus.NOT_FOUND);
     }
 }

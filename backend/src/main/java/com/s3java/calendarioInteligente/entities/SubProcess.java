@@ -16,7 +16,10 @@ public class SubProcess {
     private ProductProcess productProcess;
 
     @Embedded
-    private ProcessAttributes processAttributes;
+    private ProcessAttributes subProcessAttributes;
+
+    public SubProcess() {
+    }
 
     public Long getId() {
         return id;
@@ -26,19 +29,19 @@ public class SubProcess {
         this.id = id;
     }
 
-    public ProductProcess getProcess() {
+    public ProductProcess getProductProcess() {
         return productProcess;
     }
 
-    public void setProcess(ProductProcess productProcess) {
+    public void setProductProcess(ProductProcess productProcess) {
         this.productProcess = productProcess;
     }
 
-    public ProcessAttributes getProcessAttributes() {
-        return processAttributes;
+    public ProcessAttributes getSubProcessAttributes() {
+        return subProcessAttributes;
     }
 
-    public void setProcessAttributes(ProcessAttributes processAttributes) {
-        this.processAttributes = processAttributes;
+    public void setSubProcessAttributes(ProcessAttributes subProcessAttributes) {
+        this.subProcessAttributes = subProcessAttributes;
     }
 }

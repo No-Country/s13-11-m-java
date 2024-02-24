@@ -18,11 +18,13 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    //Borrar antes de hacer merge
     @Override
     public ResponseEntity<?> getAllProducts() {
         return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
     }
 
+    //Borrar antes de hacer merge
     @Override
     public ResponseEntity<?> createNewProduct(Product product) {
         return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);

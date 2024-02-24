@@ -20,12 +20,15 @@ public class ProductProcess {
     @JsonBackReference
     private Product product;
 
-    @OneToMany(mappedBy = "productProcess", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "productProcess", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<SubProcess> subProcesses = new ArrayList<>();
 
     @Embedded
     private ProcessAttributes processAttributes;
+
+    public ProductProcess() {
+    }
 
     public Long getId() {
         return id;

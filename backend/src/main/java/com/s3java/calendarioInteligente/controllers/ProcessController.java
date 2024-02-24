@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.controllers;
 
 import com.s3java.calendarioInteligente.entities.ProductProcess;
+import com.s3java.calendarioInteligente.entities.SubProcess;
 import com.s3java.calendarioInteligente.services.impl.ProcessServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,11 @@ public class ProcessController {
         return processService.updateByID(updatedProcess, processID);
     }
 
-    //TODO:
+    //TODO: Agregar subproceso a Proceso
+
+    @PostMapping("/subprocess/{processID}")
+        public ResponseEntity<?> addSubProcessToProcess(@Valid @RequestBody SubProcess subProcess, @PathVariable Long processID){
+        return processService.addSubProcessToProcess(subProcess, processID);
+    }
+
 }

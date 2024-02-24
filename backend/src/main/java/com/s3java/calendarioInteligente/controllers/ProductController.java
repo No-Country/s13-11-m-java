@@ -15,12 +15,12 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @GetMapping("/")
+    @GetMapping("/")//Borrar antes de hacer merge
     public ResponseEntity<?> getAllProducts(){
         return productService.getAllProducts();
     }
 
-    @PostMapping("/")
+    @PostMapping("/")//Borrar antes de hacer merge
     public ResponseEntity<?> createNewProduct(@Valid @RequestBody Product product){
         return productService.createNewProduct(product);
     }
