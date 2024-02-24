@@ -57,7 +57,7 @@ function Navbar() {
                 ))}
               </div>
             </div>
-            <div className="hidden space-x-4 md:block">
+            <div className="space-x-4">
               {logItems.map((item, index) => (
                 <Button {...item.props} className=" max-lg:px-10" size="rounded-xl" key={index} asChild>
                   <Link to={item.link}>{item.title}</Link>
@@ -66,7 +66,7 @@ function Navbar() {
             </div>
           </>
         ) : (
-          <div className="inline-flex grow justify-end">
+          <div className="flex grow justify-end">
             <Menubar>
               <MenubarMenu>
                 <MenubarTrigger>
@@ -74,17 +74,17 @@ function Navbar() {
                 </MenubarTrigger>
                 <MenubarContent>
                   {navItems.map((item, index) => (
-                    <MenubarItem key={index} inset>
+                    <MenubarItem key={index} asChild className="cursor-pointer">
                       <Link to={item.link}>{item.title}</Link>
                     </MenubarItem>
                   ))}
                   <MenubarSeparator />
                   {logItems.map((item, index) => (
-                    <MenubarItem key={index}>
-                      <Button {...item.props} className="w-full py-2" size="xs" asChild>
+                    <div key={index} className="flex py-1.5">
+                      <Button {...item.props} className="w-full cursor-pointer" size="xs" asChild>
                         <Link to={item.link}>{item.title}</Link>
                       </Button>
-                    </MenubarItem>
+                    </div>
                   ))}
                 </MenubarContent>
               </MenubarMenu>
