@@ -1,5 +1,7 @@
 export type AllProductsResponse = Product[];
 
+export type AllEmployeesResponse = Employee[];
+
 export type GetProductByNameRequest = string;
 export type GetProductByNameResponse = Product;
 

@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
-
 import UserLayout from "@/layouts/UserLayout";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Login from "@/pages/Login/Login";
@@ -15,7 +13,7 @@ import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
 import Orders from "@/pages/Orders/Orders";
 import Calendar from "@/pages/Calendar/Calendar";
-import Employees from "@/pages/Employees/Employees";
+import EmployeesPage from "@/pages/Employees/EmployeesPage";
 import Configuration from "@/pages/Configuration/Configuration";
 
 export const router = createBrowserRouter([
@@ -51,7 +49,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/employees",
-        element: <Employees />,
+        element: <EmployeesPage />,
       },
       {
         path: "/configuration",
