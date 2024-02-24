@@ -9,4 +9,5 @@ public interface ProductService {
 
     ResponseEntity<?> createNewProduct(Product product);//Borrar antes de hacer merge
     ResponseEntity<?> addProcessToProduct(ProductProcess process, Long productID);
+    ResponseEntity<?> deleteProcessFromProduct(Long productID, Long processID);
 }

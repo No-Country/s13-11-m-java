@@ -29,4 +29,9 @@ public class ProductController {
     public ResponseEntity<?> addProcessToProduct(@Valid @RequestBody ProductProcess productProcess, @PathVariable Long productID){
         return productService.addProcessToProduct(productProcess, productID);
     }
+
+    @DeleteMapping("/process/{productID}/{processID}")
+    public ResponseEntity<?> deleteProcess(@PathVariable Long productID, @PathVariable Long processID){
+        return productService.deleteProcessFromProduct(productID, processID);
+    }
 }
