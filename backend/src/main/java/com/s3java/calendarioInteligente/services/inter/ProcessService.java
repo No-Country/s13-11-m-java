@@ -10,5 +10,6 @@ public interface ProcessService {
     ResponseEntity<?> getProcessByID(Long processID);
     ResponseEntity<?> deleteByID(Long processID);
     ResponseEntity<?> updateByID(ProductProcess updatedProcess, Long processIDToUpdate);
-    public ResponseEntity<?> addSubProcessToProcess(SubProcess subProcess, Long processID);
+    ResponseEntity<?> addSubProcessToProcess(SubProcess subProcess, Long processID);
+    ResponseEntity<?> deleteSubProcessFromProcess(Long processID, Long subprocessID);
 }

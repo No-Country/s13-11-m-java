@@ -39,8 +39,13 @@ public class ProcessController {
     //TODO: Agregar subproceso a Proceso
 
     @PostMapping("/subprocess/{processID}")
-        public ResponseEntity<?> addSubProcessToProcess(@Valid @RequestBody SubProcess subProcess, @PathVariable Long processID){
+    public ResponseEntity<?> addSubProcessToProcess(@Valid @RequestBody SubProcess subProcess, @PathVariable Long processID){
         return processService.addSubProcessToProcess(subProcess, processID);
+    }
+
+    @DeleteMapping("/subprocess/{processID}/{subprocessID}")
+    public ResponseEntity<?> deleteSubProcess(@PathVariable Long processID, @PathVariable Long subprocessID){
+        return processService.deleteSubProcessFromProcess(processID, subprocessID);
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -79,6 +80,19 @@ public class ProcessServiceImpl  implements ProcessService {
             return new ResponseEntity<>(processRepository.save(process), HttpStatus.OK);
         }
         //TODO: Añadir mejor manejo de excepciones
+        return new ResponseEntity<>("Process Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteSubProcessFromProcess(Long processID, Long subprocessID) {
+        Optional<ProductProcess> foundProcess =  processRepository.findById(processID);
+        if (foundProcess.isPresent()) {
+            ProductProcess process = foundProcess.get();
+            List<SubProcess> subProcessList = process.getSubProcesses();
+            subProcessList.removeIf(p -> Objects.equals(p.getId(), subprocessID));
+            process.setSubProcesses(subProcessList);
+            return new ResponseEntity<>(processRepository.save(process), HttpStatus.OK);
+        }
         return new ResponseEntity<>("Process Not Found", HttpStatus.NOT_FOUND);
     }
 }
