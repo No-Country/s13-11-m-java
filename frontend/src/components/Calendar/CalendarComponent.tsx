@@ -1,8 +1,10 @@
 import React from "react";
 import { Calendar, Event } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "@/components/Calendar/CalendarComponent.css";
 import moment from "moment";
 import { momentLocalizer } from "react-big-calendar";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "moment/dist/locale/es";
 
 moment.locale("es");
@@ -19,17 +21,26 @@ interface MyEvent extends Event {
 const events: MyEvent[] = [
   {
     id: 1,
-    title: "Meeting",
-    start: new Date(2022, 8, 15, 10, 0, 0),
-    end: new Date(2022, 8, 15, 12, 0, 0),
-  },
-  {
-    id: 2,
-    title: "Lunch",
-    start: new Date(2022, 8, 16, 12, 0, 0),
-    end: new Date(2022, 8, 16, 13, 0, 0),
+    title: "Test",
+    start: new Date(2024, 2, 25, 10, 0, 0),
+    end: new Date(2024, 2, 25, 12, 0, 0),
   },
 ];
+
+const customToolbar = () => {
+  return (
+    <div className="custom-toolbar flex items-center justify-center gap-3">
+      <button>
+        <FaArrowLeft />
+      </button>
+      <h3>Febrero</h3>
+      <h3>2024</h3>
+      <button>
+        <FaArrowRight />
+      </button>
+    </div>
+  );
+};
 
 const CalendarComponent: React.FC = () => {
   return (
@@ -49,6 +60,9 @@ const CalendarComponent: React.FC = () => {
           month: "Mes",
           week: "Semanal",
           day: "Diario",
+        }}
+        components={{
+          toolbar: customToolbar,
         }}
       />
     </div>
