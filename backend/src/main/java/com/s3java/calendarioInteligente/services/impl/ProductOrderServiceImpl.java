@@ -2,6 +2,7 @@ package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
+import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.entities.Company;
 import com.s3java.calendarioInteligente.entities.ProductOrder;
 import com.s3java.calendarioInteligente.exception.ProductOrderNotFoundException;
@@ -26,7 +27,7 @@ import java.util.Optional;
 public class ProductOrderServiceImpl implements ProductOrderService {
 
 
-    private final Long companyId = 1L;
+    private final Long companyId = 1L; // TODO sacar de JWT token
     private final ProductOrderRepository productOrderRepository;
     private final ClientRepository clientRepository;
     private final ProductOrderMapper productOrderMapper;
@@ -88,10 +89,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         ProductOrder productOrder = this.productOrderMapper.productOrderRequestToProductOrder(productOrderRequest);
         productOrder.setEntryDate(this.timeNow);
 
-        logger.info(timeNow.toString());
-        logger.info(productOrderRequest.getInitialDate().toString());
-        logger.info(timeNow.toString());
-
         this.validateDateOrder(productOrder.getInitialDate(), this.timeNow,
                 "The initial date must not be earlier than the entry date.");
         this.validateDateOrder(productOrder.getFinishEstimatedDate(), this.timeNow,
@@ -106,11 +103,14 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         // TODO adaptar cuando esten Product y Client repositorios
         Company company = this.companyRepository.findById(this.companyId)
                 .orElseThrow(() -> new ProductOrderNotFoundException("company was not found"));
+        Client client = this.clientRepository.findById(productOrderRequest.getClient().getId())
+                .orElseThrow(() -> new ProductOrderNotFoundException("client " + productOrderRequest.getClient()
+                        .getCommonAttribute().getName() + "was not found"));
         //Product p = new Product();
        // p.setName("nuevo producto");
         // this.productRepository.save(p);
          //Client c = new Client();
-        //TODO buscar si un cliente creado y un producto ya existen y agregar
+        //TODO buscar si un cliente creado y un si producto ya existen y agregar
          //this.clientRepository.save(c);
 
         /*Product product = this.productRepository.findById(productOrderRequest.getProductId())
@@ -118,11 +118,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         //productOrder.setProduct(p);
         //productOrder.setClient(c); // TODO eliminar datos duros
         productOrder.setCompany(company);
+        productOrder.setClient(client);
         //-------------------------------
-        List lista = this.clientRepository.findAll();
+        //List lista = this.clientRepository.findAll();
         ProductOrder productOrderSaved = this.productOrderRepository.save(productOrder);
-        lista.add(productOrderSaved);
-        company.setProductOrders(lista);
+        //company.setProductOrders(lista);
         return this.productOrderMapper.productOrderToProductOrderResponse(productOrderSaved);
     }
 

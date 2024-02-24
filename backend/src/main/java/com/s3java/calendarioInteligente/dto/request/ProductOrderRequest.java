@@ -1,6 +1,8 @@
 package com.s3java.calendarioInteligente.dto.request;
 
 
+import com.s3java.calendarioInteligente.entities.Client;
+
 import java.time.LocalDateTime;
 
 public class ProductOrderRequest {
@@ -18,7 +20,7 @@ public class ProductOrderRequest {
 
     private Long productId;
 
-    private Long clientId;
+    private Client client;
 
     public String getName() {
         return name;
@@ -60,12 +62,12 @@ public class ProductOrderRequest {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Long getProductId() {
@@ -85,7 +87,6 @@ public class ProductOrderRequest {
                 ", initialDate=" + initialDate +
                 ", finishEstimatedDate=" + finishEstimatedDate +
                 ", productId=" + productId +
-                ", clientId=" + clientId +
                 '}';
     }
 }
