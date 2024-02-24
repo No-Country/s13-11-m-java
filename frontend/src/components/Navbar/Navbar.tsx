@@ -7,19 +7,42 @@ import useAuth from "@/hooks/useAuth";
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
 import { logItems, navItems } from "./items";
+// import useMediaQuery from "@/hooks/useMediaQuery";
+
+// import {
+//   NavigationMenu,
+//   NavigationMenuContent,
+//   NavigationMenuItem,
+//   NavigationMenuList,
+//   NavigationMenuTrigger,
+// } from "@/components/ui/navigation-menu";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
-
+  // const matches = useMediaQuery("(min-width: 768px)");
+  {
+    /* <div>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Avatar />
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>asd</NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div> */
+  }
   return (
-    <header className="sticky inset-x-0 top-0 z-50  bg-background p-4 shadow-sm">
+    <header className="sticky inset-x-0 top-0 z-50 bg-background py-4 shadow-sm">
       <div className="container flex items-center">
         <Link to="/">
           <h1 className="text-3xl">LOGO</h1>
         </Link>
         <div className="flex grow justify-end md:justify-center">
-          {isLogin && (
-            <div className="space-x-4">
+          {!isLogin && (
+            <div>
               {navItems.map((item, index) => (
                 <Button variant="link" key={index} className="text-base" asChild>
                   <Link to={item.link}>{item.title}</Link>
@@ -49,7 +72,7 @@ function Navbar() {
         ) : (
           <div className="hidden space-x-4 md:block">
             {logItems.map((item, index) => (
-              <Button {...item.props} className="text-base" size="rounded-xl" key={index} asChild>
+              <Button {...item.props} className="text-base max-lg:px-10" size="rounded-xl" key={index} asChild>
                 <Link to={item.link}>{item.title}</Link>
               </Button>
             ))}
