@@ -2,25 +2,34 @@ package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
+import com.s3java.calendarioInteligente.exception.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/api/v1/product-orders")
+@Validated
 public class ProductOrderController {
 
 
@@ -44,12 +53,14 @@ public class ProductOrderController {
     public ResponseEntity<List<ProductOrderResponse>> getAllOrders()
             {
         try {
-            List<ProductOrderResponse> productOrders = productOrderService.findAllProducts();
+            List<ProductOrderResponse> productOrders = productOrderService.findAllProductOrders();
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
-            return ResponseEntity.noContent().build();
+            return  ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .header("No content", e.getMessage()).build();
         }
     }
+
 
 
     @GetMapping("/orders/clients/{clientId}")
@@ -61,15 +72,17 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<ProductOrderResponse>> getAllOrdersByClient(
-            @PathVariable Long clientId){
+            @PathVariable @Valid Long clientId){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
                     .findProductOrdersByClientId(clientId);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .header("No content", e.getMessage()).build();
         }
     }
+
 
     @GetMapping("all/{date}/finish_date")
     @Operation(summary = "Get all orders by finish date",
@@ -81,14 +94,18 @@ public class ProductOrderController {
     })
     public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByFinishDate(
             @Parameter(description = "date")
-            @PathVariable LocalDate date
+            @PathVariable
+            @Valid
+            String date
             ){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
                     .findProductOrdersByFinishDate(date);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
-            return ResponseEntity.noContent().build();
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ArrayList<>());
         }
     }
 
@@ -102,14 +119,16 @@ public class ProductOrderController {
     })
     public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByEntryDate(
             @Parameter(description = "date")
-            @PathVariable LocalDate date
+            @PathVariable @Valid String date
     ){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
                     .findProductOrdersByEntry(date);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
-            return ResponseEntity.noContent().build();
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                            new ArrayList<>());
         }
     }
 
@@ -123,14 +142,16 @@ public class ProductOrderController {
     })
     public ResponseEntity<List<ProductOrderResponse>> getAllProductOrderByInitialDate(
             @Parameter(description = "date")
-            @PathVariable LocalDate date
+            @PathVariable @Valid String date
     ){
         try {
             List<ProductOrderResponse> productOrders = productOrderService
                     .findProductOrdersByInitialDate(date);
             return ResponseEntity.ok().body(productOrders);
         } catch (Exception e) {
-            return ResponseEntity.noContent().build();
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ArrayList<>());
         }
     }
 
@@ -143,14 +164,15 @@ public class ProductOrderController {
     })
     public ResponseEntity<ProductOrderResponse> getOrder(
             @Parameter(description = "ID of the order")
-            @PathVariable Long orderId
+            @PathVariable @Valid Long orderId
 
     ){
         try {
             ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderId);
             return ResponseEntity.ok().body(productOrder);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .header("Not found", e.getMessage()).build();
         }
     }
 
@@ -164,15 +186,27 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<ProductOrderResponse> createOrder(
-            @RequestBody ProductOrderRequest productOrderDTO
+            @RequestBody @Valid ProductOrderRequest productOrderDTO
 
     ){
         try {
             ProductOrderResponse productOrder = productOrderService.createProductOrder(productOrderDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(productOrder);
-        } catch (Exception e) {
-            this.logger.error(e.getMessage());
-            return ResponseEntity.notFound().build();
+        } catch (ProductOrderNotFoundException e) {
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductOrderResponse("Resource not found: " + e.getMessage()));
+        } catch (BadRequestException e) {
+            this.logger.error("Bad request: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request: " + e.getMessage()));
+        }
+        catch (IllegalArgumentException e){
+            this.logger.error("Bad request " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request error" + e.getMessage()));
+
+        }
+        catch (Exception e) {
+            this.logger.error("Internal server error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ProductOrderResponse("Internal server error"));
         }
     }
 
@@ -185,15 +219,29 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<ProductOrderResponse> editOrder(
-            @PathVariable Long orderId,
-            @RequestBody  ProductOrderRequest productOrderDTO
+            @PathVariable @Valid Long orderId,
+            @RequestBody @Valid  ProductOrderRequest productOrderDTO
     ){
         try {
             ProductOrderResponse productOrders = productOrderService
                     .updateProductOrder(orderId, productOrderDTO);
             return ResponseEntity.ok().body(productOrders);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
+        catch (ChangeSetPersister.NotFoundException e) {
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new ProductOrderResponse("Resource not found: " + e.getMessage()));
+        } catch (BadRequestException e) {
+            this.logger.error("Bad request: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request: " + e.getMessage()));
+        }
+        catch (IllegalArgumentException e){
+            this.logger.error("Bad request " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request error" + e.getMessage()));
+
+        }
+        catch (Exception e) {
+            this.logger.error("Internal server error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ProductOrderResponse("Internal server error"));
         }
     }
 
@@ -204,14 +252,17 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<?> deleteOrder(@PathVariable Long orderId){
+    public ResponseEntity<?> deleteOrder(@PathVariable @Valid Long orderId){
         try {
             productOrderService
                     .deleteProductOrder(orderId);
             return ResponseEntity.accepted().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+                    .header("Not implemented", e.getMessage()).build();
         }
     }
 
 }
+
+

@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -16,8 +17,9 @@ public class Client {
     private CommonAttribute commonAttribute;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_order_id")
+    @JsonBackReference
     private ProductOrder productOrder;
 
     public Long getId() {

@@ -4,12 +4,11 @@ import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public interface ProductOrderService {
-    List<ProductOrderResponse> findAllProducts() throws Exception;
+    List<ProductOrderResponse> findAllProductOrders() throws Exception;
 
     ProductOrderResponse findProductOrderById(Long productOrderId) throws Exception;
 
@@ -22,9 +21,10 @@ public interface ProductOrderService {
     void deleteProductOrder(Long productOrderId) throws Exception;
 
 
-    List<ProductOrderResponse> findProductOrdersByFinishDate(LocalDate date);
+    List<ProductOrderResponse> findProductOrdersByFinishDate(String date) throws Exception;
 
-    List<ProductOrderResponse> findProductOrdersByEntry(LocalDate entryDate);
+    List<ProductOrderResponse> findProductOrdersByEntry(String entryDate) throws Exception;
 
-    List<ProductOrderResponse> findProductOrdersByInitialDate(LocalDate date);
+    List<ProductOrderResponse> findProductOrdersByInitialDate(String date) throws Exception;
+
 }

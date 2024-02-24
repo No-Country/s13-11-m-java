@@ -1,5 +1,6 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -22,10 +23,9 @@ public class Company {
     @JsonManagedReference
     private List<User> employee = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
     @Column(name = "product_orders_id")
-    @JsonManagedReference
-
+    @JsonIgnore
     private List<ProductOrder> productOrders = new ArrayList<>();
 
 

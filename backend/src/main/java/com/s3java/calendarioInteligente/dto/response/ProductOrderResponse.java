@@ -2,31 +2,37 @@ package com.s3java.calendarioInteligente.dto.response;
 
 import com.s3java.calendarioInteligente.entities.*;
 
-
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 public class ProductOrderResponse {
+
+    private String message;
 
 
     private Long id;
 
     private String name;
 
-    private Date entryDate;
+    private LocalDateTime entryDate;
 
     private Double errorTime;
 
     private String photoLink;
 
-    private LocalDate initialDate;
+    private LocalDateTime initialDate;
 
-    private LocalDate finishEstimatedDate;
+    private LocalDateTime finishEstimatedDate;
 
-    private Long productId;
+    private Client product;
 
-    private Long clientId;
+    private Client client;
+
+    public ProductOrderResponse() {}
+
+    public ProductOrderResponse(String message) {
+        this.message = message;
+    }
 
     public Long getId() {
         return id;
@@ -44,11 +50,11 @@ public class ProductOrderResponse {
         this.name = name;
     }
 
-    public Date getEntryDate() {
+    public LocalDateTime getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(LocalDateTime entryDate) {
         this.entryDate = entryDate;
     }
 
@@ -68,51 +74,61 @@ public class ProductOrderResponse {
         this.photoLink = photoLink;
     }
 
-    public LocalDate getInitialDate() {
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
+    public Client getProduct() {
+        return product;
+    }
+
+    public void setProduct(Client product) {
+        this.product = product;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public LocalDateTime getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDate initialDate) {
+    public void setInitialDate(LocalDateTime initialDate) {
         this.initialDate = initialDate;
     }
 
-    public LocalDate getFinishEstimatedDate() {
+    public LocalDateTime getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDate finishEstimatedDate) {
+    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
-    }
-
-
-    public Long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     @Override
     public String toString() {
         return "ProductOrderResponse{" +
-                "id=" + id +
+                "message='" + message + '\'' +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +
                 ", errorTime=" + errorTime +
                 ", photoLink='" + photoLink + '\'' +
                 ", initialDate=" + initialDate +
                 ", finishEstimatedDate=" + finishEstimatedDate +
-                ", productId=" + productId +
-                ", clientId=" + clientId +
+                ", product=" + product +
+                ", client=" + client +
                 '}';
     }
 }

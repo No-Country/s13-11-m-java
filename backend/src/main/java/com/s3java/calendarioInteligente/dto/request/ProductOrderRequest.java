@@ -1,7 +1,7 @@
 package com.s3java.calendarioInteligente.dto.request;
 
-import java.time.LocalDate;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 public class ProductOrderRequest {
 
@@ -12,9 +12,9 @@ public class ProductOrderRequest {
 
     private String photoLink;
 
-    private LocalDate initialDate;
+    private LocalDateTime initialDate;
 
-    private LocalDate finishEstimatedDate;
+    private LocalDateTime finishEstimatedDate;
 
     private Long productId;
 
@@ -44,22 +44,21 @@ public class ProductOrderRequest {
         this.photoLink = photoLink;
     }
 
-    public LocalDate getInitialDate() {
+    public LocalDateTime getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDate initialDate) {
+    public void setInitialDate(LocalDateTime initialDate) {
         this.initialDate = initialDate;
     }
 
-    public LocalDate getFinishEstimatedDate() {
+    public LocalDateTime getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDate finishEstimatedDate) {
+    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
     }
-
 
     public Long getClientId() {
         return clientId;

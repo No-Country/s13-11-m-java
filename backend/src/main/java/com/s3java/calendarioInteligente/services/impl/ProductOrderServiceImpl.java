@@ -2,26 +2,23 @@ package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
-import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.entities.Company;
-import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.entities.ProductOrder;
+import com.s3java.calendarioInteligente.exception.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapper;
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.repositories.CompanyRepository;
 import com.s3java.calendarioInteligente.repositories.ProductOrderRepository;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +36,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     private final CompanyRepository companyRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductOrderServiceImpl.class);
-
+    private LocalDateTime timeNow = LocalDateTime.now();
 
 
     ProductOrderServiceImpl(ProductOrderRepository productOrderRepository,
@@ -57,11 +54,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     }
     @Override
-    public List<ProductOrderResponse> findAllProducts() throws Exception {
-        List<ProductOrder> productOrder = this.productOrderRepository.findAllProducts(companyId);
+    public List<ProductOrderResponse> findAllProductOrders() throws Exception {
+        List<ProductOrder> productOrder = this.productOrderRepository.findAllProductOrders(companyId);
         List<ProductOrderResponse> productOrdersResponse = this.productOrderMapper.productOrdersToProductOrdersResponse(productOrder);
         return productOrdersResponse;
     }
+
 
     @Override
     public ProductOrderResponse findProductOrderById(Long productOrderId) throws Exception {
@@ -71,6 +69,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
          productOrderOptional.orElseThrow( ()-> new Exception("user no found"));
          return this.productOrderMapper.productOrderToProductOrderResponse(productOrderOptional.get());
     }
+
+
 
 
     @Override
@@ -86,31 +86,40 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 
         ProductOrder productOrder = this.productOrderMapper.productOrderRequestToProductOrder(productOrderRequest);
-        productOrder.setEntryDate(LocalDate.now());
+        productOrder.setEntryDate(this.timeNow);
+
+        logger.info(timeNow.toString());
+        logger.info(productOrderRequest.getInitialDate().toString());
+        logger.info(timeNow.toString());
+
+        this.validateDateOrder(productOrder.getInitialDate(), this.timeNow,
+                "The initial date must not be earlier than the entry date.");
+        this.validateDateOrder(productOrder.getFinishEstimatedDate(), this.timeNow,
+                "The finish estimated date must not be earlier than the entry date.");
+
+        this.validateDateOrder(productOrder.getFinishEstimatedDate(), productOrder.getInitialDate(),
+                "The finish estimated date must not be earlier than the initial date.");
+
+
         productOrder.setActive(true);
 
-
-
-        // TODO adaptar cuando este Product y demas repositorios
+        // TODO adaptar cuando esten Product y Client repositorios
         Company company = this.companyRepository.findById(this.companyId)
-                .orElseThrow(() -> new EntityNotFoundException("company not found"));
-        Product p = new Product();
-        Client c = new Client();
-        p = this.productRepository.save(p);
-        c = this.clientRepository.save(c);
-
+                .orElseThrow(() -> new ProductOrderNotFoundException("company was not found"));
+        //Product p = new Product();
+       // p.setName("nuevo producto");
+        // this.productRepository.save(p);
+         //Client c = new Client();
+        //TODO buscar si un cliente creado y un producto ya existen y agregar
+         //this.clientRepository.save(c);
 
         /*Product product = this.productRepository.findById(productOrderRequest.getProductId())
                 .orElseThrow(() -> new  EntityNotFoundException("product not found"));*/
-
-        productOrder.setProduct(p);
-
+        //productOrder.setProduct(p);
+        //productOrder.setClient(c); // TODO eliminar datos duros
         productOrder.setCompany(company);
-
-
         //-------------------------------
-
-        List lista = new ArrayList();
+        List lista = this.clientRepository.findAll();
         ProductOrder productOrderSaved = this.productOrderRepository.save(productOrder);
         lista.add(productOrderSaved);
         company.setProductOrders(lista);
@@ -118,6 +127,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    @Transactional
     public ProductOrderResponse updateProductOrder(Long productOrderId,
                                                    ProductOrderRequest productOrderRequest) throws Exception {
         ProductOrder oldProductOrder = this.productOrderRepository
@@ -134,27 +144,50 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public void deleteProductOrder(Long productOrderId) throws Exception {
         Optional<ProductOrder> optionalOrder = this.productOrderRepository.findById(productOrderId);
-        optionalOrder.ifPresent(productOrder -> {
-            productOrder.setIsActive(false);
-            productOrderRepository.save(productOrder);
-        });
+        optionalOrder.ifPresentOrElse(
+                productOrder -> {
+                    productOrder.setIsActive(false);
+                    productOrderRepository.save(productOrder);
+                },
+                () -> {
+                    throw new RuntimeException("Product order not found with ID: " + productOrderId);
+                }
+        );
     }
 
     @Override
-    public List<ProductOrderResponse> findProductOrdersByFinishDate(LocalDate date) {
-        List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByFinishDate(date, companyId);
+    public List<ProductOrderResponse> findProductOrdersByFinishDate(String date) {
+        logger.info(" ---------------------- findProductOrdersByFinishDate ----------------- ");
+        logger.debug(date);
+        LocalDateTime dateConverted = DateUtils.converFromString(date);
+        logger.info(" ---------------------- findProductOrdersByFinishDate converted ----------------- ");
+        logger.debug(dateConverted.toString());
+        List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByFinishDate(dateConverted, companyId);
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
     }
 
     @Override
-    public List<ProductOrderResponse> findProductOrdersByEntry(LocalDate date) {
-        List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByEntryDate(date, companyId);
+    public List<ProductOrderResponse> findProductOrdersByEntry(String date) {
+        LocalDateTime dateConverted = DateUtils.converFromString(date);
+        List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByEntryDate(dateConverted, companyId);
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
     }
 
     @Override
-    public List<ProductOrderResponse> findProductOrdersByInitialDate(LocalDate date) {
-        List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByInitialDate(date, companyId);
+    public List<ProductOrderResponse> findProductOrdersByInitialDate(String date) {
+        LocalDateTime dateConverted = DateUtils.converFromString(date);
+        List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByInitialDate(dateConverted, companyId);
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
     }
+
+
+
+    private void validateDateOrder(LocalDateTime firstDateToValidate, LocalDateTime secondDateToValidate, String errorMessage) throws IllegalArgumentException {
+        if (DateUtils.isNotBeforeOrEqual(firstDateToValidate, secondDateToValidate)) {
+            logger.error(errorMessage);
+            throw new IllegalArgumentException(errorMessage +
+                    " Please ensure that the date is equal to or later than the entry date");
+        }
+    }
+
 }

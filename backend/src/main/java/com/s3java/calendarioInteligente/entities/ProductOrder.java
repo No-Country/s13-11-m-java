@@ -1,10 +1,13 @@
 package com.s3java.calendarioInteligente.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PRODUCT_ORDERS")
@@ -19,7 +22,7 @@ public class ProductOrder {
     private String name;
 
     @Column(name = "entry_date")
-    private LocalDate entryDate;
+    private LocalDateTime entryDate;
 
 
     @Column(name = "error_time")
@@ -31,10 +34,10 @@ public class ProductOrder {
 
     @Column(name = "initial_date")
     @NotNull
-    private LocalDate initialDate;
+    private LocalDateTime initialDate;
 
     @Column(name = "finish_est_date")
-    private LocalDate finishEstimatedDate;
+    private LocalDateTime finishEstimatedDate;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -44,14 +47,15 @@ public class ProductOrder {
     @NotNull
     private Product product;
 
-    @OneToOne(mappedBy = "productOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name = "client_id")
+    @OneToOne(mappedBy = "productOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @Fetch(FetchMode.JOIN)
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
-    @JsonBackReference
+    @JsonIgnore
+    @Fetch(FetchMode.JOIN)
     private Company company;
 
 
@@ -71,11 +75,15 @@ public class ProductOrder {
         this.name = name;
     }
 
-    public LocalDate getEntryDate() {
+    public LocalDateTime getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDate entryDate) {
+    public void setInitialDate(LocalDateTime initialDate) {
+        this.initialDate = initialDate;
+    }
+
+    public void setEntryDate(LocalDateTime entryDate) {
         this.entryDate = entryDate;
     }
 
@@ -112,19 +120,15 @@ public class ProductOrder {
         this.photoLink = photoLink;
     }
 
-    public LocalDate getInitialDate() {
+    public LocalDateTime getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDate initialDate) {
-        this.initialDate = initialDate;
-    }
-
-    public LocalDate getFinishEstimatedDate() {
+    public LocalDateTime getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDate finishEstimatedDate) {
+    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 

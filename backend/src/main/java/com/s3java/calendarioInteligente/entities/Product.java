@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Null;
@@ -39,8 +40,8 @@ public class Product {
     @JsonBackReference
     private Company company;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.LAZY)
-    @JsonBackReference
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.EAGER)
+    @JsonIgnore
     @Null
     private ProductOrder productOrder;
 
