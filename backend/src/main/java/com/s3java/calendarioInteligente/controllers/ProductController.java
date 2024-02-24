@@ -15,15 +15,6 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @GetMapping("/")//Borrar antes de hacer merge
-    public ResponseEntity<?> getAllProducts(){
-        return productService.getAllProducts();
-    }
-
-    @PostMapping("/")//Borrar antes de hacer merge
-    public ResponseEntity<?> createNewProduct(@Valid @RequestBody Product product){
-        return productService.createNewProduct(product);
-    }
 
     @PostMapping("/process/{productID}")
     public ResponseEntity<?> addProcessToProduct(@Valid @RequestBody ProductProcess productProcess, @PathVariable Long productID){

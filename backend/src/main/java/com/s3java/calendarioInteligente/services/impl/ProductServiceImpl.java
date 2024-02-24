@@ -20,18 +20,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    //Borrar antes de hacer merge
-    @Override
-    public ResponseEntity<?> getAllProducts() {
-        return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
-    }
-
-    //Borrar antes de hacer merge
-    @Override
-    public ResponseEntity<?> createNewProduct(Product product) {
-        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-    }
-
     @Override
     public ResponseEntity<?> addProcessToProduct(ProductProcess process, Long productID) {
         Optional<Product> foundProduct = productRepository.findById(productID);
@@ -43,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
             process.setProduct(product);
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
+        //TODO: Mejor manejo de excepcion
         return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
     }
 
@@ -56,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
             product.setProductProcesses(processList);
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
+        //TODO: Mejor manejo de excepcion
         return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
     }
 }
