@@ -16,7 +16,7 @@ const productFormSchema = z.object({
     .max(10, { message: "Por favor elige una fecha valida" }),
   estimatedTime: z
     //   este se calcula en base a los tiempos de procesos, no lo completa el usuario
-    .string()
+    .number()
     .min(1, { message: "El tiempo estimado es requerido" })
     .max(10, { message: "El tiempo estimado no puede tener más de 10 caracteres" }),
   progressPercent: z.number(),

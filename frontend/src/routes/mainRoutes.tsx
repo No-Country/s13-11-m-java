@@ -17,6 +17,8 @@ import Orders from "@/pages/Orders/Orders";
 import Calendar from "@/pages/Calendar/Calendar";
 import Employees from "@/pages/Employees/Employees";
 import Configuration from "@/pages/Configuration/Configuration";
+import ProductPage from "@/pages/Products/ProductPage";
+import OrderPage from "@/pages/Orders/OrderPage";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ export const router = createBrowserRouter([
       {
         path: "/configuration",
         element: <Configuration />,
+      },
+      {
+        path: "/product",
+        element: <ProductPage />,
+      },
+      {
+        path: "/order",
+        element: <OrderPage />,
       },
     ],
   },

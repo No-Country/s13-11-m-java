@@ -1,6 +1,6 @@
 import { FaCamera } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import productFormSchema, { ProductFormInputs } from "@/schemas/addProductSchema";
+import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
