@@ -1,5 +1,11 @@
+import CalendarComponent from "@/components/Calendar/CalendarComponent";
+
 const Calendar = () => {
-  return <div>Calendar</div>;
+  return (
+    <div>
+      <CalendarComponent />
+    </div>
+  );
 };
 
 export default Calendar;

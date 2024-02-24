@@ -72,9 +72,9 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "startTime",
-    accessorKey: "startTime",
-    header: "Hora",
+    id: "jornadaLaboral",
+    accessorKey: "jornadaLaboral",
+    header: "Jornada Laboral",
     cell: ({ row }) =>
       new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
@@ -82,11 +82,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "client",
-    accessorKey: "client",
-    header: (prop) => ColumnSortButton("Cliente", prop),
+    id: "cantidadFinalizados",
+    accessorKey: "cantidadFinalizados",
+    header: (prop) => ColumnSortButton("Nombre", prop),
     meta: {
-      headerName: "Cliente",
+      headerName: "Cantidad productos finalizados",
     },
   },
   {
@@ -109,7 +109,7 @@ export const columns: ColumnDef<Product>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <BsPencilSquare className="mr-2" />
-              Modificar producto
+              Modificar empleado
             </DropdownMenuItem>
             <DropdownMenuItem>
               <MdOutlinePostAdd className="mr-2" />
@@ -120,7 +120,7 @@ export const columns: ColumnDef<Product>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <BsTrash className="mr-2" /> Eliminar producto
+              <BsTrash className="mr-2" /> Eliminar empleado
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
