@@ -20,9 +20,9 @@ import { options, data as barData } from "@/data/Dashboard/bar/bar.chart";
 import { optionsComparative, dataComparative } from "@/data/Dashboard/comparative/comparative.chart";
 import { Progress } from "@/components/ui/progress";
 import { DataTable } from "@/components/ui/data-table";
-import { columns } from "../Products/columns";
+import { columns } from "../Orders/columns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { products } from "../Products/data";
+import useOrder from "@/hooks/useOrder";
 
 ChartJS.register(
   ArcElement,
@@ -37,12 +37,14 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const { orders } = useOrder();
+
   return (
     <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-8 py-8 sm:grid-cols-2 md:grid-cols-3 md:pl-20 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
         <ScrollArea className="h-full whitespace-nowrap rounded-md border">
           <div className="flex">
-            <DataTable columns={columns} data={products} />
+            <DataTable columns={columns} data={orders} />
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
