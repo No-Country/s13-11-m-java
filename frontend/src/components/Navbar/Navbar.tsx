@@ -20,9 +20,6 @@ import { FaBars, FaRegBell } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 
 import { logItems, navItems } from "./items";
-import "moment/locale/es";
-
-import "./styles.css";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
