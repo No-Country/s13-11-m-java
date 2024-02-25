@@ -5,12 +5,16 @@ import { Progress } from "@/components/ui/progress";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import { columns } from "../Orders/columns";
-import { data as barData, options } from "@/data/Dashboard/bar/bar.chart";
-import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
-import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
-import { dataProcessPorcent } from "@/data/Dashboard/donuts/procesos.data";
-import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
-import { dataProcessQ2 } from "@/data/Dashboard/donuts/process.dataq2";
+import {
+  barData,
+  barOptions,
+  doughnutDataEmployee,
+  doughnutDataProcessPorcent,
+  doughnutDataProcessQ,
+  doughnutDataProcessQ2,
+  lineData,
+  lineOptions,
+} from "./data";
 import {
   ArcElement,
   BarElement, // Legend,
@@ -60,30 +64,30 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div>
-          <Bar options={options} data={barData} />
+          <Bar options={barOptions} data={barData} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataProcessPorcent} />
+          <Doughnut data={doughnutDataProcessPorcent} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataProcessQ} />
+          <Doughnut data={doughnutDataProcessQ} />
         </div>
       </div>
       <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-xl:order-5 xl:col-span-2 xl:row-span-2">
-        <Line options={optionsComparative} data={dataComparative} height={200} />
+        <Line options={lineOptions} data={lineData} height={200} />
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataEmployee} />
+          <Doughnut data={doughnutDataEmployee} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataProcessQ2} />
+          <Doughnut data={doughnutDataProcessQ2} />
         </div>
       </div>
     </div>
