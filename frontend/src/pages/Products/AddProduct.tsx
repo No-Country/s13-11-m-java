@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { MdArrowBackIos } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 import ProductForm from "@/components/ProductForm/ProductForm";
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+
+import { MdArrowBackIos } from "react-icons/md";
 
 const AddProduct = () => {
   return (

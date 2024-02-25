@@ -1,8 +1,9 @@
+import useAuth from "@/hooks/useAuth";
+
 import AuthTemplate from "@/components/AuthTemplate";
+import RegisterForm2 from "@/components/RegisterForm/RegisterForm2";
 
 import registerImage from "@/assets/register.svg";
-import RegisterForm2 from "@/components/RegisterForm/RegisterForm2";
-import useAuth from "@/hooks/useAuth";
 
 const Register2 = () => {
   const { register, isLoadingRegister } = useAuth();

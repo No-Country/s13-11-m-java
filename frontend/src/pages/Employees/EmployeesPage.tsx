@@ -1,15 +1,19 @@
-import { columns } from "./columns";
-import { DataTable } from "@/components/ui/data-table";
 import React from "react";
+
+import useProduct from "@/hooks/useProduct";
+
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
+import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 // import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import SelectColumns from "@/components/ui/select-columns";
-import { Input } from "@/components/ui/input";
-import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import useProduct from "@/hooks/useProduct";
-import { Employee } from "@/app/services/api/types";
+
 import AddEmployeeIcon from "@/components/icons/AddEmployeeIcon";
+
+import { columns } from "./columns";
+import type { Employee } from "@/app/services/api/types";
+import type { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 
 const EmployeesPage = () => {
   const { products } = useProduct();
