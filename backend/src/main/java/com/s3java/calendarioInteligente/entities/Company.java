@@ -23,14 +23,14 @@ public class Company {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @JsonManagedReference
-    private List<User> employee = new ArrayList<>();
+    private List<UserE> employee = new ArrayList<>();
 
 
     public List<Product> getProducts() {
         return products;
     }
 
-    public List<User> getEmployee() {
+    public List<UserE> getEmployee() {
         return employee;
     }
 
@@ -38,7 +38,7 @@ public class Company {
         this.products = products;
     }
 
-    public void setEmployee(List<User> employee) {
+    public void setEmployee(List<UserE> employee) {
         this.employee = employee;
     }
 

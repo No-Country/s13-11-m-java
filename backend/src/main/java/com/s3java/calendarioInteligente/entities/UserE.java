@@ -2,20 +2,25 @@ package com.s3java.calendarioInteligente.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.s3java.calendarioInteligente.utils.Role;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class UserE {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = RoleE.class)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleE> roles = new HashSet<>();
 
     @Embedded
     private CommonAttribute commonAttribute ;//= new CommonAttribute()
@@ -33,12 +38,12 @@ public class User {
         this.id = id;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<RoleE> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<RoleE> roles) {
+        this.roles = roles;
     }
 
     public CommonAttribute getCommonAttribute() {
@@ -55,5 +60,15 @@ public class User {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "UserE{" +
+                "id=" + id +
+                ", roles=" + roles +
+                ", commonAttribute=" + commonAttribute +
+                ", company=" + company +
+                '}';
     }
 }
