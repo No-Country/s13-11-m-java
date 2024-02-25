@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const productFormSchema = z.object({
-  // _id, name, createdDate, estimatedTime, progressPercent, process, image, note
+  // _id, name, createdDate, estimatedTime, progressPercent,instruction, process, image, note
   _id: z.string({
     required_error: "Por favor asigna un ID",
     invalid_type_error: "Solo se permiten valores alfanumericos!",
@@ -10,16 +10,16 @@ const productFormSchema = z.object({
     .string()
     .min(1, { message: "El nombre del producto es requerido" })
     .max(255, { message: "El nombre del producto no puede tener más de 255 caracteres" }),
-  createdDate: z
-    .string()
-    .min(8, { message: "Por favor elige una fecha valida" })
-    .max(10, { message: "Por favor elige una fecha valida" }),
+  createdDate: z.number(),
+  // .min(8, { message: "Por favor elige una fecha valida" })
+  // .max(10, { message: "Por favor elige una fecha valida" }),
   estimatedTime: z
     //   este se calcula en base a los tiempos de procesos, no lo completa el usuario
-    .number()
-    .min(1, { message: "El tiempo estimado es requerido" })
-    .max(10, { message: "El tiempo estimado no puede tener más de 10 caracteres" }),
+    .number(),
+  // .min(1, { message: "El tiempo estimado es requerido" })
+  // .max(10, { message: "El tiempo estimado no puede tener más de 10 caracteres" }),
   progressPercent: z.number(),
+  instruction: z.string(),
   process: z.array(
     z.object({
       name: z.string(),
