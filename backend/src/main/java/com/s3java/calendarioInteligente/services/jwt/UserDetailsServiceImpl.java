@@ -1,6 +1,6 @@
 package com.s3java.calendarioInteligente.services.jwt;
 
-import com.s3java.calendarioInteligente.entities.User;
+import com.s3java.calendarioInteligente.entities.UserE;
 import com.s3java.calendarioInteligente.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findFirstByEmail(username);
+        Optional<UserE> optionalUser = userRepository.findFirstByEmail(username);
         if (optionalUser.isEmpty()) throw new UsernameNotFoundException("Username not found", null);
         return new org.springframework.security.core.userdetails.User(optionalUser.get().getCommonAttribute().getEmail()
                 ,optionalUser.get().getCommonAttribute().getPassword(),

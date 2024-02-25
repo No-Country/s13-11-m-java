@@ -1,6 +1,6 @@
 package com.s3java.calendarioInteligente.utils;
 
-public enum Role {
+public enum RoleType {
     ROLE_ADMIN,
     ROLE_EMPLOYEE
 }

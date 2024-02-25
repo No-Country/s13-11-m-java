@@ -1,14 +1,18 @@
 package com.s3java.calendarioInteligente.dto;
 
 
-import com.s3java.calendarioInteligente.utils.Role;
+import com.s3java.calendarioInteligente.entities.RoleE;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDto {
 
     private Long id;
     private String email;
     private String name;
-    private Role userRole;
+
+    private Set<RoleE> userRoles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -34,11 +38,21 @@ public class UserDto {
         this.name = name;
     }
 
-    public Role getUserRole() {
-        return userRole;
+    public Set<RoleE> getUserRoles() {
+        return userRoles;
     }
 
-    public void setUserRole(Role userRole) {
-        this.userRole = userRole;
+    public void setUserRoles(Set<RoleE> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", userRoles=" + userRoles +
+                '}';
     }
 }
