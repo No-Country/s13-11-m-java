@@ -11,7 +11,9 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <React.Suspense fallback={null}>
+        <RouterProvider router={router} />
+      </React.Suspense>
     </Provider>
   </React.StrictMode>
 );

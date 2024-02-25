@@ -1,21 +1,10 @@
+import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
-import UserLayout from "@/layouts/UserLayout";
-import Calendar from "@/pages/Calendar/Calendar";
-import Configuration from "@/pages/Configuration/Configuration";
-import Dashboard from "@/pages/Dashboard/Dashboard";
-import EmployeesPage from "@/pages/Employees/EmployeesPage";
-import Login from "@/pages/Login/Login";
 import NotFoundPage from "@/pages/NotFoundPage";
 import OnBoarding from "@/pages/OnBoarding/OnBoarding";
-import Orders from "@/pages/Orders/Orders";
-import ProductsPage from "@/pages/Products/ProductsPage";
-import ConfirmEmail from "@/pages/Register/ConfirmEmail";
-import ErrorRegister from "@/pages/Register/ErrorRegister";
-import ForgotPassword from "@/pages/Register/ForgotPassword";
-import Register from "@/pages/Register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -28,31 +17,31 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <UserLayout />,
+    Component: React.lazy(() => import("@/layouts/UserLayout")),
     children: [
       {
         path: "/products",
-        element: <ProductsPage />,
+        Component: React.lazy(() => import("@/pages/Products/ProductsPage")),
       },
       {
         path: "/calendar",
-        element: <Calendar />,
+        Component: React.lazy(() => import("@/pages/Calendar/Calendar")),
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        Component: React.lazy(() => import("@/pages/Dashboard/Dashboard")),
       },
       {
         path: "/orders",
-        element: <Orders />,
+        Component: React.lazy(() => import("@/pages/Orders/Orders")),
       },
       {
         path: "/employees",
-        element: <EmployeesPage />,
+        Component: React.lazy(() => import("@/pages/Employees/EmployeesPage")),
       },
       {
         path: "/configuration",
-        element: <Configuration />,
+        Component: React.lazy(() => import("@/pages/Configuration/Configuration")),
       },
     ],
   },
@@ -61,23 +50,23 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/login",
-        element: <Login />,
+        Component: React.lazy(() => import("@/pages/Login/Login")),
       },
       {
         path: "/register",
-        element: <Register />,
+        Component: React.lazy(() => import("@/pages/Register/Register")),
       },
       {
         path: "/confirm-email",
-        element: <ConfirmEmail />,
+        Component: React.lazy(() => import("@/pages/Register/ConfirmEmail")),
       },
       {
         path: "/forgot-password",
-        element: <ForgotPassword />,
+        Component: React.lazy(() => import("@/pages/Register/ForgotPassword")),
       },
       {
         path: "/error-register",
-        element: <ErrorRegister />,
+        Component: React.lazy(() => import("@/pages/Register/ErrorRegister")),
       },
     ],
   },
