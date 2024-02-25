@@ -1,16 +1,12 @@
 import { Link } from "react-router-dom";
 
-import { FaRegBell } from "react-icons/fa6";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import useAuth from "@/hooks/useAuth";
-import useMediaQuery from "@/hooks/useMediaQuery";
-import { FaBars } from "react-icons/fa6";
+
 import Logo from "../Logo/Logo";
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
-import { logItems, navItems } from "./items";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Menubar,
   MenubarContent,
@@ -19,6 +15,14 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+
+import { FaBars, FaRegBell } from "react-icons/fa6";
+import { IoSearch } from "react-icons/io5";
+
+import { logItems, navItems } from "./items";
+import "moment/locale/es";
+
+import "./styles.css";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
@@ -29,15 +33,21 @@ function Navbar() {
       <div className="container flex items-center">
         <Logo />
         {isLogin ? (
-          <div className="flex grow justify-end space-x-4">
-            <div>
-              <InputSearch className="w-60" type="search" placeholder="Buscar" />
-            </div>
+          <div className="flex grow justify-end space-x-2 md:space-x-4">
+            {matches ? (
+              <div>
+                <InputSearch className="max-w-60" type="search" placeholder="Buscar" />
+              </div>
+            ) : (
+              <Button variant="ghost" size="icon">
+                <IoSearch size={24} />
+              </Button>
+            )}
             <Button variant="ghost" size="icon">
               <FaRegBell size={24} />
             </Button>
             <div className="flex items-center">
-              <Avatar className="mr-4 cursor-pointer" onClick={logout}>
+              <Avatar className="cursor-pointer md:mr-4" onClick={logout}>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
@@ -69,7 +79,7 @@ function Navbar() {
           <div className="flex grow justify-end">
             <Menubar>
               <MenubarMenu>
-                <MenubarTrigger>
+                <MenubarTrigger className="cursor-pointer">
                   <FaBars />
                 </MenubarTrigger>
                 <MenubarContent>

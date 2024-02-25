@@ -13,34 +13,9 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "prettier",
   ],
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: [".eslintrc.{js,cjs}"],
-      parserOptions: {
-        sourceType: "script",
-      },
-    },
-  ],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "node_modules"],
   parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  settings: {
-    react: {
-      version: "detect",
-    },
-    "import/resolver": {
-      typescript: {},
-    },
-  },
-  plugins: ["@typescript-eslint", "react", "react-hooks"],
+  plugins: ["react-refresh", "import", "simple-import-sort"],
   rules: {
     "react/react-in-jsx-scope": "off", // Desactiva la regla de react-in-jsx-scope
     "react/prop-types": [2, { ignore: ["className"] }], // Desactiva la regla de prop-types para className
