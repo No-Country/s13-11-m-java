@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calendar, Event, View } from "react-big-calendar";
+import { Calendar, Event, ToolbarProps, View } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import { momentLocalizer } from "react-big-calendar";
@@ -18,8 +18,7 @@ enum NavigationDirection {
   NEXT = "NEXT",
 }
 
-interface CustomToolbarProps {
-  onNavigate: (action: NavigationDirection | string) => void;
+interface CustomToolbarProps extends ToolbarProps {
   onViewChange: (view: View) => void;
 }
 
