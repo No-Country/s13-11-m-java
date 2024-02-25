@@ -1,6 +1,7 @@
 import slideImage1 from "@/assets/slide_1.svg";
 import slideImage2 from "@/assets/slide_2.svg";
 import slideImage3 from "@/assets/slide_3.svg";
+import type { Settings } from "react-slick";
 
 interface CarouselItem {
   title: string;
@@ -36,3 +37,11 @@ export const carouselItems: CarouselItem[] = [
     },
   },
 ];
+
+export const settings: Settings = {
+  dots: true,
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+};

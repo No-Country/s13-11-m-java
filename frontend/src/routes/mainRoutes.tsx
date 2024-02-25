@@ -19,7 +19,6 @@ import Register from "@/pages/Register/Register";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
     element: <MainLayout />,
     children: [
       {
@@ -29,7 +28,6 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
     element: <UserLayout />,
     children: [
       {
@@ -59,7 +57,6 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
     element: <AuthLayout />,
     children: [
       {
