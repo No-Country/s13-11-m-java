@@ -1,3 +1,5 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 import {
   AllProductsResponse,
   CreateProductRequest,
@@ -19,7 +21,6 @@ import {
 import { RootState } from "@/app/store";
 import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   reducerPath: "api",
