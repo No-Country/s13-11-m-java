@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { LuBellRing } from "react-icons/lu";
 import { MdOutlinePersonOutline, MdOutlineAdminPanelSettings } from "react-icons/md";
@@ -9,7 +9,7 @@ const SettingsPage = () => {
       <div className="border-b-2 py-4">
         <span className="text-3xl">Configuración</span>
       </div>
-      <div className="text-xl">
+      <div className="text-2xl">
         <button className=" my-6 flex w-full items-center gap-4 border-b-2 py-4">
           <MdOutlineAdminPanelSettings size={24} />
           <Link to="/settings/security">Seguridad y Privacidad</Link>
@@ -27,6 +27,7 @@ const SettingsPage = () => {
           <Link to="/settings/calendar">Calendario</Link>
         </button>
       </div>
+      <Outlet />
     </div>
   );
 };
