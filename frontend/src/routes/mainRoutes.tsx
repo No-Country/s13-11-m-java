@@ -14,7 +14,11 @@ import Register from "@/pages/Register/Register";
 import Orders from "@/pages/Orders/Orders";
 import Calendar from "@/pages/Calendar/Calendar";
 import EmployeesPage from "@/pages/Employees/EmployeesPage";
-import Configuration from "@/pages/Configuration/Configuration";
+import SettingsPage from "@/pages/Settings/SettingsPage";
+import SecurityPrivacy from "@/pages/Settings/SecurityPrivacy";
+import AccountSettings from "@/pages/Settings/AccountSettings";
+import NotificationSettings from "@/pages/Settings/NotificationSettings";
+import CalendarySettings from "@/pages/Settings/CalendarySettings";
 
 export const router = createBrowserRouter([
   {
@@ -52,8 +56,26 @@ export const router = createBrowserRouter([
         element: <EmployeesPage />,
       },
       {
-        path: "/configuration",
-        element: <Configuration />,
+        path: "/settings",
+        element: <SettingsPage />,
+        children: [
+          {
+            path: "/settings/security",
+            element: <SecurityPrivacy />,
+          },
+          {
+            path: "/settings/account",
+            element: <AccountSettings />,
+          },
+          {
+            path: "/settings/notifications",
+            element: <NotificationSettings />,
+          },
+          {
+            path: "/settings/calendar",
+            element: <CalendarySettings />,
+          },
+        ],
       },
     ],
   },
