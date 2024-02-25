@@ -1,11 +1,15 @@
-import { FaCamera } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import productFormSchema, { ProductFormInputs } from "@/schemas/addProductSchema";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { Textarea } from "../ui/textarea";
+import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
+
+import { FaCamera } from "react-icons/fa";
+
+import productFormSchema, { ProductFormInputs } from "@/schemas/addProductSchema";
+
 import ProcessModal from "./ProcessModal";
 import ProcessScroll from "./ProcessScroll";
 

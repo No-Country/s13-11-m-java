@@ -1,28 +1,28 @@
+import useOrder from "@/hooks/useOrder";
+
+import { DataTable } from "@/components/ui/data-table";
+import { Progress } from "@/components/ui/progress";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
+import { columns } from "../Orders/columns";
+import { data as barData, options } from "@/data/Dashboard/bar/bar.chart";
+import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
+import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessPorcent } from "@/data/Dashboard/donuts/procesos.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { dataProcessQ2 } from "@/data/Dashboard/donuts/process.dataq2";
-import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import {
-  Chart as ChartJS,
   ArcElement,
-  Tooltip,
-  // Legend,
+  BarElement, // Legend,
   CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  PointElement,
+  Chart as ChartJS,
   LineElement,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
 } from "chart.js";
-
-import { Doughnut, Bar, Line } from "react-chartjs-2";
-import { options, data as barData } from "@/data/Dashboard/bar/bar.chart";
-import { optionsComparative, dataComparative } from "@/data/Dashboard/comparative/comparative.chart";
-import { Progress } from "@/components/ui/progress";
-import { DataTable } from "@/components/ui/data-table";
-import { columns } from "../Orders/columns";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import useOrder from "@/hooks/useOrder";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 
 ChartJS.register(
   ArcElement,

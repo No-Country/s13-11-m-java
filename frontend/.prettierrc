@@ -8,10 +8,11 @@
   "tailwindFunctions": ["clsx", "cn", "twMerge", "tw"],
   "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
-    "^react$|^react-[rd]",
+    "^react$|^react-[rd]|^@reduxjs",
     "^.*hook",
-    "(?!^@/components/icons/)^.*components/|^.*ui/|^\\.\\./[A-Z].*/[A-Z][^/]*$|^@radix-ui/",
+    "(?!^@/components/icons/)^.*components/|^.*ui/|^\\.\\./[A-Z].*/[A-Z][^/]*$|^@radix-ui/|^.*/[A-Z]*$",
     "^.*icons/|^lucide",
+    "^@/schemas/",
     "^.*(?<!\\.css)$",
     "^.*\\.css$"
   ],

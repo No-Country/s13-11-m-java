@@ -1,10 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerCredentials } from "@/constants/api";
+
 import registerFormSchema, { RegisterFormInputs } from "@/schemas/registerFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
+import { registerCredentials } from "@/constants/api";
 
 interface RegisterFormProps {
   onSubmit?: (values: RegisterFormInputs) => void;

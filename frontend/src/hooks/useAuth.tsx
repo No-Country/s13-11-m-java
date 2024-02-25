@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useLoginMutation, useForgotPasswordMutation, useRegisterMutation } from "@/app/services/api";
-import { logout } from "@/features/auth/authSlice";
+
 import { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
 import { LoginFormInputs } from "@/schemas/loginFormSchema";
 import { RegisterFormInputs } from "@/schemas/registerFormSchema";
-import { useNavigate } from "react-router-dom";
+
+import { useForgotPasswordMutation, useLoginMutation, useRegisterMutation } from "@/app/services/api";
+import { logout } from "@/features/auth/authSlice";
 
 const useAuth = () => {
   const user = useAppSelector((state) => state.auth.user);
