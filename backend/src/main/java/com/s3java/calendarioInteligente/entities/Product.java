@@ -5,7 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,21 +18,37 @@ import java.util.List;
 @Table(name = "PRODUCT")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
+    @Column(unique = true)
+    private String idUnico;
+
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String instruction;
+
+    @Column(name = "CREATE_DATE")
+    private String createDate;
+
+    @NotBlank
     private String description;
-    @Column(name = "total_production")
-    private Integer totalProduction;
+
 
     //  TODO: Ver si cambiar a ENUM (activo, en pausa, finalizado, cancelado)
+
+
     @Column(name = "state")
     private Boolean state;
+
+
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @NotBlank
     @Column(name = "time_estimated_completion")
     private String timeEstimatedCompletion;
 
@@ -48,12 +69,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, String instruction, String description, Integer totalProduction, Boolean state, Boolean isActive, String timeEstimatedCompletion) {
+
+    public Product(Long id, String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
         this.id = id;
+        this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
         this.description = description;
-        this.totalProduction = totalProduction;
         this.state = state;
         this.isActive = isActive;
         this.timeEstimatedCompletion = timeEstimatedCompletion;
@@ -83,6 +105,14 @@ public class Product {
         this.id = id;
     }
 
+    public String getIdUnico() {
+        return idUnico;
+    }
+
+    public void setIdUnico(String idUnico) {
+        this.idUnico = idUnico;
+    }
+
     public String getName() {
         return name;
     }
@@ -107,12 +137,14 @@ public class Product {
         this.description = description;
     }
 
-    public Integer getTotalProduction() {
-        return totalProduction;
+
+
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setTotalProduction(Integer totalProduction) {
-        this.totalProduction = totalProduction;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public Boolean getState() {
@@ -154,7 +186,6 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", instruction='" + instruction + '\'' +
                 ", description='" + description + '\'' +
-                ", totalProduction=" + totalProduction +
                 ", state=" + state +
                 ", isActive=" + isActive +
                 ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
@@ -162,5 +193,8 @@ public class Product {
                 ", company=" + company +
                // ", productOrder=" + productOrder +
                 '}';
+    @PrePersist
+    public void onPrePersist() {
+        this.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 }
