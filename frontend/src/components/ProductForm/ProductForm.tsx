@@ -171,7 +171,7 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
                       <PopoverContent className="w-[340px] p-0">
                         <Command>
                           <CommandInput placeholder="Buscar producto..." className="h-9" />
-                          <CommandEmpty>No framework found.</CommandEmpty>
+                          <CommandEmpty>Proceso no encontrado</CommandEmpty>
                           <CommandGroup>
                             {data.map((process, i) => (
                               <CommandItem
@@ -181,7 +181,7 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
                                   // Hice un estado local que guarde los procesos por una cuestion de sincronizacion, si queria traerlos para renderizarlos tenia un delay
                                   setProcessList([...field.value, process] as Process[]);
                                   //Esta es la funcion para setear el valor del form con los procesos, funciona pero marca como error el codigo
-                                  // form.setValue("process", [...field.value, process] as Process[]);
+                                  form.setValue("process", [...field.value, process] as Process[]);
                                 }}
                               >
                                 {process.name}
@@ -203,6 +203,7 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
                         </Command>
                       </PopoverContent>
                     </Popover>
+                    {/* Agregar proceso */}
                     <ProcessModal />
                   </div>
                 </FormControl>

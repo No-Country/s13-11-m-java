@@ -6,7 +6,7 @@ export type Process = {
   progress: number;
   estimatedTime: number;
   status: Status;
-  subProcess?: Process[];
+  subProcess?: Process[] | undefined;
 };
 
 export const process: Process[] = [
