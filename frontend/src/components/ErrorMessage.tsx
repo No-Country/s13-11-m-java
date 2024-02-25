@@ -1,6 +1,8 @@
-import { cn } from "@/lib/utils";
 import React, { HTMLAttributes } from "react";
+
 import { FieldError } from "react-hook-form";
+
+import { cn } from "@/lib/utils";
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {
   error?: FieldError;
