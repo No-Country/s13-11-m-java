@@ -20,7 +20,7 @@ const Carousel: React.FC = () => {
                 <h2 className="text-xl lg:text-3xl">{title}</h2>
                 <p className="text-lg lg:text-2xl">{description}</p>
                 {button && (
-                  <Button className="w-full text-base" size="rounded" asChild>
+                  <Button className="w-full text-base" size="rounded" asChild tabIndex={-1}>
                     <Link to={button.link}>{button.title}</Link>
                   </Button>
                 )}
