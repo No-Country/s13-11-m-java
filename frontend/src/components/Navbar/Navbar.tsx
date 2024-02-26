@@ -32,17 +32,6 @@ function Navbar() {
           <Logo className="h-14 w-14" />
           <span className="mt-2 w-32 select-none text-sm font-bold">SMART BUSINESS TRACKER</span>
         </Link>
-        <div className="flex grow justify-end md:justify-center">
-          {isLogin && (
-            <div className="space-x-4">
-              {navItems.map((item, index) => (
-                <Button variant="link" key={index} className="text-base" asChild>
-                  <Link to={item.link}>{item.title}</Link>
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
         {isLogin ? (
           <div className="flex grow justify-end space-x-2 md:space-x-4">
             {matches ? (
