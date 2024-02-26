@@ -4,6 +4,7 @@ import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.entities.Company;
+import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.entities.ProductOrder;
 import com.s3java.calendarioInteligente.exception.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapper;
@@ -12,6 +13,7 @@ import com.s3java.calendarioInteligente.repositories.CompanyRepository;
 import com.s3java.calendarioInteligente.repositories.ProductOrderRepository;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
+import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.utils.DateUtils;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,12 +31,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private final Long companyId = 1L; // TODO sacar de JWT token
     private final ProductOrderRepository productOrderRepository;
-    private final ClientRepository clientRepository;
+    private final ClientRepository clientRepository; // TODO cambiar por respectivo servicio
     private final ProductOrderMapper productOrderMapper;
+    private final ProductService productService;
 
-    private final ProductRepository productRepository;
-
-    private final CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository; // TODO cambiar por respectivo servicio
 
     private static final Logger logger = LoggerFactory.getLogger(ProductOrderServiceImpl.class);
     private LocalDateTime timeNow = LocalDateTime.now();
@@ -42,14 +43,14 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     ProductOrderServiceImpl(ProductOrderRepository productOrderRepository,
                             ClientRepository clientRepository,
-                            ProductRepository productRepository,
+                            ProductService productService,
                             CompanyRepository companyRepository,
                             ProductOrderMapper productOrderMapper
     ){
         this.productOrderRepository = productOrderRepository;
         this.clientRepository = clientRepository;
         this.productOrderMapper  = productOrderMapper;
-        this.productRepository  = productRepository;
+        this.productService  = productService;
         this.companyRepository = companyRepository;
 
 
@@ -86,8 +87,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public ProductOrderResponse createProductOrder(ProductOrderRequest productOrderRequest) throws Exception {
 
 
-        ProductOrder productOrder = this.productOrderMapper.productOrderRequestToProductOrder(productOrderRequest);
-        productOrder.setEntryDate(this.timeNow);
+        ProductOrder productOrder = this.createProductOrderWithEntryDateFromRequest(productOrderRequest);
 
 
         this.validateDateOrder(productOrder.getInitialDate(), this.timeNow,
@@ -107,27 +107,15 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 
         Company company = this.companyRepository.findById(this.companyId)
-                .orElseThrow(() -> new ProductOrderNotFoundException("company was not found"));
-        Client client = this.clientRepository.findById(productOrderRequest.getClient().getId())
-                .orElseThrow(() -> new ProductOrderNotFoundException("client " + productOrderRequest.getClient()
-                        .getCommonAttribute().getName() + " was not found"));
-        //Product p = new Product();
-       // p.setName("nuevo producto");
-        // this.productRepository.save(p);
-         //Client c = new Client();
-        //TODO buscar si un cliente creado y un si producto ya existen y agregar
-         //this.clientRepository.save(c);
+                .orElseThrow(() -> new EntityNotFoundException("company was not found"));
 
-        /*Product product = this.productRepository.findById(productOrderRequest.getProductId())
-                .orElseThrow(() -> new  EntityNotFoundException("product not found"));*/
-        //productOrder.setProduct(p);
-        //productOrder.setClient(c); // TODO eliminar datos duros
+
+        Product product = this.findProductByIdOrThrow((productOrderRequest.getProductId()));
+
+        productOrder.setProduct(product);
         productOrder.setCompany(company);
         productOrder.setClient(clientSaved);
-        //-------------------------------
-        //List lista = this.clientRepository.findAll();
         ProductOrder productOrderSaved = this.productOrderRepository.save(productOrder);
-        //company.setProductOrders(lista);
         return this.productOrderMapper.productOrderToProductOrderResponse(productOrderSaved);
     }
 
@@ -182,6 +170,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
     }
 
+    private ProductOrder createProductOrderWithEntryDateFromRequest(ProductOrderRequest productOrderRequest) {
+        ProductOrder productOrder = this.productOrderMapper.productOrderRequestToProductOrder(productOrderRequest);
+        productOrder.setEntryDate(this.timeNow);
+        return productOrder;
+    }
+
 
 
     private void validateDateOrder(LocalDateTime firstDateToValidate, LocalDateTime secondDateToValidate, String errorMessage) throws IllegalArgumentException {
@@ -190,6 +184,26 @@ public class ProductOrderServiceImpl implements ProductOrderService {
             throw new IllegalArgumentException(errorMessage +
                     " Please ensure that the date is equal to or later than the entry date");
         }
+
+    }
+
+    //TODO implementar
+    /*
+    private Client saveClient(Client client) {
+        return this.clientService.saveClient(client);
+    }*/
+
+    private Product findProductByIdOrThrow(Long productId)
+            throws EntityNotFoundException {
+        return this.productService.byId(productId)
+                .orElseThrow(() -> {
+                    logger.error("product with id " +
+                            productId +
+                            "not found");
+                   throw new EntityNotFoundException("product with id " +
+                            productId +
+                            " not found");
+                });
     }
 
 }

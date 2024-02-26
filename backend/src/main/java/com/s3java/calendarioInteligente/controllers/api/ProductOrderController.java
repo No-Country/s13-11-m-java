@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
@@ -194,19 +195,28 @@ public class ProductOrderController {
             return ResponseEntity.status(HttpStatus.CREATED).body(productOrder);
         } catch (ProductOrderNotFoundException e) {
             this.logger.error("Resource not found: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductOrderResponse("Resource not found: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ProductOrderResponse("Resource not found: " + e.getMessage()));
         } catch (BadRequestException e) {
             this.logger.error("Bad request: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ProductOrderResponse("Bad request: " + e.getMessage()));
+        }
+        catch (EntityNotFoundException e){
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ProductOrderResponse("Resource not found: " + e.getMessage()));
         }
         catch (IllegalArgumentException e){
             this.logger.error("Bad request " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request error" + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ProductOrderResponse("Bad request error" + e.getMessage()));
 
         }
         catch (Exception e) {
             this.logger.error("Internal server error: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ProductOrderResponse("Internal server error"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ProductOrderResponse("Internal server error"));
         }
     }
 
@@ -233,6 +243,11 @@ public class ProductOrderController {
         } catch (BadRequestException e) {
             this.logger.error("Bad request: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request: " + e.getMessage()));
+        }
+        catch (EntityNotFoundException e){
+            this.logger.error("Resource not found: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ProductOrderResponse("Resource not found: " + e.getMessage()));
         }
         catch (IllegalArgumentException e){
             this.logger.error("Bad request " + e.getMessage());
