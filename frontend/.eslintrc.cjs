@@ -13,6 +13,11 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "prettier",
   ],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   ignorePatterns: ["dist", ".eslintrc.cjs", "node_modules"],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh", "import", "simple-import-sort"],
