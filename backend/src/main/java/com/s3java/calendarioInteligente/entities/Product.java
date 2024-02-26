@@ -52,9 +52,9 @@ public class Product {
     @Column(name = "time_estimated_completion")
     private String timeEstimatedCompletion;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Process> processes = new ArrayList<>();
+    private List<ProductProcess> productProcesses = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -81,12 +81,12 @@ public class Product {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
-    public List<Process> getProcesses() {
-        return processes;
+    public List<ProductProcess> getProductProcesses() {
+        return productProcesses;
     }
 
-    public void setProcesses(List<Process> processes) {
-        this.processes = processes;
+    public void setProductProcesses(List<ProductProcess> productProcesses) {
+        this.productProcesses = productProcesses;
     }
 
     public Company getCompany() {

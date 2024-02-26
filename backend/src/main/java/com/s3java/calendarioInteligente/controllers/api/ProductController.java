@@ -2,6 +2,7 @@ package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
+import com.s3java.calendarioInteligente.entities.ProductProcess;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -112,6 +113,16 @@ public class ProductController {
                 errors.put(error.getField(), "El campo " + error.getField() + " " + error.getDefaultMessage())
         );
         return ResponseEntity.badRequest().body(errors);
+    }
+  
+   @PostMapping("/process/{productID}")
+    public ResponseEntity<?> addProcessToProduct(@Valid @RequestBody ProductProcess productProcess, @PathVariable Long productID){
+        return productService.addProcessToProduct(productProcess, productID);
+    }
+
+    @DeleteMapping("/process/{productID}/{processID}")
+    public ResponseEntity<?> deleteProcess(@PathVariable Long productID, @PathVariable Long processID){
+        return productService.deleteProcessFromProduct(productID, processID);
     }
 
 }
