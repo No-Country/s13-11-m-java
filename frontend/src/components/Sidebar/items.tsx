@@ -1,11 +1,6 @@
+import OrdersIcon from "../icons/OrdersIcon";
 import ProductsIcon from "../icons/ProductsIcon";
-import {
-  MdOutlineCalendarMonth,
-  MdOutlineDashboard,
-  MdOutlinePeopleAlt,
-  MdOutlineSettings,
-  MdReceiptLong,
-} from "react-icons/md";
+import { MdOutlineCalendarMonth, MdOutlineDashboard, MdOutlinePeopleAlt, MdOutlineSettings } from "react-icons/md";
 
 export const menuItems = [
   {
@@ -19,7 +14,7 @@ export const menuItems = [
     href: "/dashboard",
   },
   {
-    icon: <MdReceiptLong />,
+    icon: <OrdersIcon />,
     label: "Pedidos",
     href: "/orders",
   },

@@ -15,7 +15,7 @@ const Sidebar = () => {
             <li
               key={index}
               data-active={pathname === item.href}
-              className="relative before:absolute before:w-0.5 hover:before:bg-primary/50 data-[active=true]:bg-accent before:data-[active=true]:bg-primary max-md:before:bottom-0 max-md:before:h-0.5 max-md:before:w-full md:before:left-0 md:before:h-full"
+              className="relative before:absolute before:w-0.5 before:rounded-sm hover:before:bg-primary/50 data-[active=true]:bg-accent before:data-[active=true]:bg-primary max-md:before:bottom-0 max-md:before:h-0.5 max-md:before:w-full md:before:left-0 md:before:h-full"
             >
               <Button asChild className="h-12 w-12 text-2xl" size="icon" variant="ghost" aria-label={item.label}>
                 <Link to={item.href}>{item.icon}</Link>
