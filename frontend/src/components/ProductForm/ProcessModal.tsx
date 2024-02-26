@@ -13,6 +13,8 @@ import {
   FaChevronDown,
   // FaCheck
 } from "react-icons/fa";
+import { Process } from "@/mocks/process/data";
+
 interface ProcessFormProps {
   onSubmit?: (values: ProcessFormInputs) => void;
   loading?: boolean;

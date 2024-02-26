@@ -1,12 +1,20 @@
 export type Status = "completed" | "in-progress" | "pending";
 
+export type SubProcess = {
+  name: string;
+  timeframe: number;
+  progress: number;
+  estimatedTime: number;
+  status: Status;
+};
+
 export type Process = {
   name: string;
   timeframe: number;
   progress: number;
   estimatedTime: number;
   status: Status;
-  subProcess?: Process[] | undefined;
+  subProcess: SubProcess[];
 };
 
 export const process: Process[] = [
@@ -86,6 +94,7 @@ export const process: Process[] = [
     progress: 0,
     estimatedTime: 0,
     status: "pending",
+    subProcess: [],
   },
 
   {

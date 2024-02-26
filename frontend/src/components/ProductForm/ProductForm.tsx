@@ -36,7 +36,7 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
   const [data, setData] = useState<Process[]>([]);
   const form = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
-    defaultValues: { process: [] },
+    defaultValues: { process: [] as Process[] },
   });
 
   function handleSubmit(values: ProductFormInputs) {
