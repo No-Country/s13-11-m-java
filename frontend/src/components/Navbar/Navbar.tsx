@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useAuth from "@/hooks/useAuth";
 
-import Logo from "../Logo/Logo";
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,6 +18,7 @@ import {
 import { FaBars, FaRegBell } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 
+import Logo from "../Logo";
 import { logItems, navItems } from "./items";
 
 function Navbar() {
@@ -28,7 +28,21 @@ function Navbar() {
   return (
     <header className="sticky inset-x-0 top-0 z-50 bg-background py-4 shadow-sm">
       <div className="container flex items-center">
-        <Logo />
+        <Link to="/" className="flex items-center gap-2">
+          <Logo className="h-14 w-14" fillColor="#00304b" />
+          <span className="mt-4 w-40 select-none font-bold text-[#00304b]">SMART BUSINESS TRACKER</span>
+        </Link>
+        <div className="flex grow justify-end md:justify-center">
+          {isLogin && (
+            <div className="space-x-4">
+              {navItems.map((item, index) => (
+                <Button variant="link" key={index} className="text-base" asChild>
+                  <Link to={item.link}>{item.title}</Link>
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
         {isLogin ? (
           <div className="flex grow justify-end space-x-2 md:space-x-4">
             {matches ? (

@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/orders",
-        Component: React.lazy(() => import("@/pages/Orders/Orders")),
+        Component: React.lazy(() => import("@/pages/Orders/OrderPage")),
       },
       {
         path: "/employees",
@@ -60,6 +60,14 @@ export const router = createBrowserRouter([
             Component: React.lazy(() => import("@/pages/Settings/CalendarSettings")),
           },
         ],
+      },
+      {
+        path: "/product",
+        Component: React.lazy(() => import("@/pages/Products/ProductPage")),
+      },
+      {
+        path: "/order",
+        Component: React.lazy(() => import("@/pages/Orders/OrderPage")),
       },
     ],
   },
