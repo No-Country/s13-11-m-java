@@ -1,23 +1,25 @@
-import CalendarIcon from "../icons/CalendarIcon";
-import ConfigurationIcon from "../icons/ConfigurationIcon";
-import DashboardIcon from "../icons/DashboardIcon";
-import EmployeesIcon from "../icons/EmployeesIcon";
-import OrdersIcon from "../icons/OrdersIcon";
 import ProductsIcon from "../icons/ProductsIcon";
+import {
+  MdOutlineCalendarMonth,
+  MdOutlineDashboard,
+  MdOutlinePeopleAlt,
+  MdOutlineSettings,
+  MdReceiptLong,
+} from "react-icons/md";
 
 export const menuItems = [
   {
-    icon: <CalendarIcon />,
+    icon: <MdOutlineCalendarMonth />,
     label: "Calendario",
     href: "/calendar",
   },
   {
-    icon: <DashboardIcon />,
+    icon: <MdOutlineDashboard />,
     label: "Dashboard",
     href: "/dashboard",
   },
   {
-    icon: <OrdersIcon />,
+    icon: <MdReceiptLong />,
     label: "Pedidos",
     href: "/orders",
   },
@@ -27,12 +29,12 @@ export const menuItems = [
     href: "/products",
   },
   {
-    icon: <EmployeesIcon />,
+    icon: <MdOutlinePeopleAlt />,
     label: "Empleados",
     href: "/employees",
   },
   {
-    icon: <ConfigurationIcon />,
+    icon: <MdOutlineSettings />,
     label: "Configuración",
     href: "/settings",
   },
