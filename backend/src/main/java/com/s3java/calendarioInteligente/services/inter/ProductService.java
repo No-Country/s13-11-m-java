@@ -1,9 +1,10 @@
 package com.s3java.calendarioInteligente.services.inter;
 
 import com.s3java.calendarioInteligente.entities.Product;
-
 import java.util.List;
 import java.util.Optional;
+import com.s3java.calendarioInteligente.entities.ProductProcess;
+import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
 
@@ -13,4 +14,7 @@ public interface ProductService {
     void delete(Long id);
     Optional<Product> byIdUnico(String idUnico);
     Optional<Product> byName(String name);
+    ResponseEntity<?> addProcessToProduct(ProductProcess process, Long productID);
+    ResponseEntity<?> deleteProcessFromProduct(Long productID, Long processID);
+
 }
