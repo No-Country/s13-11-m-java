@@ -179,6 +179,8 @@ public class Product {
         this.productOrder = productOrder;
     }
 
+
+
     @Override
     public String toString() {
         return "Product{" +
@@ -189,7 +191,6 @@ public class Product {
                 ", state=" + state +
                 ", isActive=" + isActive +
                 ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
-                ", processes=" + processes +
                 ", company=" + company +
                 // ", productOrder=" + productOrder +
                 '}';
