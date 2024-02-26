@@ -1,8 +1,8 @@
 const ErrorRegister = () => {
   return (
     <div className="flex h-screen w-screen">
-      <div className="w-1/3 bg-primary flex justify-center items-center"></div>
-      <div className="w-2/3 flex justify-center items-center max-w-[658px] text-center mx-auto">
+      <div className="flex w-1/3 items-center justify-center bg-primary"></div>
+      <div className="mx-auto flex w-2/3 max-w-[658px] items-center justify-center text-center">
         <p className="text-2xl">Lo sentimos, el nombre de usuario o la contraseña ingresados son incorrectos.</p>
       </div>
     </div>

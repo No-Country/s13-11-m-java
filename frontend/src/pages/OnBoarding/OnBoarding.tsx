@@ -25,7 +25,7 @@ const Carousel: React.FC = () => {
                   </Button>
                 )}
               </div>
-              <div className="md:col-span-3 mx-auto max-w-sm md:max-w-full">
+              <div className="mx-auto max-w-sm md:col-span-3 md:max-w-full">
                 <img src={image} />
               </div>
             </div>
