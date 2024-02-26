@@ -10,14 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import com.s3java.calendarioInteligente.entities.ProductProcess;
 import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     @Autowired
     private ProductRepository productRepository;
 
     @Override
+
     @Transactional(readOnly = true)
     public List<Product> list() {
         return (List<Product>) productRepository.findAll();
@@ -51,4 +57,34 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> byName(String name) {
         return productRepository.findByName(name);
     }
+
+    @Override
+    public ResponseEntity<?> addProcessToProduct (ProductProcess process, Long productID) {
+        Optional<Product> foundProduct = productRepository.findById(productID);
+        if (foundProduct.isPresent()) {
+            Product product = foundProduct.get();
+            List<ProductProcess> productList = product.getProductProcesses();
+            productList.add(process);
+            product.setProductProcesses(productList);
+            process.setProduct(product);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        //TODO: Mejor manejo de excepcion
+        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteProcessFromProduct (Long productID, Long processID){
+        Optional<Product> foundProduct = productRepository.findById(productID);
+        if (foundProduct.isPresent()) {
+            Product product = foundProduct.get();
+            List<ProductProcess> processList = product.getProductProcesses();
+            processList.removeIf(p -> Objects.equals(p.getId(), processID));
+            product.setProductProcesses(processList);
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        //TODO: Mejor manejo de excepcion
+        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+    }
+
 }

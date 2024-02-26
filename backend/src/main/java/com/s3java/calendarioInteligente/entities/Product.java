@@ -1,8 +1,10 @@
 package com.s3java.calendarioInteligente.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -50,14 +52,19 @@ public class Product {
     @Column(name = "time_estimated_completion")
     private String timeEstimatedCompletion;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Process> processes = new ArrayList<>();
+    private List<ProductProcess> productProcesses = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     @JsonBackReference
     private Company company;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @Null
+    private ProductOrder productOrder;
 
     public Product() {
     }
@@ -74,12 +81,12 @@ public class Product {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
-    public List<Process> getProcesses() {
-        return processes;
+    public List<ProductProcess> getProductProcesses() {
+        return productProcesses;
     }
 
-    public void setProcesses(List<Process> processes) {
-        this.processes = processes;
+    public void setProductProcesses(List<ProductProcess> productProcesses) {
+        this.productProcesses = productProcesses;
     }
 
     public Company getCompany() {
@@ -164,6 +171,30 @@ public class Product {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
+    public ProductOrder getProductOrder() {
+        return productOrder;
+    }
+
+    public void setProductOrder(ProductOrder productOrder) {
+        this.productOrder = productOrder;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", instruction='" + instruction + '\'' +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                ", isActive=" + isActive +
+                ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
+                ", company=" + company +
+                // ", productOrder=" + productOrder +
+                '}';
+    }
     @PrePersist
     public void onPrePersist() {
         this.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
