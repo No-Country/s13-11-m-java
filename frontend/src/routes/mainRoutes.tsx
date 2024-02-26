@@ -5,11 +5,6 @@ import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import NotFoundPage from "@/pages/NotFoundPage";
 import OnBoarding from "@/pages/OnBoarding/OnBoarding";
-import AccountSettings from "@/pages/Settings/AccountSettings";
-import CalendarSettings from "@/pages/Settings/CalendarSettings";
-import NotificationSettings from "@/pages/Settings/NotificationSettings";
-import SecurityPrivacy from "@/pages/Settings/SecurityPrivacy";
-import SettingsPage from "@/pages/Settings/SettingsPage";
 
 export const router = createBrowserRouter([
   {
@@ -46,23 +41,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "/settings",
-        element: <SettingsPage />,
+        Component: React.lazy(() => import("@/pages/Settings/SettingsPage")),
         children: [
           {
             path: "/settings/security",
-            element: <SecurityPrivacy />,
+            Component: React.lazy(() => import("@/pages/Settings/SecurityPrivacy")),
           },
           {
             path: "/settings/account",
-            element: <AccountSettings />,
+            Component: React.lazy(() => import("@/pages/Settings/AccountSettings")),
           },
           {
             path: "/settings/notifications",
-            element: <NotificationSettings />,
+            Component: React.lazy(() => import("@/pages/Settings/NotificationSettings")),
           },
           {
             path: "/settings/calendar",
-            element: <CalendarSettings />,
+            Component: React.lazy(() => import("@/pages/Settings/CalendarSettings")),
           },
         ],
       },
