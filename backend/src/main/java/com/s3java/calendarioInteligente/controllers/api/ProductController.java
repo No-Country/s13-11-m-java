@@ -1,4 +1,4 @@
-package com.s3java.calendarioInteligente.controllers;
+package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
