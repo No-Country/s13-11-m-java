@@ -1,8 +1,10 @@
 package com.s3java.calendarioInteligente.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -58,6 +60,11 @@ public class Product {
     @JoinColumn(name = "company_id")
     @JsonBackReference
     private Company company;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @Null
+    private ProductOrder productOrder;
 
     public Product() {
     }
@@ -164,6 +171,28 @@ public class Product {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
+    public ProductOrder getProductOrder() {
+        return productOrder;
+    }
+
+    public void setProductOrder(ProductOrder productOrder) {
+        this.productOrder = productOrder;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", instruction='" + instruction + '\'' +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                ", isActive=" + isActive +
+                ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
+                ", processes=" + processes +
+                ", company=" + company +
+               // ", productOrder=" + productOrder +
+                '}';
     @PrePersist
     public void onPrePersist() {
         this.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
