@@ -7,6 +7,7 @@ import useAuth from "@/hooks/useAuth";
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
 import { logItems, navItems } from "./items";
+import Logo from "../Logo";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
@@ -14,8 +15,9 @@ function Navbar() {
   return (
     <header className="sticky inset-x-0 top-0 z-50  bg-background p-4 shadow-sm">
       <div className="container flex items-center">
-        <Link to="/">
-          <h1 className="text-3xl">LOGO</h1>
+        <Link to="/" className="flex items-center gap-2">
+          <Logo className="h-14 w-14" fillColor="#00304b" />
+          <span className="mt-4 w-40 select-none font-bold text-[#00304b]">SMART BUSINESS TRACKER</span>
         </Link>
         <div className="flex grow justify-end md:justify-center">
           {isLogin && (
