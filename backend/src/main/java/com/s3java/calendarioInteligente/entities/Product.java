@@ -40,7 +40,7 @@ public class Product {
     @JsonBackReference
     private Company company;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.EAGER)
+    @OneToOne()
     @JsonIgnore
     @Null
     private ProductOrder productOrder;

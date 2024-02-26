@@ -89,6 +89,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         ProductOrder productOrder = this.productOrderMapper.productOrderRequestToProductOrder(productOrderRequest);
         productOrder.setEntryDate(this.timeNow);
 
+
         this.validateDateOrder(productOrder.getInitialDate(), this.timeNow,
                 "The initial date must not be earlier than the entry date.");
         this.validateDateOrder(productOrder.getFinishEstimatedDate(), this.timeNow,
@@ -101,11 +102,15 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         productOrder.setActive(true);
 
         // TODO adaptar cuando esten Product y Client repositorios
+
+        Client clientSaved = this.clientRepository.save(productOrderRequest.getClient());
+
+
         Company company = this.companyRepository.findById(this.companyId)
                 .orElseThrow(() -> new ProductOrderNotFoundException("company was not found"));
         Client client = this.clientRepository.findById(productOrderRequest.getClient().getId())
                 .orElseThrow(() -> new ProductOrderNotFoundException("client " + productOrderRequest.getClient()
-                        .getCommonAttribute().getName() + "was not found"));
+                        .getCommonAttribute().getName() + " was not found"));
         //Product p = new Product();
        // p.setName("nuevo producto");
         // this.productRepository.save(p);
@@ -118,7 +123,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         //productOrder.setProduct(p);
         //productOrder.setClient(c); // TODO eliminar datos duros
         productOrder.setCompany(company);
-        productOrder.setClient(client);
+        productOrder.setClient(clientSaved);
         //-------------------------------
         //List lista = this.clientRepository.findAll();
         ProductOrder productOrderSaved = this.productOrderRepository.save(productOrder);

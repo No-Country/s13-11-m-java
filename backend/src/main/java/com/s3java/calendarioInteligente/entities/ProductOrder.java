@@ -52,7 +52,7 @@ public class ProductOrder {
     @Fetch(FetchMode.JOIN)
     private Client client;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     @JsonIgnore
     @Fetch(FetchMode.JOIN)

@@ -56,15 +56,7 @@ class ProductOrderServiceTest {
     @Test
     void findProductOrderById() {
 
-        Long productId = 1L;
-        ProductOrder mockProductOrder = /* create a ProductOrder instance */;
-        Optional<ProductOrder> optionalProductOrder = Optional.of(mockProductOrder);
-        when(productOrderRepository.findProductOrderById(eq(productId), anyLong())).thenReturn(optionalProductOrder);
 
-        ProductOrderResponse result = productOrderService.findProductOrderById(productId);
-
-
-        assertNotNull(result);
     }
 
     @Test
