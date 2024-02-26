@@ -3,13 +3,15 @@ version: '3.9'
 services:
   java_app:
     container_name: java_app
-    image: duquenestor/javacalendario:latest
+    build: .
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_URL=jdbc:postgresql://java_db:5432/postgres
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=postgres
+        - PROD_DB_HOST=java_db
+        - PROD_DB_PORT=5432
+        - PROD_DB_NAME=postgres
+        - PROD_DB_USERNAME=postgres
+        - PROD_DB_PASSWORD=postgres
     depends_on:
       - java_db
     restart: always
