@@ -63,8 +63,7 @@ public class Product {
     }
 
 
-    public Product(Long id, String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
-        this.id = id;
+    public Product(String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
         this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
