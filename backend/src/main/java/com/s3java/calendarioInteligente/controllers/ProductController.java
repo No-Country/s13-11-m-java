@@ -18,9 +18,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-  
-    @Autowired
-    private ProductServiceImpl productServiceImpl;
 
     @GetMapping("/all")
     public List<Product> list(){

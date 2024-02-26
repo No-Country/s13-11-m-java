@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-  
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -56,10 +56,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> byName(String name) {
         return productRepository.findByName(name);
-      
-    public ResponseEntity<?> addProcessToProduct(ProductProcess process, Long productID) {
+    }
+
+    @Override
+    public ResponseEntity<?> addProcessToProduct (ProductProcess process, Long productID) {
         Optional<Product> foundProduct = productRepository.findById(productID);
-        if (foundProduct.isPresent()){
+        if (foundProduct.isPresent()) {
             Product product = foundProduct.get();
             List<ProductProcess> productList = product.getProductProcesses();
             productList.add(process);
@@ -72,8 +74,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> deleteProcessFromProduct(Long productID, Long processID) {
-        Optional<Product> foundProduct =  productRepository.findById(productID);
+    public ResponseEntity<?> deleteProcessFromProduct (Long productID, Long processID){
+        Optional<Product> foundProduct = productRepository.findById(productID);
         if (foundProduct.isPresent()) {
             Product product = foundProduct.get();
             List<ProductProcess> processList = product.getProductProcesses();
@@ -82,6 +84,7 @@ public class ProductServiceImpl implements ProductService {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
         //TODO: Mejor manejo de excepcion
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);  
+        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
     }
+
 }
