@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const NotificationSettings = () => {
   return (
-    <div className="position container fixed top-20 h-screen bg-[#fafafa] px-1 py-3">
+    <div className="position container fixed top-20 h-screen bg-[#fafafa] px-0 py-4">
       <div className="flex items-center gap-4 border-b-2 py-4">
         <Link to="/settings" className="transition-transform hover:scale-125">
           <FaArrowLeft size={24} />

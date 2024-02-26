@@ -18,7 +18,7 @@ import SettingsPage from "@/pages/Settings/SettingsPage";
 import SecurityPrivacy from "@/pages/Settings/SecurityPrivacy";
 import AccountSettings from "@/pages/Settings/AccountSettings";
 import NotificationSettings from "@/pages/Settings/NotificationSettings";
-import CalendarySettings from "@/pages/Settings/CalendarySettings";
+import CalendarSettings from "@/pages/Settings/CalendarSettings";
 
 export const router = createBrowserRouter([
   {
@@ -73,7 +73,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/settings/calendar",
-            element: <CalendarySettings />,
+            element: <CalendarSettings />,
           },
         ],
       },
