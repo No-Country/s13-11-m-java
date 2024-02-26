@@ -8,5 +8,5 @@ public interface ClientService {
 
     public Set<Client> getAll();
 
-    public Client create();
+    public Client create(Client client);
 }

@@ -26,7 +26,7 @@ import java.util.Optional;
 public class ProductOrderServiceImpl implements ProductOrderService {
 
 
-    private final Long companyId = 1L;
+    private final Long companyId = 1L; // TODO debe venir de token
     private final ProductOrderRepository productOrderRepository;
     private final ClientRepository clientRepository;
     private final ProductOrderMapper productOrderMapper;

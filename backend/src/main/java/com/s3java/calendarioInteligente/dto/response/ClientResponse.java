@@ -3,20 +3,11 @@ package com.s3java.calendarioInteligente.dto.response;
 
 public class ClientResponse {
 
-    private Long id;
-
     private String name;
     private String email;
     private String address;
     private String phone;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -53,7 +44,6 @@ public class ClientResponse {
     @Override
     public String toString() {
         return "ClientResponse{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +

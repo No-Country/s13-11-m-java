@@ -22,6 +22,11 @@ public class Client {
     @JsonBackReference
     private ProductOrder productOrder;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
+    private Company company;
+
     public Long getId() {
         return id;
     }
