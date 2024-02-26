@@ -191,8 +191,9 @@ public class Product {
                 ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
                 ", processes=" + processes +
                 ", company=" + company +
-               // ", productOrder=" + productOrder +
+                // ", productOrder=" + productOrder +
                 '}';
+    }
     @PrePersist
     public void onPrePersist() {
         this.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
