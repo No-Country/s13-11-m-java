@@ -13,7 +13,7 @@
   ],
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss",
+    "prettier-plugin-tailwindcss"
   ],
   "importOrder": [
     "^react$|^react-[rd]|^@reduxjs",
