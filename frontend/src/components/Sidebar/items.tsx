@@ -34,6 +34,6 @@ export const menuItems = [
   {
     icon: <ConfigurationIcon />,
     label: "Configuración",
-    href: "/configuration",
+    href: "/settings",
   },
 ];

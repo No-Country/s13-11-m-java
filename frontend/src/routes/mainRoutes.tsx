@@ -5,6 +5,11 @@ import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import NotFoundPage from "@/pages/NotFoundPage";
 import OnBoarding from "@/pages/OnBoarding/OnBoarding";
+import AccountSettings from "@/pages/Settings/AccountSettings";
+import CalendarSettings from "@/pages/Settings/CalendarSettings";
+import NotificationSettings from "@/pages/Settings/NotificationSettings";
+import SecurityPrivacy from "@/pages/Settings/SecurityPrivacy";
+import SettingsPage from "@/pages/Settings/SettingsPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,8 +45,26 @@ export const router = createBrowserRouter([
         Component: React.lazy(() => import("@/pages/Employees/EmployeesPage")),
       },
       {
-        path: "/configuration",
-        Component: React.lazy(() => import("@/pages/Configuration/Configuration")),
+        path: "/settings",
+        element: <SettingsPage />,
+        children: [
+          {
+            path: "/settings/security",
+            element: <SecurityPrivacy />,
+          },
+          {
+            path: "/settings/account",
+            element: <AccountSettings />,
+          },
+          {
+            path: "/settings/notifications",
+            element: <NotificationSettings />,
+          },
+          {
+            path: "/settings/calendar",
+            element: <CalendarSettings />,
+          },
+        ],
       },
     ],
   },
