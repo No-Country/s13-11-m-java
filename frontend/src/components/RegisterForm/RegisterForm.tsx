@@ -63,12 +63,7 @@ const RegisterForm = ({ loading, onSubmit }: RegisterFormProps) => {
               <FormItem>
                 <FormLabel>{input.label}</FormLabel>
                 <FormControl>
-                  <Input
-                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                    placeholder={input.placeholder}
-                    type={input.type}
-                    {...field}
-                  />
+                  <Input variant="standard" placeholder={input.placeholder} type={input.type} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -9,7 +9,8 @@
     "clsx",
     "cn",
     "twMerge",
-    "tw"
+    "tw",
+    "cva"
   ],
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",
