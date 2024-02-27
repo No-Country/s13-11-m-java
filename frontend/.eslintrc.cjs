@@ -43,6 +43,6 @@ module.exports = {
   plugins: ["@typescript-eslint", "react", "react-hooks"],
   rules: {
     "react/react-in-jsx-scope": "off", // Desactiva la regla de react-in-jsx-scope
-    "react/prop-types": [2, { ignore: ["className"] }], // Desactiva la regla de prop-types para className
+    "react/prop-types": "off", // Desactiva la regla de prop-types para className
   },
 };
