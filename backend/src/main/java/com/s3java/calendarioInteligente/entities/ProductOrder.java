@@ -42,7 +42,7 @@ public class ProductOrder {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     @NotNull
     private Product product;

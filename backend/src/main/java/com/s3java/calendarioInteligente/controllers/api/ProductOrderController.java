@@ -272,9 +272,16 @@ public class ProductOrderController {
             productOrderService
                     .deleteProductOrder(orderId);
             return ResponseEntity.accepted().build();
-        } catch (Exception e) {
+        }
+        catch (RuntimeException e){
+            this.logger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
                     .header("Not implemented", e.getMessage()).build();
+
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("internal server error", e.getMessage()).build();
         }
     }
 

@@ -18,6 +18,7 @@ import com.s3java.calendarioInteligente.utils.DateUtils;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -134,18 +135,18 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return this.productOrderMapper.productOrderToProductOrderResponse(productOrderUpdated);
     }
 
+    @Transactional
     @Override
     public void deleteProductOrder(Long productOrderId) throws Exception {
-        Optional<ProductOrder> optionalOrder = this.productOrderRepository.findById(productOrderId);
-        optionalOrder.ifPresentOrElse(
-                productOrder -> {
-                    productOrder.setIsActive(false);
-                    productOrderRepository.save(productOrder);
-                },
-                () -> {
-                    throw new RuntimeException("Product order not found with ID: " + productOrderId);
-                }
-        );
+
+
+        ProductOrder po = this.productOrderRepository.findById(productOrderId)
+                .orElseThrow(() -> new EntityNotFoundException("Product order not found with ID: " + productOrderId));
+        po.setIsActive(false);
+        Company company = po.getCompany();
+        Hibernate.initialize(company.getEmployee());
+        productOrderRepository.save(po);
+
     }
 
     @Override

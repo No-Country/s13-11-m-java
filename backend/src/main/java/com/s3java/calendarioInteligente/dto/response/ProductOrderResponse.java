@@ -24,7 +24,7 @@ public class ProductOrderResponse {
 
     private LocalDateTime finishEstimatedDate;
 
-    private Long productId;
+    private Product product;
 
     private Client client;
 
@@ -84,12 +84,12 @@ public class ProductOrderResponse {
     }
 
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Client getClient() {
@@ -127,7 +127,6 @@ public class ProductOrderResponse {
                 ", photoLink='" + photoLink + '\'' +
                 ", initialDate=" + initialDate +
                 ", finishEstimatedDate=" + finishEstimatedDate +
-                ", productId=" + productId +
                 ", client=" + client +
                 '}';
     }
