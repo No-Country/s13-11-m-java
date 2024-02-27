@@ -37,7 +37,10 @@ export const api = createApi({
           return {
             error: {
               status: 401,
-              data: { message: "Invalid credentials" },
+              data: {
+                message: "Invalid credentials",
+                errors: { email: "Email not found", password: "Password is incorrect" },
+              },
             },
           };
         }
@@ -54,7 +57,17 @@ export const api = createApi({
           return {
             error: {
               status: 400,
-              data: { message: "Invalid data" },
+              data: {
+                message: "Invalid data",
+                errors: {
+                  email: "El email ya existe",
+                  password: "La contraseña es muy débil",
+                  firstName: "El nombre es requerido",
+                  lastName: "El apellido es requerido",
+                  address: "La dirección es requerida",
+                  phone: "El teléfono es requerido",
+                },
+              },
             },
           };
         }

@@ -48,6 +48,12 @@ export interface RegisterRequest {
   phone: string;
 }
 
+// error de registro
+export type RegisterError = ErrorRequest<{
+  message: string;
+  errors: Partial<Record<keyof RegisterRequest, string>>;
+}>;
+
 export interface Product {
   id: number;
   idUnico: string;
@@ -118,4 +124,9 @@ export interface Order {
   finishEstimatedDate: string;
   productId: number;
   clientId: number;
+}
+
+export interface ErrorRequest<T = unknown> {
+  status: number;
+  data: T;
 }

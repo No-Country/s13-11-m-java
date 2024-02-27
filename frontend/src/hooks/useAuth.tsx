@@ -23,34 +23,19 @@ const useAuth = () => {
   };
 
   const handleSubmit = async (values: LoginFormInputs) => {
-    try {
-      await login(values).unwrap();
-      navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
-      alert("Error al iniciar sesión");
-    }
+    await login(values).unwrap();
+    navigate("/dashboard");
   };
 
   const handleForgotPassword = async (values: ForgotPasswordFormInputs) => {
-    try {
-      const { email } = values;
-      await forgotPassword(email).unwrap();
-      navigate("/confirm-email");
-    } catch (error) {
-      console.error(error);
-      alert("Error al enviar email");
-    }
+    const { email } = values;
+    await forgotPassword(email).unwrap();
+    navigate("/confirm-email");
   };
 
   const handleRegister = async (values: RegisterFormInputs) => {
-    try {
-      await register(values).unwrap();
-      navigate("/confirm-email");
-    } catch (error) {
-      console.error(error);
-      alert("Error al registrar usuario");
-    }
+    await register(values).unwrap();
+    navigate("/confirm-email");
   };
 
   return {

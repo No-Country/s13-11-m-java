@@ -12,7 +12,7 @@ import forgotPasswordSchema, { ForgotPasswordFormInputs } from "@/schemas/forgot
 import ForgotPasswordImage from "@/assets/forgot_password.svg";
 import { authCredentials } from "@/constants/api";
 
-const ForgotPassword2 = () => {
+const ForgotPassword = () => {
   const { forgotPassword, isLoadingForgotPassword } = useAuth();
 
   const form = useForm<ForgotPasswordFormInputs>({
@@ -55,4 +55,4 @@ const ForgotPassword2 = () => {
   );
 };
 
-export default ForgotPassword2;
+export default ForgotPassword;
