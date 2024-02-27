@@ -14,7 +14,7 @@ function CalendarSettings() {
           <span className="text-3xl">Calendario</span>
         </div>
         <div>
-          <Button variant="default" className="flex items-center gap-2 px-12">
+          <Button variant="default" className="flex hidden items-center gap-2 px-12">
             <IoMdAddCircleOutline size={24} />
             Agregar feriado/ día no laborable
           </Button>
