@@ -91,6 +91,10 @@
   * {
     @apply border-border;
   }
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply bg-background text-base text-foreground;
     font-family: "Lato", sans-serif;

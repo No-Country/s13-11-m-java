@@ -7,7 +7,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 
 function CalendarSettings() {
   return (
-    <div className="position container fixed top-20 h-screen bg-[#fafafa] px-0 py-4">
+    <div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 py-4">
           <Link to="/settings" className="transition-transform hover:scale-125">

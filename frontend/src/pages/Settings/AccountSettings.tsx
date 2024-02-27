@@ -11,7 +11,7 @@ import { FaArrowLeft } from "react-icons/fa";
 function AccountSettings() {
   const { user } = useAuth();
   return (
-    <div className="position container fixed top-20 h-screen bg-[#fafafa] px-0 py-4">
+    <div>
       <div className="flex items-center gap-4 py-4">
         <Link to="/settings" className="transition-transform hover:scale-125">
           <FaArrowLeft size={24} />

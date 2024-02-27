@@ -41,8 +41,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/settings",
-        Component: React.lazy(() => import("@/pages/Settings/SettingsPage")),
+        Component: React.lazy(() => import("@/pages/Settings/SettingsLayout")),
         children: [
+          {
+            index: true,
+            Component: React.lazy(() => import("@/pages/Settings/SettingsPage")),
+          },
           {
             path: "/settings/security",
             Component: React.lazy(() => import("@/pages/Settings/SecurityPrivacy")),

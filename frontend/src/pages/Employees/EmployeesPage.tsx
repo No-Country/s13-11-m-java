@@ -38,7 +38,7 @@ const EmployeesPage = () => {
   };
 
   return (
-    <div className="container py-10">
+    <div>
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Empleados</h2>
         <Button size="rounded-xl" className="w-full max-w-sm max-sm:px-0">

@@ -4,7 +4,6 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import useAuth from "@/hooks/useAuth";
 
 import { Button } from "../ui/button";
-import { InputSearch } from "../ui/inputSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Menubar,
@@ -16,7 +15,6 @@ import {
 } from "@/components/ui/menubar";
 
 import { FaBars, FaRegBell } from "react-icons/fa6";
-import { IoSearch } from "react-icons/io5";
 
 import Logo from "../Logo";
 import { logItems, navItems } from "./items";
@@ -34,7 +32,7 @@ function Navbar() {
         </Link>
         {isLogin ? (
           <div className="flex grow justify-end space-x-2 md:space-x-4">
-            {matches ? (
+            {/* {matches ? (
               <div>
                 <InputSearch className="max-w-60" type="search" placeholder="Buscar" />
               </div>
@@ -42,7 +40,7 @@ function Navbar() {
               <Button variant="ghost" size="icon">
                 <IoSearch size={24} />
               </Button>
-            )}
+            )} */}
             <Button variant="ghost" size="icon">
               <FaRegBell size={24} />
             </Button>

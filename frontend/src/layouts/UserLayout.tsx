@@ -14,10 +14,10 @@ const UserLayout = () => {
   }
 
   return (
-    <div>
+    <div className="flex h-screen flex-col">
       <Navbar />
       <Sidebar />
-      <main>
+      <main className="container grow pb-20 pt-8 md:pl-20">
         <React.Suspense fallback={null}>
           <Outlet />
         </React.Suspense>

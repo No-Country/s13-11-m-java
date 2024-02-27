@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { LuBellRing } from "react-icons/lu";
@@ -6,7 +6,7 @@ import { MdOutlineAdminPanelSettings, MdOutlinePersonOutline } from "react-icons
 
 const SettingsPage = () => {
   return (
-    <div className="container p-6">
+    <div>
       <div className="border-b-2 py-4">
         <span className="text-3xl">Configuración</span>
       </div>
@@ -28,7 +28,6 @@ const SettingsPage = () => {
           <Link to="/settings/calendar">Calendario</Link>
         </button>
       </div>
-      <Outlet />
     </div>
   );
 };

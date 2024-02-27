@@ -73,39 +73,37 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
   };
 
   return (
-    <div>
-      <div className="custom-toolbar flex items-center justify-between gap-3 py-4">
-        <div className="flex gap-3">
-          <Button variant="default" onClick={() => handleViewChange("month")}>
-            Mensual
-          </Button>
-          <Button variant="default" onClick={() => handleViewChange("week")}>
-            Semanal
-          </Button>
-          <Button variant="default" onClick={() => handleViewChange("day")}>
-            Diario
-          </Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <button onClick={handlePrev} className="transition-transform hover:scale-125">
-            <FaArrowLeft />
-          </button>
-          <span className="text-lg font-bold" style={{ minWidth: "150px", textAlign: "center" }}>
-            {currentDate.format("MMMM YYYY")}
-          </span>
-          <button onClick={handleNext} className="transition-transform hover:scale-125">
-            <FaArrowRight />
-          </button>
-        </div>
-        <div className="flex gap-3">
-          <Button variant="default" className="flex items-center gap-2">
-            <IoMdAddCircle size={20} />
-            Agregar Pedido
-          </Button>
-          <button className="hover:opacity-90">
-            <FaGear size={40} color="#00304B" />
-          </button>
-        </div>
+    <div className="custom-toolbar flex items-center justify-between gap-3 pb-4 max-sm:flex-col">
+      <div className="flex gap-3">
+        <Button variant="default" onClick={() => handleViewChange("month")}>
+          Mensual
+        </Button>
+        <Button variant="default" onClick={() => handleViewChange("week")}>
+          Semanal
+        </Button>
+        <Button variant="default" onClick={() => handleViewChange("day")}>
+          Diario
+        </Button>
+      </div>
+      <div className="flex items-center gap-2">
+        <button onClick={handlePrev} className="transition-transform hover:scale-125">
+          <FaArrowLeft />
+        </button>
+        <span className="text-lg font-bold" style={{ minWidth: "150px", textAlign: "center" }}>
+          {currentDate.format("MMMM YYYY")}
+        </span>
+        <button onClick={handleNext} className="transition-transform hover:scale-125">
+          <FaArrowRight />
+        </button>
+      </div>
+      <div className="flex gap-3">
+        <Button variant="default" className="flex items-center gap-2">
+          <IoMdAddCircle size={20} />
+          Agregar Pedido
+        </Button>
+        <button className="hover:opacity-90">
+          <FaGear size={40} color="#00304B" />
+        </button>
       </div>
     </div>
   );
@@ -119,30 +117,28 @@ const CalendarComponent: React.FC = () => {
   };
 
   return (
-    <div className="pb-14 capitalize">
-      <Calendar
-        localizer={localizer}
-        events={events}
-        defaultDate={moment().toDate()}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 800 }}
-        views={["month", "week", "day"]}
-        view={view}
-        onView={handleViewChange}
-        messages={{
-          next: "Siguiente",
-          previous: "Anterior",
-          today: "Hoy",
-          month: "Mes",
-          week: "Semanal",
-          day: "Diario",
-        }}
-        components={{
-          toolbar: (props) => <CustomToolbar {...props} onViewChange={handleViewChange} />,
-        }}
-      />
-    </div>
+    <Calendar
+      localizer={localizer}
+      events={events}
+      defaultDate={moment().toDate()}
+      startAccessor="start"
+      endAccessor="end"
+      style={{ height: 800 }}
+      views={["month", "week", "day"]}
+      view={view}
+      onView={handleViewChange}
+      messages={{
+        next: "Siguiente",
+        previous: "Anterior",
+        today: "Hoy",
+        month: "Mes",
+        week: "Semanal",
+        day: "Diario",
+      }}
+      components={{
+        toolbar: (props) => <CustomToolbar {...props} onViewChange={handleViewChange} />,
+      }}
+    />
   );
 };
 

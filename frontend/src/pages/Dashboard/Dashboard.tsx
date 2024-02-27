@@ -44,7 +44,7 @@ const Dashboard = () => {
   const { orders } = useOrder();
 
   return (
-    <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-8 py-8 sm:grid-cols-2 md:grid-cols-3 md:pl-20 xl:grid-cols-4">
+    <div className="grid grid-flow-row grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
         <ScrollArea className="h-full whitespace-nowrap rounded-md border">
           <div className="flex">

@@ -7,7 +7,7 @@ import { MdArrowBackIos } from "react-icons/md";
 
 const OrderPage = () => {
   return (
-    <div className="container pt-10">
+    <div>
       <div className="flex">
         <Button variant={"ghost"} size={"icon"}>
           <Link to={"/products"}>
