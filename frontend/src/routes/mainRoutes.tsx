@@ -62,6 +62,14 @@ export const router = createBrowserRouter([
           {
             path: "/settings/security",
             element: <SecurityPrivacy />,
+            children: [
+              {
+                path: "/settings/security/reset-password",
+              },
+              {
+                path: "/settings/security/privacy-policy",
+              },
+            ],
           },
           {
             path: "/settings/account",
