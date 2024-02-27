@@ -39,6 +39,11 @@ export interface LoginRequest {
   password: string;
 }
 
+export type LoginError = ErrorRequest<{
+  message: string;
+  error: string;
+}>;
+
 export interface RegisterRequest {
   email: string;
   password: string;
@@ -48,7 +53,6 @@ export interface RegisterRequest {
   phone: string;
 }
 
-// error de registro
 export type RegisterError = ErrorRequest<{
   message: string;
   errors: Partial<Record<keyof RegisterRequest, string>>;

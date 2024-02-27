@@ -8,3 +8,18 @@ export const linkItems = [
     link: "/register",
   },
 ];
+
+export const inputs = [
+  {
+    label: "Email",
+    name: "email",
+    placeholder: "Ingresa tu email",
+    type: "email",
+  },
+  {
+    label: "Contraseña",
+    name: "password",
+    placeholder: "Ingresa tu contraseña",
+    type: "password",
+  },
+];
