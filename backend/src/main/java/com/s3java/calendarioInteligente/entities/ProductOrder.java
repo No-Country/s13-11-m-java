@@ -55,7 +55,6 @@ public class ProductOrder {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     @JsonIgnore
-    @Fetch(FetchMode.JOIN)
     private Company company;
 
 
