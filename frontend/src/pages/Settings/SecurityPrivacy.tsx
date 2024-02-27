@@ -1,5 +1,5 @@
 import { FaArrowLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { GoShield } from "react-icons/go";
 function SecurityPrivacy() {
@@ -14,13 +14,14 @@ function SecurityPrivacy() {
       <div className="text-2xl">
         <button className=" my-6 flex w-full items-center gap-4 border-b-2 py-4">
           <RiLockPasswordLine size={28} />
-          <Link to="/settings/password">Reestablecer Contraseña</Link>
+          <Link to="/settings/security/password-reset">Reestablecer Contraseña</Link>
         </button>
         <button className=" my-6 flex w-full items-center gap-4 border-b-2 py-4">
           <GoShield size={28} />
-          <Link to="/settings/privacy">Política de Privacidad</Link>
+          <Link to="/settings/security/privacy-policy">Política de Privacidad</Link>
         </button>
       </div>
+      <Outlet />
     </div>
   );
 }
