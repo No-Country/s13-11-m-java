@@ -39,7 +39,8 @@ export const api = createApi({
               status: 401,
               data: {
                 message: "Invalid credentials",
-                errors: { email: "Email not found", password: "Password is incorrect" },
+                error:
+                  "Parece que algo no está bien. Revisá tu correo electrónico y contraseña,  y volvé a intentarlo.",
               },
             },
           };
@@ -61,11 +62,6 @@ export const api = createApi({
                 message: "Invalid data",
                 errors: {
                   email: "El email ya existe",
-                  password: "La contraseña es muy débil",
-                  firstName: "El nombre es requerido",
-                  lastName: "El apellido es requerido",
-                  address: "La dirección es requerida",
-                  phone: "El teléfono es requerido",
                 },
               },
             },
@@ -74,18 +70,9 @@ export const api = createApi({
       },
     }),
     forgotPassword: builder.mutation<void, string>({
-      queryFn: async (email) => {
+      queryFn: async () => {
         await simulateLoading();
-        if (email === authCredentials.email) {
-          return { data: undefined };
-        } else {
-          return {
-            error: {
-              status: 404,
-              data: { message: "User not found" },
-            },
-          };
-        }
+        return { data: undefined };
       },
     }),
     // endpoints de productos
