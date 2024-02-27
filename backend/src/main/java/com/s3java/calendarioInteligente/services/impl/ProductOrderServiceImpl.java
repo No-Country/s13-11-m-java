@@ -56,15 +56,21 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 
     }
+
     @Override
+    @Transactional
     public List<ProductOrderResponse> findAllProductOrders() throws Exception {
-        List<ProductOrder> productOrder = this.productOrderRepository.findAllProductOrders(companyId);
-        List<ProductOrderResponse> productOrdersResponse = this.productOrderMapper.productOrdersToProductOrdersResponse(productOrder);
+        List<ProductOrder> productOrders = this.productOrderRepository.findAllProductOrders(companyId);
+        for (ProductOrder productOrder : productOrders) {
+            Hibernate.initialize(productOrder.getClient());
+        }
+        List<ProductOrderResponse> productOrdersResponse = this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
         return productOrdersResponse;
     }
 
 
     @Override
+    @Transactional
     public ProductOrderResponse findProductOrderById(Long productOrderId) throws Exception {
         logger.info(""+productOrderId + companyId);
          Optional<ProductOrder> productOrderOptional = this.productOrderRepository
@@ -77,6 +83,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 
     @Override
+    @Transactional
     public List<ProductOrderResponse> findProductOrdersByClientId(Long clientId) throws Exception {
         List<ProductOrder> productOrder = this.productOrderRepository
                 .findProductOrdersByClientId(clientId, this.companyId);
@@ -150,6 +157,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    @Transactional
     public List<ProductOrderResponse> findProductOrdersByFinishDate(String date) {
         logger.debug(date);
         LocalDateTime dateConverted = DateUtils.converFromString(date);
@@ -158,6 +166,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+    @Transactional
     public List<ProductOrderResponse> findProductOrdersByEntry(String date) {
         LocalDateTime dateConverted = DateUtils.converFromString(date);
         List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByEntryDate(dateConverted, companyId);
@@ -165,6 +174,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
+
     public List<ProductOrderResponse> findProductOrdersByInitialDate(String date) {
         LocalDateTime dateConverted = DateUtils.converFromString(date);
         List<ProductOrder> productOrders = this.productOrderRepository.findProductOrdersByInitialDate(dateConverted, companyId);

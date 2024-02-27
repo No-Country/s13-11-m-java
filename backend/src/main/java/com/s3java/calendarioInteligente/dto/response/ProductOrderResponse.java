@@ -1,27 +1,29 @@
 package com.s3java.calendarioInteligente.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.s3java.calendarioInteligente.entities.*;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 
 import java.time.LocalDateTime;
 
 
 public class ProductOrderResponse {
 
-    private String message;
-
-
     private Long id;
 
     private String name;
 
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private LocalDateTime entryDate;
 
     private Double errorTime;
 
     private String photoLink;
 
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private LocalDateTime initialDate;
 
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private LocalDateTime finishEstimatedDate;
 
     private Product product;
@@ -30,9 +32,6 @@ public class ProductOrderResponse {
 
     public ProductOrderResponse() {}
 
-    public ProductOrderResponse(String message) {
-        this.message = message;
-    }
 
     public Long getId() {
         return id;
@@ -75,14 +74,6 @@ public class ProductOrderResponse {
     }
 
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
 
     public Product getProduct() {
         return product;
@@ -119,7 +110,6 @@ public class ProductOrderResponse {
     @Override
     public String toString() {
         return "ProductOrderResponse{" +
-                "message='" + message + '\'' +
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +

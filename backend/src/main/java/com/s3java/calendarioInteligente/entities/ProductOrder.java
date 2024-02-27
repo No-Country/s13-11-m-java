@@ -1,7 +1,9 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
@@ -22,6 +24,7 @@ public class ProductOrder {
     private String name;
 
     @Column(name = "entry_date")
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private LocalDateTime entryDate;
 
 
@@ -34,9 +37,11 @@ public class ProductOrder {
 
     @Column(name = "initial_date")
     @NotNull
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private LocalDateTime initialDate;
 
     @Column(name = "finish_est_date")
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private LocalDateTime finishEstimatedDate;
 
     @Column(name = "is_active")
@@ -47,7 +52,7 @@ public class ProductOrder {
     @NotNull
     private Product product;
 
-    @OneToOne(mappedBy = "productOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     @Fetch(FetchMode.JOIN)
     private Client client;
