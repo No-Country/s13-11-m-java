@@ -13,7 +13,7 @@ import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from 
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 import { Order } from "@/app/services/api/types";
-
+import { NavLink } from "react-router-dom";
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -116,7 +116,8 @@ export const columns: ColumnDef<Order>[] = [
               Agregar nota
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <BsFileEarmarkText className="mr-2" /> Ver detalle
+              <BsFileEarmarkText className="mr-2" />
+              <NavLink to="/order/:orderId">Ver detalle</NavLink>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

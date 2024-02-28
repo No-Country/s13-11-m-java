@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
-import { Product } from "@/app/services/api/types";
+import { Employee } from "@/app/services/api/types";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
@@ -23,10 +23,10 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Employee>[] = [
   {
     id: "name",
-    accessorKey: "name",
+    accessorKey: "Nombre",
     header: (prop) => ColumnSortButton("Nombre", prop),
     meta: {
       headerName: "Nombre",
@@ -34,7 +34,7 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     id: "progress",
-    accessorKey: "state",
+    accessorKey: "Estado",
     header: (prop) => ColumnSortButton("Estado", prop),
     sortingFn: (rowA, rowB) => {
       const { active: activeA } = rowA.original;
@@ -58,8 +58,8 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     id: "startDate",
-    accessorKey: "startDate",
-    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
+    accessorKey: "Fecha de inicio",
+    header: (prop) => ColumnSortButton("Fecha de inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.timeEstimatedCompletion);
       const dateB = new Date(rowB.original.timeEstimatedCompletion);
@@ -73,7 +73,7 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     id: "jornadaLaboral",
-    accessorKey: "jornadaLaboral",
+    accessorKey: "Jornada Laboral",
     header: "Jornada Laboral",
     cell: ({ row }) =>
       new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
@@ -83,8 +83,8 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     id: "cantidadFinalizados",
-    accessorKey: "cantidadFinalizados",
-    header: (prop) => ColumnSortButton("Nombre", prop),
+    accessorKey: "Cantidad de Productos finalizados",
+    header: (prop) => ColumnSortButton("Cantidad de Productos finalizados", prop),
     meta: {
       headerName: "Cantidad productos finalizados",
     },

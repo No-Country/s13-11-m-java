@@ -21,6 +21,7 @@ export type DeleteProductRequest = number;
 export type DeleteProductResponse = number;
 
 export type GetOrdersResponse = Order[];
+export type GetEmployeesResponse = Employee[];
 
 export interface User {
   id: string;
@@ -102,10 +103,12 @@ export interface CommonAttribute {
 }
 
 export interface Employee {
-  id: number;
-  role: string;
-  commonAttribute: CommonAttribute;
-  company: string;
+  id?: number;
+  role?: string;
+  commonAttribute?: CommonAttribute;
+  timeEstimatedCompletion: string;
+  company?: string;
+  active?: boolean;
 }
 
 export interface Order {

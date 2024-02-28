@@ -7,7 +7,7 @@ import SelectColumns from "@/components/ui/select-columns";
 import { Input } from "@/components/ui/input";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import useProduct from "@/hooks/useProduct";
+import useEmployee from "@/hooks/useEmp";
 import { Employee } from "@/app/services/api/types";
 import AddEmployee from "@/components/icons/AddEmployee";
 import { Doughnut, Line } from "react-chartjs-2";
@@ -16,7 +16,7 @@ import { dataComparative, optionsComparative } from "@/data/Dashboard/comparativ
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 
 const EmployeesPage = () => {
-  const { products } = useProduct();
+  const { employees } = useEmployee();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -65,7 +65,7 @@ const EmployeesPage = () => {
             <div className="flex">
               <DataTable
                 columns={columns}
-                data={products}
+                data={employees}
                 columnFilters={columnFilters}
                 setColumnFilters={setColumnFilters}
               />

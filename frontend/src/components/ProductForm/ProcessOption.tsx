@@ -31,7 +31,8 @@ const ProcessOption = () => {
           Agregar nota
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <BsFileEarmarkText className="mr-2" /> Ver detalle
+          <BsFileEarmarkText className="mr-2" />
+          Ver detalle
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
