@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
+import com.s3java.calendarioInteligente.utils.State;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -41,17 +41,24 @@ public class Product {
     //  TODO: Ver si cambiar a ENUM (activo, en pausa, finalizado, cancelado)
 
 
-    @Column(name = "state")
-    private Boolean state;
-
+//    @Column(name = "state")
+//    private Boolean state;
+@Enumerated(EnumType.STRING)
+@Column(name = "state")
+private State state;
 
     @Column(name = "is_active")
     private Boolean isActive;
 
     @NotBlank
     @Column(name = "time_estimated_completion")
-    private String timeEstimatedCompletion;
+    private Double timeEstimatedCompletion;
+//    private String timeEstimatedCompletion;
 
+    private Double timeAverage;  //tiempo promedio anual, calculado desde el historico de procesos o subprocesos
+    private Double timeMargin;   //cuantos minutos por encima o por debajo es aceptable
+
+    
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ProductProcess> productProcesses = new ArrayList<>();
@@ -70,14 +77,14 @@ public class Product {
     }
 
 
-    public Product(String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
+    public Product(String idUnico, String name, String instruction, String description, State state, Boolean isActive, Double timeEstimatedCompletion){
         this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
         this.description = description;
-        this.state = state;
+        this.state = state; //cambio de boolean a ENUM
         this.isActive = isActive;
-        this.timeEstimatedCompletion = timeEstimatedCompletion;
+        this.timeEstimatedCompletion = timeEstimatedCompletion;  //cambio de String a Double
     }
 
     public List<ProductProcess> getProductProcesses() {
@@ -146,14 +153,19 @@ public class Product {
         this.createDate = createDate;
     }
 
-    public Boolean getState() {
-        return state;
-    }
-
-    public void setState(Boolean state) {
-        this.state = state;
-    }
-
+//    public Boolean getState() {
+//        return state;
+//    }
+//
+//    public void setState(Boolean state) {
+//        this.state = state;
+//    }
+public State getState() {
+    return state;
+}
+public void setState(State state) {
+    this.state = state;
+}
     public Boolean getActive() {
         return isActive;
     }
@@ -162,12 +174,30 @@ public class Product {
         isActive = active;
     }
 
-    public String getTimeEstimatedCompletion() {
+//    public String getTimeEstimatedCompletion() {
+//        return timeEstimatedCompletion;
+//    }
+//
+//    public void setTimeEstimatedCompletion(String timeEstimatedCompletion) {
+//        this.timeEstimatedCompletion = timeEstimatedCompletion;
+//    }
+    public Double getTimeEstimatedCompletion() {
         return timeEstimatedCompletion;
     }
-
-    public void setTimeEstimatedCompletion(String timeEstimatedCompletion) {
+    public void setTimeEstimatedCompletion(Double timeEstimatedCompletion) {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
+    }
+    public Double getTimeAverage() {
+        return timeAverage;
+    }
+    public void setTimeAverage(Double timeAverage) {
+        this.timeAverage = timeAverage;
+    }
+    public Double getTimeMargin() {
+        return timeMargin;
+    }
+    public void setTimeMargin(Double timeMargin) {
+        this.timeMargin = timeMargin;
     }
 
     @JsonIgnore

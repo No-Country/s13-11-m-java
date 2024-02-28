@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.s3java.calendarioInteligente.utils.DateUtils;
+import com.s3java.calendarioInteligente.utils.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
@@ -44,6 +45,10 @@ public class ProductOrder {
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String finishEstimatedDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private State state;   //cambio de boolean a ENUM y se copia como nuevo attributo, setters y getter generados
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -62,6 +67,14 @@ public class ProductOrder {
     @JsonIgnore
     private Company company;
 
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;

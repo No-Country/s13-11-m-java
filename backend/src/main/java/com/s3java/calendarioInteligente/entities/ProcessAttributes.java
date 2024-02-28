@@ -1,16 +1,22 @@
 package com.s3java.calendarioInteligente.entities;
 
 import jakarta.persistence.Embeddable;
+import com.s3java.calendarioInteligente.utils.State;
 
-
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 @Embeddable
 public class ProcessAttributes {
     private String name;
-    private Double timeReal;
-    private Double timeAverage;
-    private Double timeMargin;
+//    private Double timeReal;  // cambio el nombre del atributo
+    private Double timeEstimatedCompletion;  //Tiempo Interno asignado,
+    // suma de tiempos manuales de subprocesos + tiempos de procesos    
+    private Double timeAverage;  //tiempo promedio anual, calculado desde el historico de procesos o subprocesos
+    private Double timeMargin;   //cuantos minutos por encima o por debajo es aceptable
     private String comment;
-    private Boolean state;
+//    private Boolean state;
+@Enumerated(EnumType.STRING)
+private State state; //cambio de boolean a ENUM    
     private Boolean active;
     private Integer counter;
 
@@ -23,12 +29,17 @@ public class ProcessAttributes {
         this.name = name;
     }
 
-    public Double getTimeReal() {
-        return timeReal;
+//    public Double getTimeReal() {
+//        return timeReal;
+//    }
+//    public void setTimeReal(Double timeReal) {
+//        this.timeReal = timeReal;
+//    }
+    public Double getTimeEstimatedCompletion() {
+        return timeEstimatedCompletion;
     }
-
-    public void setTimeReal(Double timeReal) {
-        this.timeReal = timeReal;
+    public void setTimeEstimatedCompletion(Double timeEstimatedCompletion) {
+        this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
     public Double getTimeAverage() {
@@ -55,11 +66,16 @@ public class ProcessAttributes {
         this.comment = comment;
     }
 
-    public Boolean getState() {
+//    public Boolean getState() {
+//        return state;
+//    }
+//    public void setState(Boolean state) {
+//        this.state = state;
+//    }
+    public State getState() {
         return state;
     }
-
-    public void setState(Boolean state) {
+    public void setState(State state) {
         this.state = state;
     }
 

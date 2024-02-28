@@ -3,6 +3,7 @@ package com.s3java.calendarioInteligente.controllers.api;
 import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
+import com.s3java.calendarioInteligente.utils.State;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +63,8 @@ public class ProductController {
                     .body(Collections
                             .singletonMap("mensaje", "Ya existe un producto con ese id unico"));
         }
-        product.setState(true);
+        //product.setState(true);  //cambio de boolean a ENUM
+        product.setState(State.PENDIENTE);  
         product.setActive(true);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
@@ -91,7 +93,7 @@ public class ProductController {
             productDb.setInstruction(product.getInstruction());
             productDb.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
             productDb.setState(product.getState());
-            productDb.setTimeEstimatedCompletion(product.getCreateDate());
+//            productDb.setTimeEstimatedCompletion(product.getCreateDate()); //ESTA linea da conflicto REVISAR por que !!!
             return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productDb));
         }
         return ResponseEntity.notFound().build();
