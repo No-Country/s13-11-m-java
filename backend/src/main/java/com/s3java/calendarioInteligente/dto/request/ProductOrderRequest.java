@@ -1,7 +1,9 @@
 package com.s3java.calendarioInteligente.dto.request;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.s3java.calendarioInteligente.entities.Client;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +16,11 @@ public class ProductOrderRequest {
 
     private String photoLink;
 
-    private LocalDateTime initialDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String initialDate;
 
-    private LocalDateTime finishEstimatedDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String finishEstimatedDate;
 
     private Long productId;
 
@@ -46,19 +50,20 @@ public class ProductOrderRequest {
         this.photoLink = photoLink;
     }
 
-    public LocalDateTime getInitialDate() {
+
+    public String getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDateTime initialDate) {
+    public void setInitialDate(String initialDate) {
         this.initialDate = initialDate;
     }
 
-    public LocalDateTime getFinishEstimatedDate() {
+    public String getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
+    public void setFinishEstimatedDate(String finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 

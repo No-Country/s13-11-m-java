@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "CLIENTS")
 public class Client {
@@ -18,11 +21,11 @@ public class Client {
     private CommonAttribute commonAttribute;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_order_id")
     @JsonBackReference
     @JsonIgnore
-    private ProductOrder productOrder;
+    private List<ProductOrder> productOrder = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -40,15 +43,13 @@ public class Client {
         this.commonAttribute = commonAttribute;
     }
 
-    public ProductOrder getProductOrder() {
+    public List<ProductOrder> getProductOrder() {
         return productOrder;
     }
 
-    public void setProductOrder(ProductOrder productOrder) {
+    public void setProductOrder(List<ProductOrder> productOrder) {
         this.productOrder = productOrder;
     }
-
-
 
     @Override
     public String toString() {
