@@ -61,17 +61,16 @@ public class Product {
     @JsonBackReference
     private Company company;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true ,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
-    @Null
-    private ProductOrder productOrder;
+    private List<ProductOrder> productOrders;
+
 
     public Product() {
     }
 
 
-    public Product(Long id, String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
-        this.id = id;
+    public Product(String idUnico, String name, String instruction, String description, Boolean state, Boolean isActive, String timeEstimatedCompletion){
         this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
@@ -171,15 +170,14 @@ public class Product {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
-    public ProductOrder getProductOrder() {
-        return productOrder;
+    @JsonIgnore
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
     }
 
-    public void setProductOrder(ProductOrder productOrder) {
-        this.productOrder = productOrder;
+    public void setProductOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
     }
-
-
 
     @Override
     public String toString() {
