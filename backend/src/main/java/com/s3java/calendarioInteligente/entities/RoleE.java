@@ -23,7 +23,6 @@ public class RoleE {
         this.id = id;
     }
 
-
     public RoleType getName() {
         return name;
     }
