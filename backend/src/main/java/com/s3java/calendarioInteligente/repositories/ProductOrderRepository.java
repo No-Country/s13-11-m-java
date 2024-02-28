@@ -31,17 +31,17 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
 
     @Query(nativeQuery = true,
             value = "SELECT * FROM product_orders po WHERE po.finish_est_date = :date AND po.company_id = :companyId AND po.is_active = true")
-    List<ProductOrder> findProductOrdersByFinishDate(@Param("date") LocalDateTime date,
+    List<ProductOrder> findProductOrdersByFinishDate(@Param("date") String date,
                                                @Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
             value = "SELECT * FROM product_orders po WHERE po.entry_date = :date AND po.company_id = :companyId AND po.is_active = true")
-    List<ProductOrder> findProductOrdersByEntryDate(@Param("date") LocalDateTime date,
+    List<ProductOrder> findProductOrdersByEntryDate(@Param("date") String date,
                                                @Param("companyId") Long companyId);
 
     @Query(nativeQuery = true,
             value = "SELECT * FROM product_orders po WHERE po.initial_date = :date AND po.company_id = :companyId AND po.is_active = true")
-    List<ProductOrder> findProductOrdersByInitialDate(@Param("date") LocalDateTime date,
+    List<ProductOrder> findProductOrdersByInitialDate(@Param("date") String date,
                                                @Param("companyId") Long companyId);
 
     // TODO ver luego para pasar a peticiones con fetch eager

@@ -1,7 +1,9 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
@@ -22,7 +24,8 @@ public class ProductOrder {
     private String name;
 
     @Column(name = "entry_date")
-    private LocalDateTime entryDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String entryDate;
 
 
     @Column(name = "error_time")
@@ -34,20 +37,22 @@ public class ProductOrder {
 
     @Column(name = "initial_date")
     @NotNull
-    private LocalDateTime initialDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String initialDate;
 
     @Column(name = "finish_est_date")
-    private LocalDateTime finishEstimatedDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String finishEstimatedDate;
 
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     @NotNull
     private Product product;
 
-    @OneToOne(mappedBy = "productOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     @Fetch(FetchMode.JOIN)
     private Client client;
@@ -55,7 +60,6 @@ public class ProductOrder {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     @JsonIgnore
-    @Fetch(FetchMode.JOIN)
     private Company company;
 
 
@@ -75,17 +79,7 @@ public class ProductOrder {
         this.name = name;
     }
 
-    public LocalDateTime getEntryDate() {
-        return entryDate;
-    }
 
-    public void setInitialDate(LocalDateTime initialDate) {
-        this.initialDate = initialDate;
-    }
-
-    public void setEntryDate(LocalDateTime entryDate) {
-        this.entryDate = entryDate;
-    }
 
     public Product getProduct() {
         return product;
@@ -120,17 +114,7 @@ public class ProductOrder {
         this.photoLink = photoLink;
     }
 
-    public LocalDateTime getInitialDate() {
-        return initialDate;
-    }
 
-    public LocalDateTime getFinishEstimatedDate() {
-        return finishEstimatedDate;
-    }
-
-    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
-        this.finishEstimatedDate = finishEstimatedDate;
-    }
 
     public Boolean getIsActive() {
         return isActive;
@@ -154,6 +138,30 @@ public class ProductOrder {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public String getInitialDate() {
+        return initialDate;
+    }
+
+    public void setInitialDate(String initialDate) {
+        this.initialDate = initialDate;
+    }
+
+    public String getFinishEstimatedDate() {
+        return finishEstimatedDate;
+    }
+
+    public void setFinishEstimatedDate(String finishEstimatedDate) {
+        this.finishEstimatedDate = finishEstimatedDate;
     }
 
     @Override

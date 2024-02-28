@@ -2,8 +2,12 @@ package com.s3java.calendarioInteligente.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "CLIENTS")
@@ -17,10 +21,11 @@ public class Client {
     private CommonAttribute commonAttribute;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_order_id")
     @JsonBackReference
-    private ProductOrder productOrder;
+    @JsonIgnore
+    private List<ProductOrder> productOrder = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -38,15 +43,13 @@ public class Client {
         this.commonAttribute = commonAttribute;
     }
 
-    public ProductOrder getProductOrder() {
+    public List<ProductOrder> getProductOrder() {
         return productOrder;
     }
 
-    public void setProductOrder(ProductOrder productOrder) {
+    public void setProductOrder(List<ProductOrder> productOrder) {
         this.productOrder = productOrder;
     }
-
-
 
     @Override
     public String toString() {

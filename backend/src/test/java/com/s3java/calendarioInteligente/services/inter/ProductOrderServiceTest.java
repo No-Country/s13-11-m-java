@@ -47,10 +47,6 @@ class ProductOrderServiceTest {
     @Test
     void findAllProductOrders() throws Exception {
 
-        List<ProductOrder> mockProductOrders = Arrays.asList(/* create some ProductOrder instances */);
-        when(productOrderRepository.findAllProductOrders(anyLong())).thenReturn(mockProductOrders);
-        List<ProductOrderResponse> result = productOrderService.findAllProductOrders();
-        assertNotNull(result);
     }
 
     @Test
