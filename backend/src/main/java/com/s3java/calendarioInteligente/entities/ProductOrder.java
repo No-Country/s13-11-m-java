@@ -25,7 +25,7 @@ public class ProductOrder {
 
     @Column(name = "entry_date")
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime entryDate;
+    private String entryDate;
 
 
     @Column(name = "error_time")
@@ -38,11 +38,11 @@ public class ProductOrder {
     @Column(name = "initial_date")
     @NotNull
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime initialDate;
+    private String initialDate;
 
     @Column(name = "finish_est_date")
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime finishEstimatedDate;
+    private String finishEstimatedDate;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -79,17 +79,7 @@ public class ProductOrder {
         this.name = name;
     }
 
-    public LocalDateTime getEntryDate() {
-        return entryDate;
-    }
 
-    public void setInitialDate(LocalDateTime initialDate) {
-        this.initialDate = initialDate;
-    }
-
-    public void setEntryDate(LocalDateTime entryDate) {
-        this.entryDate = entryDate;
-    }
 
     public Product getProduct() {
         return product;
@@ -124,17 +114,7 @@ public class ProductOrder {
         this.photoLink = photoLink;
     }
 
-    public LocalDateTime getInitialDate() {
-        return initialDate;
-    }
 
-    public LocalDateTime getFinishEstimatedDate() {
-        return finishEstimatedDate;
-    }
-
-    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
-        this.finishEstimatedDate = finishEstimatedDate;
-    }
 
     public Boolean getIsActive() {
         return isActive;
@@ -158,6 +138,30 @@ public class ProductOrder {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public String getInitialDate() {
+        return initialDate;
+    }
+
+    public void setInitialDate(String initialDate) {
+        this.initialDate = initialDate;
+    }
+
+    public String getFinishEstimatedDate() {
+        return finishEstimatedDate;
+    }
+
+    public void setFinishEstimatedDate(String finishEstimatedDate) {
+        this.finishEstimatedDate = finishEstimatedDate;
     }
 
     @Override

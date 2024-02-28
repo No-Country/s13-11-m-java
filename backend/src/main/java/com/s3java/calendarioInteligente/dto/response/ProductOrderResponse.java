@@ -14,17 +14,17 @@ public class ProductOrderResponse {
     private String name;
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime entryDate;
+    private String entryDate;
 
     private Double errorTime;
 
     private String photoLink;
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime initialDate;
+    private String initialDate;
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime finishEstimatedDate;
+    private String finishEstimatedDate;
 
     private Product product;
 
@@ -49,11 +49,11 @@ public class ProductOrderResponse {
         this.name = name;
     }
 
-    public LocalDateTime getEntryDate() {
+    public String getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDateTime entryDate) {
+    public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
     }
 
@@ -91,19 +91,19 @@ public class ProductOrderResponse {
         this.client = client;
     }
 
-    public LocalDateTime getInitialDate() {
+    public String getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDateTime initialDate) {
+    public void setInitialDate(String initialDate) {
         this.initialDate = initialDate;
     }
 
-    public LocalDateTime getFinishEstimatedDate() {
+    public String getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
+    public void setFinishEstimatedDate(String finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 

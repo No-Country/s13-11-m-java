@@ -163,7 +163,7 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<ProductOrderResponse> getOrder(
+    public ResponseEntity<?> getOrder(
             @Parameter(description = "ID of the order")
             @PathVariable @Valid Long orderId
 
@@ -172,8 +172,7 @@ public class ProductOrderController {
             ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderId);
             return ResponseEntity.ok().body(productOrder);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("Not found", e.getMessage()).build();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 

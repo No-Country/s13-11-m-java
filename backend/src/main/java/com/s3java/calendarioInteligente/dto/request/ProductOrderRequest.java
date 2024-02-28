@@ -17,10 +17,10 @@ public class ProductOrderRequest {
     private String photoLink;
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime initialDate;
+    private String initialDate;
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
-    private LocalDateTime finishEstimatedDate;
+    private String finishEstimatedDate;
 
     private Long productId;
 
@@ -50,19 +50,20 @@ public class ProductOrderRequest {
         this.photoLink = photoLink;
     }
 
-    public LocalDateTime getInitialDate() {
+
+    public String getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDateTime initialDate) {
+    public void setInitialDate(String initialDate) {
         this.initialDate = initialDate;
     }
 
-    public LocalDateTime getFinishEstimatedDate() {
+    public String getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
+    public void setFinishEstimatedDate(String finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 
