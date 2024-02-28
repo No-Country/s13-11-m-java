@@ -3,11 +3,11 @@ package com.s3java.calendarioInteligente.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CLIENTS")
@@ -63,5 +63,18 @@ public class Client {
                 ", commonAttribute=" + commonAttribute +
                 ", productOrder=" + productOrder +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(id, client.id) && Objects.equals(commonAttribute, client.commonAttribute) && Objects.equals(productOrder, client.productOrder) && Objects.equals(company, client.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, commonAttribute, productOrder, company);
     }
 }

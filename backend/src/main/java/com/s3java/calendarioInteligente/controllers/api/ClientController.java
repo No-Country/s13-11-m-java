@@ -1,7 +1,7 @@
 package com.s3java.calendarioInteligente.controllers.api;
 
-import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import com.s3java.calendarioInteligente.entities.Client;
+import com.s3java.calendarioInteligente.mappers.productOrders.ClientMapper;
 import com.s3java.calendarioInteligente.services.inter.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/clients")
@@ -25,12 +25,15 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    private final ClientMapper clientMapper;
+
     private static final Logger logger = LoggerFactory.getLogger(ProductOrderController.class);
 
 
-    ClientController(ClientService clientService){
+    ClientController(ClientService clientService, ClientMapper clientMapper){
         this.clientService = clientService;
 
+        this.clientMapper = clientMapper;
     }
 
     @GetMapping("/all")
@@ -43,11 +46,20 @@ public class ClientController {
     public ResponseEntity<?> getAllClients()
     {
         try {
-            Set<Client> clients = this.clientService.getAll();
-            return ResponseEntity.ok().body(clients);
+            List<Client> clients = this.clientService.getAll();
+            return ResponseEntity.ok().body(this.clientMapper.ClientsToClientsResponse(clients));
         } catch (Exception e) {
-            return  ResponseEntity.status(HttpStatus.NO_CONTENT)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
                     .header("No content", e.getMessage()).build();
         }
     }
+
+    // no requerido
+    /*
+    @RequestMapping("/update")
+    public void updateClients(@RequestBody Client c) throws IllegalAccessException {
+       this.clientService.update(c);
+    }*/
+
+
 }
