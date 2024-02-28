@@ -54,12 +54,4 @@ public class ClientController {
         }
     }
 
-    // no requerido
-    /*
-    @RequestMapping("/update")
-    public void updateClients(@RequestBody Client c) throws IllegalAccessException {
-       this.clientService.update(c);
-    }*/
-
-
 }

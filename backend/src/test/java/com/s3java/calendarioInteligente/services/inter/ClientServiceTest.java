@@ -4,7 +4,7 @@ import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.entities.CommonAttribute;
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.services.impl.ClientServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -49,6 +49,7 @@ class ClientServiceTest {
 
 
         when(clientRepository.findAll()).thenReturn(clients);
+
 
     }
 
@@ -104,34 +105,52 @@ class ClientServiceTest {
     @Test
     void update() {
         // Given
-        Client client = new Client();
-        CommonAttribute ca = new CommonAttribute();
-        ca.setEmail("ejemplo@gmail.com");
-        ca.setName("nombre");
-        ca.setPhone("123456");
-        client.setId(1L);
-        client.setCommonAttribute(ca);
+        Client clientToUpdate = new Client();
+        clientToUpdate.setId(1L);
+        CommonAttribute newAttributes = new CommonAttribute();
+        newAttributes.setName("UpdatedName");
+        newAttributes.setEmail("updated@example.com");
+        clientToUpdate.setCommonAttribute(newAttributes);
 
-        Client updatedClient = new Client();
-        ca.setName("nombreActualizado");
-        ca.setPassword("advc");
-        updatedClient.setId(1L);
-        updatedClient.setCommonAttribute(ca);
-        doReturn(updatedClient).when(clientRepository).save(client);
+        Client existingClient = new Client();
+        existingClient.setId(1L);
+        CommonAttribute existingAttributes = new CommonAttribute();
+        existingAttributes.setName("OldName");
+        existingAttributes.setEmail("old@example.com");
+        existingClient.setCommonAttribute(existingAttributes);
+
+        when(clientRepository.findById(1L)).thenReturn(java.util.Optional.of(existingClient));
+        when(clientRepository.save(any())).thenAnswer(invocation -> invocation.getArguments()[0]);
 
         // When
-        Client result = null;
+        Client updatedClient = null;
         try {
-            result = clientService.update(client);
+            updatedClient = clientService.update(clientToUpdate);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            fail("IllegalAccessException not expected");
         }
 
         // Then
-        // Verificar que el resultado es el cliente actualizado simulado
-        assertEquals(updatedClient, result);
+        assertEquals(clientToUpdate.getId(), updatedClient.getId());
+        assertEquals(clientToUpdate.getCommonAttribute().getName(), updatedClient.getCommonAttribute().getName());
+        assertEquals(clientToUpdate.getCommonAttribute().getEmail(), updatedClient.getCommonAttribute().getEmail());
 
-        // Verificar que el método save del repositorio fue llamado con el cliente modificado
-        verify(clientRepository, times(1)).save(client);
+        verify(clientRepository, times(1)).findById(1L);
+        verify(clientRepository, times(1)).save(any());
+    }
+
+    @Test
+    void updateClient_EntityNotFoundException() {
+        // Given
+        Client clientToUpdate = new Client();
+        clientToUpdate.setId(1L);
+
+        when(clientRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+
+        // When/Then
+        assertThrows(EntityNotFoundException.class, () -> clientService.update(clientToUpdate));
+
+        verify(clientRepository, times(1)).findById(1L);
+        verify(clientRepository, never()).save(any());
     }
 }

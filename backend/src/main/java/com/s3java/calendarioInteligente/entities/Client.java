@@ -27,6 +27,7 @@ public class Client {
     @JsonIgnore
     private List<ProductOrder> productOrder = new ArrayList<>();
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     @JsonBackReference
