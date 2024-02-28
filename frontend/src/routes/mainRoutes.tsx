@@ -20,6 +20,8 @@ import NotificationSettings from "@/pages/Settings/NotificationSettings";
 import CalendarSettings from "@/pages/Settings/CalendarSettings";
 import ProductPage from "@/pages/Products/ProductPage";
 import OrderPage from "@/pages/Orders/OrderPage";
+import PasswordReset from "@/pages/Settings/SecurityPrivacy/PasswordReset";
+import PrivacyPolicy from "@/pages/Settings/SecurityPrivacy/PrivacyPolicy";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +65,16 @@ export const router = createBrowserRouter([
           {
             path: "/settings/security",
             element: <SecurityPrivacy />,
+            children: [
+              {
+                path: "/settings/security/password-reset",
+                element: <PasswordReset />,
+              },
+              {
+                path: "/settings/security/privacy-policy",
+                element: <PrivacyPolicy />,
+              },
+            ],
           },
           {
             path: "/settings/account",
