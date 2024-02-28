@@ -22,6 +22,7 @@ import ProductPage from "@/pages/Products/ProductPage";
 import OrderPage from "@/pages/Orders/OrderPage";
 import PasswordReset from "@/pages/Settings/SecurityPrivacy/PasswordReset";
 import PrivacyPolicy from "@/pages/Settings/SecurityPrivacy/PrivacyPolicy";
+import OrderDetails from "@/pages/Orders/details/OrderDetails";
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ export const router = createBrowserRouter([
       {
         path: "/order",
         element: <OrderPage />,
+      },
+      {
+        path: "/order/:orderId",
+        element: <OrderDetails />,
       },
     ],
   },

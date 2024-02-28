@@ -118,4 +118,13 @@ export interface Order {
   finishEstimatedDate: string;
   productId: number;
   clientId: number;
+  idUnico: string;
+  instruction: string;
+  description: string;
+  totalProduction: number;
+  state: boolean;
+  timeEstimatedCompletion: string;
+  processes: Process[];
+  company: Company;
+  active: boolean;
 }
