@@ -103,12 +103,15 @@ export interface CommonAttribute {
 }
 
 export interface Employee {
-  id?: number;
-  role?: string;
-  commonAttribute?: CommonAttribute;
+  name: string;
+  state: string;
+  startdate: string;
+  jornada: string;
+  cantidadfinalizados: number;
+  role: string;
   timeEstimatedCompletion: string;
-  company?: string;
-  active?: boolean;
+  company: string;
+  active: boolean;
 }
 
 export interface Order {

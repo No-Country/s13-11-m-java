@@ -36,6 +36,12 @@ export const columns: ColumnDef<Order>[] = [
     id: "name",
     accessorKey: "name",
     header: (prop) => ColumnSortButton("Nombre", prop),
+    sortingFn: (rowA, rowB) => {
+      const { name: activeA } = rowA.original;
+      const { name: activeB } = rowB.original;
+
+      return activeA === activeB ? 0 : activeA ? -1 : 1;
+    },
     meta: {
       headerName: "Nombre",
     },
@@ -45,18 +51,18 @@ export const columns: ColumnDef<Order>[] = [
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
-      const { id } = row.original;
-      const variant = id % 2 === 0 ? "success" : "destructive";
+      const { errorTime } = row.original;
+      const variant = errorTime % 2 === 0 ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{id % 2 === 0 ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{errorTime % 2 === 0 ? "Activo" : "Inactivo"}</span>
         </div>
       );
     },
     sortingFn: (rowA, rowB) => {
-      const { id: idA } = rowA.original;
-      const { id: idB } = rowB.original;
+      const { errorTime: idA } = rowA.original;
+      const { errorTime: idB } = rowB.original;
 
       return (idA % 2) - (idB % 2);
     },

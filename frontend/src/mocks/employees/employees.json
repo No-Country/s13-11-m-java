@@ -1,8 +1,15 @@
-{
-    "id": 12345,
-    "role": "Manager",
-    "commonAttribute": [],
-    "timeEstimatedCompletion": "2024-03-31",
-    "company": "Tech Inc.",
-    "active": true
-}
+[
+    {
+        "name": "Maria Martinez",
+        "state": "Activo",
+        "startdate": "01/01/2000",
+        "jornada": "6 hs",
+        "cantidadfinalizados": 50,
+        "productId": 5,
+        "clientId": 5,
+        "role": "user",
+        "timeEstimatedCompletion": "",
+        "company": "1",
+        "active": true
+    }
+]

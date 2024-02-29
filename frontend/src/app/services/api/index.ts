@@ -81,7 +81,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/all.json");
-        return { data: json.default as AllProductsResponse };
+        return { data: json.default as unknown as AllProductsResponse };
       },
     }),
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
@@ -98,7 +98,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -116,7 +116,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -134,7 +134,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -143,7 +143,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/one.json");
-        return { data: json.default as UpdateProductResponse };
+        return { data: json.default as unknown as UpdateProductResponse };
       },
     }),
     createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
@@ -151,7 +151,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/one.json");
-        return { data: json.default as CreateProductResponse };
+        return { data: json.default as unknown as CreateProductResponse };
       },
     }),
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
