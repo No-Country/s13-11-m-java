@@ -8,6 +8,7 @@ import { FaGear } from "react-icons/fa6";
 import { IoMdAddCircle } from "react-icons/io";
 import "moment/dist/locale/es";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 moment.locale("es");
 
@@ -94,9 +95,11 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
           </button>
         </div>
         <div className="flex gap-3">
-          <Button variant="default" className="flex items-center gap-2">
-            <IoMdAddCircle size={20} />
-            Agregar Pedido
+          <Button asChild variant="default" className="flex items-center gap-2">
+            <Link to="/order">
+              <IoMdAddCircle size={20} />
+              Agregar Pedido
+            </Link>
           </Button>
           <button className="hover:opacity-90">
             <FaGear size={40} color="#00304B" />
