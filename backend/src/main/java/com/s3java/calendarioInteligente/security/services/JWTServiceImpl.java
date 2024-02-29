@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.security.Key;
@@ -33,12 +34,15 @@ public class JWTServiceImpl implements JWTService {
 
     public String generateToken(UserDtls userDetails) {
         return Jwts.builder()
+                .claim("companyId", userDetails.getCompanyId())
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSiginKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+
 
     public String generateRefreshToken(Map<String, Object> extraClaims, UserDtls userDetails) {
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
@@ -60,6 +64,11 @@ public class JWTServiceImpl implements JWTService {
     public boolean isTokenValid(String token, UserDtls userDetails) {
         final String username = extractUserName(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public Long getCompanyIdFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(getSiginKey()).parseClaimsJws(token).getBody();
+        return (Long) claims.get("companyId");
     }
 
 }
