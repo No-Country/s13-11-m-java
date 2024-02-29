@@ -163,12 +163,12 @@ export const api = createApi({
 
     // endpoints de ordenes
     getOrders: builder.query<GetOrdersResponse, void>({
-      // query: () => "orders/all",
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/orders/all.json");
-        return { data: json.default as GetOrdersResponse };
-      },
+      query: () => "v1/product-orders/all",
+      // queryFn: async () => {
+      //   await simulateLoading();
+      //   const json = await import("@/mocks/orders/all.json");
+      //   return { data: json.default as GetOrdersResponse };
+      // },
     }),
   }),
 });
