@@ -191,7 +191,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
                         new EntityNotFoundException("Product order not found with ID: " + productOrderId));
         po.setIsActive(false);
         Company company = po.getCompany();
-        Hibernate.initialize(company.getEmployee());
+        //Hibernate.initialize(company.getEmployee());
         productOrderRepository.save(po);
 
     }
