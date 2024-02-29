@@ -2,9 +2,9 @@ package com.s3java.calendarioInteligente.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.s3java.calendarioInteligente.utils.UserRole;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,14 +16,14 @@ public class UserE {
     private Long id;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = RoleE.class)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<RoleE> roles = new HashSet<>();
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<UserRole> roles;
 
     @Embedded
     private CommonAttribute commonAttribute ;//= new CommonAttribute()
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -38,11 +38,11 @@ public class UserE {
         this.id = id;
     }
 
-    public Set<RoleE> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleE> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 
@@ -53,6 +53,7 @@ public class UserE {
     public void setCommonAttribute(CommonAttribute commonAttribute) {
         this.commonAttribute = commonAttribute;
     }
+
 
     public Company getCompany() {
         return company;
@@ -68,7 +69,6 @@ public class UserE {
                 "id=" + id +
                 ", roles=" + roles +
                 ", commonAttribute=" + commonAttribute +
-                ", company=" + company +
                 '}';
     }
 }

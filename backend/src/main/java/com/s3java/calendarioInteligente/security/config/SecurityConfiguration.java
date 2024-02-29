@@ -1,8 +1,8 @@
 package com.s3java.calendarioInteligente.security.config;
 
 
-import com.s3java.calendarioInteligente.security.entities.Role;
 import com.s3java.calendarioInteligente.security.services.UserService;
+import com.s3java.calendarioInteligente.utils.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.authentication.AuthenticationManager;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Configuration
@@ -45,12 +43,13 @@ public class SecurityConfiguration {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( request ->  request.requestMatchers(
                         "/",
-                                "/swagger-ui.html",
-                                "/api/security/auth/**"
-                        ) // Login no
+                                "/swagger-ui/index.html",
+                                "/api/security/auth/**",
+                                "/api/security/auth/signin"
+                        )
                         .permitAll()
-                        .requestMatchers("/api/security/admin").hasAnyAuthority(Role.ADMIN.name()) // Admin
-                        .requestMatchers("/api/security/user").hasAnyAuthority(Role.USER.name()) // User
+                        .requestMatchers("/api/security/admin").hasAnyAuthority(String.valueOf(UserRole.ROLE_ADMIN)) // Admin
+                        .requestMatchers("/api/security/user").hasAnyAuthority(String.valueOf(UserRole.ROLE_EMPLOYEE)) // User
                         .anyRequest().authenticated()
 
                 )

@@ -8,6 +8,8 @@ public class SignUpRequest {
 
     private String password;
 
+    private Long companyId;
+
     public String getName() {
         return name;
     }
@@ -30,5 +32,13 @@ public class SignUpRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 }

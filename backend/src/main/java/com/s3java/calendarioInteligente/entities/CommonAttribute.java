@@ -2,6 +2,7 @@ package com.s3java.calendarioInteligente.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -9,7 +10,7 @@ import jakarta.validation.constraints.Size;
 @Embeddable
 public class CommonAttribute {
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Email
     @NotBlank
     @Size(max = 70)

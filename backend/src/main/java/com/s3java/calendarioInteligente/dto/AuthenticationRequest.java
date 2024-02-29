@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class AuthenticationRequest {
 
+    /*
     @Email
     @NotBlank
     private String username;
@@ -26,5 +27,5 @@ public class AuthenticationRequest {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 }

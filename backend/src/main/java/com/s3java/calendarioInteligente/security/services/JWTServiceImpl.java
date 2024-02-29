@@ -1,7 +1,6 @@
 package com.s3java.calendarioInteligente.security.services;
 
-import com.s3java.calendarioInteligente.security.dto.JwtAuthenticationResponse;
-import com.s3java.calendarioInteligente.security.dto.RefreshTokenRequest;
+import com.s3java.calendarioInteligente.security.entities.UserDtls;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,7 +31,7 @@ public class JWTServiceImpl implements JWTService {
         return claimResolvers.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDtls userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -41,10 +40,11 @@ public class JWTServiceImpl implements JWTService {
                 .compact();
     }
 
-    public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateRefreshToken(Map<String, Object> extraClaims, UserDtls userDetails) {
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() * 604800000 ))
+                .claim("companyId", userDetails.getCompanyId())
                 .signWith(getSiginKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -57,7 +57,7 @@ public class JWTServiceImpl implements JWTService {
         return extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDtls userDetails) {
         final String username = extractUserName(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

@@ -1,35 +1,38 @@
 package com.s3java.calendarioInteligente.security.entities;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.s3java.calendarioInteligente.utils.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "users")
-public class User implements UserDetails {
+public class UserDtls implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String name;
 
     private String email;
 
+    private Long companyId;
+
+    @JsonIgnore
     private String password;
 
-    private Role role;
+    private Set<UserRole> roles = new HashSet();
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public UserDtls() {}
+
+    public UserDtls(String name, String email, String password, Set<UserRole> roles) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public String getName() {
@@ -52,17 +55,27 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public Long getCompanyId() {
+        return companyId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.toString()))
+                .collect(Collectors.toList());
     }
 
     public String getPassword() {

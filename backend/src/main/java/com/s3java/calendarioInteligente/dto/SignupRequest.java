@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class SignupRequest {
 
+    /*
+
     private String email;
     private String password;
     private String name;
@@ -43,5 +45,5 @@ public class SignupRequest {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
-    }
+    }*/
 }

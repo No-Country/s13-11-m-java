@@ -1,5 +1,6 @@
 package com.s3java.calendarioInteligente.security.config;
 
+import com.s3java.calendarioInteligente.security.entities.UserDtls;
 import com.s3java.calendarioInteligente.security.services.JWTService;
 import com.s3java.calendarioInteligente.security.services.UserService;
 import jakarta.servlet.FilterChain;
@@ -32,7 +33,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
 
@@ -40,7 +43,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String userEmail;
 
-        if(StringUtils.isEmpty(authHeader) || !org.apache.commons.lang3.StringUtils.startsWith(authHeader, "Bearer ") ) {
+        if(StringUtils.isEmpty(authHeader) || !org.apache.commons.lang3.StringUtils.startsWith(authHeader,
+                "Bearer ") ) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -48,8 +52,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUserName(jwt);
 
-        if(StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);
+        if(StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext()
+                .getAuthentication() == null) {
+            UserDtls userDetails = (UserDtls) userService.userDetailsService().loadUserByUsername(userEmail);
 
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

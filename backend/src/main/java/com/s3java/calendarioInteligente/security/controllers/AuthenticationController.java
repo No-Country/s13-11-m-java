@@ -4,7 +4,6 @@ import com.s3java.calendarioInteligente.security.dto.JwtAuthenticationResponse;
 import com.s3java.calendarioInteligente.security.dto.SignInRequest;
 import com.s3java.calendarioInteligente.security.dto.SignUpRequest;
 import com.s3java.calendarioInteligente.security.dto.RefreshTokenRequest;
-import com.s3java.calendarioInteligente.security.entities.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +21,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody SignUpRequest signUpRequest) {
-        return ResponseEntity.ok(authenticationService.signup(signUpRequest));
+    public ResponseEntity<?> signup(@RequestBody SignUpRequest signUpRequest) {
+        try {
+        JwtAuthenticationResponse jwt = authenticationService.signup(signUpRequest);
+        return ResponseEntity.ok(jwt);
+        }
+        catch (RuntimeException e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+
     }
 
     // The credentials must be previously registered in the database, otherwise a 403 error will be returned.

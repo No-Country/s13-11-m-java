@@ -1,10 +1,13 @@
 package com.s3java.calendarioInteligente.utils;
 
+import com.s3java.calendarioInteligente.controllers.api.ProductOrderController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,9 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
+    /*
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
     public static final String SECRET = "413F4428472B4B6250655368566D5970337336763979244226452948404D6351";
 
     public String generateToken(String username){
@@ -29,7 +35,7 @@ public class JwtUtil {
               .setClaims(claims)
               .setSubject(username)
               .setIssuedAt(new Date(System.currentTimeMillis()))
-              .setExpiration(new Date(System.currentTimeMillis() + 1000 + 60 + 30))
+              .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000L))
               .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
@@ -60,9 +66,18 @@ public class JwtUtil {
    }
 
    public Boolean validateToken(String token, UserDetails userDetails){
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-   }
+        try {
+            Jwts.parserBuilder().setSigningKey(this.getSignKey()).build().parseClaimsJws(token).getBody();
+            return true;
+        }
+        catch (Exception e){
+            logger.error("token not valid");
+            return false;
+
+        }
+        //final String username = extractUsername(token);
+        //return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+   }*/
 
 
 }

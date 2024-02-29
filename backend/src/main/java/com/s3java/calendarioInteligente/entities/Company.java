@@ -12,11 +12,12 @@ import java.util.List;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded
     private CommonAttribute commonAttribute;
+
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
@@ -31,15 +32,6 @@ public class Company {
 
 
 
-    public List<UserE> getEmployee() {
-        return employee;
-    }
-
-
-
-    public void setEmployee(List<UserE> employee) {
-        this.employee = employee;
-    }
 
 
     public Long getId() {
@@ -71,7 +63,6 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", commonAttribute=" + commonAttribute +
-                ", employee=" + employee +
                 ", productOrders=" + productOrders +
                 '}';
     }

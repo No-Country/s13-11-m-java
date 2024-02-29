@@ -1,23 +1,17 @@
 package com.s3java.calendarioInteligente;
 
-import com.s3java.calendarioInteligente.security.entities.Role;
-import com.s3java.calendarioInteligente.security.entities.User;
-import com.s3java.calendarioInteligente.security.repositories.UserRepositoryI;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-public class CalendarioInteligenteApplication implements CommandLineRunner {
+public class CalendarioInteligenteApplication {
 
-	@Autowired
-	private UserRepositoryI userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CalendarioInteligenteApplication.class, args);
 	}
+
+	/*
 
 	private void createAccount(String name, String email, String password, Role role) {
 		User user = new User();
@@ -41,5 +35,5 @@ public class CalendarioInteligenteApplication implements CommandLineRunner {
 		if(Account2 == null) {
 			createAccount("User", "user@mail.co", "userp", Role.USER );
 		}
-	}
+	}*/
 }
