@@ -22,14 +22,14 @@ const settings: Settings = {
 
 const Carousel: React.FC = () => {
   return (
-    <div className="px-8">
+    <div>
       <Slider {...settings} className="pb-2">
         {carouselItems.map((item, index) => (
-          <div key={index}>
+          <div key={index} className="px-8">
             <div className="h-min-screen-without-header grid grid-cols-1 items-center sm:container md:grid-cols-5">
               <div className="col-span-2 space-y-2 max-md:order-2 md:space-y-8">
-                <h2 className="text-xl lg:text-3xl">{item.title}</h2>
-                <p className="text-lg lg:text-2xl">{item.description}</p>
+                <h2 className="text-2xl lg:text-3xl">{item.title}</h2>
+                <p className="text-md lg:text-2xl">{item.description}</p>
                 {item.button && (
                   <Button className="w-full text-base" size="rounded" asChild>
                     <Link to={item.button.link}>{item.button.title}</Link>
