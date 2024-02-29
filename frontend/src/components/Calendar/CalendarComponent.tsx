@@ -19,8 +19,6 @@ enum NavigationDirection {
   NEXT = "NEXT",
 }
 
-const entryDate = [2024, 2, 26, 21, 36, 54, 786464000];
-
 interface CustomToolbarProps extends ToolbarProps {
   onViewChange: (view: View) => void;
 }
@@ -35,9 +33,9 @@ interface MyEvent extends Event {
 const events: MyEvent[] = [
   {
     id: 1,
-    title: "Terminar el calendario",
-    start: new Date(...entryDate.slice(0, 5)),
-    end: new Date(...entryDate.slice(0, 5)),
+    title: "Test",
+    start: new Date(2024, 2, 25, 10, 0, 0),
+    end: new Date(2024, 2, 25, 12, 0, 0),
   },
 ];
 
