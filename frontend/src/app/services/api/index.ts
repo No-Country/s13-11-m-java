@@ -151,11 +151,11 @@ export const api = createApi({
       },
     }),
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
-      // query: (id) => `products/delete/${id}`,
-      queryFn: async (id) => {
-        await simulateLoading();
-        return { data: id };
-      },
+      query: (id) => `v1/products/delete/${id}`,
+      // queryFn: async (id) => {
+      //   await simulateLoading();
+      //   return { data: id };
+      // },
     }),
 
     // endpoints de ordenes
