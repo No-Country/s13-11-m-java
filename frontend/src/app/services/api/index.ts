@@ -168,7 +168,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/orders/all.json");
-        return { data: json.default as GetOrdersResponse };
+        return { data: json.default as unknown as GetOrdersResponse };
       },
     }),
     //endpoint de empleados

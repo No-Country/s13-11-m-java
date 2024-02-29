@@ -33,22 +33,22 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "progress",
+    id: "state",
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
     sortingFn: (rowA, rowB) => {
-      const { active: activeA } = rowA.original;
-      const { active: activeB } = rowB.original;
+      const { state: activeA } = rowA.original;
+      const { state: activeB } = rowB.original;
 
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const { active } = row.original;
-      const variant = active ? "success" : "destructive";
+      const { state } = row.original;
+      const variant = state ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{active ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{state ? "Activo" : "Inactivo"}</span>
         </div>
       );
     },
@@ -57,12 +57,12 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
-    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
+    id: "initialDate",
+    accessorKey: "initialDate",
+    header: (prop) => ColumnSortButton("Fecha inicio", prop),
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.timeEstimatedCompletion);
-      const dateB = new Date(rowB.original.timeEstimatedCompletion);
+      const dateA = new Date(rowA.original.initialDate);
+      const dateB = new Date(rowB.original.initialDate);
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) =>
@@ -72,21 +72,18 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "jornadaLaboral",
-    accessorKey: "jornadaLaboral",
-    header: "Jornada Laboral",
+    id: "endDate",
+    accessorKey: "endDate",
+    header: (prop) => ColumnSortButton("Fecha final", prop),
+    sortingFn: (rowA, rowB) => {
+      const dateA = new Date(rowA.original.endDate);
+      const dateB = new Date(rowB.original.endDate);
+      return dateA.getTime() - dateB.getTime();
+    },
     cell: ({ row }) =>
       new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
-    },
-  },
-  {
-    id: "cantidadFinalizados",
-    accessorKey: "cantidadFinalizados",
-    header: (prop) => ColumnSortButton("Nombre", prop),
-    meta: {
-      headerName: "Cantidad productos finalizados",
     },
   },
   {

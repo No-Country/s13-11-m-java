@@ -47,7 +47,7 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "progress",
+    id: "errorTime",
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
@@ -71,8 +71,8 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
+    id: "initialDate",
+    accessorKey: "initialDate",
     header: (prop) => ColumnSortButton("Fecha Inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.initialDate);
@@ -93,15 +93,15 @@ export const columns: ColumnDef<Order>[] = [
   },
   {
     id: "endDate",
-    accessorKey: "finishEstimatedDate",
+    accessorKey: "endDate",
     header: "Fecha final",
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.initialDate);
-      const dateB = new Date(rowB.original.initialDate);
+      const dateA = new Date(rowA.original.endDate);
+      const dateB = new Date(rowB.original.endDate);
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) => {
-      const datetime = new Date(row.original.initialDate);
+      const datetime = new Date(row.original.endDate);
       const date = datetime.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
       const time = datetime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
@@ -125,7 +125,8 @@ export const columns: ColumnDef<Order>[] = [
       hidden: true,
     },
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const { id } = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -147,7 +148,7 @@ export const columns: ColumnDef<Order>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <BsFileEarmarkText className="mr-2" />
-              <NavLink to="/order/:orderId">Ver detalle</NavLink>
+              <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

@@ -121,14 +121,14 @@ export interface Order {
   errorTime: number;
   photoLink: string;
   initialDate: string;
-  finishEstimatedDate: string;
+  endDate: string;
   productId: number;
   clientId: number;
   idUnico: string;
   instruction: string;
   description: string;
   totalProduction: number;
-  state: boolean;
+  state: string;
   timeEstimatedCompletion: string;
   processes: Process[];
   company: Company;
