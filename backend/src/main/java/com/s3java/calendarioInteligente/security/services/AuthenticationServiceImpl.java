@@ -72,12 +72,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         UserE user = new UserE();
-
-
         CommonAttribute commonAttr = new CommonAttribute();
 
         commonAttr.setEmail(signUpRequest.getEmail());
         commonAttr.setName(signUpRequest.getName());
+        commonAttr.setPhone(signUpRequest.getPhone());
+        commonAttr.setAddress(signUpRequest.getAddress());
         user.setRoles(Collections.singleton(UserRole.ROLE_ADMIN));
         commonAttr.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         user.setCommonAttribute(commonAttr);
