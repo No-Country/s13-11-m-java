@@ -1,21 +1,26 @@
 import { z } from "zod";
 
-const processFormSchema = z.object({
+export const processFormSchema = z.object({
   name: z.string(),
-  marginTime: z.number(),
-  progress: z.number(),
-  estimatedTime: z.number(),
+  marginTime: z.string(),
+  progress: z.string(),
+  estimatedTime: z.string(),
   status: z.string(),
   subprocess: z.array(
     z.object({
       name: z.string(),
-      timeframe: z.number(),
-      progress: z.number(),
-      estimatedTime: z.number(),
-      status: z.string(),
     })
   ),
 });
 
-export default processFormSchema;
+export const subProcessFormSchema = z.object({
+  name: z.string(),
+  timeframe: z.string(),
+  progress: z.string(),
+  estimatedTime: z.string(),
+  status: z.string(),
+});
+
 export type ProcessFormInputs = z.infer<typeof processFormSchema>;
+
+export type SubProcessFormInputs = z.infer<typeof subProcessFormSchema>;

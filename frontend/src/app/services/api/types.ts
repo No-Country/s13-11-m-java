@@ -21,6 +21,7 @@ export type DeleteProductRequest = number;
 export type DeleteProductResponse = number;
 
 export type GetOrdersResponse = Order[];
+export type GetEmployeesResponse = Employee[];
 
 export interface User {
   id: string;
@@ -102,10 +103,15 @@ export interface CommonAttribute {
 }
 
 export interface Employee {
-  id: number;
+  name: string;
+  state: string;
+  startdate: string;
+  jornada: string;
+  cantidadfinalizados: number;
   role: string;
-  commonAttribute: CommonAttribute;
+  timeEstimatedCompletion: string;
   company: string;
+  active: boolean;
 }
 
 export interface Order {
@@ -115,7 +121,16 @@ export interface Order {
   errorTime: number;
   photoLink: string;
   initialDate: string;
-  finishEstimatedDate: string;
+  endDate: string;
   productId: number;
   clientId: number;
+  idUnico: string;
+  instruction: string;
+  description: string;
+  totalProduction: number;
+  state: string;
+  timeEstimatedCompletion: string;
+  processes: Process[];
+  company: Company;
+  active: boolean;
 }
