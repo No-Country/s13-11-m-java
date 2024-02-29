@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
-import { Product } from "@/app/services/api/types";
+import { Order } from "@/app/services/api/types";
 import { NavLink } from "react-router-dom";
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
@@ -23,7 +23,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Order>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -33,22 +33,22 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "progress",
+    id: "state",
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
     sortingFn: (rowA, rowB) => {
-      const { active: activeA } = rowA.original;
-      const { active: activeB } = rowB.original;
+      const { state: activeA } = rowA.original;
+      const { state: activeB } = rowB.original;
 
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const { active } = row.original;
-      const variant = active ? "success" : "destructive";
+      const { state } = row.original;
+      const variant = state ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{active ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{state ? "Activo" : "Inactivo"}</span>
         </div>
       );
     },
@@ -57,12 +57,12 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
-    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
+    id: "initialDate",
+    accessorKey: "initialDate",
+    header: (prop) => ColumnSortButton("Fecha inicio", prop),
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.timeEstimatedCompletion);
-      const dateB = new Date(rowB.original.timeEstimatedCompletion);
+      const dateA = new Date(rowA.original.initialDate);
+      const dateB = new Date(rowB.original.initialDate);
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) =>
@@ -72,21 +72,18 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "startTime",
-    accessorKey: "startTime",
-    header: "Hora",
+    id: "endDate",
+    accessorKey: "endDate",
+    header: (prop) => ColumnSortButton("Fecha final", prop),
+    sortingFn: (rowA, rowB) => {
+      const dateA = new Date(rowA.original.endDate);
+      const dateB = new Date(rowB.original.endDate);
+      return dateA.getTime() - dateB.getTime();
+    },
     cell: ({ row }) =>
       new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
-    },
-  },
-  {
-    id: "client",
-    accessorKey: "client",
-    header: (prop) => ColumnSortButton("Cliente", prop),
-    meta: {
-      headerName: "Cliente",
     },
   },
   {
@@ -95,8 +92,7 @@ export const columns: ColumnDef<Product>[] = [
       hidden: true,
     },
     enableHiding: false,
-    cell: ({ row }) => {
-      const { id } = row.original;
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -110,7 +106,7 @@ export const columns: ColumnDef<Product>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <BsPencilSquare className="mr-2" />
-              Modificar producto
+              Modificar empleado
             </DropdownMenuItem>
             <DropdownMenuItem>
               <MdOutlinePostAdd className="mr-2" />
@@ -118,11 +114,11 @@ export const columns: ColumnDef<Product>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <BsFileEarmarkText className="mr-2" />
-              <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
+              <NavLink to="/order/:orderId">Ver detalle</NavLink>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <BsTrash className="mr-2" /> Eliminar producto
+              <BsTrash className="mr-2" /> Eliminar empleado
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

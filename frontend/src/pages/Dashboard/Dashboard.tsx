@@ -1,3 +1,4 @@
+import React from "react";
 import { dataProcessPorcent } from "@/data/Dashboard/donuts/procesos.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { dataProcessQ2 } from "@/data/Dashboard/donuts/process.dataq2";
@@ -19,6 +20,7 @@ import { Doughnut, Bar, Line } from "react-chartjs-2";
 import { options, data as barData } from "@/data/Dashboard/bar/bar.chart";
 import { optionsComparative, dataComparative } from "@/data/Dashboard/comparative/comparative.chart";
 import { Progress } from "@/components/ui/progress";
+import { ColumnFiltersState } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "../Orders/columns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -38,13 +40,35 @@ ChartJS.register(
 
 const Dashboard = () => {
   const { orders } = useOrder();
+  // const [selectedColumn, setSelectedColumn] = React.useState("");
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+
+  // const onlyVisibleColumns = React.useMemo(
+  //   () => columns.filter((column) => !column.meta?.hidden) as AccessorKeyColumnDef<Order[], unknown>[],
+  //   []
+  // );
+
+  // const handleColumnChange = (value: string) => {
+  //   setSelectedColumn(value);
+  //   setColumnFilters([]);
+  // };
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  //   const value = event.target.value;
+  //   setColumnFilters(value ? [{ id: selectedColumn, value }] : []);
+  // };
 
   return (
     <div className="container grid max-w-full grid-flow-row grid-cols-1 gap-8 py-8 sm:grid-cols-2 md:grid-cols-3 md:pl-20 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
         <ScrollArea className="h-full whitespace-nowrap rounded-md border">
           <div className="flex">
-            <DataTable columns={columns} data={orders} />
+            <DataTable
+              columns={columns}
+              data={orders}
+              columnFilters={columnFilters}
+              setColumnFilters={setColumnFilters}
+            />
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>

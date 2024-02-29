@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
-import { Product } from "@/app/services/api/types";
+import { Employee } from "@/app/services/api/types";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
@@ -23,7 +23,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Employee>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -33,22 +33,22 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "progress",
+    id: "state",
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
     sortingFn: (rowA, rowB) => {
-      const { active: activeA } = rowA.original;
-      const { active: activeB } = rowB.original;
+      const { state: activeA } = rowA.original;
+      const { state: activeB } = rowB.original;
 
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const { active } = row.original;
-      const variant = active ? "success" : "destructive";
+      const { state } = row.original;
+      const variant = state ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{active ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{state ? "Activo" : "Desvinculado"}</span>
         </div>
       );
     },
@@ -57,34 +57,34 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
-    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
+    id: "startdate",
+    accessorKey: "startdate",
+    header: (prop) => ColumnSortButton("Fecha de inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.timeEstimatedCompletion);
       const dateB = new Date(rowB.original.timeEstimatedCompletion);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) =>
-      new Date(row.original.timeEstimatedCompletion).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+    cell: ({ row }) => {
+      const date = new Date(row.original.startdate);
+      return date.toLocaleDateString();
+    },
     meta: {
       hidden: true,
     },
   },
   {
-    id: "jornadaLaboral",
-    accessorKey: "jornadaLaboral",
+    id: "jornada",
+    accessorKey: "jornada",
     header: "Jornada Laboral",
-    cell: ({ row }) =>
-      new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },
   },
   {
-    id: "cantidadFinalizados",
-    accessorKey: "cantidadFinalizados",
-    header: (prop) => ColumnSortButton("Nombre", prop),
+    id: "cantidadfinalizados",
+    accessorKey: "cantidadfinalizados",
+    header: (prop) => ColumnSortButton("Cantidad de productos finalizados", prop),
     meta: {
       headerName: "Cantidad productos finalizados",
     },

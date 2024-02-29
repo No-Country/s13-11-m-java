@@ -18,6 +18,7 @@ import {
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
+  GetEmployeesResponse,
 } from "./types";
 import { RootState } from "@/app/store";
 
@@ -76,7 +77,8 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      query: () => "/v1/products/all",
+      query: () => "products/all",
+      // query: () => "/v1/products/all",
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
@@ -93,7 +95,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -111,7 +113,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -130,7 +132,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -139,7 +141,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/one.json");
-        return { data: json.default as UpdateProductResponse };
+        return { data: json.default as unknown as UpdateProductResponse };
       },
     }),
     createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
@@ -147,7 +149,7 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/one.json");
-        return { data: json.default as CreateProductResponse };
+        return { data: json.default as unknown as CreateProductResponse };
       },
     }),
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
@@ -164,7 +166,16 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/orders/all.json");
-        return { data: json.default as GetOrdersResponse };
+        return { data: json.default as unknown as GetOrdersResponse };
+      },
+    }),
+    //endpoint de empleados
+    getEmployeers: builder.query<GetEmployeesResponse, void>({
+      // query: () => "orders/all",
+      queryFn: async () => {
+        await simulateLoading();
+        const json = await import("@/mocks/employees/employees.json");
+        return { data: json.default as GetEmployeesResponse };
       },
     }),
   }),
@@ -182,4 +193,5 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useGetOrdersQuery,
+  useGetEmployeersQuery,
 } = api;
