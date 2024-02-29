@@ -28,14 +28,18 @@ public class DateUtils {
         return !referenceDate.isBefore(dateToCheck) || referenceDate.isEqual(dateToCheck);
     }
 
+    /**
+     * Converts a string representation of a date to a {@code LocalDateTime} object using the ISO_DATE_TIME format.
+     *
+     * @param date A string representing a date in the ISO_DATE_TIME format.
+     * @return A {@code LocalDateTime} object parsed from the input string.
+     * @throws DateTimeException If the input string is not in the expected ISO_DATE_TIME format.
+     */
     public static LocalDateTime converFromString(String date) throws DateTimeException {
         return LocalDateTime.parse(
                 date,
                 DateTimeFormatter.ofPattern(FORMAT_DATE_TIME));
     }
-
-
-
 
 
 }
