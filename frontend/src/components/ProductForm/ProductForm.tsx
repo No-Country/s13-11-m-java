@@ -18,18 +18,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 // import { SlOptionsVertical } from "react-icons/sl";
 import ProcessOption from "./ProcessOption";
 
-interface ProductFormProps {
-  onSubmit?: (values: ProductFormInputs) => void;
-  loading?: boolean;
-}
-
 //mock
 async function getData(): Promise<Process[]> {
   await simulateLoading();
   return process;
 }
 
-const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
+const ProductForm = () => {
   const [data, setData] = useState<Process[]>([]);
   const productForm = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
@@ -37,7 +32,6 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
   });
 
   function handleSubmit(values: ProductFormInputs) {
-    onSubmit?.(values);
     console.log(values);
   }
 
@@ -240,7 +234,7 @@ const ProductForm = ({ loading, onSubmit }: ProductFormProps) => {
               </FormItem>
             )}
           />
-          <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
+          <Button className="w-full md:col-span-2" type="submit" size="rounded">
             Confirmar
           </Button>
         </form>
