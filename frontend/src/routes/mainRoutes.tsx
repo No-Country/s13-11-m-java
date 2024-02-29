@@ -24,6 +24,8 @@ import PasswordReset from "@/pages/Settings/SecurityPrivacy/PasswordReset";
 import PrivacyPolicy from "@/pages/Settings/SecurityPrivacy/PrivacyPolicy";
 import OrderDetails from "@/pages/Orders/details/OrderDetails";
 
+import ApiTesting from "@/pages/API TESTING/ApiTesting";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -102,6 +104,10 @@ export const router = createBrowserRouter([
       {
         path: "/order/:orderId",
         element: <OrderDetails />,
+      },
+      {
+        path: "/apitest",
+        element: <ApiTesting />,
       },
     ],
   },

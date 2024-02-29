@@ -77,13 +77,10 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      // query: () => "products/all",
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/products/all.json");
-        return { data: json.default as unknown as AllProductsResponse };
-      },
+      query: () => "products/all",
+      // query: () => "/v1/products/all",
     }),
+
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
       // query: (name) => `products/product-name/${name}`,
       queryFn: async (name, api) => {
@@ -120,6 +117,7 @@ export const api = createApi({
         }
       },
     }),
+
     getProductByUnicoId: builder.query<GetProductByUnicoIdResponse, GetProductByUnicoIdRequest>({
       // query: (idUnico) => `products/product-id-unico/${idUnico}`,
       queryFn: async (idUnico, api) => {
