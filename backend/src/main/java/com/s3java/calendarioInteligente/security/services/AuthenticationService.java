@@ -10,7 +10,7 @@ public interface AuthenticationService {
 
     JwtAuthenticationResponse signup(SignUpRequest signUpRequest) throws RuntimeException;
 
-    JwtAuthenticationResponse signIn(SignInRequest signinRequest);
+    JwtAuthenticationResponse signIn(SignInRequest signinRequest) throws Exception;
 
     JwtAuthenticationResponse refreshToken(RefreshTokenRequest resfreshTokenRequest);
 

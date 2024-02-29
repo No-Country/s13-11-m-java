@@ -8,7 +8,11 @@ public class SignUpRequest {
 
     private String password;
 
-    private Long companyId;
+    private String address;
+
+    private String phone;
+
+
 
     public String getName() {
         return name;
@@ -34,11 +38,19 @@ public class SignUpRequest {
         this.password = password;
     }
 
-    public Long getCompanyId() {
-        return companyId;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

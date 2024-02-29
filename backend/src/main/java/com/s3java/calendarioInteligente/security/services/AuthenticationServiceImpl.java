@@ -99,7 +99,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return jar;
     }
 
-    public JwtAuthenticationResponse signIn(SignInRequest signinRequest) throws AuthenticationException {
+    public JwtAuthenticationResponse signIn(SignInRequest signinRequest) throws Exception {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getEmail(),
                 signinRequest.getPassword()));
@@ -112,8 +112,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 userEntity.getCommonAttribute().getEmail(),
                 userEntity.getCommonAttribute().getPassword(),
                 userEntity.getRoles());
-
-        System.out.println(" ---------------- TOKEN ----------------");
 
         String jwt = jwtService.generateToken(user);
 
