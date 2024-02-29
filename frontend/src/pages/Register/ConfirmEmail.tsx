@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { FcGoogle } from "react-icons/fc";
-import { PiMicrosoftOutlookLogo } from "react-icons/pi";
-import { MdOutlineMail } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 import AuthTemplate from "@/components/AuthTemplate";
+import { Button } from "@/components/ui/button";
+
+import { FcGoogle } from "react-icons/fc";
+import { MdOutlineMail } from "react-icons/md";
+import { PiMicrosoftOutlookLogo } from "react-icons/pi";
 
 import checkEmailImage from "@/assets/check_email.svg";
-import { Link } from "react-router-dom";
 
 const ConfirmEmail = () => {
   return (

@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 import OrderForm from "@/components/OrderForm/OrderForm";
 import { Button } from "@/components/ui/button";
+
 import { MdArrowBackIos } from "react-icons/md";
-import { Link } from "react-router-dom";
 
 const OrderPage = () => {
   return (

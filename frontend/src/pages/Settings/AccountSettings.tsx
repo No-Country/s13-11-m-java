@@ -1,9 +1,12 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
 import useAuth from "@/hooks/useAuth";
+
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+
 import { BsPencilFill } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa";
 
 function AccountSettings() {
   const { user } = useAuth();

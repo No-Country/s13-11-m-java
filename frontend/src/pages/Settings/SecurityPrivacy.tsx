@@ -1,7 +1,9 @@
-import { FaArrowLeft } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
-import { RiLockPasswordLine } from "react-icons/ri";
+
+import { FaArrowLeft } from "react-icons/fa";
 import { GoShield } from "react-icons/go";
+import { RiLockPasswordLine } from "react-icons/ri";
+
 function SecurityPrivacy() {
   return (
     <div className="position container fixed top-20 h-screen bg-[#fafafa] px-0 py-4">

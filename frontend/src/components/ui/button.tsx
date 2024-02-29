@@ -1,8 +1,9 @@
 import * as React from "react";
+
 import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { type VariantProps, cva } from "class-variance-authority";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -18,12 +19,12 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-10 px-4 py-2",
-        rounded: "h-10 px-4 py-2 rounded-full",
-        "rounded-xl": "h-10 px-16 py-2 rounded-full",
+        rounded: "h-10 rounded-full px-4 py-2",
+        "rounded-xl": "h-10 rounded-full px-16 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-        "rounded-sm": "h-9 px-3 rounded-full py-2",
+        "rounded-sm": "h-9 rounded-full px-3 py-2",
       },
     },
     defaultVariants: {

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useGetAllProductsQuery } from "../../app/services/api/";
 
 function ApiTesting() {

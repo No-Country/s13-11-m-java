@@ -1,11 +1,14 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SubProcessFormInputs, subProcessFormSchema } from "@/schemas/processSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
 import { FaCamera } from "react-icons/fa6";
+
+import { SubProcessFormInputs, subProcessFormSchema } from "@/schemas/processSchema";
 
 const SubProcessModal = () => {
   const subProcessForm = useForm<SubProcessFormInputs>({

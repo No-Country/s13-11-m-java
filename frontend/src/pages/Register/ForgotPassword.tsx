@@ -1,14 +1,17 @@
-import AuthTemplate from "@/components/AuthTemplate";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import ForgotPasswordImage from "@/assets/forgot_password.svg";
-import forgotPasswordSchema, { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
-
+import useAuth from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
+import AuthTemplate from "@/components/AuthTemplate";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import forgotPasswordSchema, { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
+
+import ForgotPasswordImage from "@/assets/forgot_password.svg";
 import { authCredentials } from "@/constants/api";
-import useAuth from "@/hooks/useAuth";
+
 const ForgotPassword2 = () => {
   const { forgotPassword, isLoadingForgotPassword } = useAuth();
 

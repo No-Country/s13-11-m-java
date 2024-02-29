@@ -1,8 +1,9 @@
-import { AccessorKeyColumnDef } from "@tanstack/react-table";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./select";
 import { SelectProps } from "@radix-ui/react-select";
 
 import { MdOutlineFilterAlt } from "react-icons/md";
+
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./select";
+import { AccessorKeyColumnDef } from "@tanstack/react-table";
 
 function SelectColumns<TData, TValue>({
   columns,

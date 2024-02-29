@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import OrderDetailsTable from "./OrderDetailsTable";
 
 const OrderDetail: React.FC = () => {

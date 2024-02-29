@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import Slider, { Settings } from "react-slick";
 
 import { Button } from "@/components/ui/button";
 
 import { carouselItems } from "./items";
+import Slider, { Settings } from "react-slick";
 
+import "./OnBoarding.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import "./OnBoarding.css";
 
 const settings: Settings = {
   dots: true,

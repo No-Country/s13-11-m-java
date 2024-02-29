@@ -1,11 +1,15 @@
-import { columns } from "./orderColumn";
-// import { DataTable2 } from "@/components/ui/data-table2";
-import { DataTable } from "@/components/ui/data-table";
 import React from "react";
-// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
 // import { Order} from "@/app/services/api/types";
 import useOrder from "@/hooks/useOrder";
+
+// import { DataTable2 } from "@/components/ui/data-table2";
+import { DataTable } from "@/components/ui/data-table";
+// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
+import { columns } from "./orderColumn";
+
 // import {FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 // import { Textarea } from "@/components/ui/textarea";
 // import { useForm } from "react-hook-form";
