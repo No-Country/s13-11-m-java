@@ -1,5 +1,6 @@
 import { columns } from "./orderColumn";
-import { DataTable2 } from "@/components/ui/data-table2";
+// import { DataTable2 } from "@/components/ui/data-table2";
+import { DataTable } from "@/components/ui/data-table";
 import React from "react";
 // import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -33,7 +34,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = (props) => {
         <div className="col-span-full flex h-full max-h-[26rem] grid-flow-row flex-col rounded-2xl">
           <div className="flex flex-col py-4 max-md:gap-2 md:flex-row"></div>
           <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
-            <div className="flex">{orderSelected ? <DataTable2 columns={columns} data={[orderSelected]} /> : ""}</div>
+            <div className="flex">{orderSelected ? <DataTable columns={columns} data={[orderSelected]} /> : ""}</div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>
@@ -45,7 +46,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = (props) => {
         <div className="col-span-full flex h-full max-h-[26rem] grid-flow-row flex-col rounded-2xl">
           <div className="flex flex-col py-4 max-md:gap-2 md:flex-row"></div>
           <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
-            <div className="flex">{orderSelected ? <DataTable2 columns={columns} data={[orderSelected]} /> : ""}</div>
+            <div className="flex">{orderSelected ? <DataTable columns={columns} data={[orderSelected]} /> : ""}</div>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>

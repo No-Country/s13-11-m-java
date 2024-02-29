@@ -16,8 +16,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  columnFilters: ColumnFiltersState;
-  setColumnFilters: React.Dispatch<React.SetStateAction<ColumnFiltersState>>;
+  columnFilters?: ColumnFiltersState;
+  setColumnFilters?: React.Dispatch<React.SetStateAction<ColumnFiltersState>>;
 }
 
 export function DataTable<TData, TValue>({

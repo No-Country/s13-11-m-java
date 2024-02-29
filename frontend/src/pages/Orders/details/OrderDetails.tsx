@@ -14,8 +14,6 @@ const OrderDetail: React.FC = () => {
   return (
     <>
       <OrderDetailsTable orderId={order} />
-      <OrderDetailsTable />
-      <OrderDetailsTable />
     </>
   );
 };
