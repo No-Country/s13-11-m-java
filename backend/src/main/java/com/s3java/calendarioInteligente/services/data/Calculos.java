@@ -46,5 +46,4 @@ public class Calculos {
         finishEstimatedDate = initialDate + (timeEstimatedCompletionProducto(id)/86400;  //86400 sale de 60segundos*60minutos*24horas => 86400seg expresado en dias. hacer las conversiones necesarias para las fechas.
         return finishEstimatedDate;
     }
-
 }
