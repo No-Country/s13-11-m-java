@@ -2,23 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import processFormSchema, { ProcessFormInputs } from "@/schemas/processSchema";
+import { SubProcessFormInputs, subProcessFormSchema } from "@/schemas/processSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaCamera } from "react-icons/fa6";
 
-interface ProcessFormProps {
-  onSubmit?: (values: ProcessFormInputs) => void;
-  loading?: boolean;
-}
-
-const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
-  const form = useForm<ProcessFormInputs>({
-    resolver: zodResolver(processFormSchema),
+const SubProcessModal = () => {
+  const subProcessForm = useForm<SubProcessFormInputs>({
+    resolver: zodResolver(subProcessFormSchema),
   });
 
-  function handleSubmit(values: ProcessFormInputs) {
-    onSubmit?.(values);
+  function handleSubmit(values: SubProcessFormInputs) {
     console.log(values);
   }
 
@@ -35,8 +29,11 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
         <DialogHeader>
           <DialogTitle>Agregar un nuevo subproceso</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col items-center justify-center">
+        <Form {...subProcessForm}>
+          <form
+            onSubmit={subProcessForm.handleSubmit(handleSubmit)}
+            className="flex flex-col items-center justify-center"
+          >
             <div className="max-auto flex h-24 w-32 flex-col items-center justify-center">
               <Button type="button" variant={"ghost"} className="w-30 flex h-44 flex-col">
                 <p>Subir una foto</p>
@@ -47,7 +44,7 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
             </div>
             <div className=" mb-2 grid-flow-col grid-rows-3 gap-x-8 space-y-4 md:grid">
               <FormField
-                control={form.control}
+                control={subProcessForm.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem className="pt-4">
@@ -60,8 +57,8 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
-                name="marginTime"
+                control={subProcessForm.control}
+                name="timeframe"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Margen de tiempo de aceptabilidad</FormLabel>
@@ -73,7 +70,7 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={subProcessForm.control}
                 name="progress"
                 render={({ field }) => (
                   <FormItem className="">
@@ -86,7 +83,7 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={subProcessForm.control}
                 name="estimatedTime"
                 render={({ field }) => (
                   <FormItem className="">
@@ -99,7 +96,7 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={subProcessForm.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem className="">
@@ -112,7 +109,7 @@ const SubProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
             </div>
-            <Button className="mx-auto mt-4 w-[282px]" type="submit" size="rounded" disabled={loading}>
+            <Button className="mx-auto mt-4 w-[282px]" type="submit" size="rounded">
               Agregar
             </Button>
           </form>

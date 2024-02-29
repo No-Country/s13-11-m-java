@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import processFormSchema, { ProcessFormInputs } from "@/schemas/processSchema";
+import { processFormSchema, ProcessFormInputs } from "@/schemas/processSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaCamera } from "react-icons/fa6";
@@ -13,21 +13,15 @@ import {
   FaChevronDown,
   // FaCheck
 } from "react-icons/fa";
-import { Process } from "@/mocks/process/data";
+import { SubProcess } from "@/mocks/process/data";
 
-interface ProcessFormProps {
-  onSubmit?: (values: ProcessFormInputs) => void;
-  loading?: boolean;
-}
-
-const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
-  const form = useForm<ProcessFormInputs>({
+const ProcessModal = () => {
+  const processForm = useForm<ProcessFormInputs>({
     resolver: zodResolver(processFormSchema),
     defaultValues: { subprocess: [] },
   });
 
   function handleSubmit(values: ProcessFormInputs) {
-    onSubmit?.(values);
     console.log(values);
   }
 
@@ -44,8 +38,8 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
         <DialogHeader>
           <DialogTitle>Agregar un nuevo proceso</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col items-center justify-center">
+        <Form {...processForm}>
+          <form onSubmit={processForm.handleSubmit(handleSubmit)} className="flex flex-col items-center justify-center">
             <div className="max-auto flex h-24 w-32 flex-col items-center justify-center">
               <Button type="button" variant={"ghost"} className="w-30 flex h-44 flex-col">
                 <p>Subir una foto</p>
@@ -56,7 +50,7 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
             </div>
             <div className=" mb-2 grid-flow-col grid-rows-3 gap-x-4 space-y-4 md:grid">
               <FormField
-                control={form.control}
+                control={processForm.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem className="pt-4">
@@ -69,7 +63,7 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={processForm.control}
                 name="marginTime"
                 render={({ field }) => (
                   <FormItem className="">
@@ -82,7 +76,7 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={processForm.control}
                 name="progress"
                 render={({ field }) => (
                   <FormItem className="">
@@ -95,7 +89,7 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={processForm.control}
                 name="estimatedTime"
                 render={({ field }) => (
                   <FormItem className="">
@@ -108,7 +102,7 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={processForm.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem className="">
@@ -121,7 +115,7 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={processForm.control}
                 name="subprocess"
                 render={({ field }) => (
                   <FormItem className="">
@@ -137,45 +131,31 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
                                 className={`${boxStyle} w-[360px]`}
                                 // className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}
                               >
-                                <p>Nombre del proceso</p>
+                                <p>Nombre del subproceso</p>
                                 <FaChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                               </Button>
                             </FormControl>
                           </PopoverTrigger>
                           <PopoverContent className="w-[340px] p-0">
                             <Command>
-                              <CommandInput placeholder="Buscar producto..." className="h-9" />
-                              <CommandEmpty>Proceso no encontrado</CommandEmpty>
+                              <CommandInput placeholder="Buscar subproceso..." className="h-9" />
+                              <CommandEmpty>Subproceso no encontrado</CommandEmpty>
                               <CommandGroup>
                                 {[{ name: "Test" }].map((subProcess, i) => (
                                   <CommandItem
                                     value={subProcess.name}
                                     key={i}
                                     onSelect={() => {
-                                      //Esta es la funcion para setear el valor del form con los procesos, funciona pero marca como error el codigo
-                                      form.setValue("subprocess", [...field.value, subProcess] as Process[]);
+                                      processForm.setValue("subprocess", [...field.value, subProcess] as SubProcess[]);
                                     }}
                                   >
                                     {subProcess.name}
-                                    {/* <FaCheck
-
-                                Esto es un icono de check que queda lindo nomas, pero me costo hacer el includo y lo pospuse
-                                className={cn(
-                                  "ml-auto h-4 w-4"
-                                  processList.includes((proc: Process) => process.name === proc.name)
-                                  field.value.includes((proc: Process) => proc.name === process.name)
-                                  ?  "opacity-100"
-                                  : "opacity-0"
-                                  process.name === field.value ? "opacity-100" : "opacity-0"
-                                )}
-                                /> */}
                                   </CommandItem>
                                 ))}
                               </CommandGroup>
                             </Command>
                           </PopoverContent>
                         </Popover>
-                        <SubProcessModal />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -185,12 +165,15 @@ const ProcessModal = ({ loading, onSubmit }: ProcessFormProps) => {
             </div>
 
             <div className="min-h-[20vh]"></div>
-            <Button className="mx-auto mt-4 w-[282px] " type="submit" size="rounded" disabled={loading}>
+            <Button className="mx-auto mt-4 w-[282px] " type="submit" size="rounded">
               Agregar
             </Button>
           </form>
         </Form>
-        <DialogFooter></DialogFooter>
+        <DialogFooter>
+          {/* AGREGR SUBPROCESO */}
+          <SubProcessModal />
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
