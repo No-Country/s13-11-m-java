@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
@@ -162,7 +163,7 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<ProductOrderResponse> getOrder(
+    public ResponseEntity<?> getOrder(
             @Parameter(description = "ID of the order")
             @PathVariable @Valid Long orderId
 
@@ -171,8 +172,7 @@ public class ProductOrderController {
             ProductOrderResponse productOrder = productOrderService.findProductOrderById(orderId);
             return ResponseEntity.ok().body(productOrder);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .header("Not found", e.getMessage()).build();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -185,28 +185,27 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<ProductOrderResponse> createOrder(
+    public ResponseEntity<Object> createOrder(
             @RequestBody @Valid ProductOrderRequest productOrderDTO
-
     ){
         try {
             ProductOrderResponse productOrder = productOrderService.createProductOrder(productOrderDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(productOrder);
+            return new ResponseEntity<>(productOrder, HttpStatus.CREATED);
         } catch (ProductOrderNotFoundException e) {
             this.logger.error("Resource not found: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductOrderResponse("Resource not found: " + e.getMessage()));
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (BadRequestException e) {
             this.logger.error("Bad request: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request: " + e.getMessage()));
-        }
-        catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (EntityNotFoundException e){
+            this.logger.error("Resource not found: " + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e){
             this.logger.error("Bad request " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request error" + e.getMessage()));
-
-        }
-        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
             this.logger.error("Internal server error: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ProductOrderResponse("Internal server error"));
+            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -218,7 +217,7 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "204", description = "No content available"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<ProductOrderResponse> editOrder(
+    public ResponseEntity<Object> editOrder(
             @PathVariable @Valid Long orderId,
             @RequestBody @Valid  ProductOrderRequest productOrderDTO
     ){
@@ -226,23 +225,23 @@ public class ProductOrderController {
             ProductOrderResponse productOrders = productOrderService
                     .updateProductOrder(orderId, productOrderDTO);
             return ResponseEntity.ok().body(productOrders);
-        }
-        catch (ChangeSetPersister.NotFoundException e) {
-            this.logger.error("Resource not found: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(new ProductOrderResponse("Resource not found: " + e.getMessage()));
-        } catch (BadRequestException e) {
-            this.logger.error("Bad request: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request: " + e.getMessage()));
-        }
-        catch (IllegalArgumentException e){
-            this.logger.error("Bad request " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ProductOrderResponse("Bad request error" + e.getMessage()));
 
-        }
-        catch (Exception e) {
-            this.logger.error("Internal server error: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ProductOrderResponse("Internal server error"));
-        }
+    } catch (ProductOrderNotFoundException e) {
+        this.logger.error("Resource not found: " + e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    } catch (BadRequestException e) {
+        this.logger.error("Bad request: " + e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    } catch (EntityNotFoundException e){
+        this.logger.error("Resource not found: " + e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    } catch (IllegalArgumentException e){
+        this.logger.error("Bad request " + e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+        this.logger.error("Internal server error: " + e.getMessage());
+        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     }
 
     @DeleteMapping("/delete/{orderId}")
@@ -257,9 +256,16 @@ public class ProductOrderController {
             productOrderService
                     .deleteProductOrder(orderId);
             return ResponseEntity.accepted().build();
-        } catch (Exception e) {
+        }
+        catch (RuntimeException e){
+            this.logger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
                     .header("Not implemented", e.getMessage()).build();
+
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("internal server error", e.getMessage()).build();
         }
     }
 

@@ -24,7 +24,7 @@ public class Company {
     @JsonManagedReference
     private List<UserE> employee = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @Column(name = "product_orders_id")
     @JsonIgnore
     private List<ProductOrder> productOrders = new ArrayList<>();

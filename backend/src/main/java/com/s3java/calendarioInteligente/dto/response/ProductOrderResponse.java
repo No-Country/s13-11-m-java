@@ -1,38 +1,37 @@
 package com.s3java.calendarioInteligente.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.s3java.calendarioInteligente.entities.*;
+import com.s3java.calendarioInteligente.utils.DateUtils;
 
 import java.time.LocalDateTime;
 
 
 public class ProductOrderResponse {
 
-    private String message;
-
-
     private Long id;
 
     private String name;
 
-    private LocalDateTime entryDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String entryDate;
 
     private Double errorTime;
 
     private String photoLink;
 
-    private LocalDateTime initialDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String initialDate;
 
-    private LocalDateTime finishEstimatedDate;
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String finishEstimatedDate;
 
-    private Client product;
+    private Product product;
 
     private Client client;
 
     public ProductOrderResponse() {}
 
-    public ProductOrderResponse(String message) {
-        this.message = message;
-    }
 
     public Long getId() {
         return id;
@@ -50,11 +49,11 @@ public class ProductOrderResponse {
         this.name = name;
     }
 
-    public LocalDateTime getEntryDate() {
+    public String getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDateTime entryDate) {
+    public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
     }
 
@@ -75,20 +74,12 @@ public class ProductOrderResponse {
     }
 
 
-    public String getMessage() {
-        return message;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-
-    public Client getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Client product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
@@ -100,26 +91,25 @@ public class ProductOrderResponse {
         this.client = client;
     }
 
-    public LocalDateTime getInitialDate() {
+    public String getInitialDate() {
         return initialDate;
     }
 
-    public void setInitialDate(LocalDateTime initialDate) {
+    public void setInitialDate(String initialDate) {
         this.initialDate = initialDate;
     }
 
-    public LocalDateTime getFinishEstimatedDate() {
+    public String getFinishEstimatedDate() {
         return finishEstimatedDate;
     }
 
-    public void setFinishEstimatedDate(LocalDateTime finishEstimatedDate) {
+    public void setFinishEstimatedDate(String finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
     }
 
     @Override
     public String toString() {
         return "ProductOrderResponse{" +
-                "message='" + message + '\'' +
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +
@@ -127,7 +117,6 @@ public class ProductOrderResponse {
                 ", photoLink='" + photoLink + '\'' +
                 ", initialDate=" + initialDate +
                 ", finishEstimatedDate=" + finishEstimatedDate +
-                ", product=" + product +
                 ", client=" + client +
                 '}';
     }
