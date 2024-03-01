@@ -76,7 +76,7 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      query: () => "/v1/products/all",
+      query: () => "v1/products/all",
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
@@ -142,14 +142,15 @@ export const api = createApi({
         return { data: json.default as UpdateProductResponse };
       },
     }),
+
     createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
-      // query:'products/create'
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/products/one.json");
-        return { data: json.default as CreateProductResponse };
-      },
+      query: (product) => ({
+        url: "/v1/products/create",
+        method: "POST",
+        body: product,
+      }),
     }),
+
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       // query: (id) => `products/delete/${id}`,
       queryFn: async (id) => {
