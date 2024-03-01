@@ -1,30 +1,26 @@
 package com.s3java.calendarioInteligente.exception;
 
-import com.s3java.calendarioInteligente.exception.exceptions.ProcessNotFoundException;
-import com.s3java.calendarioInteligente.exception.exceptions.ProductOrderNotFoundException;
-import com.s3java.calendarioInteligente.exception.exceptions.SubProcessNotFoundException;
+import com.s3java.calendarioInteligente.exception.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Map;
+import java.util.*;
+
 
 @RestControllerAdvice
-public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
+public class ApplicationExceptionHandler {
 
     @ExceptionHandler(value = {
             ProductOrderNotFoundException.class,
             SubProcessNotFoundException.class,
             ProcessNotFoundException.class,
-            UsernameNotFoundException.class
+            ClientNotFoundException.class
     })
-    public ResponseEntity<Object> handleBusinessException(RuntimeException exception){
+    public ResponseEntity<Object> handleNotFoundBusinessException(RuntimeException exception){
 
         HttpStatus notFound = HttpStatus.NOT_FOUND;
 
@@ -35,6 +31,22 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         );
 
         return new ResponseEntity<>(apiException, notFound);
+    }
+
+
+    @ExceptionHandler(value = BindingResultException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(BindingResultException exception){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        List<String> errorMessages = new ArrayList<>();
+        exception.getBindingResult().getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
+
+        BindingResultErrorDetails apiException = new BindingResultErrorDetails(
+                errorMessages,
+                badRequest,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, badRequest);
     }
 
     @ExceptionHandler(value = {Exception.class})

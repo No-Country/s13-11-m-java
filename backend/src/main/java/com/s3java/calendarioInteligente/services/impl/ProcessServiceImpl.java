@@ -1,6 +1,5 @@
 package com.s3java.calendarioInteligente.services.impl;
 
-import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
 import com.s3java.calendarioInteligente.entities.SubProcess;
 import com.s3java.calendarioInteligente.exception.exceptions.ProcessNotFoundException;
@@ -39,8 +38,8 @@ public class ProcessServiceImpl  implements ProcessService {
         if (foundProcess.isPresent()){
             return new ResponseEntity<>(foundProcess.get(), HttpStatus.OK);
         }
-        ////TODO: Crear ProcessNotFoundException
-        return new ResponseEntity<>("No process found", HttpStatus.NOT_FOUND);
+        //TODO: Crear ProcessNotFoundException
+        throw new ProcessNotFoundException("No process found with id: " + processID);
     }
 
     @Override
