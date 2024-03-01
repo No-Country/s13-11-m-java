@@ -3,6 +3,7 @@ package com.s3java.calendarioInteligente.services.impl;
 import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
 import com.s3java.calendarioInteligente.entities.SubProcess;
+import com.s3java.calendarioInteligente.exception.exceptions.ProcessNotFoundException;
 import com.s3java.calendarioInteligente.repositories.ProcessRepository;
 import com.s3java.calendarioInteligente.services.inter.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +45,12 @@ public class ProcessServiceImpl  implements ProcessService {
 
     @Override
     public ResponseEntity<?> deleteByID(Long processID) {
-        try {
+        var processExists = processRepository.findById(processID);
+        if (processExists.isPresent()) {
             processRepository.deleteById(processID);
-            //Revisar si es necesario hacer un mensaje distinto
             return new ResponseEntity<>("Process Deleted", HttpStatus.OK);
-        } catch (Exception e){
-            //TODO: Crear ProcessNotFoundException
-            return new ResponseEntity<>("Process Not found", HttpStatus.NOT_FOUND);
         }
+        throw new ProcessNotFoundException("No process found with id: " + processID);
     }
 
     @Override
@@ -60,12 +59,13 @@ public class ProcessServiceImpl  implements ProcessService {
         if (foundProcess.isPresent()){
             ProductProcess processToUpdate = foundProcess.get();
 
-            //Solo actualizo los atributos, lo de relaciones es de otro endpoints
+            //Solo actualizo los atributos
+            //Las relaciones se actualizan en otros endpoints
             processToUpdate.setProcessAttributes(updatedProcess.getProcessAttributes());
             return new ResponseEntity<>(processRepository.save(processToUpdate), HttpStatus.OK);
         }
         //TODO: Añadir mejor manejo de excepciones
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+        throw new ProcessNotFoundException("No process found with id: " + processIDToUpdate);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ProcessServiceImpl  implements ProcessService {
             return new ResponseEntity<>(processRepository.save(process), HttpStatus.OK);
         }
         //TODO: Añadir mejor manejo de excepciones
-        return new ResponseEntity<>("Process Not Found", HttpStatus.NOT_FOUND);
+        throw new ProcessNotFoundException("No process found with id: " + processID);
     }
 
     @Override
@@ -93,6 +93,6 @@ public class ProcessServiceImpl  implements ProcessService {
             process.setSubProcesses(subProcessList);
             return new ResponseEntity<>(processRepository.save(process), HttpStatus.OK);
         }
-        return new ResponseEntity<>("Process Not Found", HttpStatus.NOT_FOUND);
+        throw new ProcessNotFoundException("No process found with id: " + processID);
     }
 }
