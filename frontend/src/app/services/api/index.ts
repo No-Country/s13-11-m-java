@@ -79,7 +79,7 @@ export const api = createApi({
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
       query: () => "products/all",
-      // query: () => "/v1/products/all",
+      // query: () => "v1/products/all",
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
@@ -145,6 +145,7 @@ export const api = createApi({
         return { data: json.default as unknown as UpdateProductResponse };
       },
     }),
+
     createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
       // query:'products/create'
       queryFn: async () => {
@@ -153,6 +154,7 @@ export const api = createApi({
         return { data: json.default as unknown as CreateProductResponse };
       },
     }),
+
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       // query: (id) => `products/delete/${id}`,
       queryFn: async (id) => {
