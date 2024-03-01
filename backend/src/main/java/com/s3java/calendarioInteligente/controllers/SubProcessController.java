@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/subprocess")
+@RequestMapping("/api/v1/subprocess")
 public class SubProcessController {
 
     @Autowired

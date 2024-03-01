@@ -1,4 +1,5 @@
-package com.s3java.calendarioInteligente.config;
+package com.s3java.calendarioInteligente.security.config;
+
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
