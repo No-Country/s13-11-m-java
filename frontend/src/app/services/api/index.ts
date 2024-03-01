@@ -1,26 +1,27 @@
-import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
-import { simulateLoading } from "@/utils/fakeUtils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 import {
-  LoginRequest,
-  UserResponse,
   AllProductsResponse,
-  GetProductByNameRequest,
-  GetProductByNameResponse,
-  GetProductByIdRequest,
-  GetProductByIdResponse,
-  GetProductByUnicoIdRequest,
-  GetProductByUnicoIdResponse,
-  UpdateProductRequest,
-  UpdateProductResponse,
   CreateProductRequest,
   CreateProductResponse,
   DeleteProductRequest,
   DeleteProductResponse,
-  GetOrdersResponse,
   GetEmployeesResponse,
+  GetOrdersResponse,
+  GetProductByIdRequest,
+  GetProductByIdResponse,
+  GetProductByNameRequest,
+  GetProductByNameResponse,
+  GetProductByUnicoIdRequest,
+  GetProductByUnicoIdResponse,
+  LoginRequest,
+  UpdateProductRequest,
+  UpdateProductResponse,
+  UserResponse,
 } from "./types";
 import { RootState } from "@/app/store";
+import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
+import { simulateLoading } from "@/utils/fakeUtils";
 
 export const api = createApi({
   reducerPath: "api",

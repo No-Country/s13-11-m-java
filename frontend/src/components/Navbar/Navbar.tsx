@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 
-import { FaRegBell } from "react-icons/fa6";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useAuth from "@/hooks/useAuth";
+
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
-import { logItems, navItems } from "./items";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import { FaRegBell } from "react-icons/fa6";
+
 import Logo from "../Logo";
+import { logItems, navItems } from "./items";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();

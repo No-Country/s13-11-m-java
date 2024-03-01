@@ -1,5 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
+
 import { menuItems } from "./items";
 
 const Sidebar = () => {

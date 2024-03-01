@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
+
+import { FaArrowLeft } from "react-icons/fa";
 
 function PrivacyPolicy() {
   return (

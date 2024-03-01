@@ -1,19 +1,24 @@
-import { FaCamera } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { Textarea } from "../ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
-import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { simulateLoading } from "@/utils/fakeUtils";
-import { Product, products } from "@/mocks/products/data";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { FaChevronDown, FaCheck } from "react-icons/fa";
+
+import { FaCamera } from "react-icons/fa";
+import { FaCheck, FaChevronDown } from "react-icons/fa";
+
+import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
+
 import { cn } from "@/lib/utils";
+import { Product, products } from "@/mocks/products/data";
+import { simulateLoading } from "@/utils/fakeUtils";
 
 interface OrderFormProps {
   onSubmit?: (values: OrderFormInputs) => void;

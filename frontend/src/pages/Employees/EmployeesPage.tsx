@@ -1,19 +1,23 @@
-import { columns } from "./columns";
-import { DataTable } from "@/components/ui/data-table";
 import React from "react";
+
+import useEmployee from "@/hooks/useEmp";
+
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
+import { Input } from "@/components/ui/input";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 // import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import SelectColumns from "@/components/ui/select-columns";
-import { Input } from "@/components/ui/input";
-import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import useEmployee from "@/hooks/useEmp";
-import { Employee } from "@/app/services/api/types";
+
 import AddEmployee from "@/components/icons/AddEmployee";
-import { Doughnut, Line } from "react-chartjs-2";
-import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
+
+import { columns } from "./columns";
+import { Employee } from "@/app/services/api/types";
 import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
+import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
+import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+import { Doughnut, Line } from "react-chartjs-2";
 
 const EmployeesPage = () => {
   const { employees } = useEmployee();
