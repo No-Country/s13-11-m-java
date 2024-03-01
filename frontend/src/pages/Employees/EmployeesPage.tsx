@@ -17,6 +17,7 @@ import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { Doughnut, Line } from "react-chartjs-2";
+// import {useEmployee} from "@/hooks/useEmployee";
 
 const EmployeesPage = () => {
   // const { employees } = useEmployee();
@@ -136,7 +137,7 @@ const EmployeesPage = () => {
             <div className="flex">
               <DataTable
                 columns={columns}
-                data={employees}
+                data={[]}
                 columnFilters={columnFilters}
                 setColumnFilters={setColumnFilters}
               />
