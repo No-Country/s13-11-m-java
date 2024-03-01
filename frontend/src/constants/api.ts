@@ -7,8 +7,8 @@ export const authCredentials = {
 
 export const registerCredentials = {
   ...authCredentials,
-  firstName: "Usuario",
-  lastName: "Test",
+  name: "Usuario",
+  email: "Test",
   address: "Calle Falsa 123",
   phone: "123456789",
 };
