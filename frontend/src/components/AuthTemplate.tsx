@@ -11,7 +11,7 @@ const AuthTemplate = (props: AuthTemplateProps) => {
     <div className="grid min-h-screen grid-cols-1 md:grid-cols-5">
       <div className="container col-span-2 bg-primary py-8 text-background max-md:hidden max-md:text-center">
         <div className="ms-auto flex h-full max-w-xl flex-col justify-center space-y-12 pt-16">
-          {title && <h1 className="text-3xl">{title}</h1>}
+          {title && <h1 className="text-3xl md:px-4">{title}</h1>}
           {image && (
             <div>
               <img src={image} alt={alt} />
