@@ -1,29 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import UserLayout from "@/layouts/UserLayout";
+import ApiTesting from "@/pages/API TESTING/ApiTesting";
+import Calendar from "@/pages/Calendar/Calendar";
 import Dashboard from "@/pages/Dashboard/Dashboard";
+import EmployeesPage from "@/pages/Employees/EmployeesPage";
 import Login from "@/pages/Login/Login";
 import NotFoundPage from "@/pages/NotFoundPage";
 import OnBoarding from "@/pages/OnBoarding/OnBoarding";
+import OrderPage from "@/pages/Orders/OrderPage";
+import OrderDetails from "@/pages/Orders/details/OrderDetails";
+import ProductPage from "@/pages/Products/ProductPage";
 import ProductsPage from "@/pages/Products/ProductsPage";
 import ConfirmEmail from "@/pages/Register/ConfirmEmail";
 import ErrorRegister from "@/pages/Register/ErrorRegister";
 import ForgotPassword from "@/pages/Register/ForgotPassword";
 import Register from "@/pages/Register/Register";
-import Calendar from "@/pages/Calendar/Calendar";
-import EmployeesPage from "@/pages/Employees/EmployeesPage";
-import SettingsPage from "@/pages/Settings/SettingsPage";
-import SecurityPrivacy from "@/pages/Settings/SecurityPrivacy";
 import AccountSettings from "@/pages/Settings/AccountSettings";
-import NotificationSettings from "@/pages/Settings/NotificationSettings";
 import CalendarSettings from "@/pages/Settings/CalendarSettings";
-import ProductPage from "@/pages/Products/ProductPage";
-import OrderPage from "@/pages/Orders/OrderPage";
+import NotificationSettings from "@/pages/Settings/NotificationSettings";
+import SecurityPrivacy from "@/pages/Settings/SecurityPrivacy";
 import PasswordReset from "@/pages/Settings/SecurityPrivacy/PasswordReset";
 import PrivacyPolicy from "@/pages/Settings/SecurityPrivacy/PrivacyPolicy";
-
-import ApiTesting from "@/pages/API TESTING/ApiTesting";
+import SettingsPage from "@/pages/Settings/SettingsPage";
 
 export const router = createBrowserRouter([
   {
@@ -99,6 +100,10 @@ export const router = createBrowserRouter([
       {
         path: "/order",
         element: <OrderPage />,
+      },
+      {
+        path: "/order/:orderId",
+        element: <OrderDetails />,
       },
       {
         path: "/apitest",

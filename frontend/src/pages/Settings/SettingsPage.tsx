@@ -1,7 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
+
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { LuBellRing } from "react-icons/lu";
-import { MdOutlinePersonOutline, MdOutlineAdminPanelSettings } from "react-icons/md";
+import { MdOutlineAdminPanelSettings, MdOutlinePersonOutline } from "react-icons/md";
 
 const SettingsPage = () => {
   return (

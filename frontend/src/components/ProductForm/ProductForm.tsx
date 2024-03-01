@@ -1,22 +1,27 @@
-import { FaCamera } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { Textarea } from "../ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
-import ProcessModal from "./ProcessModal";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { FaChevronDown, FaCheck } from "react-icons/fa";
-import { Process, process } from "@/mocks/process/data";
-import { simulateLoading } from "@/utils/fakeUtils";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+import { FaCamera } from "react-icons/fa";
+import { FaCheck, FaChevronDown } from "react-icons/fa";
+
+import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
+
+import ProcessModal from "./ProcessModal";
 // import { SlOptionsVertical } from "react-icons/sl";
 import ProcessOption from "./ProcessOption";
+import { cn } from "@/lib/utils";
+import { Process, process } from "@/mocks/process/data";
+import { simulateLoading } from "@/utils/fakeUtils";
 
 //mock
 async function getData(): Promise<Process[]> {

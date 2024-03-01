@@ -1,14 +1,16 @@
 [
   {
     "id": 1,
-    "name": "Order 1",
+    "name": "Producto 1",
     "entryDate": "2021-01-01",
     "errorTime": 0,
     "photoLink": "https://picsum.photos/300",
-    "initialDate": "2021-01-01",
-    "finishEstimatedDate": "2021-01-01",
+    "timeEstimatedCompletion": "2021-01-01",
+    "initialDate": "0121-01-01",
+    "endDate": "2021-01-01",
     "productId": 1,
-    "clientId": 1
+    "clientId": 1,
+    "state": "2"
   },
   {
     "id": 2,
@@ -16,10 +18,11 @@
     "entryDate": "2021-01-01",
     "errorTime": 0,
     "photoLink": "https://picsum.photos/300",
-    "initialDate": "2021-01-01",
-    "finishEstimatedDate": "2021-01-01",
+    "initialDate": "0121-01-01",
+    "endDate": "2021-01-01",
     "productId": 2,
-    "clientId": 2
+    "clientId": 2,
+    "state": "Inactivo"
   },
   {
     "id": 3,
@@ -27,10 +30,11 @@
     "entryDate": "2021-01-01",
     "errorTime": 0,
     "photoLink": "https://picsum.photos/300",
-    "initialDate": "2021-01-01",
-    "finishEstimatedDate": "2021-01-01",
+    "initialDate": "0121-01-01",
+    "endDate": "2021-01-01",
     "productId": 3,
-    "clientId": 3
+    "clientId": 3,
+    "state": "Activo"
   },
   {
     "id": 4,
@@ -38,10 +42,11 @@
     "entryDate": "2021-01-01",
     "errorTime": 0,
     "photoLink": "https://picsum.photos/300",
-    "initialDate": "2021-01-01",
-    "finishEstimatedDate": "2021-01-01",
+    "initialDate": "0121-01-01",
+    "endDate": "2021-01-01",
     "productId": 4,
-    "clientId": 4
+    "clientId": 4,
+    "state": false
   },
   {
     "id": 5,
@@ -49,9 +54,10 @@
     "entryDate": "2021-01-01",
     "errorTime": 0,
     "photoLink": "https://picsum.photos/300",
-    "initialDate": "2021-01-01",
-    "finishEstimatedDate": "2021-01-01",
+    "initialDate": "0121-01-01",
+    "endDate": "2021-01-01",
     "productId": 5,
-    "clientId": 5
+    "clientId": 5,
+    "state": false
   }
 ]

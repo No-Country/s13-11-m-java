@@ -1,7 +1,10 @@
-import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
+
+import { FaArrowLeft } from "react-icons/fa";
 
 interface PasswordResetFormData {
   email: string;

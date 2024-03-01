@@ -5,6 +5,17 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "auto",
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindFunctions": ["clsx", "cn", "twMerge", "tw"]
+  "tailwindFunctions": ["clsx", "cn", "twMerge", "tw", "cva"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "importOrder": [
+    "^react$|^react-[rd]|^@reduxjs",
+    "^.*hook",
+    "(?!^@/components/icons/)^.*components/|^.*ui/|^\\.\\./[A-Z].*/[A-Z][^/]*$|^@radix-ui/|^.*/[A-Z]*$",
+    "^.*icons/|^lucide",
+    "^@/schemas/",
+    "^.*(?<!\\.css)$",
+    "^.*\\.css$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

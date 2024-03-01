@@ -29,46 +29,32 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
 
 export const columns: ColumnDef<Order>[] = [
   {
-    id: "id",
-    accessorKey: "id",
-    header: (prop) => ColumnSortButton("ID", prop),
-    meta: {
-      headerName: "ID",
-    },
-  },
-  {
     id: "name",
     accessorKey: "name",
     header: (prop) => ColumnSortButton("Nombre", prop),
-    sortingFn: (rowA, rowB) => {
-      const { name: activeA } = rowA.original;
-      const { name: activeB } = rowB.original;
-
-      return activeA === activeB ? 0 : activeA ? -1 : 1;
-    },
     meta: {
       headerName: "Nombre",
     },
   },
   {
-    id: "errorTime",
-    accessorKey: "errorTime",
+    id: "state",
+    accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
+    sortingFn: (rowA, rowB) => {
+      const { state: activeA } = rowA.original;
+      const { state: activeB } = rowB.original;
+
+      return activeA === activeB ? 0 : activeA ? -1 : 1;
+    },
     cell: ({ row }) => {
-      const { errorTime } = row.original;
-      const variant = errorTime % 2 === 0 ? "success" : "destructive";
+      const { state } = row.original;
+      const variant = state ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{errorTime % 2 === 0 ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{state ? "Activo" : "Inactivo"}</span>
         </div>
       );
-    },
-    sortingFn: (rowA, rowB) => {
-      const { errorTime: idA } = rowA.original;
-      const { errorTime: idB } = rowB.original;
-
-      return (idA % 2) - (idB % 2);
     },
     meta: {
       hidden: true,
@@ -77,20 +63,14 @@ export const columns: ColumnDef<Order>[] = [
   {
     id: "initialDate",
     accessorKey: "initialDate",
-    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
+    header: (prop) => ColumnSortButton("Fecha inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.initialDate);
       const dateB = new Date(rowB.original.initialDate);
       return dateA.getTime() - dateB.getTime();
     },
-    // return 14/2 - 09:00
-    cell: ({ row }) => {
-      const datetime = new Date(row.original.initialDate);
-      const date = datetime.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
-      const time = datetime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-      return `${date} - ${time}`;
-    },
+    cell: ({ row }) =>
+      new Date(row.original.timeEstimatedCompletion).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
     meta: {
       hidden: true,
     },
@@ -98,29 +78,16 @@ export const columns: ColumnDef<Order>[] = [
   {
     id: "endDate",
     accessorKey: "endDate",
-    header: "Fecha final",
+    header: (prop) => ColumnSortButton("Fecha final", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.endDate);
       const dateB = new Date(rowB.original.endDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) => {
-      const datetime = new Date(row.original.endDate);
-      const date = datetime.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
-      const time = datetime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-      return `${date} - ${time}`;
-    },
+    cell: ({ row }) =>
+      new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
-    },
-  },
-  {
-    id: "client",
-    accessorKey: "clientId",
-    header: (prop) => ColumnSortButton("Cliente", prop),
-    meta: {
-      headerName: "Cliente",
     },
   },
   {
@@ -129,8 +96,7 @@ export const columns: ColumnDef<Order>[] = [
       hidden: true,
     },
     enableHiding: false,
-    cell: ({ row }) => {
-      const { id } = row.original;
+    cell: () => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -144,7 +110,7 @@ export const columns: ColumnDef<Order>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <BsPencilSquare className="mr-2" />
-              Modificar producto
+              Modificar empleado
             </DropdownMenuItem>
             <DropdownMenuItem>
               <MdOutlinePostAdd className="mr-2" />
@@ -152,11 +118,11 @@ export const columns: ColumnDef<Order>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <BsFileEarmarkText className="mr-2" />
-              <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
+              <NavLink to="/order/:orderId">Ver detalle</NavLink>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <BsTrash className="mr-2" /> Eliminar producto
+              <BsTrash className="mr-2" /> Eliminar empleado
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

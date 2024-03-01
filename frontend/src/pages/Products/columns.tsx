@@ -1,5 +1,7 @@
-import { ColumnDef, HeaderContext } from "@tanstack/react-table";
+import { NavLink } from "react-router-dom";
+
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from "react-icons/bs";
+
+import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical, BsTrash } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
+
 import { Product } from "@/app/services/api/types";
+import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
@@ -95,7 +99,8 @@ export const columns: ColumnDef<Product>[] = [
       hidden: true,
     },
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const { id } = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -116,7 +121,8 @@ export const columns: ColumnDef<Product>[] = [
               Agregar nota
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <BsFileEarmarkText className="mr-2" /> Ver detalle
+              <BsFileEarmarkText className="mr-2" />
+              <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

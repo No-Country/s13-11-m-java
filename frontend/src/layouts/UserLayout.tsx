@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 
+import useAuth from "@/hooks/useAuth";
+
 import Navbar from "@/components/Navbar/Navbar";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import useAuth from "@/hooks/useAuth";
 
 const UserLayout = () => {
   const { user } = useAuth();

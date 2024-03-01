@@ -1,18 +1,21 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { processFormSchema, ProcessFormInputs } from "@/schemas/processSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { FaCamera } from "react-icons/fa6";
-import SubProcessModal from "./SubProcessModal";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 import {
-  FaChevronDown,
-  // FaCheck
+  FaChevronDown, // FaCheck
 } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa6";
+
+import { ProcessFormInputs, processFormSchema } from "@/schemas/processSchema";
+
+import SubProcessModal from "./SubProcessModal";
 import { SubProcess } from "@/mocks/process/data";
 
 const ProcessModal = () => {

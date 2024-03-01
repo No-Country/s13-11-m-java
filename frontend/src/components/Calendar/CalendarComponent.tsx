@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Calendar, Event, ToolbarProps, View } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import moment from "moment";
-import { momentLocalizer } from "react-big-calendar";
+import { Link } from "react-router-dom";
+
+import { Button } from "../ui/button";
+
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 import { IoMdAddCircle } from "react-icons/io";
+
+import moment from "moment";
 import "moment/dist/locale/es";
-import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Calendar, Event, ToolbarProps, View } from "react-big-calendar";
+import { momentLocalizer } from "react-big-calendar";
+
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 moment.locale("es");
 

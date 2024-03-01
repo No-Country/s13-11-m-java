@@ -1,25 +1,26 @@
-import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
-import { simulateLoading } from "@/utils/fakeUtils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
 import {
-  LoginRequest,
-  UserResponse,
   AllProductsResponse,
-  GetProductByNameRequest,
-  GetProductByNameResponse,
-  GetProductByIdRequest,
-  GetProductByIdResponse,
-  GetProductByUnicoIdRequest,
-  GetProductByUnicoIdResponse,
-  UpdateProductRequest,
-  UpdateProductResponse,
   CreateProductRequest,
   CreateProductResponse,
   DeleteProductRequest,
-  DeleteProductResponse,
+  DeleteProductResponse, // GetEmployeesResponse,
   GetOrdersResponse,
+  GetProductByIdRequest,
+  GetProductByIdResponse,
+  GetProductByNameRequest,
+  GetProductByNameResponse,
+  GetProductByUnicoIdRequest,
+  GetProductByUnicoIdResponse,
+  LoginRequest,
+  UpdateProductRequest,
+  UpdateProductResponse,
+  UserResponse,
 } from "./types";
 import { RootState } from "@/app/store";
+import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
+import { simulateLoading } from "@/utils/fakeUtils";
 
 export const api = createApi({
   reducerPath: "api",
@@ -76,7 +77,8 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      query: () => "/v1/products/all",
+      query: () => "products/all",
+      // query: () => "v1/products/all",
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
@@ -93,7 +95,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -111,7 +113,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -130,7 +132,7 @@ export const api = createApi({
           return { data: product };
         } else {
           const json = await import("@/mocks/products/one.json");
-          return { data: json.default as GetProductByNameResponse };
+          return { data: json.default as unknown as GetProductByNameResponse };
         }
       },
     }),
@@ -139,17 +141,19 @@ export const api = createApi({
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/one.json");
-        return { data: json.default as UpdateProductResponse };
+        return { data: json.default as unknown as UpdateProductResponse };
       },
     }),
+
     createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
       // query:'products/create'
       queryFn: async () => {
         await simulateLoading();
         const json = await import("@/mocks/products/one.json");
-        return { data: json.default as CreateProductResponse };
+        return { data: json.default as unknown as CreateProductResponse };
       },
     }),
+
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       query: (id) => `v1/products/delete/${id}`,
       // queryFn: async (id) => {
@@ -182,4 +186,5 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useGetOrdersQuery,
+  // useGetEmployeersQuery,
 } = api;
