@@ -20,38 +20,33 @@ import { cn } from "@/lib/utils";
 import { Product, products } from "@/mocks/products/data";
 import { simulateLoading } from "@/utils/fakeUtils";
 
-interface OrderFormProps {
-  onSubmit?: (values: OrderFormInputs) => void;
-  loading?: boolean;
-}
-
 //mock
 async function getData(): Promise<Product[]> {
   await simulateLoading();
   return products;
 }
 
-const OrderForm = ({ loading, onSubmit }: OrderFormProps) => {
+const OrderForm = () => {
   const [product, setProduct] = useState<Product | undefined>();
   const [data, setData] = useState<Product[]>([]);
 
   const form = useForm<OrderFormInputs>({
     resolver: zodResolver(orderFormSchema),
+    defaultValues: {
+      errortime: 5,
+      photoLink: "",
+    },
   });
 
   function handleSubmit(values: OrderFormInputs) {
-    onSubmit?.(values);
+    console.log(product);
+
+    console.log(values);
   }
 
   useEffect(() => {
     getData().then(setData);
   }, []);
-
-  useEffect(() => {
-    if (product !== undefined) {
-      console.log(product);
-    }
-  }, [product]);
 
   const labelStyle = "text-[#606060]";
   const boxStyle =
@@ -60,7 +55,7 @@ const OrderForm = ({ loading, onSubmit }: OrderFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl">
-        <div className="max-auto flex flex-col items-center justify-center">
+        <div className="max-auto hidden flex-col items-center justify-center">
           <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
             <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
               <FaCamera className="relative left-9 top-9 text-2xl" />
@@ -96,7 +91,7 @@ const OrderForm = ({ loading, onSubmit }: OrderFormProps) => {
                       <PopoverContent className="w-[340px] p-0">
                         <Command>
                           <CommandInput placeholder="Buscar producto..." className="h-9" />
-                          <CommandEmpty>No framework found.</CommandEmpty>
+                          <CommandEmpty>Producto no encontrado.</CommandEmpty>
                           <CommandGroup>
                             {data.map((product) => (
                               <CommandItem
@@ -131,7 +126,7 @@ const OrderForm = ({ loading, onSubmit }: OrderFormProps) => {
           />
           <FormField
             control={form.control}
-            name="startDate"
+            name="initialDate"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha Inicial</FormLabel>
@@ -149,10 +144,23 @@ const OrderForm = ({ loading, onSubmit }: OrderFormProps) => {
           />
           <FormField
             control={form.control}
-            name="estimatedEndDate"
+            name="finishEstimatedDate"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha estimada final</FormLabel>
+                <FormControl>
+                  <Input className={boxStyle} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="client.name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className={labelStyle}>Cliente</FormLabel>
                 <FormControl>
                   <Input className={boxStyle} {...field} />
                 </FormControl>
@@ -205,7 +213,7 @@ const OrderForm = ({ loading, onSubmit }: OrderFormProps) => {
             </FormItem>
           )}
         />
-        <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
+        <Button className="w-full md:col-span-2" type="submit" size="rounded">
           Confirmar
         </Button>
       </form>
