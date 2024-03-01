@@ -1,8 +1,16 @@
 import React from "react";
-import { useGetAllProductsQuery, useGetProductByNameQuery, useGetOrdersQuery } from "../../app/services/api/";
+
+import {
+  useCreateProductMutation,
+  useGetAllProductsQuery,
+  useGetOrdersQuery,
+  useGetProductByNameQuery,
+} from "../../app/services/api/";
 
 function ApiTesting() {
   const { data: allProductsData, error: allProductsError, isLoading: allProductsLoading } = useGetAllProductsQuery();
+
+  const [createProduct, { data: creacionProducto, isLoading }] = useCreateProductMutation();
 
   const productName = "SampleProductName";
   const { data: productData, error: productError, isLoading: productLoading } = useGetProductByNameQuery(productName);
@@ -11,6 +19,15 @@ function ApiTesting() {
 
   // const {DeleteProductResponse, error: errorDelete, isLoading: errorLoading}= useDeleteProductMutation()
 
+  const handleClick = async () => {
+    await createProduct({
+      idUnico: "prueba123",
+      description: "prueba123",
+      instruction: "instruccion",
+      name: "prueba123",
+      timeEstimatedCompletion: "123",
+    });
+  };
   React.useEffect(() => {
     console.log("useGetAllProductsQuery result:", { allProductsData, allProductsError, allProductsLoading });
     console.log("useGetProductByNameQuery result:", { productName, productData, productError, productLoading });
@@ -29,7 +46,13 @@ function ApiTesting() {
     isLoadingOrders,
   ]);
 
-  return <div>ApiTesting</div>;
+  return (
+    <div>
+      {isLoading && <h2>cargando...</h2>}
+      {creacionProducto && <h2>{creacionProducto.name}</h2>}
+      <button onClick={handleClick}>crear un producto</button>
+    </div>
+  );
 }
 
 export default ApiTesting;

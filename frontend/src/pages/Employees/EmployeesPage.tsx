@@ -1,7 +1,6 @@
 import React from "react";
 
-import useEmployee from "@/hooks/useEmp";
-
+// import useEmployee from "@/hooks/useEmp";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
@@ -20,7 +19,7 @@ import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table"
 import { Doughnut, Line } from "react-chartjs-2";
 
 const EmployeesPage = () => {
-  const { employees } = useEmployee();
+  // const { employees } = useEmployee();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 

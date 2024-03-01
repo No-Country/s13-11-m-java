@@ -14,7 +14,10 @@ export type GetProductByUnicoIdResponse = Product;
 export type UpdateProductRequest = Product;
 export type UpdateProductResponse = Product;
 
-export type CreateProductRequest = Product;
+export type CreateProductRequest = Pick<
+  Product,
+  "idUnico" | "name" | "instruction" | "description" | "timeEstimatedCompletion"
+>;
 export type CreateProductResponse = Product;
 
 export type DeleteProductRequest = number;
