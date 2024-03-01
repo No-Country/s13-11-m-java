@@ -13,7 +13,7 @@ import { BsThreeDotsVertical, BsTrash, BsPencilSquare, BsFileEarmarkText } from 
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 import { Order } from "@/app/services/api/types";
-
+import { NavLink } from "react-router-dom";
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
   return (
     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -36,27 +36,33 @@ export const columns: ColumnDef<Order>[] = [
     id: "name",
     accessorKey: "name",
     header: (prop) => ColumnSortButton("Nombre", prop),
+    sortingFn: (rowA, rowB) => {
+      const { name: activeA } = rowA.original;
+      const { name: activeB } = rowB.original;
+
+      return activeA === activeB ? 0 : activeA ? -1 : 1;
+    },
     meta: {
       headerName: "Nombre",
     },
   },
   {
-    id: "progress",
+    id: "errorTime",
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
-      const { id } = row.original;
-      const variant = id % 2 === 0 ? "success" : "destructive";
+      const { errorTime } = row.original;
+      const variant = errorTime % 2 === 0 ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{id % 2 === 0 ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{errorTime % 2 === 0 ? "Activo" : "Inactivo"}</span>
         </div>
       );
     },
     sortingFn: (rowA, rowB) => {
-      const { id: idA } = rowA.original;
-      const { id: idB } = rowB.original;
+      const { errorTime: idA } = rowA.original;
+      const { errorTime: idB } = rowB.original;
 
       return (idA % 2) - (idB % 2);
     },
@@ -65,8 +71,8 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
+    id: "initialDate",
+    accessorKey: "initialDate",
     header: (prop) => ColumnSortButton("Fecha Inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.initialDate);
@@ -87,15 +93,15 @@ export const columns: ColumnDef<Order>[] = [
   },
   {
     id: "endDate",
-    accessorKey: "finishEstimatedDate",
+    accessorKey: "endDate",
     header: "Fecha final",
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.initialDate);
-      const dateB = new Date(rowB.original.initialDate);
+      const dateA = new Date(rowA.original.endDate);
+      const dateB = new Date(rowB.original.endDate);
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) => {
-      const datetime = new Date(row.original.initialDate);
+      const datetime = new Date(row.original.endDate);
       const date = datetime.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
       const time = datetime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
@@ -119,7 +125,8 @@ export const columns: ColumnDef<Order>[] = [
       hidden: true,
     },
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const { id } = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -140,7 +147,8 @@ export const columns: ColumnDef<Order>[] = [
               Agregar nota
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <BsFileEarmarkText className="mr-2" /> Ver detalle
+              <BsFileEarmarkText className="mr-2" />
+              <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
