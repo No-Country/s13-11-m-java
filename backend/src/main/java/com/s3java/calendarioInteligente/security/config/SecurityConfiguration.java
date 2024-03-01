@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -30,6 +31,40 @@ public class SecurityConfiguration {
 
     private final UserService userService;
 
+    private static final String[] FREE_ENDPOINTS = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            //others
+            "/authenticate/**",
+            "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**"
+
+    };
+
+    private static final String[] FREE_ADMIN_ENDPOINTS = {
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            //others
+            "/authenticate/**",
+            "/api/security/auth/**", "/styles/**", "/assets/**", "/scripts/**"
+
+    };
+
     public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, UserService userService) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.userService = userService;
@@ -42,12 +77,10 @@ public class SecurityConfiguration {
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( request ->  request.requestMatchers(
-                        "/",
-                                "/swagger-ui/index.html",
-                                "/api/security/auth/**"
+                        FREE_ENDPOINTS
                         )
                         .permitAll()
-                        .requestMatchers("/api/security/admin").hasAnyAuthority(String.valueOf(UserRole.ROLE_ADMIN)) // Admin
+                        .requestMatchers("/api/**").hasAnyAuthority(String.valueOf(UserRole.ROLE_ADMIN)) // Admin
                         .requestMatchers("/api/security/user").hasAnyAuthority(String.valueOf(UserRole.ROLE_EMPLOYEE)) // User
                         .anyRequest().authenticated()
 
