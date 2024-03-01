@@ -2,18 +2,8 @@ import React from "react";
 
 const Logo: React.FC<React.SVGAttributes<SVGSVGElement>> = (props) => {
   return (
-    <svg
-      version="1.0"
-      xmlns="http://www.w3.org/2000/svg"
-      width="439.932429pt"
-      height="485.749645pt"
-      viewBox="0 0 439.932429 485.749645"
-      preserveAspectRatio="xMidYMid meet"
-      fill="currentColor"
-      {...props}
-    >
-      <metadata>Created by potrace 1.12, written by Peter Selinger 2001-2015</metadata>
-      <g transform="translate(-32.025688,530.798478) scale(0.100000,-0.100000)" stroke="none">
+    <svg viewBox="0 0 439.932429 485.749645" preserveAspectRatio="xMidYMid meet" fill="currentColor" {...props}>
+      <g transform="translate(-32.025688,530.798478) scale(0.100000,-0.100000)">
         <path
           d="M3323 5290 c-42 -25 -49 -58 -57 -236 -6 -147 4 -282 25 -327 27 -58
 143 -77 197 -32 17 14 33 38 37 53 8 39 -13 453 -25 488 -23 65 -114 93 -177
