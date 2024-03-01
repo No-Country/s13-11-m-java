@@ -12,16 +12,17 @@ import java.util.List;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded
     private CommonAttribute commonAttribute;
 
 
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @JsonManagedReference
-    private List<User> employee = new ArrayList<>();
+    private List<UserE> employee = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @Column(name = "product_orders_id")
@@ -31,15 +32,6 @@ public class Company {
 
 
 
-    public List<User> getEmployee() {
-        return employee;
-    }
-
-
-
-    public void setEmployee(List<User> employee) {
-        this.employee = employee;
-    }
 
 
     public Long getId() {
@@ -71,7 +63,6 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", commonAttribute=" + commonAttribute +
-                ", employee=" + employee +
                 ", productOrders=" + productOrders +
                 '}';
     }
