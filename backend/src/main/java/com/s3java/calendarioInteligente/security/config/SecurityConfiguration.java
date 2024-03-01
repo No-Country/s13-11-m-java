@@ -32,6 +32,7 @@ public class SecurityConfiguration {
     private final UserService userService;
 
     private static final String[] FREE_ENDPOINTS = {
+            "/api/v1/company/create",
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -48,7 +49,9 @@ public class SecurityConfiguration {
 
     };
 
+    //TODO aqui agregar todos los endpoints libres para administradores y crear uno para usuarios
     private static final String[] FREE_ADMIN_ENDPOINTS = {
+            "**/company/create",
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
