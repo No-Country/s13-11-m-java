@@ -1,35 +1,51 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { DatePickerForm } from "../DatePicker/DatePickerForm";
+import SelectInputForm from "../SelectInput/SelectInputForm";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { FaCamera } from "react-icons/fa";
-import { FaCheck, FaChevronDown } from "react-icons/fa";
 
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
-import { cn } from "@/lib/utils";
-import { Product, products } from "@/mocks/products/data";
-import { simulateLoading } from "@/utils/fakeUtils";
+import { products } from "@/mocks/products/data";
 
-//mock
-async function getData(): Promise<Product[]> {
-  await simulateLoading();
-  return products;
-}
+const employees = [
+  {
+    _id: "1",
+    name: "Tommy Vercetti",
+  },
+  {
+    _id: "2",
+    name: "Claude Speed",
+  },
+  {
+    _id: "3",
+    name: "Niko Bellic",
+  },
+];
+
+const clients = [
+  {
+    _id: "1",
+    name: "Bojang",
+  },
+  {
+    _id: "2",
+    name: "Rockstar Games",
+  },
+  {
+    _id: "3",
+    name: "Ubisoft",
+  },
+];
 
 const OrderForm = () => {
-  const [product, setProduct] = useState<Product | undefined>();
-  const [data, setData] = useState<Product[]>([]);
-
   const form = useForm<OrderFormInputs>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
@@ -39,18 +55,12 @@ const OrderForm = () => {
   });
 
   function handleSubmit(values: OrderFormInputs) {
-    console.log(product);
-
     console.log(values);
   }
 
-  useEffect(() => {
-    getData().then(setData);
-  }, []);
-
   const labelStyle = "text-[#606060]";
-  const boxStyle =
-    "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
+
+  console.log(form.control._formValues);
 
   return (
     <Form {...form}>
@@ -72,51 +82,15 @@ const OrderForm = () => {
                 <FormLabel className={labelStyle}>Nombre o ID del producto</FormLabel>
                 <div className="flex items-center">
                   <FormControl>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={`${boxStyle} w-[360px]`}
-                            // className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}
-                          >
-                            {field.value
-                              ? data.find((product) => product.name === field.value)?.name
-                              : "Nombre del producto"}
-                            <FaChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[340px] p-0">
-                        <Command>
-                          <CommandInput placeholder="Buscar producto..." className="h-9" />
-                          <CommandEmpty>Producto no encontrado.</CommandEmpty>
-                          <CommandGroup>
-                            {data.map((product) => (
-                              <CommandItem
-                                value={product.name}
-                                key={product._id}
-                                onSelect={() => {
-                                  form.setValue("name", product.name);
-                                  setProduct(product);
-                                }}
-                              >
-                                {product.name}
-                                <FaCheck
-                                  className={cn(
-                                    "ml-auto h-4 w-4",
-                                    product.name === field.value ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+                    <SelectInputForm
+                      selectOptions={products}
+                      fieldValue={field.value}
+                      setValue={form.setValue as () => void}
+                      title={"producto"}
+                      fieldName={"name"}
+                    />
                   </FormControl>
-                  <Button type="button" className="ml-2 rounded-full">
+                  <Button type="button" className="ml-2 rounded-full" asChild>
                     <Link to={"/product"}>+</Link>
                   </Button>
                 </div>
@@ -131,12 +105,7 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha Inicial</FormLabel>
                 <FormControl>
-                  <Input
-                    className={boxStyle}
-                    placeholder="Ingresar fecha"
-                    {...field}
-                    // onChange={form.setValue("estimatedEndDate", field.value + product!.estimatedTime)}
-                  />
+                  <DatePickerForm onChangeDate={field.onChange} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,7 +118,7 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha estimada final</FormLabel>
                 <FormControl>
-                  <Input className={boxStyle} {...field} />
+                  <DatePickerForm onChangeDate={field.onChange} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -162,7 +131,13 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Cliente</FormLabel>
                 <FormControl>
-                  <Input className={boxStyle} {...field} />
+                  <SelectInputForm
+                    selectOptions={clients}
+                    fieldValue={field.value}
+                    setValue={form.setValue as () => void}
+                    title={"cliente"}
+                    fieldName={"client.name"}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -173,10 +148,15 @@ const OrderForm = () => {
             name="assignedEmployee.name"
             render={({ field }) => (
               <FormItem>
-                {/* Aca va un shadcn Command */}
                 <FormLabel className={labelStyle}>Empleado asignado</FormLabel>
                 <FormControl>
-                  <Input className={boxStyle} {...field} />
+                  <SelectInputForm
+                    selectOptions={employees}
+                    fieldValue={field.value}
+                    setValue={form.setValue as () => void}
+                    title={"empleado"}
+                    fieldName="assignedEmployee.name"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -189,7 +169,7 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha más cercana disponible del empleado</FormLabel>
                 <FormControl>
-                  <Input className={boxStyle} {...field} />
+                  <DatePickerForm onChangeDate={field.onChange} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
