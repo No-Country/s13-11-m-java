@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { DatePicker } from "../ui/datepicker";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -49,7 +50,6 @@ const ProductForm = () => {
   const labelStyle = "text-[#606060]";
   const boxStyle =
     "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
-
   return (
     <div>
       {/* Agregar proceso */}
@@ -85,11 +85,11 @@ const ProductForm = () => {
             <FormField
               control={productForm.control}
               name="createdDate"
-              render={({ field }) => (
-                <FormItem>
+              render={() => (
+                <FormItem className="flex flex-col">
                   <FormLabel className={labelStyle}>Fecha de creación</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Fecha de creacion" {...field} />
+                    <DatePicker />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -121,7 +121,6 @@ const ProductForm = () => {
                 </FormItem>
               )}
             />
-            <div></div>
             <FormField
               control={productForm.control}
               name="estimatedTime"
