@@ -6,6 +6,9 @@ import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.entities.Company;
 import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.entities.ProductOrder;
+import com.s3java.calendarioInteligente.exception.exceptions.InvalidDateException;
+import com.s3java.calendarioInteligente.exception.exceptions.ProductNotFoundException;
+import com.s3java.calendarioInteligente.exception.exceptions.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapper;
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.repositories.CompanyRepository;
@@ -79,7 +82,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         logger.info(""+productOrderId + companyId);
          Optional<ProductOrder> productOrderOptional = this.productOrderRepository
                  .findProductOrderById(productOrderId, this.companyId);
-         productOrderOptional.orElseThrow( ()-> new Exception("user no found"));
+         productOrderOptional.orElseThrow( ()-> new Exception("product order with id: " + productOrderId + " not found"));
          return this.productOrderMapper.productOrderToProductOrderResponse(productOrderOptional.get());
     }
 
@@ -183,12 +186,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Transactional
     @Override
-    public void deleteProductOrder(Long productOrderId) throws Exception {
+    public void deleteProductOrder(Long productOrderId) throws ProductNotFoundException {
 
 
         ProductOrder po = this.productOrderRepository.findById(productOrderId)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Product order not found with ID: " + productOrderId));
+                        new ProductOrderNotFoundException("Product order not found with ID: " + productOrderId));
         po.setIsActive(false);
         Company company = po.getCompany();
         //Hibernate.initialize(company.getEmployee());
@@ -233,10 +236,10 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private void validateDateOrder(LocalDateTime firstDateToValidate,
                                    LocalDateTime secondDateToValidate,
-                                   String errorMessage) throws IllegalArgumentException {
+                                   String errorMessage) throws InvalidDateException {
         if (DateUtils.isNotBeforeOrEqual(firstDateToValidate, secondDateToValidate)) {
             logger.error(errorMessage);
-            throw new IllegalArgumentException(errorMessage +
+            throw new InvalidDateException(errorMessage +
                     " Please make sure that the dates are correct.");
         }
 
@@ -249,13 +252,13 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }*/
 
     private Product findProductByIdOrThrow(Long productId)
-            throws EntityNotFoundException {
+            throws ProductNotFoundException {
         return this.productService.byId(productId)
                 .orElseThrow(() -> {
                     logger.error("product with id " +
                             productId +
                             "not found");
-                   throw new EntityNotFoundException("product with id " +
+                   throw new ProductNotFoundException("product with id " +
                             productId +
                             " not found");
                 });

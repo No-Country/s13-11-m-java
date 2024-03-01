@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.exception;
 
 import com.s3java.calendarioInteligente.exception.exceptions.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,10 +19,11 @@ public class ApplicationExceptionHandler {
             ProductOrderNotFoundException.class,
             SubProcessNotFoundException.class,
             ProcessNotFoundException.class,
-            ClientNotFoundException.class
+            ClientNotFoundException.class,
+            ProductNotFoundException.class,
+            EntityNotFoundException.class
     })
     public ResponseEntity<Object> handleNotFoundBusinessException(RuntimeException exception){
-
         HttpStatus notFound = HttpStatus.NOT_FOUND;
 
         ApiException apiException = new ApiException(
@@ -33,9 +35,22 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(apiException, notFound);
     }
 
+    @ExceptionHandler(value = {InvalidDateException.class})
+    public ResponseEntity<Object> handleBadRequestException(RuntimeException exception){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                exception.getMessage(),
+                badRequest,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, badRequest);
+    }
+
 
     @ExceptionHandler(value = BindingResultException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValidException(BindingResultException exception){
+    public ResponseEntity<Object> handleBindingResultException(BindingResultException exception){
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         List<String> errorMessages = new ArrayList<>();
         exception.getBindingResult().getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
