@@ -5,7 +5,7 @@ import LoginForm from "@/components/LoginForm/LoginForm";
 
 import loginImage from "@/assets/login.svg";
 
-const Login2 = () => {
+const Login = () => {
   const { login, isLoading } = useAuth();
 
   return (
@@ -15,4 +15,4 @@ const Login2 = () => {
   );
 };
 
-export default Login2;
+export default Login;
