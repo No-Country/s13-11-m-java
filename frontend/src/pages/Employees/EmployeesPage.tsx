@@ -137,7 +137,7 @@ const EmployeesPage = () => {
             <div className="flex">
               <DataTable
                 columns={columns}
-                data={[]}
+                data={employees}
                 columnFilters={columnFilters}
                 setColumnFilters={setColumnFilters}
               />
