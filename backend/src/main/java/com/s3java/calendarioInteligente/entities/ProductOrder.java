@@ -11,6 +11,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "PRODUCT_ORDERS")
@@ -67,6 +68,25 @@ public class ProductOrder {
     @JsonIgnore
     private Company company;
 
+    //nuevos campos para calculo de tiempoReal de productos
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateStart;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateEnd;
+
+    public Timestamp getDateStart() {
+        return dateStart;
+    }
+    public void setDateStart(Timestamp dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public Timestamp getDateEnd() {
+        return dateEnd;
+    }
+    public void setDateEnd(Timestamp dateEnd) {
+        this.dateEnd = dateEnd;
+    }
 
     public State getState() {
         return state;

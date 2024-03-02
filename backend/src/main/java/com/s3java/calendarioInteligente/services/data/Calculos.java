@@ -1,49 +1,93 @@
 package com.s3java.calendarioInteligente.services.data;
 
+import com.s3java.calendarioInteligente.entities.Product;
+import com.s3java.calendarioInteligente.entities.ProductOrder;
+import com.s3java.calendarioInteligente.entities.ProductProcess;
+import com.s3java.calendarioInteligente.entities.SubProcess;
+import com.s3java.calendarioInteligente.repositories.ProcessRepository;
+import com.s3java.calendarioInteligente.repositories.ProductOrderRepository;
+import com.s3java.calendarioInteligente.repositories.ProductRepository;
+import com.s3java.calendarioInteligente.repositories.SubProcessRepository;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+
 public class Calculos {
-
+    private ProductRepository productRepository;
+    private ProcessRepository processRepository;
+    private SubProcessRepository subProcessRepository;
+    private ProductOrderRepository productOrderRepository;
     private final Double timeMarginPercentage=3.0;  //atributo para calcular timeMargin despues se lo podria hacer modificable por el admin.
+    private Double timeAverage=0.0;
 
-    private Double timeEstimatedCompletionProducto(Long id){ //id = id de producto
+    // suma de tiempos timeEstimatedCompletion de todos los procesos pertenecientes al id de producto.
+    private Double timeEstimatedCompletionProduct(Long idProduct){ //id = id de producto
         Double timeEstimatedCompletion=0.00;
-        // suma de tiempos timeEstimatedCompletion de todos los procesos pertenecientes al id de producto.
+        Optional<Product> foundProduct = productRepository.findById(idProduct);
+        if (foundProduct.isPresent()) {
+            List<ProductProcess> productProcessesList = foundProduct.get().getProductProcesses();
+            if (!productProcessesList.isEmpty()){
+                for (int i = 0; i < productProcessesList.size()-1; i++) {
+                    timeEstimatedCompletion = timeEstimatedCompletion + productProcessesList.get(i).getProcessAttributes().getTimeEstimatedCompletion();
+                }
+            }
+        }
         return timeEstimatedCompletion;
     };
 
-    private Double timeEstimatedCompletionProceso(Long id){ //id = id de proceso
+    // suma de tiempos timeEstimatedCompletion de todos los subProcesos pertenecientes al id de proceso.
+    private Double timeEstimatedCompletionProcess(Long idProcess){ //id = id de proceso
         Double timeEstimatedCompletion=0.00;
-        // suma de tiempos timeEstimatedCompletion de todos los subProcesos pertenecientes al id de proceso.
+        Optional<ProductProcess> foundProcess = processRepository.findById(idProcess);
+        if (foundProcess.isPresent()) {
+            List<SubProcess> subProcessList = foundProcess.get().getSubProcesses();
+            if (!subProcessList.isEmpty()){
+                for (int i = 0; i < subProcessList.size()-1; i++) {
+                    timeEstimatedCompletion = timeEstimatedCompletion + subProcessList.get(i).getSubProcessAttributes().getTimeEstimatedCompletion();
+                }
+            }
+        }
         return timeEstimatedCompletion;
     };
-    private Double timeAverage(Long id){  //id = id de producto
-        //tiempo promedio anual, calculado desde algun historico de productos producidos o acumulador suma.
-        Double timeAverage=0.0;
-        Double suma_tiempos_id_producto= 0.0; //suma de los tiempos REALES de produccion de toda la historia de ese id de producto
-        int count_productosTerminados_del_id = 0; //cuenta de todos los productos de ese id efectivamente terminados.
-        timeAverage =  suma_tiempos_id_producto / count_productosTerminados_del_id;
 
+    //Calculo de timeMargin para productos, procesos y subProcesos. Es cuanto tiempo por encima o por debajo es aceptable, ej. el 3% del tiempoEstimatedCompletion del producto
+    private Double timeMargin(Long id, Double timeEstimatedCompletion){ //id = id de producto, proceso o subproceso.
+        Double timeMargin = timeEstimatedCompletion * timeMarginPercentage/100;
+        return timeMargin;
+    };
+
+    //metodo para calcular el newTime como diferencia de los 2 Timestamps dateStart - dateEnd.
+    private Double newTime(Long idOrder){
+        double newTime = 0.0;
+        Optional<ProductOrder> foundOrder = productOrderRepository.findById(idOrder);
+        if (foundOrder.isPresent()){
+            Instant dateTime1 = foundOrder.get().getDateStart().toInstant();
+            Instant dateTime2 = foundOrder.get().getDateEnd().toInstant();
+            Duration duration = Duration.between(dateTime1, dateTime2);
+            newTime = duration.toSeconds();
+        }
+        return newTime;
+    }
+
+    //tiempo promedio de producto, calculado desde algun historico de productos producidos o acumulador suma. timeAverage = (timeAverage+newTime)/2
+    private Double timeAverage(Long id, Double newTime){  //id = id de producto
+        if (timeAverage == 0.0){
+            timeAverage = newTime;
+        } else {
+            timeAverage =  (timeAverage*4 + newTime)/5;
+        }
         return timeAverage;
     };
-    private Double timeMarginProduct(Long id, Double timeEstimatedCompletion){ //id = id de producto
-        Double timeMargin = timeEstimatedCompletion * timeMarginPercentage/100;
-        //cuanto tiempo por encima o por debajo es aceptable, ej. el 3% del tiempoEstimatedCompletion del producto
-        return timeMargin;
-    };
-    private Double timeMarginProcess(Long id, Double timeEstimatedCompletion){ //id = id de proceso
-        Double timeMargin = timeEstimatedCompletion * timeMarginPercentage/100;
-        //cuanto tiempo por encima o por debajo es aceptable, ej. el 3% del tiempoEstimatedCompletion del proceso
-        return timeMargin;
-    };
 
-    private Double timeMarginSubProcess(Long id, Double timeEstimatedCompletion){ //id = id de subProceso
-        Double timeMargin = timeEstimatedCompletion * timeMarginPercentage/100;
-        //cuanto tiempo por encima o por debajo es aceptable, ej. el 3% del tiempoEstimatedCompletion del subProceso
-        return timeMargin;
-    };
-
-    private String finishEstimatedDate(String initialDate, Long id){  //initialDate seleccionada por usuario manualmente del calendario. id de producto en la orden
-        String finishEstimatedDate;
-        finishEstimatedDate = initialDate + (timeEstimatedCompletionProducto(id)/86400;  //86400 sale de 60segundos*60minutos*24horas => 86400seg expresado en dias. hacer las conversiones necesarias para las fechas.
+    //86400 sale de 60segundos*60minutos*24horas => 86400seg expresado en dias. hacer las conversiones necesarias para las fechas.
+    private String finishEstimatedDate(Long idOrder){  //initialDate seleccionada por usuario manualmente del calendario. id de producto en la orden
+        String finishEstimatedDate="0";
+        Optional<ProductOrder> foundOrder = productOrderRepository.findById(idOrder);
+        if (foundOrder.isPresent()){
+            finishEstimatedDate = foundOrder.get().getInitialDate() + foundOrder.get().getProduct().getTimeEstimatedCompletion()/84600;
+        }
         return finishEstimatedDate;
     }
 }
