@@ -20,21 +20,22 @@ import {
 } from "./types";
 import { apiUrl, authCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
-import { selectToken } from "@/features/auth/authSlice";
-import { RootState } from "@/app/store";
+// import { selectToken } from "@/features/auth/authSlice";
+// import { RootState } from "@/app/store";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
-    prepareHeaders: (headers, { getState }) => {
-      const token = selectToken(getState() as RootState);
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-        sessionStorage.setItem("token", token);
-      }
-      return headers;
-    },
+    // prepareHeaders: (headers, { getState }) => {
+    //   const token = selectToken(getState() as RootState);
+    //   if (token) {
+    //     sessionStorage.setItem("token", token);
+    //     localStorage.setItem("token", token);
+    //     headers.set("Authorization", `Bearer ${token}`);
+    //   }
+    //   return headers;
+    // },
   }),
   endpoints: (builder) => ({
     login: builder.mutation<UserResponse, LoginRequest>({
@@ -101,11 +102,27 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      query: () => "/v1/products/all",
+      // query: () => "/v1/products/all",
+      query: () => ({
+        url: "/v1/products/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
       query: (name) => `/v1/products/product-name/${name}`,
+      // query: (name) => ({
+      //   url: `/v1/products/product-name/${name}`,
+      //   method: "GET",
+      //   headers:{
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      //   }
+      // }),
     }),
     getProductById: builder.query<GetProductByIdResponse, GetProductByIdRequest>({
       query: (id) => `/v1/products/product-id/${id}`,
@@ -118,6 +135,10 @@ export const api = createApi({
       query: (product) => ({
         url: `/v1/products/update/${product.id}`,
         body: product,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
       }),
     }),
 

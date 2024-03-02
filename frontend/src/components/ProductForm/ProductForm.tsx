@@ -187,8 +187,10 @@ const ProductForm = () => {
                           </Command>
                         </PopoverContent>
                       </Popover>
+                      <ProcessModal />
                     </div>
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
