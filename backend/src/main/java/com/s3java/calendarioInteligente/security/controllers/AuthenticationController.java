@@ -1,5 +1,6 @@
 package com.s3java.calendarioInteligente.security.controllers;
 
+
 import com.s3java.calendarioInteligente.security.dto.JwtAuthenticationResponse;
 import com.s3java.calendarioInteligente.security.dto.SignInRequest;
 import com.s3java.calendarioInteligente.security.dto.SignUpRequest;
@@ -34,6 +35,7 @@ public class AuthenticationController {
             return  ResponseEntity.internalServerError().body(e.getMessage());
         }
 
+
     }
 
     // The credentials must be previously registered in the database, otherwise a 403 error will be returned.
@@ -50,6 +52,8 @@ public class AuthenticationController {
         } catch (Exception e) {
             return  ResponseEntity.internalServerError().body(e.getMessage());
         }
+
+
     }
 
     @PostMapping("/refresh")

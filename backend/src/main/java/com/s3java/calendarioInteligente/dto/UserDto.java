@@ -11,7 +11,7 @@ public class UserDto {
 
     private Long id;
     private String email;
-    private String name;
+
 
     private Set<UserRole> userRoles = new HashSet<>();
 
@@ -31,13 +31,7 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Set<UserRole> getUserRoles() {
         return userRoles;
@@ -52,7 +46,6 @@ public class UserDto {
         return "UserDto{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
                 ", userRoles=" + userRoles +
                 '}';
     }
