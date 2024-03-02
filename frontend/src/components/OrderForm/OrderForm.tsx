@@ -49,18 +49,37 @@ const OrderForm = () => {
   const form = useForm<OrderFormInputs>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
+      assignedEmployee: {},
+      client: {},
+      employeeAvailability: "",
+      finishEstimatedDate: "",
+      initialDate: "",
+      name: "",
+      note: "",
+      productId: 0,
       errortime: 5,
       photoLink: "",
     },
   });
 
   function handleSubmit(values: OrderFormInputs) {
-    console.log(values);
+    const { name, errortime, photoLink, initialDate, finishEstimatedDate, productId, client } = values;
+
+    //requestBody es lo que solicita el endpoint de create
+
+    const requestBody = {
+      name,
+      errortime,
+      photoLink,
+      initialDate,
+      finishEstimatedDate,
+      productId,
+      client: { commonAttribute: { name: client.name } },
+    };
+    console.log(requestBody);
   }
 
   const labelStyle = "text-[#606060]";
-
-  console.log(form.control._formValues);
 
   return (
     <Form {...form}>
@@ -105,7 +124,7 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha Inicial</FormLabel>
                 <FormControl>
-                  <DatePickerForm onChangeDate={field.onChange} {...field} />
+                  <DatePickerForm onChangeDate={field.onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,7 +137,7 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha estimada final</FormLabel>
                 <FormControl>
-                  <DatePickerForm onChangeDate={field.onChange} {...field} />
+                  <DatePickerForm onChangeDate={field.onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -169,7 +188,7 @@ const OrderForm = () => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha más cercana disponible del empleado</FormLabel>
                 <FormControl>
-                  <DatePickerForm onChangeDate={field.onChange} {...field} />
+                  <DatePickerForm onChangeDate={field.onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

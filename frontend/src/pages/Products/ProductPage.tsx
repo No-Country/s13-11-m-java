@@ -9,9 +9,9 @@ const AddProduct = () => {
   return (
     <div className="container pt-10">
       <div className="flex">
-        <Button variant={"ghost"} className="px-6">
+        <Button variant={"ghost"} size={"icon"} asChild>
           <Link to={"/order"}>
-            <MdArrowBackIos className="mr-2 h-5 w-5" />
+            <MdArrowBackIos className="h-5 w-5" />
           </Link>
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
