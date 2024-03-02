@@ -24,7 +24,9 @@ const useAuth = () => {
 
   const handleSubmit = async (values: LoginFormInputs) => {
     try {
-      await login(values).unwrap();
+      const response = await login(values).unwrap();
+      const token = response.token;
+      sessionStorage.setItem("token", token);
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
