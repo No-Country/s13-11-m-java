@@ -17,11 +17,80 @@ import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { Doughnut, Line } from "react-chartjs-2";
+// import {useEmployee} from "@/hooks/useEmployee";
 
 const EmployeesPage = () => {
   // const { employees } = useEmployee();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+
+  const employees = [
+    {
+      name: "Juan García",
+      state: "Activo",
+      startdate: "2015-03-15",
+      jornada: "8 hs",
+      cantidadfinalizados: 70,
+      productId: 7,
+      clientId: 7,
+      role: "usuario",
+      timeEstimatedCompletion: "",
+      company: "1",
+      active: true,
+    },
+    {
+      name: "Ana Rodríguez",
+      state: "Activo",
+      startdate: "2018-07-20",
+      jornada: "7 hs",
+      cantidadfinalizados: 45,
+      productId: 3,
+      clientId: 3,
+      role: "usuario",
+      timeEstimatedCompletion: "",
+      company: "1",
+      active: true,
+    },
+    {
+      name: "Carlos López",
+      state: "Activo",
+      startdate: "2017-02-10",
+      jornada: "6 hs",
+      cantidadfinalizados: 55,
+      productId: 2,
+      clientId: 2,
+      role: "usuario",
+      timeEstimatedCompletion: "",
+      company: "1",
+      active: true,
+    },
+    {
+      name: "Laura Sánchez",
+      state: "Activo",
+      startdate: "2019-09-05",
+      jornada: "8 hs",
+      cantidadfinalizados: 60,
+      productId: 6,
+      clientId: 6,
+      role: "usuario",
+      timeEstimatedCompletion: "",
+      company: "1",
+      active: true,
+    },
+    {
+      name: "Pedro Pérez",
+      state: "Activo",
+      startdate: "2016-11-03",
+      jornada: "7 hs",
+      cantidadfinalizados: 65,
+      productId: 4,
+      clientId: 4,
+      role: "usuario",
+      timeEstimatedCompletion: "",
+      company: "1",
+      active: true,
+    },
+  ];
 
   const onlyVisibleColumns = React.useMemo(
     () => columns.filter((column) => !column.meta?.hidden) as AccessorKeyColumnDef<Employee[], unknown>[],

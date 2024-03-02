@@ -18,46 +18,71 @@ import {
   UpdateProductResponse,
   UserResponse,
 } from "./types";
-import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
+import { apiUrl, authCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
+import { selectToken } from "@/features/auth/authSlice";
+import { RootState } from "@/app/store";
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const token = selectToken(getState() as RootState);
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+        sessionStorage.setItem("token", token);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     login: builder.mutation<UserResponse, LoginRequest>({
-      queryFn: async (args) => {
-        const { email, password } = args;
-        await simulateLoading();
-        if (email === authCredentials.email && password === authCredentials.password) {
-          const json = await import("@/mocks/users/user.json");
-          return { data: json.default as UserResponse };
-        } else {
-          return {
-            error: {
-              status: 401,
-              data: { message: "Invalid credentials" },
-            },
-          };
-        }
-      },
+      query: (credentials) => ({
+        url: "/security/auth/signin",
+        body: credentials,
+        method: "POST",
+      }),
+
+      // queryFn: async (args) => {
+      //   const { email, password } = args;
+      //   await simulateLoading();
+      //   if (email === authCredentials.email && password === authCredentials.password) {
+      //     const json = await import("@/mocks/users/user.json");
+      //     return { data: json.default as UserResponse };
+      //   } else {
+      //     return {
+      //       error: {
+      //         status: 401,
+      //         data: { message: "Invalid credentials" },
+      //       },
+      //     };
+      //   }
+      // },
     }),
+
     register: builder.mutation<UserResponse, LoginRequest>({
-      queryFn: async (args) => {
-        const { email, password } = args;
-        await simulateLoading();
-        if (email === registerCredentials.email && password === registerCredentials.password) {
-          const json = await import("@/mocks/users/user.json");
-          return { data: json.default as UserResponse };
-        } else {
-          return {
-            error: {
-              status: 400,
-              data: { message: "Invalid data" },
-            },
-          };
-        }
-      },
+      query: (credentials) => ({
+        url: "/security/auth/signup",
+        body: credentials,
+        method: "POST",
+      }),
+
+      //   queryFn: async (args) => {
+      //     const { email, password } = args;
+      //     await simulateLoading();
+      //     if (email === registerCredentials.email && password === registerCredentials.password) {
+      //       const json = await import("@/mocks/users/user.json");
+      //       return { data: json.default as UserResponse };
+      //     } else {
+      //       return {
+      //         error: {
+      //           status: 400,
+      //           data: { message: "Invalid data" },
+      //         },
+      //       };
+      //     }
+      // },
     }),
     forgotPassword: builder.mutation<void, string>({
       queryFn: async (email) => {
@@ -76,22 +101,22 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      query: () => "v1/products/all",
+      query: () => "/v1/products/all",
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
-      query: (name) => `products/product-name/${name}`,
+      query: (name) => `/v1/products/product-name/${name}`,
     }),
     getProductById: builder.query<GetProductByIdResponse, GetProductByIdRequest>({
-      query: (id) => `products/product-id/${id}`,
+      query: (id) => `/v1/products/product-id/${id}`,
     }),
 
     getProductByUnicoId: builder.query<GetProductByUnicoIdResponse, GetProductByUnicoIdRequest>({
-      query: (idUnico) => `products/product-id-unico/${idUnico}`,
+      query: (idUnico) => `/v1/products/product-id-unico/${idUnico}`,
     }),
     updateProduct: builder.mutation<UpdateProductResponse, UpdateProductRequest>({
       query: (product) => ({
-        url: `products/update/${product.id}`,
+        url: `/v1/products/update/${product.id}`,
         body: product,
       }),
     }),
@@ -105,11 +130,11 @@ export const api = createApi({
     }),
 
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
-      query: (id) => `v1/products/delete/${id}`,
+      query: (id) => `/v1/products/delete/${id}`,
     }),
     // endpoints de ordenes
     getOrders: builder.query<GetOrdersResponse, void>({
-      query: () => "v1/product-orders/all",
+      query: () => "/v1/product-orders/all",
     }),
   }),
 });

@@ -20,8 +20,8 @@ const RegisterForm2 = ({ loading, onSubmit }: RegisterFormProps) => {
     defaultValues: {
       email: registerCredentials.email,
       password: registerCredentials.password,
-      firstName: registerCredentials.firstName,
-      lastName: registerCredentials.lastName,
+      firstName: registerCredentials.name,
+      lastName: registerCredentials.lastname,
       address: registerCredentials.address,
       phone: registerCredentials.phone,
     },
