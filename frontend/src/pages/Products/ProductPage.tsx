@@ -16,7 +16,7 @@ const AddProduct = () => {
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
       </div>
-      <div className="flex justify-center ">
+      <div className="flex justify-center pb-10">
         <ProductForm />
       </div>
     </div>

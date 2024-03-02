@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { FaCamera } from "react-icons/fa";
+// import { FaCamera } from "react-icons/fa";
 import { FaCheck, FaChevronDown } from "react-icons/fa";
 
 import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
@@ -60,14 +60,14 @@ const ProductForm = () => {
           onSubmit={productForm.handleSubmit(handleSubmit)}
           className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl"
         >
-          <div className="max-auto flex flex-col items-center justify-center">
+          {/* <div className="max-auto flex flex-col items-center justify-center">
             <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
               <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
                 <FaCamera className="relative left-9 top-9 text-2xl" />
               </div>
               <p>Subir una foto</p>
             </Button>
-          </div>
+          </div> */}
           <div className="w-full grid-flow-col grid-rows-5 gap-x-12 space-y-8 md:grid">
             <FormField
               control={productForm.control}

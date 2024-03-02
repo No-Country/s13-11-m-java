@@ -31,7 +31,7 @@ export function DatePickerForm({ onChangeDate }: Props) {
             className={cn("h-[55px] w-[400px] justify-start text-center font-normal", !date && "text-muted-foreground")}
           >
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-            {date ? format(date, "PPP", {}) : <span>Selecciona una fecha</span>}
+            {date ? format(date, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
           </Button>
         </FormControl>
       </PopoverTrigger>
