@@ -3,7 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { DatePicker } from "../ui/datepicker";
+import { DatePickerForm } from "../DatePicker/DatePickerForm";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -76,11 +76,11 @@ const ProductForm = () => {
             <FormField
               control={productForm.control}
               name="createDate"
-              render={() => (
+              render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel className={labelStyle}>Fecha de creación</FormLabel>
                   <FormControl>
-                    <DatePicker />
+                    <DatePickerForm onChangeDate={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -146,7 +146,6 @@ const ProductForm = () => {
                   <FormLabel className={labelStyle}>Procesos</FormLabel>
                   <FormControl>
                     <div className="mb-2 flex items-center">
-                      {/* PROCESOS */}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
