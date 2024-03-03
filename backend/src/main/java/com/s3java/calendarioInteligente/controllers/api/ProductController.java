@@ -118,8 +118,7 @@ public class ProductController {
   
    @PostMapping("/process/{productID}")
     public ResponseEntity<?> addProcessToProduct(@RequestBody @Valid ProductProcess productProcess, BindingResult bindingResult, @PathVariable Long productID){
-        if (bindingResult.hasErrors()){
-            System.out.println(bindingResult.getAllErrors().getFirst().getDefaultMessage());
+        if (bindingResult.hasErrors()) {
             throw new BindingResultException(bindingResult);
         }
         return productService.addProcessToProduct(productProcess, productID);
