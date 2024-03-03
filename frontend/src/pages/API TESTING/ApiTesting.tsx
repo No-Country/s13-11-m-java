@@ -12,7 +12,7 @@ function ApiTesting() {
 
   const [createProduct, { data: creacionProducto, isLoading }] = useCreateProductMutation();
 
-  const productName = "SampleProductName";
+  const productName = "rueda";
   const { data: productData, error: productError, isLoading: productLoading } = useGetProductByNameQuery(productName);
 
   const { data: GetOrdersResponse, error: errorOrders, isLoading: isLoadingOrders } = useGetOrdersQuery();

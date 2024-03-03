@@ -20,22 +20,19 @@ import {
 } from "./types";
 import { apiUrl, authCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
-// import { selectToken } from "@/features/auth/authSlice";
-// import { RootState } from "@/app/store";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
-    // prepareHeaders: (headers, { getState }) => {
-    //   const token = selectToken(getState() as RootState);
-    //   if (token) {
-    //     sessionStorage.setItem("token", token);
-    //     localStorage.setItem("token", token);
-    //     headers.set("Authorization", `Bearer ${token}`);
-    //   }
-    //   return headers;
-    // },
+    prepareHeaders: (headers) => {
+      const token = sessionStorage.getItem("token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+        sessionStorage.setItem("token", token);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     login: builder.mutation<UserResponse, LoginRequest>({
@@ -44,22 +41,6 @@ export const api = createApi({
         body: credentials,
         method: "POST",
       }),
-
-      // queryFn: async (args) => {
-      //   const { email, password } = args;
-      //   await simulateLoading();
-      //   if (email === authCredentials.email && password === authCredentials.password) {
-      //     const json = await import("@/mocks/users/user.json");
-      //     return { data: json.default as UserResponse };
-      //   } else {
-      //     return {
-      //       error: {
-      //         status: 401,
-      //         data: { message: "Invalid credentials" },
-      //       },
-      //     };
-      //   }
-      // },
     }),
 
     register: builder.mutation<UserResponse, LoginRequest>({
@@ -68,22 +49,6 @@ export const api = createApi({
         body: credentials,
         method: "POST",
       }),
-
-      //   queryFn: async (args) => {
-      //     const { email, password } = args;
-      //     await simulateLoading();
-      //     if (email === registerCredentials.email && password === registerCredentials.password) {
-      //       const json = await import("@/mocks/users/user.json");
-      //       return { data: json.default as UserResponse };
-      //     } else {
-      //       return {
-      //         error: {
-      //           status: 400,
-      //           data: { message: "Invalid data" },
-      //         },
-      //       };
-      //     }
-      // },
     }),
     forgotPassword: builder.mutation<void, string>({
       queryFn: async (email) => {
@@ -114,7 +79,15 @@ export const api = createApi({
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
-      query: (name) => `/v1/products/product-name/${name}`,
+      query: (name) => ({
+        url: `/v1/products/product-name/${name}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+
       // query: (name) => ({
       //   url: `/v1/products/product-name/${name}`,
       //   method: "GET",
@@ -155,7 +128,14 @@ export const api = createApi({
     }),
     // endpoints de ordenes
     getOrders: builder.query<GetOrdersResponse, void>({
-      query: () => "/v1/product-orders/all",
+      query: () => ({
+        url: "/v1/product-orders/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
     }),
   }),
 });
