@@ -86,7 +86,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
 
 
-        httpSecurity.csrf(AbstractHttpConfigurer::disable)
+        httpSecurity.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests( request ->  request.requestMatchers(
                         FREE_ENDPOINTS
