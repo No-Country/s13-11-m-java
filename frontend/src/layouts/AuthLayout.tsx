@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import AuthNavbar from "@/components/AuthNavbar";
+import AuthNavbar from "@/components/Navbar/AuthNavbar";
 
 const AuthLayout = () => {
   return (
