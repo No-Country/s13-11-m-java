@@ -20,15 +20,13 @@ import {
 } from "./types";
 import { apiUrl, authCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
-import { selectToken } from "@/features/auth/authSlice";
-import { RootState } from "@/app/store";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
-    prepareHeaders: (headers, { getState }) => {
-      const token = selectToken(getState() as RootState);
+    prepareHeaders: (headers) => {
+      const token = sessionStorage.getItem("token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
         sessionStorage.setItem("token", token);
@@ -43,22 +41,6 @@ export const api = createApi({
         body: credentials,
         method: "POST",
       }),
-
-      // queryFn: async (args) => {
-      //   const { email, password } = args;
-      //   await simulateLoading();
-      //   if (email === authCredentials.email && password === authCredentials.password) {
-      //     const json = await import("@/mocks/users/user.json");
-      //     return { data: json.default as UserResponse };
-      //   } else {
-      //     return {
-      //       error: {
-      //         status: 401,
-      //         data: { message: "Invalid credentials" },
-      //       },
-      //     };
-      //   }
-      // },
     }),
 
     register: builder.mutation<UserResponse, LoginRequest>({
@@ -67,22 +49,6 @@ export const api = createApi({
         body: credentials,
         method: "POST",
       }),
-
-      //   queryFn: async (args) => {
-      //     const { email, password } = args;
-      //     await simulateLoading();
-      //     if (email === registerCredentials.email && password === registerCredentials.password) {
-      //       const json = await import("@/mocks/users/user.json");
-      //       return { data: json.default as UserResponse };
-      //     } else {
-      //       return {
-      //         error: {
-      //           status: 400,
-      //           data: { message: "Invalid data" },
-      //         },
-      //       };
-      //     }
-      // },
     }),
     forgotPassword: builder.mutation<void, string>({
       queryFn: async (email) => {
