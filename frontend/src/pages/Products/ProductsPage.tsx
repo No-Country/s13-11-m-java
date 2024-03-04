@@ -36,7 +36,7 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="container pt-10">
+    <div>
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Productos</h2>
         <Button size="rounded" className="px-6">
@@ -59,7 +59,7 @@ const ProductsPage = () => {
           className="max-w-sm"
         />
       </div>
-      <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
+      <ScrollArea className="h-[44vh] whitespace-nowrap rounded-md border md:h-[60vh]">
         <div className="flex">
           <DataTable
             columns={columns}
