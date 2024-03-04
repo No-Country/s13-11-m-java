@@ -81,17 +81,17 @@ public class Calculos {
     };
 
     //86400 sale de 60segundos*60minutos*24horas => 86400seg expresado en dias. hacer las conversiones necesarias para las fechas.
-    public String finishEstimatedDate(Long idOrder){  //initialDate seleccionada por usuario manualmente del calendario. id de producto en la orden
+    /*public String finishEstimatedDate(Long idOrder){  //initialDate seleccionada por usuario manualmente del calendario. id de producto en la orden
         String finishEstimatedDate="0";
         Optional<ProductOrder> foundOrder = productOrderRepository.findById(idOrder);
         if (foundOrder.isPresent()){
             finishEstimatedDate = foundOrder.get().getInitialDate() + foundOrder.get().getProduct().getTimeEstimatedCompletion()/84600;
         }
         return finishEstimatedDate;
-    }
+    }*/
 
     //TODO revisar
-    public String finishEstimatedDate2(String initialDate, Long idProduct){
+    public String finishEstimatedDate(String initialDate, Long idProduct){
         String finishEstimatedDate="0";
         Optional<Product> foundProduct = productRepository.findById(idProduct);
 
