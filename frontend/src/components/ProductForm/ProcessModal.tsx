@@ -35,7 +35,9 @@ const ProcessModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="rounded-full">+</Button>
+        <Button className="" variant="outline">
+          Agregar un nuevo proceso
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[955px] flex-col md:flex md:max-h-[801px]">
         <DialogHeader>

@@ -19,15 +19,15 @@ const AddProduct = () => {
   };
 
   const defaultValues: ProductFormInputs = {
-    idUnico: "ejemplo007",
-    name: "rueda puerco",
-    instruction: "rueda negra",
-    description: "hacer rueda cuadrada",
-    timeEstimatedCompletion: "200",
+    idUnico: "",
+    name: "",
+    instruction: "",
+    description: "",
+    timeEstimatedCompletion: "",
   };
 
   return (
-    <div className="container pt-10">
+    <div className="container w-full pt-6">
       <div className="flex">
         <Button variant={"ghost"} size={"icon"} asChild>
           <Link to={"/order"}>
@@ -36,7 +36,7 @@ const AddProduct = () => {
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
       </div>
-      <div className="flex justify-center pb-10">
+      <div className="flex w-full justify-center pb-10">
         <ProductForm loading={isLoading} onSubmit={handleSubmit} defaultValues={defaultValues} />
       </div>
     </div>
