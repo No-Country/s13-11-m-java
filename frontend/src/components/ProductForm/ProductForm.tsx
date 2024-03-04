@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { DatePickerForm } from "../DatePicker/DatePickerForm";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -11,45 +12,36 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { FaCamera } from "react-icons/fa";
 import { FaCheck, FaChevronDown } from "react-icons/fa";
 
 import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
 
 import ProcessModal from "./ProcessModal";
-// import { SlOptionsVertical } from "react-icons/sl";
 import ProcessOption from "./ProcessOption";
 import { cn } from "@/lib/utils";
 import { Process, process } from "@/mocks/process/data";
-import { simulateLoading } from "@/utils/fakeUtils";
 
-//mock
-async function getData(): Promise<Process[]> {
-  await simulateLoading();
-  return process;
+export interface ProductFormProps {
+  onSubmit?: (values: ProductFormInputs) => void;
+  defaultValues?: ProductFormInputs;
+  loading?: boolean;
 }
 
-const ProductForm = () => {
-  const [data, setData] = useState<Process[]>([]);
+const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => {
   const productForm = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
-    defaultValues: { process: [] as Process[] },
+    defaultValues,
   });
 
   function handleSubmit(values: ProductFormInputs) {
-    console.log(values);
+    onSubmit?.(values);
   }
-
-  useEffect(() => {
-    getData().then(setData);
-  }, []);
 
   const [processList, setProcessList] = useState<Process[]>([]);
 
   const labelStyle = "text-[#606060]";
   const boxStyle =
     "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
-
   return (
     <div>
       {/* Agregar proceso */}
@@ -60,14 +52,6 @@ const ProductForm = () => {
           onSubmit={productForm.handleSubmit(handleSubmit)}
           className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl"
         >
-          <div className="max-auto flex flex-col items-center justify-center">
-            <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
-              <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
-                <FaCamera className="relative left-9 top-9 text-2xl" />
-              </div>
-              <p>Subir una foto</p>
-            </Button>
-          </div>
           <div className="w-full grid-flow-col grid-rows-5 gap-x-12 space-y-8 md:grid">
             <FormField
               control={productForm.control}
@@ -84,12 +68,12 @@ const ProductForm = () => {
             />
             <FormField
               control={productForm.control}
-              name="createdDate"
+              name="createDate"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col">
                   <FormLabel className={labelStyle}>Fecha de creación</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Fecha de creacion" {...field} />
+                    <DatePickerForm onChangeDate={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,7 +81,7 @@ const ProductForm = () => {
             />
             <FormField
               control={productForm.control}
-              name="_id"
+              name="idUnico"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={labelStyle}>ID interno</FormLabel>
@@ -121,10 +105,9 @@ const ProductForm = () => {
                 </FormItem>
               )}
             />
-            <div></div>
             <FormField
               control={productForm.control}
-              name="estimatedTime"
+              name="timeEstimatedCompletion"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={labelStyle}>Cantidad días/horas estimadas de producción</FormLabel>
@@ -150,13 +133,12 @@ const ProductForm = () => {
             />
             <FormField
               control={productForm.control}
-              name="process"
+              name="productProcesses"
               render={({ field }) => (
                 <FormItem className="row-span-1">
                   <FormLabel className={labelStyle}>Procesos</FormLabel>
                   <FormControl>
                     <div className="mb-2 flex items-center">
-                      {/* PROCESOS */}
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -176,13 +158,13 @@ const ProductForm = () => {
                             <CommandInput placeholder="Buscar proceso..." className="h-9" />
                             <CommandEmpty>Proceso no encontrado</CommandEmpty>
                             <CommandGroup>
-                              {data.map((process, i) => (
+                              {process.map((process, i) => (
                                 <CommandItem
                                   value={process.name}
                                   key={i}
                                   onSelect={() => {
-                                    setProcessList([...field.value, process] as Process[]);
-                                    productForm.setValue("process", [...field.value, process] as Process[]);
+                                    setProcessList([...field.value!, process] as Process[]);
+                                    productForm.setValue("productProcesses", [...field.value!, process] as Process[]);
                                   }}
                                 >
                                   {process.name}
@@ -198,8 +180,10 @@ const ProductForm = () => {
                           </Command>
                         </PopoverContent>
                       </Popover>
+                      <ProcessModal />
                     </div>
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -224,7 +208,7 @@ const ProductForm = () => {
           </div>
           <FormField
             control={productForm.control}
-            name="note"
+            name="description"
             render={({ field }) => (
               <FormItem className="px-6 py-8">
                 <FormLabel className={labelStyle}>Notas</FormLabel>
@@ -239,7 +223,7 @@ const ProductForm = () => {
               </FormItem>
             )}
           />
-          <Button className="w-full md:col-span-2" type="submit" size="rounded">
+          <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
             Confirmar
           </Button>
         </form>

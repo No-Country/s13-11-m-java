@@ -6,7 +6,6 @@ import {
   CreateProductResponse,
   DeleteProductRequest,
   DeleteProductResponse,
-  GetEmployeesResponse,
   GetOrdersResponse,
   GetProductByIdRequest,
   GetProductByIdResponse,
@@ -19,47 +18,37 @@ import {
   UpdateProductResponse,
   UserResponse,
 } from "./types";
-import { RootState } from "@/app/store";
-import { apiUrl, authCredentials, registerCredentials } from "@/constants/api";
+import { apiUrl, authCredentials } from "@/constants/api";
 import { simulateLoading } from "@/utils/fakeUtils";
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrl,
+    prepareHeaders: (headers) => {
+      const token = sessionStorage.getItem("token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+        sessionStorage.setItem("token", token);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     login: builder.mutation<UserResponse, LoginRequest>({
-      queryFn: async (args) => {
-        const { email, password } = args;
-        await simulateLoading();
-        if (email === authCredentials.email && password === authCredentials.password) {
-          const json = await import("@/mocks/users/user.json");
-          return { data: json.default as UserResponse };
-        } else {
-          return {
-            error: {
-              status: 401,
-              data: { message: "Invalid credentials" },
-            },
-          };
-        }
-      },
+      query: (credentials) => ({
+        url: "/security/auth/signin",
+        body: credentials,
+        method: "POST",
+      }),
     }),
+
     register: builder.mutation<UserResponse, LoginRequest>({
-      queryFn: async (args) => {
-        const { email, password } = args;
-        await simulateLoading();
-        if (email === registerCredentials.email && password === registerCredentials.password) {
-          const json = await import("@/mocks/users/user.json");
-          return { data: json.default as UserResponse };
-        } else {
-          return {
-            error: {
-              status: 400,
-              data: { message: "Invalid data" },
-            },
-          };
-        }
-      },
+      query: (credentials) => ({
+        url: "/security/auth/signup",
+        body: credentials,
+        method: "POST",
+      }),
     }),
     forgotPassword: builder.mutation<void, string>({
       queryFn: async (email) => {
@@ -78,108 +67,75 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      query: () => "products/all",
-      // query: () => "v1/products/all",
+      // query: () => "/v1/products/all",
+      query: () => ({
+        url: "/v1/products/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
     }),
 
     getProductByName: builder.query<GetProductByNameResponse, GetProductByNameRequest>({
-      // query: (name) => `products/product-name/${name}`,
-      queryFn: async (name, api) => {
-        await simulateLoading();
+      query: (name) => ({
+        url: `/v1/products/product-name/${name}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
 
-        const state = api.getState() as RootState;
-        const { data } = (state.api.queries.getAllProducts?.data || { data: [] }) as { data: AllProductsResponse };
-
-        const product = data.find((p) => p.name === name);
-
-        if (product) {
-          return { data: product };
-        } else {
-          const json = await import("@/mocks/products/one.json");
-          return { data: json.default as unknown as GetProductByNameResponse };
-        }
-      },
+      // query: (name) => ({
+      //   url: `/v1/products/product-name/${name}`,
+      //   method: "GET",
+      //   headers:{
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      //   }
+      // }),
     }),
     getProductById: builder.query<GetProductByIdResponse, GetProductByIdRequest>({
-      // query: (id) => `products/product-id/${id}`,
-      queryFn: async (id, api) => {
-        await simulateLoading();
-
-        const state = api.getState() as RootState;
-        const { data } = (state.api.queries.getAllProducts?.data || { data: [] }) as { data: AllProductsResponse };
-
-        const product = data.find((p) => p.id === id);
-
-        if (product) {
-          return { data: product };
-        } else {
-          const json = await import("@/mocks/products/one.json");
-          return { data: json.default as unknown as GetProductByNameResponse };
-        }
-      },
+      query: (id) => `/v1/products/product-id/${id}`,
     }),
 
     getProductByUnicoId: builder.query<GetProductByUnicoIdResponse, GetProductByUnicoIdRequest>({
-      // query: (idUnico) => `products/product-id-unico/${idUnico}`,
-      queryFn: async (idUnico, api) => {
-        await simulateLoading();
-
-        const state = api.getState() as RootState;
-        const { data } = (state.api.queries.getAllProducts?.data || { data: [] }) as { data: AllProductsResponse };
-
-        const product = data.find((p) => p.idUnico === idUnico);
-
-        if (product) {
-          return { data: product };
-        } else {
-          const json = await import("@/mocks/products/one.json");
-          return { data: json.default as unknown as GetProductByNameResponse };
-        }
-      },
+      query: (idUnico) => `/v1/products/product-id-unico/${idUnico}`,
     }),
     updateProduct: builder.mutation<UpdateProductResponse, UpdateProductRequest>({
-      // query: (product) => `products/update/${product.id}`,
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/products/one.json");
-        return { data: json.default as unknown as UpdateProductResponse };
-      },
+      query: (product) => ({
+        url: `/v1/products/update/${product.id}`,
+        body: product,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }),
     }),
 
     createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
-      // query:'products/create'
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/products/one.json");
-        return { data: json.default as unknown as CreateProductResponse };
-      },
+      query: (product) => ({
+        url: "/v1/products/create",
+        body: product,
+        method: "POST",
+      }),
     }),
 
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
-      // query: (id) => `products/delete/${id}`,
-      queryFn: async (id) => {
-        await simulateLoading();
-        return { data: id };
-      },
+      query: (id) => `/v1/products/delete/${id}`,
     }),
-
     // endpoints de ordenes
     getOrders: builder.query<GetOrdersResponse, void>({
-      // query: () => "orders/all",
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/orders/all.json");
-        return { data: json.default as unknown as GetOrdersResponse };
-      },
-    }),
-    //endpoint de empleados
-    getEmployeers: builder.query<GetEmployeesResponse, void>({
-      // query: () => "orders/all",
-      queryFn: async () => {
-        await simulateLoading();
-        const json = await import("@/mocks/employees/employees.json");
-        return { data: json.default as GetEmployeesResponse };
-      },
+      query: () => ({
+        url: "/v1/product-orders/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
     }),
   }),
 });
@@ -189,6 +145,7 @@ export const {
   useForgotPasswordMutation,
   useRegisterMutation,
   useGetAllProductsQuery,
+  useLazyGetAllProductsQuery,
   useGetProductByIdQuery,
   useGetProductByNameQuery,
   useGetProductByUnicoIdQuery,
@@ -196,5 +153,4 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useGetOrdersQuery,
-  useGetEmployeersQuery,
 } = api;
