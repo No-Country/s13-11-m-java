@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 
 import loginFormSchema, { LoginFormInputs } from "@/schemas/loginFormSchema";
 
-import { linkItems } from "./items";
+import { formItems, linkItems } from "./items";
 import { authCredentials } from "@/constants/api";
 
 interface LoginFormProps {
@@ -31,43 +31,29 @@ const LoginForm = ({ loading, onSubmit }: LoginFormProps) => {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="mx-auto w-full max-w-3xl space-y-8 pt-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="mx-auto w-full max-w-3xl space-y-8">
         <h2 className="text-4xl">Iniciar sesión</h2>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Ingresa tu email"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Contraseña</FormLabel>
-              <FormControl>
-                <Input
-                  className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Ingresa tu contraseña"
-                  type="password"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {formItems.map((item, index) => (
+          <FormField
+            key={index}
+            control={form.control}
+            name={item.name}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{item.label}</FormLabel>
+                <FormControl>
+                  <Input
+                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                    placeholder="Ingresa tu email"
+                    type={item.type}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ))}
         <br />
         <Button className="w-full" type="submit" size="rounded" disabled={loading}>
           Iniciar sesión

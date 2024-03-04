@@ -21,27 +21,20 @@ import ProcessOption from "./ProcessOption";
 import { cn } from "@/lib/utils";
 import { Process, process } from "@/mocks/process/data";
 
-const ProductForm = () => {
+export interface ProductFormProps {
+  onSubmit?: (values: ProductFormInputs) => void;
+  defaultValues?: ProductFormInputs;
+  loading?: boolean;
+}
+
+const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => {
   const productForm = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
-    defaultValues: {
-      name: "",
-      createDate: "",
-      description: "",
-      idUnico: "",
-      instruction: "",
-      progressPercent: "",
-      timeEstimatedCompletion: "",
-      productProcesses: [] as Process[],
-    },
+    defaultValues,
   });
 
   function handleSubmit(values: ProductFormInputs) {
-    const { idUnico, name, instruction, description, timeEstimatedCompletion } = values;
-
-    // este es el objeto que se envia en la request
-    const requestBody = { idUnico, name, instruction, description, timeEstimatedCompletion };
-    console.log(requestBody);
+    onSubmit?.(values);
   }
 
   const [processList, setProcessList] = useState<Process[]>([]);
@@ -170,8 +163,8 @@ const ProductForm = () => {
                                   value={process.name}
                                   key={i}
                                   onSelect={() => {
-                                    setProcessList([...field.value, process] as Process[]);
-                                    productForm.setValue("productProcesses", [...field.value, process] as Process[]);
+                                    setProcessList([...field.value!, process] as Process[]);
+                                    productForm.setValue("productProcesses", [...field.value!, process] as Process[]);
                                   }}
                                 >
                                   {process.name}
@@ -230,7 +223,7 @@ const ProductForm = () => {
               </FormItem>
             )}
           />
-          <Button className="w-full md:col-span-2" type="submit" size="rounded">
+          <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
             Confirmar
           </Button>
         </form>

@@ -1,47 +1,53 @@
 import { Link } from "react-router-dom";
 
 import useAuth from "@/hooks/useAuth";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
-import { FaRegBell } from "react-icons/fa6";
+import { FaBars, FaRegBell } from "react-icons/fa6";
+import { IoSearch } from "react-icons/io5";
 
 import Logo from "../Logo";
 import { logItems, navItems } from "./items";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
+  const matches = useMediaQuery("(min-width: 768px)");
 
   return (
-    <header className="sticky inset-x-0 top-0 z-50  bg-background p-4 shadow-sm">
-      <div className="container flex items-center">
+    <header className="container sticky inset-x-0 top-0 z-50 bg-background p-4 shadow-sm">
+      <div className="flex items-center">
         <Link to="/" className="flex items-center gap-2">
-          <Logo className="h-14 w-14" fillColor="#00304b" />
-          <span className="mt-4 w-40 select-none font-bold text-[#00304b]">SMART BUSINESS TRACKER</span>
+          <Logo className="h-14 w-14 text-primary" />
+          <span className="mt-4 w-36 select-none font-bold text-primary">SMART BUSINESS TRACKER</span>
         </Link>
-        <div className="flex grow justify-end md:justify-center">
-          {isLogin && (
-            <div className="space-x-4">
-              {navItems.map((item, index) => (
-                <Button variant="link" key={index} className="text-base" asChild>
-                  <Link to={item.link}>{item.title}</Link>
-                </Button>
-              ))}
-            </div>
-          )}
-        </div>
         {isLogin ? (
-          <div className="flex space-x-4">
-            <div className="hidden md:block">
-              <InputSearch className="w-60" type="search" placeholder="Buscar" />
-            </div>
+          <div className="flex grow justify-end space-x-2 md:space-x-4">
+            {matches ? (
+              <div>
+                <InputSearch className="max-w-60" type="search" placeholder="Buscar" />
+              </div>
+            ) : (
+              <Button variant="ghost" size="icon">
+                <IoSearch size={24} />
+              </Button>
+            )}
             <Button variant="ghost" size="icon">
               <FaRegBell size={24} />
             </Button>
             <div className="flex items-center">
-              <Avatar className="mr-4 cursor-pointer" onClick={logout}>
+              <Avatar className="cursor-pointer md:mr-4" onClick={logout}>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
@@ -50,13 +56,49 @@ function Navbar() {
               </h3>
             </div>
           </div>
+        ) : matches ? (
+          <>
+            <div className="flex grow justify-center">
+              <div>
+                {navItems.map((item, index) => (
+                  <Button variant="link" key={index} asChild>
+                    <Link to={item.link}>{item.title}</Link>
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div className="space-x-4">
+              {logItems.map((item, index) => (
+                <Button {...item.props} className=" max-lg:px-10" size="rounded-xl" key={index} asChild>
+                  <Link to={item.link}>{item.title}</Link>
+                </Button>
+              ))}
+            </div>
+          </>
         ) : (
-          <div className="hidden space-x-4 md:block">
-            {logItems.map((item, index) => (
-              <Button {...item.props} className="text-base" size="rounded-xl" key={index} asChild>
-                <Link to={item.link}>{item.title}</Link>
-              </Button>
-            ))}
+          <div className="flex grow justify-end">
+            <Menubar>
+              <MenubarMenu>
+                <MenubarTrigger className="cursor-pointer">
+                  <FaBars />
+                </MenubarTrigger>
+                <MenubarContent>
+                  {navItems.map((item, index) => (
+                    <MenubarItem key={index} asChild className="cursor-pointer">
+                      <Link to={item.link}>{item.title}</Link>
+                    </MenubarItem>
+                  ))}
+                  <MenubarSeparator />
+                  {logItems.map((item, index) => (
+                    <div key={index} className="flex py-1.5">
+                      <Button {...item.props} className="w-full cursor-pointer" size="xs" asChild>
+                        <Link to={item.link}>{item.title}</Link>
+                      </Button>
+                    </div>
+                  ))}
+                </MenubarContent>
+              </MenubarMenu>
+            </Menubar>
           </div>
         )}
       </div>
