@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
@@ -222,7 +223,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
                         new EntityNotFoundException("Product order not found with ID: " + productOrderId));
         po.setIsActive(false);
         Company company = po.getCompany();
-        //Hibernate.initialize(company.getEmployee());
         productOrderRepository.save(po);
 
     }
@@ -259,11 +259,13 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         this.productOrderRepository.updateStartDate(orderId, startDate);
     }
 
+    //TODO revisar
     @Override
-    public String getFinishEstimatedDate(String initialDate, Long productId) {
+    public String getFinishEstimatedDate(String initialDateString, Long productId) throws EntityNotFoundException{
         Product p = this.findProductByIdOrThrow(productId);
+        LocalDateTime initialDate = DateUtils.converFromString(initialDateString);
+        return initialDate.plusSeconds((long) p.getTimeAverage().doubleValue()).toString();
 
-        return null;
     }
 
     private ProductOrder createProductOrderWithEntryDateFromRequest(ProductOrderRequest productOrderRequest) {

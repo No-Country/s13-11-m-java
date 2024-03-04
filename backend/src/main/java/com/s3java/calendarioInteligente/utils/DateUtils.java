@@ -46,7 +46,7 @@ public class DateUtils {
                 DateTimeFormatter.ofPattern(FORMAT_DATE_TIME));
     }
 
-    public static Timestamp convertToTimeStampFromString(String dateString) throws ParseException {
+    public static Timestamp convertToTimeStampFromString(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT_DATE_TIME);
         return Timestamp.valueOf(LocalDateTime.parse(dateString, formatter));
     }

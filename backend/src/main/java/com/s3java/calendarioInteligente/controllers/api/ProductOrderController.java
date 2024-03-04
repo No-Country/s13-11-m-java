@@ -270,11 +270,19 @@ public class ProductOrderController {
     @GetMapping("/obtain-finishEstimateDate/{initialDate}/{productId}")
     @Operation(summary = "Get a finish estimated time by a initial date",
             description = "Retrieve a finish estimated date using a initial date and a saved product information")
-    public String getFinishEstimatedDate(
+    public ResponseEntity<?> getFinishEstimatedDate(
             @PathVariable String initialDate,
             @PathVariable Long productId
             ){
-        return this.productOrderService.getFinishEstimatedDate(initialDate, productId);
+        try{
+            String finishEstimateDate = this.productOrderService.getFinishEstimatedDate(initialDate, productId);
+            return new ResponseEntity<>(finishEstimateDate, HttpStatus.OK);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
