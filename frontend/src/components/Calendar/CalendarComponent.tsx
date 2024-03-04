@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { FaGear } from "react-icons/fa6";
 import { IoMdAddCircle } from "react-icons/io";
 
 import moment from "moment";
@@ -70,19 +69,29 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
 
   return (
     <div>
-      <div className="custom-toolbar flex items-center justify-between gap-3 py-4">
-        <div className="flex gap-3">
-          <Button variant="default" onClick={() => handleViewChange("month")}>
-            Mensual
-          </Button>
-          <Button variant="default" onClick={() => handleViewChange("week")}>
-            Semanal
-          </Button>
-          <Button variant="default" onClick={() => handleViewChange("day")}>
-            Diario
-          </Button>
+      <div className="custom-toolbar md:items flex flex-col items-center justify-between gap-2 py-4 md:items-stretch">
+        <div className="order-1 flex items-center justify-between gap-1">
+          <div className="x flex gap-1">
+            <Button variant="default" onClick={() => handleViewChange("month")}>
+              Mensual
+            </Button>
+            <Button variant="default" onClick={() => handleViewChange("week")}>
+              Semanal
+            </Button>
+            <Button variant="default" onClick={() => handleViewChange("day")}>
+              Diario
+            </Button>
+          </div>
+          <div className="">
+            <Button asChild variant="default" className="flex items-center">
+              <Link to="/order">
+                <IoMdAddCircle size={20} />
+                Agregar Pedido
+              </Link>
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="order-1 flex items-center justify-center gap-2">
           <button onClick={handlePrev} className="transition-transform hover:scale-125">
             <FaArrowLeft />
           </button>
@@ -91,17 +100,6 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
           </span>
           <button onClick={handleNext} className="transition-transform hover:scale-125">
             <FaArrowRight />
-          </button>
-        </div>
-        <div className="flex gap-3">
-          <Button asChild variant="default" className="flex items-center gap-2">
-            <Link to="/order">
-              <IoMdAddCircle size={20} />
-              Agregar Pedido
-            </Link>
-          </Button>
-          <button className="hover:opacity-90">
-            <FaGear size={40} color="#00304B" />
           </button>
         </div>
       </div>
@@ -117,14 +115,14 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   };
 
   return (
-    <div className="pb-14 capitalize">
+    <div className="capitalize">
       <Calendar
         localizer={localizer}
         events={events}
         defaultDate={moment().toDate()}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 800 }}
+        style={{ height: 700 }}
         views={["month", "week", "day"]}
         view={view}
         onView={handleViewChange}
