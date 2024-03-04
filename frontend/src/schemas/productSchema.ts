@@ -10,28 +10,30 @@ const productFormSchema = z.object({
     .string()
     .min(1, { message: "El nombre del producto es requerido" })
     .max(255, { message: "El nombre del producto no puede tener más de 255 caracteres" }),
-  createDate: z.string(),
+  createDate: z.string().optional(),
   timeEstimatedCompletion: z.string(),
-  progressPercent: z.string(),
+  progressPercent: z.string().optional(),
   instruction: z.string(),
-  productProcesses: z.array(
-    z.object({
-      name: z.string(),
-      timeframe: z.number(),
-      progress: z.number(),
-      estimatedTime: z.number(),
-      status: z.string(),
-      subProcess: z.array(
-        z.object({
-          name: z.string(),
-          timeframe: z.number(),
-          progress: z.number(),
-          estimatedTime: z.number(),
-          status: z.string(),
-        })
-      ),
-    })
-  ),
+  productProcesses: z
+    .array(
+      z.object({
+        name: z.string(),
+        timeframe: z.number(),
+        progress: z.number(),
+        estimatedTime: z.number(),
+        status: z.string(),
+        subProcess: z.array(
+          z.object({
+            name: z.string(),
+            timeframe: z.number(),
+            progress: z.number(),
+            estimatedTime: z.number(),
+            status: z.string(),
+          })
+        ),
+      })
+    )
+    .optional(),
   // image: z.string(),
   description: z.string(),
   // active: z.boolean(),
