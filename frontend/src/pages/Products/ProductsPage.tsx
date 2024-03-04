@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import useProduct from "@/hooks/useProduct";
 
@@ -6,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import SelectColumns from "@/components/ui/select-columns";
 
 import { MdAddCircle } from "react-icons/md";
@@ -39,9 +39,11 @@ const ProductsPage = () => {
     <div>
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Productos</h2>
-        <Button size="rounded" className="px-6">
-          <MdAddCircle className="mr-2 h-5 w-5" />
-          Crear producto
+        <Button asChild size="rounded" className="px-6">
+          <Link to={"/product"} className="flex">
+            <MdAddCircle className="mr-2 h-5 w-5" />
+            Crear producto
+          </Link>
         </Button>
       </div>
       <div className="flex flex-col py-4 max-md:gap-2 md:flex-row">
