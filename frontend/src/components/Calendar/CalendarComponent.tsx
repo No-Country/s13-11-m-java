@@ -27,21 +27,16 @@ interface CustomToolbarProps extends ToolbarProps {
   onViewChange: (view: View) => void;
 }
 
-interface MyEvent extends Event {
+interface Orders extends Event {
   id: number;
   title: string;
   start: Date;
   end: Date;
 }
 
-const events: MyEvent[] = [
-  {
-    id: 1,
-    title: "Test",
-    start: new Date(2024, 2, 25, 10, 0, 0),
-    end: new Date(2024, 2, 25, 12, 0, 0),
-  },
-];
+interface CalendarComponentProps {
+  events: Orders[];
+}
 
 const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange }) => {
   const [currentDate, setCurrentDate] = useState(moment());
@@ -114,7 +109,7 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
   );
 };
 
-const CalendarComponent: React.FC = () => {
+const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   const [view, setView] = useState<View>("month");
 
   const handleViewChange = (newView: View) => {
