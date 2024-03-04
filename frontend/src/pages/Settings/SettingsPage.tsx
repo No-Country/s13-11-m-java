@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -28,7 +29,9 @@ const SettingsPage = () => {
           <Link to="/settings/calendar">Calendario</Link>
         </button>
       </div>
-      <Outlet />
+      <React.Suspense fallback={null}>
+        <Outlet />
+      </React.Suspense>
     </div>
   );
 };
