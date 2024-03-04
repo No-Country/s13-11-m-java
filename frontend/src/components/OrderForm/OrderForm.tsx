@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -57,11 +56,11 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
     });
   }
 
-  const labelStyle = "text-[#606060]";
+  const labelStyle = "text-[#606060] flex w-full";
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-3/4 flex-col ">
         <div className="w-full grid-flow-col grid-rows-3 gap-x-12 space-y-8 md:grid">
           <FormField
             control={form.control}
@@ -79,11 +78,9 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
                       setValue={form.setValue as () => void}
                       title={"producto"}
                       fieldName={"name"}
+                      isProduct={true}
                     />
                   </FormControl>
-                  <Button type="button" className="ml-2 rounded-full" asChild>
-                    <Link to={"/product"}>+</Link>
-                  </Button>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -167,26 +164,28 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name="note"
-          render={({ field }) => (
-            <FormItem className="px-6 py-8">
-              <FormLabel className={labelStyle}>Notas</FormLabel>
-              <FormControl>
-                <Textarea
-                  className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Agregar un comentario"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={isLoading}>
-          Confirmar
-        </Button>
+        <div className="bg-red mb-32 flex w-full flex-col items-center justify-center">
+          <FormField
+            control={form.control}
+            name="note"
+            render={({ field }) => (
+              <FormItem className="w-full py-8">
+                <FormLabel className={labelStyle}>Notas</FormLabel>
+                <FormControl>
+                  <Textarea
+                    className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                    placeholder="Agregar un comentario"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={isLoading}>
+            Confirmar
+          </Button>
+        </div>
       </form>
     </Form>
   );
