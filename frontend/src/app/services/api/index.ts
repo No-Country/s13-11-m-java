@@ -118,14 +118,6 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-    createProduct: builder.mutation<CreateProductResponse, CreateProductRequest>({
-      query: (product) => ({
-        url: "/v1/products/create",
-        body: product,
-        method: "POST",
-      }),
-    }),
-
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       query: (id) => `/v1/products/delete/${id}`,
     }),
