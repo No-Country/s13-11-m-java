@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { FormControl } from "../ui/form";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -22,12 +24,22 @@ interface Props {
   selectOptions: Array<Option> | AllProductsResponse | undefined;
   isLoading?: boolean;
   pickId?: (id: number) => void;
+  isProduct?: boolean;
 }
 
 const boxStyle =
   " bg-[#F5F6FA] w-full border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
 
-const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName, isLoading, pickId }: Props) => {
+const SelectInputForm = ({
+  selectOptions,
+  fieldValue,
+  setValue,
+  title,
+  fieldName,
+  isLoading,
+  pickId,
+  isProduct,
+}: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -43,6 +55,13 @@ const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName
           <CommandInput placeholder={`Buscar ${title}...`} className="h-9" />
           <CommandEmpty>{title} no encontrado.</CommandEmpty>
           <CommandGroup>
+            {isProduct && (
+              <div className="p-4">
+                <Button type="button" asChild variant={"outline"} className="my-2 w-full">
+                  <Link to={"/product"}>Agregar Producto</Link>
+                </Button>
+              </div>
+            )}
             {isLoading
               ? "Loading..."
               : selectOptions?.map((option) => (

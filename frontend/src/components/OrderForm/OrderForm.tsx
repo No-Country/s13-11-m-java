@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -71,7 +70,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-3/4 flex-col">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-3/4 flex-col ">
         <div className="max-auto hidden flex-col items-center justify-center">
           <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
             <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
@@ -97,11 +96,9 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
                       setValue={form.setValue as () => void}
                       title={"producto"}
                       fieldName={"name"}
+                      isProduct={true}
                     />
                   </FormControl>
-                  <Button type="button" className="ml-2 rounded-full" asChild>
-                    <Link to={"/product"}>+</Link>
-                  </Button>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -185,7 +182,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
             )}
           />
         </div>
-        <div className="bg-red flex w-full flex-col items-center justify-center">
+        <div className="bg-red mb-32 flex w-full flex-col items-center justify-center">
           <FormField
             control={form.control}
             name="note"
