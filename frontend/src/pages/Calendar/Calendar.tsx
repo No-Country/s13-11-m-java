@@ -15,7 +15,7 @@ const Calendar = () => {
     : [];
 
   return (
-    <div className="mx-auto px-4 md:container">
+    <div className="mx-auto md:container">
       <CalendarComponent events={formattedOrders} />
     </div>
   );

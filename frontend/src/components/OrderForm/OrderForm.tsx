@@ -9,6 +9,8 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
+import { FaCamera } from "react-icons/fa6";
+
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
 import { useGetAllProductsQuery } from "@/app/services/api";
@@ -60,7 +62,15 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-3/4 flex-col ">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full flex-col md:w-3/4 ">
+        <div className="max-auto hidden flex-col items-center justify-center">
+          <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
+            <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
+              <FaCamera className="relative left-9 top-9 text-2xl" />
+            </div>
+            <p>Subir una foto</p>
+          </Button>
+        </div>
         <div className="w-full grid-flow-col grid-rows-3 gap-x-12 space-y-8 md:grid">
           <FormField
             control={form.control}

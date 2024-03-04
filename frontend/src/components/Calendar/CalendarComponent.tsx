@@ -71,7 +71,7 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
     <div>
       <div className="custom-toolbar md:items flex flex-col items-center justify-between gap-2 py-4 md:items-stretch">
         <div className="order-1 flex items-center justify-between gap-1">
-          <div className="x flex gap-1">
+          <div className="flex gap-1">
             <Button variant="default" onClick={() => handleViewChange("month")}>
               Mensual
             </Button>
@@ -82,11 +82,11 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
               Diario
             </Button>
           </div>
-          <div className="">
+          <div>
             <Button asChild variant="default" className="flex items-center">
               <Link to="/order">
                 <IoMdAddCircle size={20} />
-                Agregar Pedido
+                <span className="hidden pl-3 md:block">Agregar Pedido </span>
               </Link>
             </Button>
           </div>
@@ -115,7 +115,7 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   };
 
   return (
-    <div className="capitalize">
+    <div className="capitalize max-md:-mx-5">
       <Calendar
         localizer={localizer}
         events={events}
