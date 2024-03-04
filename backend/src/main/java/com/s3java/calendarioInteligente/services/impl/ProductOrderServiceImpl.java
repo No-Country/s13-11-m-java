@@ -177,14 +177,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         String finishEstimatedDateString = productOrderRequest.getFinishEstimatedDate();
 
         // para actualizar los timeStamp
-        if(productOrderRequest.getState() == State.EN_PROGRESO){
-            this.updateStartDate(productOrderId);
-        }
-
-        if(productOrderRequest.getState() == State.TERMINADO){
-            this.updateEndDate(productOrderId);
-            this.productService.updateTimeAverage(oldProductOrder.getProduct().getId());
-        }
+        this.verifyStateForSetAStartDate(productOrderId, productOrderRequest, oldProductOrder);
 
         //-------------------------------------------------------------
 
@@ -206,6 +199,18 @@ public class ProductOrderServiceImpl implements ProductOrderService {
             ProductOrder productOrderUpdated = this.productOrderRepository.save(oldProductOrder);
             return this.productOrderMapper.productOrderToProductOrderResponse(productOrderUpdated);
         }
+
+    private void verifyStateForSetAStartDate(Long productOrderId, ProductOrderRequest productOrderRequest,
+                           ProductOrder oldProductOrder) throws Exception {
+        if(productOrderRequest.getState() == State.EN_PROGRESO){
+            this.updateStartDate(productOrderId);
+        }
+
+        else if(productOrderRequest.getState() == State.TERMINADO){
+            this.updateEndDate(productOrderId);
+            this.productService.updateTimeAverage(oldProductOrder.getProduct().getId());
+        }
+    }
 
     private void updateEndDate(Long productOrderId) {
         Timestamp endDate = Timestamp.valueOf(LocalDateTime.now());
