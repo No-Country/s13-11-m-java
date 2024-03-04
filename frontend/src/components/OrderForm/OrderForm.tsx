@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,39 +13,20 @@ import { FaCamera } from "react-icons/fa";
 
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
-import { products } from "@/mocks/products/data";
+import { useGetAllProductsQuery } from "@/app/services/api";
+import { OrderRequest } from "@/app/services/api/types";
+import { clients, employees } from "@/mocks/orderFormMocks/data";
 
-const employees = [
-  {
-    _id: "1",
-    name: "Tommy Vercetti",
-  },
-  {
-    _id: "2",
-    name: "Claude Speed",
-  },
-  {
-    _id: "3",
-    name: "Niko Bellic",
-  },
-];
+export interface OrderFormProps {
+  onSubmit?: (values: OrderRequest) => void;
+  isLoading?: boolean;
+}
 
-const clients = [
-  {
-    _id: "1",
-    name: "Bojang",
-  },
-  {
-    _id: "2",
-    name: "Rockstar Games",
-  },
-  {
-    _id: "3",
-    name: "Ubisoft",
-  },
-];
+const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
+  const { data: productsData, isLoading: isLoadingProduct } = useGetAllProductsQuery();
 
-const OrderForm = () => {
+  const [productIdFI, setProductId] = useState<number>(0);
+
   const form = useForm<OrderFormInputs>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
@@ -56,34 +37,40 @@ const OrderForm = () => {
       initialDate: "",
       name: "",
       note: "",
-      productId: 0,
-      errortime: 5,
-      photoLink: "",
+      productId: 11,
+      errorTime: 5,
+      photoLink:
+        "https://media.istockphoto.com/id/467479468/photo/car-wheel.jpg?s=612x612&w=0&k=20&c=FVAl5bqn5DJAgEOQtt8Ca3Mb9Dzk0BqwTJ3SiQ3L3ts=",
     },
   });
 
   function handleSubmit(values: OrderFormInputs) {
-    const { name, errortime, photoLink, initialDate, finishEstimatedDate, productId, client } = values;
-
-    //requestBody es lo que solicita el endpoint de create
-
-    const requestBody = {
+    const { name, errorTime, photoLink, initialDate, finishEstimatedDate, client } = values;
+    onSubmit?.({
       name,
-      errortime,
+      errorTime,
       photoLink,
       initialDate,
       finishEstimatedDate,
-      productId,
+      productId: productIdFI,
       client: { commonAttribute: { name: client.name } },
-    };
-    console.log(requestBody);
+    });
+    console.log({
+      name,
+      errorTime,
+      photoLink,
+      initialDate,
+      finishEstimatedDate,
+      productId: productIdFI,
+      client: { commonAttribute: { name: client.name } },
+    });
   }
 
-  const labelStyle = "text-[#606060]";
+  const labelStyle = "text-[#606060] flex w-full";
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full flex-col md:w-3/4 ">
         <div className="max-auto hidden flex-col items-center justify-center">
           <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
             <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
@@ -102,16 +89,16 @@ const OrderForm = () => {
                 <div className="flex items-center">
                   <FormControl>
                     <SelectInputForm
-                      selectOptions={products}
+                      pickId={setProductId as () => void}
+                      isLoading={isLoadingProduct}
+                      selectOptions={productsData}
                       fieldValue={field.value}
                       setValue={form.setValue as () => void}
                       title={"producto"}
                       fieldName={"name"}
+                      isProduct={true}
                     />
                   </FormControl>
-                  <Button type="button" className="ml-2 rounded-full" asChild>
-                    <Link to={"/product"}>+</Link>
-                  </Button>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -195,26 +182,28 @@ const OrderForm = () => {
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name="note"
-          render={({ field }) => (
-            <FormItem className="px-6 py-8">
-              <FormLabel className={labelStyle}>Notas</FormLabel>
-              <FormControl>
-                <Textarea
-                  className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Agregar un comentario"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="w-full md:col-span-2" type="submit" size="rounded">
-          Confirmar
-        </Button>
+        <div className="bg-red mb-32 flex w-full flex-col items-center justify-center">
+          <FormField
+            control={form.control}
+            name="note"
+            render={({ field }) => (
+              <FormItem className="w-full py-8">
+                <FormLabel className={labelStyle}>Notas</FormLabel>
+                <FormControl>
+                  <Textarea
+                    className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                    placeholder="Agregar un comentario"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={isLoading}>
+            Confirmar
+          </Button>
+        </div>
       </form>
     </Form>
   );

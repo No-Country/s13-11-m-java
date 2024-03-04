@@ -27,7 +27,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container pt-10">
+    <div className="container w-full pt-6">
       <div className="flex">
         <Button variant={"ghost"} size={"icon"} asChild>
           <Link to={"/order"}>
@@ -36,7 +36,7 @@ const AddProduct = () => {
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
       </div>
-      <div className="flex justify-center pb-10">
+      <div className="flex w-full justify-center pb-10">
         <ProductForm loading={isLoading} onSubmit={handleSubmit} defaultValues={defaultValues} />
       </div>
     </div>

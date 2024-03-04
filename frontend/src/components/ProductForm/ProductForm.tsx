@@ -40,15 +40,12 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
 
   const labelStyle = "text-[#606060]";
   const boxStyle =
-    "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
+    "bg-[#F5F6FA] w-full border border-[#D5D5D5] rounded-none pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
   return (
-    <div>
+    <div className="flex justify-center">
       <Form {...productForm}>
-        <form
-          onSubmit={productForm.handleSubmit(handleSubmit)}
-          className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl"
-        >
-          <div className="w-full grid-flow-col grid-rows-3 gap-x-12 space-y-8 md:grid">
+        <form onSubmit={productForm.handleSubmit(handleSubmit)} className="w-3/4 flex-col md:flex md:w-full">
+          <div className="w-full grid-flow-col grid-rows-3 gap-4 space-y-8 md:grid">
             <FormField
               control={productForm.control}
               name="name"

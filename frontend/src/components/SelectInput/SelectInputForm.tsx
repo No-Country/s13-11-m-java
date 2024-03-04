@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { FormControl } from "../ui/form";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -5,11 +7,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import { FaCheck, FaChevronDown } from "react-icons/fa";
 
+import { AllProductsResponse } from "@/app/services/api/types";
 import { cn } from "@/lib/utils";
 
 type Option = {
   name: string;
-  _id: string;
+  id?: number | string;
+  idUnico?: string;
 };
 
 interface Props {
@@ -17,23 +21,30 @@ interface Props {
   title: string;
   fieldName: string;
   setValue: (fieldName: string, value: string) => void;
-  selectOptions: Array<Option>;
+  selectOptions: Array<Option> | AllProductsResponse | undefined;
+  isLoading?: boolean;
+  pickId?: (id: number) => void;
+  isProduct?: boolean;
 }
 
 const boxStyle =
-  "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
+  " bg-[#F5F6FA] w-full border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
 
-const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName }: Props) => {
+const SelectInputForm = ({
+  selectOptions,
+  fieldValue,
+  setValue,
+  title,
+  fieldName,
+  isLoading,
+  pickId,
+  isProduct,
+}: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <FormControl>
-          <Button
-            variant="outline"
-            role="combobox"
-            className={boxStyle}
-            // className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}
-          >
+          <Button variant="outline" role="combobox" className={boxStyle}>
             {fieldValue ? fieldValue : `Nombre del ${title}`}
             <FaChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -44,19 +55,32 @@ const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName
           <CommandInput placeholder={`Buscar ${title}...`} className="h-9" />
           <CommandEmpty>{title} no encontrado.</CommandEmpty>
           <CommandGroup>
-            {selectOptions.map((option) => (
-              <CommandItem
-                value={option.name}
-                key={option._id}
-                onSelect={() => {
-                  setValue(fieldName, option.name);
-                  //   setProduct(option);
-                }}
-              >
-                {option.name}
-                <FaCheck className={cn("ml-auto h-4 w-4", option.name === fieldValue ? "opacity-100" : "opacity-0")} />
-              </CommandItem>
-            ))}
+            {isProduct && (
+              <div className="p-4">
+                <Button type="button" asChild variant={"outline"} className="my-2 w-full">
+                  <Link to={"/product"}>Agregar Producto</Link>
+                </Button>
+              </div>
+            )}
+            {isLoading
+              ? "Loading..."
+              : selectOptions?.map((option) => (
+                  <CommandItem
+                    value={option.name}
+                    key={option.id}
+                    onSelect={() => {
+                      setValue(fieldName, option.name);
+                      if (pickId && typeof option.id === "number") {
+                        pickId(option.id!);
+                      }
+                    }}
+                  >
+                    {option.name}
+                    <FaCheck
+                      className={cn("ml-auto h-4 w-4", option.name === fieldValue ? "opacity-100" : "opacity-0")}
+                    />
+                  </CommandItem>
+                ))}
           </CommandGroup>
         </Command>
       </PopoverContent>

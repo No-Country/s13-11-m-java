@@ -30,6 +30,8 @@ export type GetOrdersResponse = Order[];
 export type GetEmployeesResponse = Employee[];
 
 export type GetProcessResponse = Process;
+export type CreateOrderRequest = OrderRequest;
+export type CreateOrderResponse = OrderResponse;
 
 export interface User {
   id: string;
@@ -140,4 +142,39 @@ export interface Order {
   processes: Process[];
   company: Company;
   active: boolean;
+}
+
+export interface OrderRequest {
+  name: string;
+  errorTime: number;
+  photoLink: string;
+  initialDate: string;
+  finishEstimatedDate: string;
+  productId: number;
+  client: {
+    commonAttribute: {
+      name: string;
+    };
+  };
+}
+
+export interface OrderResponse {
+  id: number;
+  name: string;
+  entryDate: Date;
+  errorTime: number;
+  photoLink: string;
+  initialDate: Date;
+  finishEstimatedDate: Date;
+  product: Product;
+  client: {
+    id: number;
+    commonAttribute: {
+      email: null;
+      password: null;
+      address: null;
+      phone: null;
+      name: string;
+    };
+  };
 }
