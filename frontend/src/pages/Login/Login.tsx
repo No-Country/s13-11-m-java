@@ -1,7 +1,7 @@
 import useAuth from "@/hooks/useAuth";
 
 import AuthTemplate from "@/components/AuthTemplate";
-import LoginForm from "@/components/LoginForm/LoginForm";
+import LoginForm from "@/components/forms/LoginForm/LoginForm";
 
 import loginImage from "@/assets/login.svg";
 

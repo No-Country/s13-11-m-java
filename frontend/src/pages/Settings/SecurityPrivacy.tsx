@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import { FaArrowLeft } from "react-icons/fa";
@@ -23,7 +24,9 @@ function SecurityPrivacy() {
           <Link to="/settings/security/privacy-policy">Política de Privacidad</Link>
         </button>
       </div>
-      <Outlet />
+      <React.Suspense fallback={null}>
+        <Outlet />
+      </React.Suspense>
     </div>
   );
 }

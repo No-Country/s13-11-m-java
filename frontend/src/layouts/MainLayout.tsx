@@ -1,3 +1,4 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
 
 import Navbar from "@/components/Navbar/Navbar";
@@ -7,7 +8,9 @@ const MainLayout = () => {
     <div>
       <Navbar />
       <main>
-        <Outlet />
+        <React.Suspense fallback={null}>
+          <Outlet />
+        </React.Suspense>
       </main>
     </div>
   );
