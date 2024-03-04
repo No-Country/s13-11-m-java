@@ -28,6 +28,7 @@ function ApiTesting() {
       timeEstimatedCompletion: "123",
     });
   };
+
   React.useEffect(() => {
     console.log("useGetAllProductsQuery result:", { allProductsData, allProductsError, allProductsLoading });
     console.log("useGetProductByNameQuery result:", { productName, productData, productError, productLoading });
