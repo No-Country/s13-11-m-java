@@ -59,7 +59,7 @@ const ProductsPage = () => {
           className="max-w-sm"
         />
       </div>
-      <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
+      <ScrollArea className="h-[44vh] whitespace-nowrap rounded-md border md:h-[60vh]">
         <div className="flex">
           <DataTable
             columns={columns}
