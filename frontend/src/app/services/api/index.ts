@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import {
   AllProductsResponse,
+  CreateOrderRequest,
+  CreateOrderResponse,
   CreateProductRequest,
   CreateProductResponse,
   DeleteProductRequest,
@@ -137,6 +139,13 @@ export const api = createApi({
         },
       }),
     }),
+    createOrder: builder.mutation<CreateOrderResponse, CreateOrderRequest>({
+      query: (productOrder) => ({
+        url: "/v1/product-orders/create",
+        body: productOrder,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -153,4 +162,5 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useGetOrdersQuery,
+  useCreateOrderMutation,
 } = api;
