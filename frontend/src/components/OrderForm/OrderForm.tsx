@@ -67,11 +67,11 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
     });
   }
 
-  const labelStyle = "text-[#606060]";
+  const labelStyle = "text-[#606060] flex w-full";
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-3/4 flex-col">
         <div className="max-auto hidden flex-col items-center justify-center">
           <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
             <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
@@ -185,26 +185,28 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name="note"
-          render={({ field }) => (
-            <FormItem className="px-6 py-8">
-              <FormLabel className={labelStyle}>Notas</FormLabel>
-              <FormControl>
-                <Textarea
-                  className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                  placeholder="Agregar un comentario"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={isLoading}>
-          Confirmar
-        </Button>
+        <div className="bg-red flex w-full flex-col items-center justify-center">
+          <FormField
+            control={form.control}
+            name="note"
+            render={({ field }) => (
+              <FormItem className="w-full py-8">
+                <FormLabel className={labelStyle}>Notas</FormLabel>
+                <FormControl>
+                  <Textarea
+                    className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                    placeholder="Agregar un comentario"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={isLoading}>
+            Confirmar
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -14,8 +14,6 @@ const Calendar = () => {
       }))
     : [];
 
-  console.log(formattedOrders);
-
   return (
     <div className="mx-auto md:container">
       <CalendarComponent events={formattedOrders} />

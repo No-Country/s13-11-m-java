@@ -25,19 +25,14 @@ interface Props {
 }
 
 const boxStyle =
-  "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
+  " bg-[#F5F6FA] w-full border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
 
 const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName, isLoading, pickId }: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <FormControl>
-          <Button
-            variant="outline"
-            role="combobox"
-            className={boxStyle}
-            // className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}
-          >
+          <Button variant="outline" role="combobox" className={boxStyle}>
             {fieldValue ? fieldValue : `Nombre del ${title}`}
             <FaChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
