@@ -11,7 +11,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import {
   FaChevronDown, // FaCheck
 } from "react-icons/fa";
-import { FaCamera } from "react-icons/fa6";
 
 import { ProcessFormInputs, processFormSchema } from "@/schemas/processSchema";
 
@@ -43,18 +42,10 @@ const ProcessModal = () => {
         </DialogHeader>
         <Form {...processForm}>
           <form onSubmit={processForm.handleSubmit(handleSubmit)} className="flex flex-col items-center justify-center">
-            <div className="max-auto flex h-24 w-32 flex-col items-center justify-center">
-              <Button type="button" variant={"ghost"} className="w-30 flex h-44 flex-col">
-                <p>Subir una foto</p>
-                <div className="mx-auto mb-2 h-16 w-16 rounded-full bg-gray-200">
-                  <FaCamera className="relative left-6 top-6 text-lg" />
-                </div>
-              </Button>
-            </div>
             <div className=" mb-2 grid-flow-col grid-rows-3 gap-x-4 space-y-4 md:grid">
               <FormField
                 control={processForm.control}
-                name="name"
+                name="processAttributes.name"
                 render={({ field }) => (
                   <FormItem className="pt-4">
                     <FormLabel className={labelStyle}>Nombre del proceso</FormLabel>
@@ -67,7 +58,7 @@ const ProcessModal = () => {
               />
               <FormField
                 control={processForm.control}
-                name="marginTime"
+                name="processAttributes.timeMargin"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Margen de tiempo de aceptabilidad</FormLabel>
@@ -80,7 +71,7 @@ const ProcessModal = () => {
               />
               <FormField
                 control={processForm.control}
-                name="progress"
+                name="processAttributes.timeReal"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Índice de progreso</FormLabel>
@@ -93,7 +84,7 @@ const ProcessModal = () => {
               />
               <FormField
                 control={processForm.control}
-                name="estimatedTime"
+                name="processAttributes.timeAverage"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Tiempo estimado</FormLabel>
@@ -106,7 +97,7 @@ const ProcessModal = () => {
               />
               <FormField
                 control={processForm.control}
-                name="status"
+                name="processAttributes.state"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Activo/Inactivo</FormLabel>

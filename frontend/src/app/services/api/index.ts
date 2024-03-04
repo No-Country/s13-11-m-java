@@ -87,15 +87,6 @@ export const api = createApi({
           "Allow-Control-Allow-Origin": "*",
         },
       }),
-
-      // query: (name) => ({
-      //   url: `/v1/products/product-name/${name}`,
-      //   method: "GET",
-      //   headers:{
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-      //   }
-      // }),
     }),
     getProductById: builder.query<GetProductByIdResponse, GetProductByIdRequest>({
       query: (id) => `/v1/products/product-id/${id}`,
