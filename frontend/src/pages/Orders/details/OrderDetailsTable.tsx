@@ -28,7 +28,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = (props) => {
   console.log("orderSelected", orderSelected);
   console.log(orderSelected);
   return (
-    <div className="container py-10">
+    <div>
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">
           Pedido {orderSelected?.id} - Cliente: {orderSelected?.clientId}
