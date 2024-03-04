@@ -1,67 +1,64 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { Button } from "../../ui/button";
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
-import registerFormSchema, { type RegisterFormInputs } from "@/schemas/registerFormSchema";
+import registerFormSchema, { RegisterFormInputs } from "@/schemas/registerFormSchema";
 
-import ErrorMessage from "../../ErrorMessage";
+import { formItems } from "./items";
 
-export default function RegisterForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormInputs>({
-    mode: "onTouched",
-    resolver: zodResolver(registerFormSchema),
-  });
-  const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => console.log(data);
-
-  const inputStyle =
-    "border-0 border-b-2 border-b-primary w-[250px] lg:w-[280px] rounded-none focus:ring-0 ring-0 focus-visible:ring-ring-0 focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 px-0 focus:bg-blue-500/10";
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-auto flex max-w-3xl flex-col justify-center">
-      <div className="grid grid-cols-1 items-center gap-4 gap-x-14 md:grid-cols-2">
-        <div>
-          <Label htmlFor="email">Mail</Label>
-          <Input type="email" {...register("email")} className={inputStyle} />
-          <ErrorMessage error={errors.email} />
-        </div>
-
-        <div>
-          <Label htmlFor="password">Contraseña</Label>
-          <Input type="password" {...register("password")} className={inputStyle} />
-          <ErrorMessage error={errors.password} />
-        </div>
-        <div>
-          <Label htmlFor="firstName">Nombre</Label>
-          <Input type="text" {...register("firstName")} className={inputStyle} />
-          <ErrorMessage error={errors.firstName} />
-        </div>
-        <div>
-          <Label htmlFor="lastName">Apellido</Label>
-          <Input type="text" {...register("lastName")} className={inputStyle} />
-          <ErrorMessage error={errors.lastName} />
-        </div>
-        <div>
-          <Label htmlFor="address">Direccion</Label>
-          <Input type="text" {...register("address")} className={inputStyle} />
-          <ErrorMessage error={errors.address} />
-        </div>
-        <div>
-          <Label htmlFor="phone">Numero de Teléfono</Label>
-          <Input type="tel" {...register("phone")} className={inputStyle} />
-          <ErrorMessage error={errors.phone} />
-        </div>
-      </div>
-
-      <Button type="submit" className="mx-auto mt-12 w-full rounded-full">
-        Registrarse
-      </Button>
-    </form>
-  );
+interface RegisterFormProps {
+  loading?: boolean;
+  defaultValues?: RegisterFormInputs;
+  onSubmit?: (values: RegisterFormInputs) => void;
 }
+
+const RegisterForm = ({ loading, defaultValues, onSubmit }: RegisterFormProps) => {
+  const form = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerFormSchema),
+    defaultValues: defaultValues,
+  });
+
+  function handleSubmit(values: RegisterFormInputs) {
+    onSubmit?.(values);
+  }
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="mx-auto grid w-full max-w-3xl gap-x-12 space-y-8 pt-8 md:grid-cols-2"
+      >
+        <h2 className="text-4xl md:col-span-2">Creá tu cuenta</h2>
+        {formItems.map((item) => (
+          <FormField
+            key={item.name}
+            control={form.control}
+            name={item.name}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{item.label}</FormLabel>
+                <FormControl>
+                  <Input
+                    className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                    placeholder="Ingresa tu email"
+                    type={item.type}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ))}
+        <br />
+        <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
+          Registrate
+        </Button>
+      </form>
+    </Form>
+  );
+};
+
+export default RegisterForm;
