@@ -12,6 +12,7 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import moment from "moment";
 
 type Props = {
   onChangeDate: (n: Date | string | undefined) => void;
@@ -41,7 +42,7 @@ export function DatePickerForm({ onChangeDate }: Props) {
           className="select-none capitalize"
           selected={date}
           onSelect={(value) => {
-            onChangeDate(value?.toISOString()), setDate(value);
+            onChangeDate(moment(value).utc().format().slice(0, -1)), setDate(value);
           }}
           initialFocus
           locale={es}

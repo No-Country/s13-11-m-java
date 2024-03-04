@@ -1,11 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import OrderForm from "@/components/OrderForm/OrderForm";
 import { Button } from "@/components/ui/button";
 
 import { MdArrowBackIos } from "react-icons/md";
 
+import { useCreateOrderMutation } from "@/app/services/api";
+import { OrderRequest } from "@/app/services/api/types";
+
 const OrderPage = () => {
+  const navigate = useNavigate();
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
+
+  const handleSubmit = async (values: OrderRequest) => {
+    await createOrder(values).unwrap();
+    navigate("/orders");
+  };
   return (
     <div className="container pt-10">
       <div className="flex">
@@ -17,7 +27,7 @@ const OrderPage = () => {
         <h2 className="text-2xl">Hacer un nuevo pedido</h2>
       </div>
       <div className="flex justify-center ">
-        <OrderForm />
+        <OrderForm isLoading={isLoading} onSubmit={handleSubmit} />
       </div>
     </div>
   );
