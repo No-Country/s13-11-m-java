@@ -4,7 +4,6 @@ import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import com.s3java.calendarioInteligente.exception.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
-import com.s3java.calendarioInteligente.utils.DateUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,14 +15,11 @@ import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -245,7 +241,8 @@ public class ProductOrderController {
     }
 
     @DeleteMapping("/delete/{orderId}")
-    @Operation(summary = "Get all orders by company ID", description = "Retrieve a list of product orders for a given company.")
+    @Operation(summary = "Get all orders by company ID",
+            description = "Retrieve a list of product orders for a given company.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
             @ApiResponse(responseCode = "204", description = "No content available"),
@@ -268,6 +265,27 @@ public class ProductOrderController {
                     .header("internal server error", e.getMessage()).build();
         }
     }
+
+    //TODO revisar
+    @GetMapping("/obtain-finishEstimateDate/{initialDate}/{productId}")
+    @Operation(summary = "Get a finish estimated time by a initial date",
+            description = "Retrieve a finish estimated date using a initial date and a saved product information")
+    public String getFinishEstimatedDate(
+            @PathVariable String initialDate,
+            @PathVariable Long productId
+            ){
+        return this.productOrderService.getFinishEstimatedDate(initialDate, productId);
+
+    }
+
+    /*
+    @PutMapping("/updateStartDate/{id}")
+    public void updateStartDate(
+            @PathVariable Long id
+    ){
+        this.productOrderService.updateStartDate(id);
+
+    }*/
 
 }
 

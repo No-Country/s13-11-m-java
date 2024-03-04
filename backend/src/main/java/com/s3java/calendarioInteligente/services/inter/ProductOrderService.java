@@ -4,6 +4,7 @@ import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -27,4 +28,7 @@ public interface ProductOrderService {
 
     List<ProductOrderResponse> findProductOrdersByInitialDate(String date) throws Exception;
 
+    void updateStartDate(Long id);
+
+    String getFinishEstimatedDate(String initialDate, Long productId);
 }

@@ -74,29 +74,8 @@ public class ProductController {
         if (result.hasErrors()) {
             return getResponseEntity(result);
         }
-        Optional<Product> productOptional = productService.byId(id);
-        if(productOptional.isPresent()){
-            Product productDb = productOptional.get();
-            if(!product.getIdUnico().isEmpty() &&
-                    !product.getIdUnico()
-                            .equalsIgnoreCase(productDb.getIdUnico())
-                                && productService.byIdUnico(product.getIdUnico()).isPresent()){
-                return ResponseEntity.badRequest()
-                        .body(Collections
-                                .singletonMap("mensaje", "Ya existe un producto con ese id Unico"));
-            }
-            productDb.setIdUnico(product.getIdUnico());
-            productDb.setName(product.getName());
-            productDb.setActive(product.getActive());
-            productDb.setDescription(product.getDescription());
-            productDb.setCompany(product.getCompany());
-            productDb.setInstruction(product.getInstruction());
-            productDb.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
-            productDb.setState(product.getState());
-//            productDb.setTimeEstimatedCompletion(product.getCreateDate()); //ESTA linea da conflicto REVISAR por que !!!
+        Product productDb = this.productService.updateProduct(id, product);
             return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productDb));
-        }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/delete/{id}")
@@ -126,5 +105,6 @@ public class ProductController {
     public ResponseEntity<?> deleteProcess(@PathVariable Long productID, @PathVariable Long processID){
         return productService.deleteProcessFromProduct(productID, processID);
     }
+
 
 }

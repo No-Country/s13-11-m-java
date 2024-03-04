@@ -4,6 +4,7 @@ package com.s3java.calendarioInteligente.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.utils.DateUtils;
+import com.s3java.calendarioInteligente.utils.State;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,8 @@ public class ProductOrderRequest {
     private Double errorTime;
 
     private String photoLink;
+
+    private State state;
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String initialDate;
@@ -81,6 +84,14 @@ public class ProductOrderRequest {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Override

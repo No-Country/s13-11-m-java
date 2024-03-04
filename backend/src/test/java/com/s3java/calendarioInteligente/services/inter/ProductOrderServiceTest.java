@@ -1,7 +1,5 @@
 package com.s3java.calendarioInteligente.services.inter;
 
-import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
-import com.s3java.calendarioInteligente.entities.ProductOrder;
 import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapper;
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.repositories.CompanyRepository;
@@ -14,14 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProductOrderServiceTest {

@@ -1,14 +1,19 @@
 package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.entities.Product;
+import com.s3java.calendarioInteligente.entities.ProductOrder;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
+import com.s3java.calendarioInteligente.services.data.Calculos;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
+import com.s3java.calendarioInteligente.utils.ReflectionUtil;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +26,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private Calculos calculos;
 
     @Override
 
@@ -59,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> addProcessToProduct (ProductProcess process, Long productID) {
+    public ResponseEntity<?> addProcessToProduct(ProductProcess process, Long productID) {
         Optional<Product> foundProduct = productRepository.findById(productID);
         if (foundProduct.isPresent()) {
             Product product = foundProduct.get();
@@ -67,6 +75,13 @@ public class ProductServiceImpl implements ProductService {
             productList.add(process);
             product.setProductProcesses(productList);
             process.setProduct(product);
+
+            //TODO revisar
+            product.setTimeEstimatedCompletion(
+                    this.calculateEstimateTimeCompletion(product));
+            product.setTimeAverage(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
+
+
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
         //TODO: Mejor manejo de excepcion
@@ -74,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> deleteProcessFromProduct (Long productID, Long processID){
+    public ResponseEntity<?> deleteProcessFromProduct(Long productID, Long processID) {
         Optional<Product> foundProduct = productRepository.findById(productID);
         if (foundProduct.isPresent()) {
             Product product = foundProduct.get();
@@ -85,6 +100,57 @@ public class ProductServiceImpl implements ProductService {
         }
         //TODO: Mejor manejo de excepcion
         return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public void updateTimeAverage(Long productId) throws Exception {
+        Double timeAverage = calculos.timeAverage(productId);
+        Product product = this.byId(productId)
+                .orElseThrow(() -> new Exception("product not found"));
+        product.setTimeAverage(timeAverage);
+        this.productRepository.save(product);
+    }
+
+
+    private Double calculateTimeMargin(Double timeEstimateCompletion) {
+        return calculos.timeMargin(timeEstimateCompletion);
+    }
+
+    private Double calculateEstimateTimeCompletion(Product product) {
+        return calculos.timeEstimatedCompletionProduct(product.getProductProcesses());
+    }
+
+    public Product updateProduct(Long id, Product product) {
+
+        Optional<Product> productOptional = this.productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            Product productDb = productOptional.get();
+            if (!product.getIdUnico().isEmpty() &&
+                    !product.getIdUnico()
+                            .equalsIgnoreCase(productDb.getIdUnico())
+                    && this.productRepository.findByIdUnico(product.getIdUnico()).isPresent()) {
+                throw new EntityNotFoundException("product not found");
+            }
+
+
+            productDb.setIdUnico(product.getIdUnico());
+            productDb.setName(product.getName());
+            productDb.setActive(product.getActive());
+            productDb.setDescription(product.getDescription());
+            productDb.setCompany(product.getCompany());
+            productDb.setInstruction(product.getInstruction());
+            productDb.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
+            productDb.setState(product.getState());
+
+            this.productRepository.save(productDb);
+        }
+        return new Product();
+    }
+
+    public void updateProductTimeEstimatedCompletion(Product product) {
+            product.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
+            this.productRepository.save(product);
+
     }
 
 }

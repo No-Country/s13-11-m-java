@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,19 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
     List<ProductOrder> findProductOrdersByInitialDate(@Param("date") String date,
                                                @Param("companyId") Long companyId);
 
+    @Modifying
+    @Query("UPDATE ProductOrder po SET po.finishEstimatedDate = :finishEstimatedDate WHERE po.id = :orderId")
+    int updateFinishDate(String finishEstimatedDate);
+
+
+    @Modifying
+    @Query("UPDATE ProductOrder po SET po.dateStart = :newStartDate WHERE po.id = :orderId")
+    int updateStartDate(@Param("orderId") Long orderId, @Param("newStartDate") Timestamp newStartDate);
+
+    @Modifying
+    @Query("UPDATE ProductOrder po SET po.dateEnd = :newEndDate WHERE po.id = :orderId")
+    int updateEndDate(@Param("orderId") Long orderId, @Param("newEndDate") Timestamp newEndDate);
+
     // TODO ver luego para pasar a peticiones con fetch eager
     /*
     @Query(nativeQuery = true, value = "SELECT * FROM product_orders po LEFT JOIN product p ON po.product_id = p.id LEFT JOIN companies c ON po.company_id = c.id WHERE c.id = :companyId AND po.is_active = true")
@@ -55,4 +69,5 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long
     @Query(nativeQuery = true, value = "SELECT * FROM product_orders po LEFT JOIN product p ON po.product_id = p.id LEFT JOIN company c ON po.company_id = c.id WHERE po.client_id = :clientId AND c.id = :companyId AND po.is_active = true")
     List<ProductOrder> findProductOrdersByClientIdEager(@Param("clientId") Long clientId,
                                                         @Param("companyId") Long companyId);*/
+
 }
