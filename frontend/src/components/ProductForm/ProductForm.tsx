@@ -3,7 +3,6 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { DatePickerForm } from "../DatePicker/DatePickerForm";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -44,15 +43,12 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
     "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
   return (
     <div>
-      {/* Agregar proceso */}
-      <ProcessModal />
-
       <Form {...productForm}>
         <form
           onSubmit={productForm.handleSubmit(handleSubmit)}
           className="w-full max-w-[70%] flex-col md:flex md:max-w-3xl"
         >
-          <div className="w-full grid-flow-col grid-rows-5 gap-x-12 space-y-8 md:grid">
+          <div className="w-full grid-flow-col grid-rows-3 gap-x-12 space-y-8 md:grid">
             <FormField
               control={productForm.control}
               name="name"
@@ -68,38 +64,12 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
             />
             <FormField
               control={productForm.control}
-              name="createDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel className={labelStyle}>Fecha de creación</FormLabel>
-                  <FormControl>
-                    <DatePickerForm onChangeDate={field.onChange} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={productForm.control}
               name="idUnico"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={labelStyle}>ID interno</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Fecha de finalizacion" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={productForm.control}
-              name="progressPercent"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={labelStyle}>Índice de progreso</FormLabel>
-                  <FormControl>
-                    <Input className={boxStyle} {...field} />
+                    <Input className={boxStyle} placeholder="Ingresa un Identificador para el producto" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,7 +80,7 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
               name="timeEstimatedCompletion"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={labelStyle}>Cantidad días/horas estimadas de producción</FormLabel>
+                  <FormLabel className={labelStyle}>Cantidad de horas estimadas de producción</FormLabel>
                   <FormControl>
                     <Input className={boxStyle} placeholder="Ingresa un tiempo estimado" {...field} />
                   </FormControl>
@@ -125,7 +95,7 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                 <FormItem>
                   <FormLabel className={labelStyle}>Instruccion</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Insertar texto" {...field} />
+                    <Input className={boxStyle} placeholder="Instrucciones para realizar el producto" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -142,12 +112,7 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={`${boxStyle} w-[360px]`}
-                              // className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}
-                            >
+                            <Button variant="outline" role="combobox" className={`${boxStyle} w-[400px]`}>
                               <p>Nombre del proceso</p>
                               <FaChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -158,6 +123,7 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                             <CommandInput placeholder="Buscar proceso..." className="h-9" />
                             <CommandEmpty>Proceso no encontrado</CommandEmpty>
                             <CommandGroup>
+                              <ProcessModal />
                               {process.map((process, i) => (
                                 <CommandItem
                                   value={process.name}
@@ -180,7 +146,6 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                           </Command>
                         </PopoverContent>
                       </Popover>
-                      <ProcessModal />
                     </div>
                   </FormControl>
 
@@ -210,7 +175,7 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
             control={productForm.control}
             name="description"
             render={({ field }) => (
-              <FormItem className="px-6 py-8">
+              <FormItem className="py-8">
                 <FormLabel className={labelStyle}>Notas</FormLabel>
                 <FormControl>
                   <Textarea
@@ -223,6 +188,7 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
               </FormItem>
             )}
           />
+
           <Button className="w-full md:col-span-2" type="submit" size="rounded" disabled={loading}>
             Confirmar
           </Button>
