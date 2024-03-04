@@ -1,3 +1,4 @@
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 import useAuth from "@/hooks/useAuth";
@@ -17,7 +18,9 @@ const UserLayout = () => {
       <Navbar />
       <Sidebar />
       <main>
-        <Outlet />
+        <React.Suspense fallback={null}>
+          <Outlet />
+        </React.Suspense>
       </main>
     </div>
   );
