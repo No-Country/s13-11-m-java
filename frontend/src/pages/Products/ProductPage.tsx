@@ -19,11 +19,11 @@ const AddProduct = () => {
   };
 
   const defaultValues: ProductFormInputs = {
-    idUnico: "ejemplo007",
-    name: "rueda puerco",
-    instruction: "rueda negra",
-    description: "hacer rueda cuadrada",
-    timeEstimatedCompletion: "200",
+    idUnico: "",
+    name: "",
+    instruction: "",
+    description: "",
+    timeEstimatedCompletion: "",
   };
 
   return (
