@@ -1,7 +1,7 @@
 package com.s3java.calendarioInteligente.services.impl;
 
-import com.s3java.calendarioInteligente.entities.ProductProcess;
 import com.s3java.calendarioInteligente.entities.SubProcess;
+import com.s3java.calendarioInteligente.exception.exceptions.SubProcessNotFoundException;
 import com.s3java.calendarioInteligente.repositories.SubProcessRepository;
 import com.s3java.calendarioInteligente.services.inter.SubProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class SubProcessServiceImpl implements SubProcessService {
         if (foundSubProcess.isPresent()){
             SubProcess subProcessToUpdate = foundSubProcess.get();
 
-            //Solo actualizo los atributos, lo de relaciones es de otro endpoints
+            //Solo actualizo los atributos
+            //Lo de relaciones es de otro endpoints
             subProcessToUpdate.setSubProcessAttributes(updatedSubProcess.getSubProcessAttributes());
             return new ResponseEntity<>(subProcessRepository.save(subProcessToUpdate), HttpStatus.OK);
         }
-        //TODO: Añadir mejor manejo de excepciones
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+        throw new SubProcessNotFoundException("No sub proccess found with id: " + subProcessIDToUpdate);
     }
 }

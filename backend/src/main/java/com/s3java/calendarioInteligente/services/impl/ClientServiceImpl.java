@@ -1,15 +1,13 @@
 package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.entities.Client;
+import com.s3java.calendarioInteligente.exception.exceptions.ClientNotFoundException;
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.services.inter.ClientService;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -40,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     public Client update(Client client) throws IllegalAccessException {
 
         Client oldClient = this.clientRepository.findById(client.getId())
-                .orElseThrow(()-> new EntityNotFoundException("Client with id " + client.getId() + " not found"));
+                .orElseThrow(()-> new ClientNotFoundException("Client with id " + client.getId() + " not found"));
 
         ReflectionUtil.copyNonNullProperties(client, oldClient);
         return this.clientRepository.save(client);

@@ -2,10 +2,12 @@ package com.s3java.calendarioInteligente.controllers;
 
 import com.s3java.calendarioInteligente.entities.ProductProcess;
 import com.s3java.calendarioInteligente.entities.SubProcess;
+import com.s3java.calendarioInteligente.exception.exceptions.BindingResultException;
 import com.s3java.calendarioInteligente.services.impl.ProcessServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,14 +34,18 @@ public class ProcessController {
     }
 
     @PutMapping("/{processID}")
-    public ResponseEntity<?> updateProcessByID(@Valid @RequestBody ProductProcess updatedProcess, @PathVariable Long processID){
+    public ResponseEntity<?> updateProcessByID(@RequestBody @Valid ProductProcess updatedProcess, BindingResult bindingResult, @PathVariable Long processID){
+        if (bindingResult.hasErrors()){
+            throw new BindingResultException(bindingResult);
+        }
         return processService.updateByID(updatedProcess, processID);
     }
 
-    //TODO: Agregar subproceso a Proceso
-
     @PostMapping("/subprocess/{processID}")
-    public ResponseEntity<?> addSubProcessToProcess(@Valid @RequestBody SubProcess subProcess, @PathVariable Long processID){
+    public ResponseEntity<?> addSubProcessToProcess(@RequestBody @Valid  SubProcess subProcess, BindingResult bindingResult, @PathVariable Long processID){
+        if (bindingResult.hasErrors()){
+            throw new BindingResultException(bindingResult);
+        }
         return processService.addSubProcessToProcess(subProcess, processID);
     }
 

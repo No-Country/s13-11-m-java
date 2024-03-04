@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.entities.Product;
+import com.s3java.calendarioInteligente.exception.exceptions.ProductNotFoundException;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
         //TODO: Mejor manejo de excepcion
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+        throw new ProductNotFoundException("No product found with id: " + productID);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
         //TODO: Mejor manejo de excepcion
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+        throw new ProductNotFoundException("No product found with id: " + productID);
     }
 
 }
