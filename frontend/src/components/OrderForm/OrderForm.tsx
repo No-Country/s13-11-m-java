@@ -13,7 +13,7 @@ import { FaCamera } from "react-icons/fa";
 
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
-import { products } from "@/mocks/products/data";
+import { useGetAllProductsQuery } from "@/app/services/api";
 
 const employees = [
   {
@@ -46,6 +46,9 @@ const clients = [
 ];
 
 const OrderForm = () => {
+  const { data: products2, isLoading } = useGetAllProductsQuery();
+  console.log(products2);
+
   const form = useForm<OrderFormInputs>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
@@ -102,7 +105,8 @@ const OrderForm = () => {
                 <div className="flex items-center">
                   <FormControl>
                     <SelectInputForm
-                      selectOptions={products}
+                      isLoading={isLoading}
+                      selectOptions={products2}
                       fieldValue={field.value}
                       setValue={form.setValue as () => void}
                       title={"producto"}
