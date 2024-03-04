@@ -3,10 +3,10 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Dialog, DialogContent } from "../ui/dialog";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -18,6 +18,7 @@ import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
 
 import ProcessForm from "./ProcessForm";
 import ProcessOption from "./ProcessOption";
+import SubProcessModal from "./SubProcessModal";
 import { cn } from "@/lib/utils";
 import { Process, process } from "@/mocks/process/data";
 
@@ -29,6 +30,7 @@ export interface ProductFormProps {
 
 const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => {
   const [open, setOpen] = useState(false);
+  const [openSubProcess, setOpenSubProcess] = useState(false);
   const productForm = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
     defaultValues,
@@ -195,8 +197,34 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
         </form>
       </Form>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
-          <ProcessForm />
+        <DialogTrigger asChild>
+          <Button className="" variant="outline">
+            Agregar un nuevo proceso
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-[955px] flex-col md:flex md:max-h-[801px]">
+          <DialogHeader>
+            <DialogTitle>Agregar un nuevo proceso</DialogTitle>
+          </DialogHeader>
+          <ProcessForm
+            onOpenModal={() => {
+              setOpenSubProcess(true);
+            }}
+          />
+          <DialogFooter>
+            <Dialog open={openSubProcess} onOpenChange={setOpenSubProcess}>
+              <DialogTrigger asChild>
+                <Button className="rounded-full">+</Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-[955px] flex-col md:flex md:max-h-[801px]">
+                <DialogHeader>
+                  <DialogTitle>Agregar un nuevo subproceso</DialogTitle>
+                </DialogHeader>
+                <SubProcessModal />
+                <DialogFooter></DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

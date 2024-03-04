@@ -22,9 +22,10 @@ export interface ProcessModalProps {
   onSubmit?: (values: ProcessFormInputs) => void;
   defaultValues?: ProcessFormInputs;
   isLoading?: boolean;
+  onOpenModal?: () => void;
 }
 
-const ProcessForm = ({ onSubmit, isLoading, defaultValues }: ProcessModalProps) => {
+const ProcessForm = ({ onSubmit, isLoading, defaultValues, onOpenModal }: ProcessModalProps) => {
   const processForm = useForm<ProcessFormInputs>({
     resolver: zodResolver(processFormSchema),
     defaultValues,
@@ -129,6 +130,9 @@ const ProcessForm = ({ onSubmit, isLoading, defaultValues }: ProcessModalProps) 
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
+                      <Button type="button" onClick={onOpenModal}>
+                        Abrir
+                      </Button>
                       <PopoverContent className="w-[340px] p-0">
                         <Command>
                           <CommandInput placeholder="Buscar subproceso..." className="h-9" />
