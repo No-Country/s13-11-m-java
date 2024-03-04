@@ -17,6 +17,7 @@ import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { Doughnut, Line } from "react-chartjs-2";
+
 // import {useEmployee} from "@/hooks/useEmployee";
 
 const EmployeesPage = () => {
@@ -108,7 +109,7 @@ const EmployeesPage = () => {
   };
 
   return (
-    <div className="container py-10">
+    <div>
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Empleados</h2>
         <Button size="rounded-xl" className="w-full max-w-sm max-sm:px-0">

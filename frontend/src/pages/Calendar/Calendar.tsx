@@ -2,7 +2,7 @@ import CalendarComponent from "@/components/Calendar/CalendarComponent";
 
 const Calendar = () => {
   return (
-    <div className="mx-auto md:container">
+    <div>
       <CalendarComponent />
     </div>
   );
