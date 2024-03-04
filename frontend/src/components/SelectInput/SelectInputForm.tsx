@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 
 type Option = {
   name: string;
-  id?: string;
+  id?: number | string;
+  idUnico?: string;
 };
 
 interface Props {
@@ -20,12 +21,13 @@ interface Props {
   setValue: (fieldName: string, value: string) => void;
   selectOptions: Array<Option> | AllProductsResponse | undefined;
   isLoading?: boolean;
+  pickId?: (id: number) => void;
 }
 
 const boxStyle =
   "bg-[#F5F6FA] border h-[57px] w-[400px] border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
 
-const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName, isLoading }: Props) => {
+const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName, isLoading, pickId }: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -54,7 +56,9 @@ const SelectInputForm = ({ selectOptions, fieldValue, setValue, title, fieldName
                     key={option.id}
                     onSelect={() => {
                       setValue(fieldName, option.name);
-                      //   setProduct(option);
+                      if (pickId && typeof option.id === "number") {
+                        pickId(option.id!);
+                      }
                     }}
                   >
                     {option.name}
