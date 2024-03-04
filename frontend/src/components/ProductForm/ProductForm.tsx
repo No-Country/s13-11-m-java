@@ -3,6 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { Dialog, DialogContent } from "../ui/dialog";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -15,7 +16,7 @@ import { FaCheck, FaChevronDown } from "react-icons/fa";
 
 import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
 
-import ProcessModal from "./ProcessModal";
+import ProcessForm from "./ProcessForm";
 import ProcessOption from "./ProcessOption";
 import { cn } from "@/lib/utils";
 import { Process, process } from "@/mocks/process/data";
@@ -27,6 +28,7 @@ export interface ProductFormProps {
 }
 
 const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => {
+  const [open, setOpen] = useState(false);
   const productForm = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
     defaultValues,
@@ -115,12 +117,14 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
+                        <Button type="button" onClick={() => setOpen(true)}>
+                          abrir
+                        </Button>
                         <PopoverContent className="w-[340px] p-0">
                           <Command>
                             <CommandInput placeholder="Buscar proceso..." className="h-9" />
                             <CommandEmpty>Proceso no encontrado</CommandEmpty>
                             <CommandGroup>
-                              <ProcessModal />
                               {process.map((process, i) => (
                                 <CommandItem
                                   value={process.name}
@@ -190,6 +194,11 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
           </Button>
         </form>
       </Form>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <ProcessForm />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
