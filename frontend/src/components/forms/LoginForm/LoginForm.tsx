@@ -31,7 +31,7 @@ const LoginForm = ({ loading, onSubmit }: LoginFormProps) => {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="mx-auto w-full max-w-3xl space-y-8 pt-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="mx-auto w-full max-w-3xl space-y-8">
         <h2 className="text-4xl">Iniciar sesión</h2>
         {formItems.map((item, index) => (
           <FormField
