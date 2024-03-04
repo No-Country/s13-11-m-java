@@ -21,6 +21,12 @@ import ProcessOption from "./ProcessOption";
 import { cn } from "@/lib/utils";
 import { Process, process } from "@/mocks/process/data";
 
+export interface ProductFormProps {
+  onSubmit?: (values: ProductFormInputs) => void;
+  defaultValues?: ProductFormInputs;
+  loading?: boolean;
+}
+
 const ProductForm = () => {
   const productForm = useForm<ProductFormInputs>({
     resolver: zodResolver(productFormSchema),
