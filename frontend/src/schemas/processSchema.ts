@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const processFormSchema = z.object({
   id: z.number(),
+  product: z.string(),
   subprocess: z.array(
     z.object({
       name: z.string(),

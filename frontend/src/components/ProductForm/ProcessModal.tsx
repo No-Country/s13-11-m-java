@@ -16,15 +16,22 @@ import { ProcessFormInputs, processFormSchema } from "@/schemas/processSchema";
 
 import SubProcessModal from "./SubProcessModal";
 import { SubProcess } from "@/mocks/process/data";
+// import { ProcessAttributes } from '../../app/services/api/types';
 
-const ProcessModal = () => {
+export interface ProcessModalProps {
+  onSubmit?: (values: ProcessFormInputs) => void;
+  defaultValues?: ProcessFormInputs;
+  isLoading?: boolean;
+}
+
+const ProcessModal = ({ onSubmit, isLoading, defaultValues }: ProcessModalProps) => {
   const processForm = useForm<ProcessFormInputs>({
     resolver: zodResolver(processFormSchema),
-    defaultValues: { subprocess: [] },
+    defaultValues,
   });
 
   function handleSubmit(values: ProcessFormInputs) {
-    console.log(values);
+    onSubmit?.(values);
   }
 
   const labelStyle = "text-[#606060]";
@@ -161,13 +168,13 @@ const ProcessModal = () => {
             </div>
 
             <div className="min-h-[20vh]"></div>
-            <Button className="mx-auto mt-4 w-[282px] " type="submit" size="rounded">
+            <Button className="mx-auto mt-4 w-[282px] " type="submit" size="rounded" disabled={isLoading}>
               Agregar
             </Button>
           </form>
         </Form>
         <DialogFooter>
-          {/* AGREGR SUBPROCESO */}
+          {/* AGREGAR SUBPROCESO */}
           <SubProcessModal />
         </DialogFooter>
       </DialogContent>

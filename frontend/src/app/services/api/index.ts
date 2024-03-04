@@ -4,9 +4,12 @@ import {
   AllProductsResponse,
   CreateProductRequest,
   CreateProductResponse,
+  CreateProcessRequest,
+  CreateProcessResponse,
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
+  GetProcessResponse,
   GetProductByIdRequest,
   GetProductByIdResponse,
   GetProductByNameRequest,
@@ -128,6 +131,27 @@ export const api = createApi({
         },
       }),
     }),
+    getProcess: builder.query<GetProcessResponse, void>({
+      query: () => ({
+        url: "/v1/product-orders/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+    }),
+    createProcess: builder.mutation<CreateProcessResponse, CreateProcessRequest>({
+      query: ({ productId, ...process }) => ({
+        url: `/v1/products/process/${productId}`,
+        body: process,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+    }),
   }),
 });
 
@@ -143,5 +167,7 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useCreateProcessMutation,
   useGetOrdersQuery,
+  useGetProcessQuery,
 } = api;

@@ -148,7 +148,6 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                       </Popover>
                     </div>
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
