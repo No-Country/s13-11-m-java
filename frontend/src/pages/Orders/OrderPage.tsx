@@ -26,7 +26,7 @@ const OrderPage = () => {
         </Button>
         <h2 className="text-2xl">Hacer un nuevo pedido</h2>
       </div>
-      <div className="flex justify-center ">
+      <div className="flex justify-center">
         <OrderForm isLoading={isLoading} onSubmit={handleSubmit} />
       </div>
     </div>

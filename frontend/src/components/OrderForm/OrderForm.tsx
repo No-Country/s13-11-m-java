@@ -70,7 +70,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-3/4 flex-col ">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full flex-col md:w-3/4 ">
         <div className="max-auto hidden flex-col items-center justify-center">
           <Button type="button" variant={"ghost"} className="flex h-48 w-36 flex-col">
             <div className="mx-auto mb-2 h-24 w-24 rounded-full bg-gray-200">
