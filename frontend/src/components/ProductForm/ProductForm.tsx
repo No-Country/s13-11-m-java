@@ -163,8 +163,8 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
                                   value={process.name}
                                   key={i}
                                   onSelect={() => {
-                                    setProcessList([...field.value, process] as Process[]);
-                                    productForm.setValue("productProcesses", [...field.value, process] as Process[]);
+                                    setProcessList([...field.value!, process] as Process[]);
+                                    productForm.setValue("productProcesses", [...field.value!, process] as Process[]);
                                   }}
                                 >
                                   {process.name}
