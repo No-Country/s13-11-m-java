@@ -1,25 +1,16 @@
 import React from "react";
 
-// import { Order} from "@/app/services/api/types";
-// import useOrder from "@/hooks/useOrder";
 import { DataTable2 } from "@/components/ui/data-table2";
-// import { DataTable } from "@/components/ui/data-table";
-// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import { columns } from "./orderColumn";
+import { Order } from "@/app/services/api/types";
 
-// import {FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-// import { Textarea } from "@/components/ui/textarea";
-// import { useForm } from "react-hook-form";
-// import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
-// import { zodResolver } from "@hookform/resolvers/zod";
 interface OrderDetailsTableProps {
-  // orderId?: number;
-  // data: Order
+  orderData: Order;
 }
 
-const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ data }) => {
+const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ orderData: data }) => {
   return (
     <div className="container py-10">
       <div className="flex flex-wrap justify-between gap-4">

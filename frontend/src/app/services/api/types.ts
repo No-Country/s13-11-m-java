@@ -77,6 +77,7 @@ export interface Product {
   processes: Process[];
   company: Company;
   active: boolean;
+  productProcesses: Process[];
 }
 
 export interface Process {
@@ -89,6 +90,7 @@ export interface SubProcess {
   id?: number;
   process?: string;
   processAttributes?: ProcessAttributes;
+  subProcessAttributes?: ProcessAttributes;
 }
 
 export interface ProcessAttributes {
@@ -131,6 +133,7 @@ export interface Employee {
 
 export interface Order {
   id: number;
+  clientName: string;
   client: {
     id: number;
     commonAttribute: {
@@ -142,6 +145,7 @@ export interface Order {
     };
   };
   product: Product;
+
   name: string;
   entryDate: string;
   errorTime: number;
