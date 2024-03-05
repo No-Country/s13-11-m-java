@@ -9,7 +9,7 @@ const UserLayout = () => {
     <div>
       <Navbar />
       <Sidebar />
-      <main>
+      <main className="px-4 pb-20 pt-8 md:container md:pl-20">
         <React.Suspense fallback={null}>
           <Outlet />
         </React.Suspense>

@@ -5,9 +5,9 @@ import Navbar from "@/components/Navbar/Navbar";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="flex h-screen flex-col">
       <Navbar />
-      <main>
+      <main className="grow">
         <React.Suspense fallback={null}>
           <Outlet />
         </React.Suspense>

@@ -7,8 +7,8 @@ import { MdOutlineAdminPanelSettings, MdOutlinePersonOutline } from "react-icons
 
 const SettingsPage = () => {
   return (
-    <div className="container p-6">
-      <div className="border-b-2 py-4">
+    <div>
+      <div className="border-b-2">
         <span className="text-3xl">Configuración</span>
       </div>
       <div className="text-2xl">

@@ -81,16 +81,6 @@
 }
 
 @layer base {
-  .h-min-screen-without-header {
-    min-height: calc(100vh - 4.5rem);
-  }
-  .h-screen-without-header {
-    height: calc(100vh - 4.5rem - 4rem);
-  }
-
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-base text-foreground;
     font-family: "Lato", sans-serif;
