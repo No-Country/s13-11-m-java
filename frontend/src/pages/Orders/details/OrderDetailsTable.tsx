@@ -21,7 +21,7 @@ interface OrderDetailsTableProps {
 
 const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ data }) => {
   return (
-    <div>
+    <div className="container py-10">
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">
           Pedido {data.id} - Cliente: {data.clientName}

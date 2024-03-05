@@ -9,13 +9,14 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-import { FaCamera } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa6";
 
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
 import { useGetAllProductsQuery } from "@/app/services/api";
 import { OrderRequest } from "@/app/services/api/types";
-import { clients, employees } from "@/mocks/orderFormMocks/data";
+import { employees } from "@/mocks/employees/employees";
+import { clients } from "@/mocks/orderFormMocks/data";
 
 export interface OrderFormProps {
   onSubmit?: (values: OrderRequest) => void;
@@ -47,15 +48,6 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
   function handleSubmit(values: OrderFormInputs) {
     const { name, errorTime, photoLink, initialDate, finishEstimatedDate, client } = values;
     onSubmit?.({
-      name,
-      errorTime,
-      photoLink,
-      initialDate,
-      finishEstimatedDate,
-      productId: productIdFI,
-      client: { commonAttribute: { name: client.name } },
-    });
-    console.log({
       name,
       errorTime,
       photoLink,

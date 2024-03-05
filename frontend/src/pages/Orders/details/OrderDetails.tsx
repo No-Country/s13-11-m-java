@@ -22,7 +22,11 @@ const OrderDetail: React.FC = () => {
     endDate: OrderData?.finishEstimatedDate,
     state: OrderData?.product.state,
   };
-  return <OrderDetailsTable data={formattedOrder} />;
+  return (
+    <>
+      <OrderDetailsTable data={formattedOrder} />
+    </>
+  );
 };
 
 export default OrderDetail;

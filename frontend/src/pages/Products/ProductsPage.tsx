@@ -36,7 +36,7 @@ const ProductsPage = () => {
   };
 
   return (
-    <div>
+    <div className="container pt-10">
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Productos</h2>
         <Button asChild size="rounded" className="px-6">
