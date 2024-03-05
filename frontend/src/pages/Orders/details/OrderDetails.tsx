@@ -44,7 +44,7 @@ const OrderDetail: React.FC = () => {
     clientName: OrderData?.client.commonAttribute.name || "",
     initialDate: OrderData?.initialDate || "",
     endDate: OrderData?.finishEstimatedDate || "",
-    state: OrderData?.product.state || "",
+    state: OrderData?.product.state || true,
     processes: mainProcesses || [],
     subprocesses: subprocesses || [],
   };

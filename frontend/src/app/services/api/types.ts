@@ -180,6 +180,7 @@ export interface OrderRequest {
   };
 }
 
+
 export interface OrderResponse {
   id: number;
   name: string;
@@ -199,4 +200,42 @@ export interface OrderResponse {
       name: string;
     };
   };
+}
+
+export interface mainProcesses {
+  id: number;
+  name: string;
+  timeReal: number;
+  timeAverage: number;
+  timeMargin: number;
+  comment: string;
+  state: boolean;
+  initialDate: string;
+  endDate: string;
+  employee: string;
+}
+
+export interface subprocesses {
+  parentId: number;
+  id: number;
+  name: string;
+  timeReal: number;
+  timeAverage: number;
+  timeMargin: number;
+  comment: string;
+  state: boolean;
+  initialDate: string;
+  endDate: string;
+  employee: string;
+}
+
+export interface formatedOrder {
+  id: number;
+  name: string;
+  clientName: string;
+  initialDate: string;
+  endDate: string;
+  state: string;
+  processes: mainProcesses[];
+  subprocesses: subprocesses[];
 }

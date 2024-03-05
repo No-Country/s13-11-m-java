@@ -1,7 +1,7 @@
-import { useGetOrderByIdQuery } from "@/app/services/api";
+import { useGetOrdersQuery } from "@/app/services/api";
 
-const useOrder = (id: number ) => {
-  const { data, isLoading, isError } = useGetOrderByIdQuery(id);
+const useOrder = ( ) => {
+  const { data, isLoading, isError } = useGetOrdersQuery();
   return { orders: data ?? [], isLoading, isError } as const;
 };
 export default useOrder;
