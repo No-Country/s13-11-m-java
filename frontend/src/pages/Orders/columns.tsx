@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 
+import DeleteAlert from "@/components/DeleteAlert/DeleteAlert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,10 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical, BsTrash } from "react-icons/bs";
+import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
+import { useDeleteOrderMutation } from "@/app/services/api";
 import { Order } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
@@ -130,37 +132,45 @@ export const columns: ColumnDef<Order>[] = [
     },
     enableHiding: false,
     cell: ({ row }) => {
-      const { id } = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="group h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <BsThreeDotsVertical className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Opciones</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <BsPencilSquare className="mr-2" />
-              Modificar producto
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <MdOutlinePostAdd className="mr-2" />
-              Agregar nota
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <BsFileEarmarkText className="mr-2" />
-              <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <BsTrash className="mr-2" /> Eliminar producto
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <MenuOrder id={row.original.id} />;
     },
   },
 ];
+
+const MenuOrder = ({ id }: { id: number }) => {
+  const [deleteOrder, { isLoading }] = useDeleteOrderMutation();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="group h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <BsThreeDotsVertical className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Opciones</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <BsPencilSquare className="mr-2" />
+          Modificar pedido
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <MdOutlinePostAdd className="mr-2" />
+          Agregar nota
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <BsFileEarmarkText className="mr-2" />
+          <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onSelect={(ev) => {
+            ev.preventDefault();
+          }}
+        >
+          <DeleteAlert isLoading={isLoading} deleteFn={deleteOrder} idItem={id} />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};

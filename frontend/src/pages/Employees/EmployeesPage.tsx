@@ -1,9 +1,11 @@
 import React from "react";
 
+// import useEmployee from "@/hooks/useEmp";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import SelectColumns from "@/components/ui/select-columns";
 
 import AddEmployee from "@/components/icons/AddEmployee";
@@ -14,32 +16,12 @@ import { dataComparative, optionsComparative } from "@/data/Dashboard/comparativ
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import {
-  ArcElement,
-  BarElement, // Legend,
-  CategoryScale,
-  Chart as ChartJS,
-  LineElement,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  CategoryScale,
-  PointElement,
-  LineElement
-);
+// import {useEmployee} from "@/hooks/useEmployee";
 
 const EmployeesPage = () => {
+  // const { employees } = useEmployee();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -127,7 +109,7 @@ const EmployeesPage = () => {
   };
 
   return (
-    <div>
+    <div className="container py-10">
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Empleados</h2>
         <Button size="rounded-xl" className="w-full max-w-sm max-sm:px-0">

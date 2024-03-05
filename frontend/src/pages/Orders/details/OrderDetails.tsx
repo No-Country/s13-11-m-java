@@ -12,7 +12,11 @@ const OrderDetail: React.FC = () => {
       setOrder(Number(orderId));
     }
   }, [orderId]);
-  return <OrderDetailsTable orderId={order} />;
+  return (
+    <>
+      <OrderDetailsTable orderId={order} />
+    </>
+  );
 };
 
 export default OrderDetail;

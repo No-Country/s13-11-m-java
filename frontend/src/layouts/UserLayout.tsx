@@ -9,7 +9,7 @@ const UserLayout = () => {
     <div>
       <Navbar />
       <Sidebar />
-      <main className="container py-8 max-md:pb-20 md:pl-20">
+      <main>
         <React.Suspense fallback={null}>
           <Outlet />
         </React.Suspense>
