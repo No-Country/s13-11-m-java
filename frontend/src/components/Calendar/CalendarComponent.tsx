@@ -121,10 +121,10 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
           <button onClick={handlePrev} className="transition-transform hover:scale-125">
             <FaArrowLeft />
           </button>
-          <span className="text-lg font-bold" style={{ minWidth: "150px", textAlign: "center" }}>
+          <span className="text-lg font-bold" style={{ minWidth: "220px", textAlign: "center" }}>
             {view === "month" && currentDate.format("MMMM YYYY")}
             {view === "week" && `Semana ${currentDate.week()}`}
-            {view === "day" && currentDate.format("dddd, Do MMMM  YYYY")}
+            {view === "day" && currentDate.format("dddd D [-] MMMM YYYY")}
           </span>
 
           <button onClick={handleNext} className="transition-transform hover:scale-125">
