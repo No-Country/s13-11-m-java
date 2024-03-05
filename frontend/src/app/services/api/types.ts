@@ -20,12 +20,16 @@ export type CreateProductRequest = Pick<
 >;
 export type CreateProductResponse = Product;
 
+export type CreateProcessRequest = Process & { productId: number };
+export type CreateProcessResponse = Process;
+
 export type DeleteProductRequest = number;
 export type DeleteProductResponse = number;
 
 export type GetOrdersResponse = Order[];
 export type GetEmployeesResponse = Employee[];
 
+export type GetProcessResponse = Process;
 export type CreateOrderRequest = OrderRequest;
 export type CreateOrderResponse = OrderResponse;
 
@@ -71,15 +75,14 @@ export interface Product {
 
 export interface Process {
   id: number;
-  product: string;
   subProcesses: SubProcess[];
   processAttributes: ProcessAttributes;
 }
 
 export interface SubProcess {
-  id: number;
-  process: string;
-  processAttributes: ProcessAttributes;
+  id?: number;
+  process?: string;
+  processAttributes?: ProcessAttributes;
 }
 
 export interface ProcessAttributes {

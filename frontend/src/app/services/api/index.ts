@@ -4,11 +4,14 @@ import {
   AllProductsResponse,
   CreateOrderRequest,
   CreateOrderResponse,
+  CreateProcessRequest,
+  CreateProcessResponse,
   CreateProductRequest,
   CreateProductResponse,
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
+  GetProcessResponse,
   GetProductByIdRequest,
   GetProductByIdResponse,
   GetProductByNameRequest,
@@ -89,15 +92,6 @@ export const api = createApi({
           "Allow-Control-Allow-Origin": "*",
         },
       }),
-
-      // query: (name) => ({
-      //   url: `/v1/products/product-name/${name}`,
-      //   method: "GET",
-      //   headers:{
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-      //   }
-      // }),
     }),
     getProductById: builder.query<GetProductByIdResponse, GetProductByIdRequest>({
       query: (id) => `/v1/products/product-id/${id}`,
@@ -124,7 +118,6 @@ export const api = createApi({
         method: "POST",
       }),
     }),
-
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       query: (id) => `/v1/products/delete/${id}`,
     }),
@@ -133,6 +126,27 @@ export const api = createApi({
       query: () => ({
         url: "/v1/product-orders/all",
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+    }),
+    getProcess: builder.query<GetProcessResponse, void>({
+      query: () => ({
+        url: "/v1/product-orders/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+    }),
+    createProcess: builder.mutation<CreateProcessResponse, CreateProcessRequest>({
+      query: ({ productId, ...process }) => ({
+        url: `/v1/products/process/${productId}`,
+        body: process,
+        method: "POST",
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           "Allow-Control-Allow-Origin": "*",
@@ -161,6 +175,8 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useCreateProcessMutation,
   useGetOrdersQuery,
+  useGetProcessQuery,
   useCreateOrderMutation,
 } = api;
