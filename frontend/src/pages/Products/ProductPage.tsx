@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import ProductForm from "@/components/ProductForm/ProductForm";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 import { MdArrowBackIos } from "react-icons/md";
 
@@ -12,9 +13,15 @@ import { useCreateProductMutation } from "@/app/services/api";
 const AddProduct = () => {
   const navigate = useNavigate();
   const [createProduct, { isLoading }] = useCreateProductMutation();
+  const { toast } = useToast();
 
   const handleSubmit = async (values: ProductFormInputs) => {
     await createProduct(values).unwrap();
+    toast({
+      variant: "success",
+      title: "Producto Agregado",
+      description: "Se agregó un nuevo producto: " + values.name,
+    });
     navigate("/products");
   };
 
@@ -27,7 +34,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container pt-10">
+    <div className="container w-full pt-6">
       <div className="flex">
         <Button variant={"ghost"} size={"icon"} asChild>
           <Link to={"/order"}>
@@ -36,7 +43,7 @@ const AddProduct = () => {
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
       </div>
-      <div className="flex justify-center pb-10">
+      <div className="flex w-full justify-center pb-10">
         <ProductForm loading={isLoading} onSubmit={handleSubmit} defaultValues={defaultValues} />
       </div>
     </div>
