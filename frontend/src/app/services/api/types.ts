@@ -124,6 +124,7 @@ export interface Employee {
 }
 
 export interface Order {
+  [x: string]: string | number | Date;
   id: number;
   name: string;
   entryDate: string;
