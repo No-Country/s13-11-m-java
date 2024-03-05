@@ -32,56 +32,6 @@ const ProductForm = ({ defaultValues = {}, loading, onSubmit }: ProductFormProps
   const [productProcesses, setProductProcesses] = React.useState<Partial<ProductProcesses>>(defaultValues);
   const form = useForm<Product>({
     resolver: zodResolver(productSchema),
-    defaultValues: {
-      name: "Prueba",
-      idUnico: "123",
-      instruction: "Sin instrucciones",
-      description: "Sin descripción",
-      timeEstimatedCompletion: "2021-09-01T00:00:00.000Z",
-      state: false,
-      active: false,
-      productProcesses: [
-        {
-          processAttributes: {
-            name: "Proceso 1",
-            active: false,
-            timeReal: 25,
-            comment: "Comentario",
-            counter: 2,
-            state: false,
-            timeAverage: 25,
-            timeMargin: 25,
-          },
-          subProcesses: [],
-        },
-        {
-          processAttributes: {
-            name: "Proceso 2",
-            active: false,
-            timeReal: 25,
-            comment: "Comentario",
-            counter: 2,
-            state: false,
-            timeAverage: 25,
-            timeMargin: 25,
-          },
-          subProcesses: [
-            {
-              subProcessAttributes: {
-                name: "SubProceso 1",
-                active: false,
-                timeReal: 25,
-                comment: "Comentario",
-                counter: 2,
-                state: false,
-                timeAverage: 25,
-                timeMargin: 25,
-              },
-            },
-          ],
-        },
-      ],
-    },
   });
 
   const handleSubmit = (data: Product) => {
