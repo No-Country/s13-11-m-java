@@ -137,6 +137,7 @@ export interface Order {
   instruction: string;
   description: string;
   totalProduction: number;
+  finishEstimatedDate: string;
   state: string;
   timeEstimatedCompletion: string;
   processes: Process[];
