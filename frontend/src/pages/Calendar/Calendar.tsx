@@ -9,8 +9,8 @@ const Calendar = () => {
     ? OrderData.map((order) => ({
         id: order.id,
         title: order.name,
-        start: new Date(order.entryDate),
-        end: new Date(order.entryDate),
+        start: new Date(order.initialDate),
+        end: new Date(order.finishEstimatedDate),
       }))
     : [];
 

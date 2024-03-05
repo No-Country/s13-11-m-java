@@ -21,6 +21,7 @@ const useAuth = () => {
   const isLogin = user !== null;
 
   const handleLogout = () => {
+    sessionStorage.removeItem("token");
     dispatch(logout());
   };
 
@@ -28,6 +29,7 @@ const useAuth = () => {
 
   const handleSubmit = async (values: LoginFormInputs) => {
     try {
+      sessionStorage.removeItem("token");
       const response = await login(values).unwrap();
       const token = response.token;
       sessionStorage.setItem("token", token);

@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 
 import { store } from "./app/store";
-import { routes } from "./routes/index";
+import { routes } from "./routes";
 
 import "./index.css";
 

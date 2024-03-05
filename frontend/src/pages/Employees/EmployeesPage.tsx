@@ -1,9 +1,11 @@
 import React from "react";
 
+// import useEmployee from "@/hooks/useEmp";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import SelectColumns from "@/components/ui/select-columns";
 
 import AddEmployee from "@/components/icons/AddEmployee";
@@ -14,32 +16,12 @@ import { dataComparative, optionsComparative } from "@/data/Dashboard/comparativ
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
-import {
-  ArcElement,
-  BarElement, // Legend,
-  CategoryScale,
-  Chart as ChartJS,
-  LineElement,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  CategoryScale,
-  PointElement,
-  LineElement
-);
+// import {useEmployee} from "@/hooks/useEmployee";
 
 const EmployeesPage = () => {
+  // const { employees } = useEmployee();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -127,7 +109,7 @@ const EmployeesPage = () => {
   };
 
   return (
-    <div>
+    <div className="container py-10">
       <div className="flex flex-wrap justify-between gap-4">
         <h2 className="text-2xl">Empleados</h2>
         <Button size="rounded-xl" className="w-full max-w-sm max-sm:px-0">
@@ -136,7 +118,7 @@ const EmployeesPage = () => {
         </Button>
       </div>
       <div className="grid max-w-full grid-flow-row grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-7">
-        <div className="col-span-full flex h-full max-h-[26rem] grid-flow-row flex-col rounded-2xl">
+        <div className="col-span-full flex h-full grid-flow-row flex-col rounded-2xl">
           <div className="flex flex-col py-4 max-md:gap-2 md:flex-row">
             <SelectColumns
               className="w-[180px]"
@@ -152,17 +134,19 @@ const EmployeesPage = () => {
               className="max-w-sm"
             />
           </div>
-          <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
-            <div className="flex">
-              <DataTable
-                columns={columns}
-                data={employees}
-                columnFilters={columnFilters}
-                setColumnFilters={setColumnFilters}
-              />
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+          <div className="col-span-full h-[50vh] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2 md:h-[60vh]">
+            <ScrollArea className="h-full whitespace-nowrap rounded-md border">
+              <div className="flex">
+                <DataTable
+                  columns={columns}
+                  data={employees}
+                  columnFilters={columnFilters}
+                  setColumnFilters={setColumnFilters}
+                />
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          </div>
         </div>
         <div className="rounded-2xl bg-background p-4 shadow-2xl md:col-span-2">
           <div className="max-w-48">

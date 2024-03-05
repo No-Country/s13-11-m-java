@@ -70,7 +70,7 @@ export const columns: ColumnDef<Order>[] = [
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) =>
-      new Date(row.original.timeEstimatedCompletion).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+      new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
     meta: {
       hidden: true,
     },
@@ -85,7 +85,7 @@ export const columns: ColumnDef<Order>[] = [
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) =>
-      new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },

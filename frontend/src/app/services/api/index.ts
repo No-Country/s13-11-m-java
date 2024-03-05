@@ -4,11 +4,18 @@ import {
   AllProductsResponse,
   CreateOrderRequest,
   CreateOrderResponse,
+  CreateProcessRequest,
+  CreateProcessResponse,
   CreateProductRequest,
   CreateProductResponse,
+  DeleteOrderRequest,
+  DeleteOrderResponse,
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
+  GetOrderByIdRequest,
+  GetOrderByIdResponse,
+  GetProcessResponse,
   GetProductByIdRequest,
   GetProductByIdResponse,
   GetProductByNameRequest,
@@ -25,7 +32,7 @@ import { simulateLoading } from "@/utils/fakeUtils";
 
 export const api = createApi({
   reducerPath: "api",
-  tagTypes: ["Products"],
+  tagTypes: ["Products", "Orders"],
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
     prepareHeaders: (headers) => {
@@ -95,6 +102,8 @@ export const api = createApi({
       query: (id) => `/v1/products/product-id/${id}`,
     }),
 
+  
+
     getProductByUnicoId: builder.query<GetProductByUnicoIdResponse, GetProductByUnicoIdRequest>({
       query: (idUnico) => `/v1/products/product-id-unico/${idUnico}`,
     }),
@@ -117,15 +126,41 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
-
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
-      query: (id) => `/v1/products/delete/${id}`,
+      query: (id) => ({ url: `/v1/products/delete/${id}`, method: "DELETE" }),
     }),
     // endpoints de ordenes
     getOrders: builder.query<GetOrdersResponse, void>({
       query: () => ({
         url: "/v1/product-orders/all",
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+      providesTags: ["Orders"],
+    }),
+
+    getOrderById: builder.query<GetOrderByIdResponse, GetOrderByIdRequest>({
+      query: (id) => `/v1/product-orders/${id}`,
+    }),
+
+    getProcess: builder.query<GetProcessResponse, void>({
+      query: () => ({
+        url: "/v1/product-orders/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+    }),
+    createProcess: builder.mutation<CreateProcessResponse, CreateProcessRequest>({
+      query: ({ productId, ...process }) => ({
+        url: `/v1/products/process/${productId}`,
+        body: process,
+        method: "POST",
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
           "Allow-Control-Allow-Origin": "*",
@@ -138,6 +173,13 @@ export const api = createApi({
         body: productOrder,
         method: "POST",
       }),
+    }),
+    deleteOrder: builder.mutation<DeleteOrderResponse, DeleteOrderRequest>({
+      query: (orderId) => ({
+        url: `/v1/product-orders/delete/${orderId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Orders"],
     }),
   }),
 });
@@ -154,6 +196,10 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useCreateProcessMutation,
   useGetOrdersQuery,
+  useGetProcessQuery,
   useCreateOrderMutation,
+  useDeleteOrderMutation,
+  useGetOrderByIdQuery,
 } = api;
