@@ -99,21 +99,21 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
         <div className="order-1 flex items-center justify-between gap-1">
           <div className="flex gap-1">
             <Button
-              variant="calendar"
+              variant="default"
               style={{ opacity: view === "month" ? 1 : 0.55 }}
               onClick={() => handleViewChange("month")}
             >
               Mensual
             </Button>
             <Button
-              variant="calendar"
+              variant="default"
               style={{ opacity: view === "week" ? 1 : 0.55 }}
               onClick={() => handleViewChange("week")}
             >
               Semanal
             </Button>
             <Button
-              variant="calendar"
+              variant="default"
               style={{ opacity: view === "day" ? 1 : 0.55 }}
               onClick={() => handleViewChange("day")}
             >
@@ -151,6 +151,20 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
 const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   const [view, setView] = useState<View>("month");
 
+  const eventStyleGetter = () => {
+    const newStyle = {
+      backgroundColor: "#2a576d",
+      color: "WHITE",
+      borderRadius: "10px",
+      border: "1px solid #a3a3a3",
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.20)",
+    };
+
+    return {
+      style: newStyle,
+    };
+  };
+
   const handleViewChange = (newView: View) => {
     setView(newView);
   };
@@ -163,9 +177,10 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
         defaultDate={moment().toDate()}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 700 }}
+        style={{ height: 700, border: "none" }}
         views={["month", "week", "day"]}
         view={view}
+        eventPropGetter={eventStyleGetter}
         onView={handleViewChange}
         messages={{
           next: "Siguiente",
