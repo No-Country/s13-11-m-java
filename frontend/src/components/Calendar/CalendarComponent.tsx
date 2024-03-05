@@ -98,13 +98,25 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
       <div className="custom-toolbar md:items flex flex-col items-center justify-between gap-2 py-4 md:items-stretch">
         <div className="order-1 flex items-center justify-between gap-1">
           <div className="flex gap-1">
-            <Button variant="default" onClick={() => handleViewChange("month")}>
+            <Button
+              variant="calendar"
+              style={{ opacity: view === "month" ? 1 : 0.55 }}
+              onClick={() => handleViewChange("month")}
+            >
               Mensual
             </Button>
-            <Button variant="default" onClick={() => handleViewChange("week")}>
+            <Button
+              variant="calendar"
+              style={{ opacity: view === "week" ? 1 : 0.55 }}
+              onClick={() => handleViewChange("week")}
+            >
               Semanal
             </Button>
-            <Button variant="default" onClick={() => handleViewChange("day")}>
+            <Button
+              variant="calendar"
+              style={{ opacity: view === "day" ? 1 : 0.55 }}
+              onClick={() => handleViewChange("day")}
+            >
               Diario
             </Button>
           </div>
