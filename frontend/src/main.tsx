@@ -1,17 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { RouterProvider } from "react-router-dom";
+
+import { Dialog } from "@/components/ui/dialog";
 
 import { store } from "./app/store";
-import { routes } from "./routes/index";
+import ProductForm from "./product-form";
 
 import "./index.css";
+
+export type DialogProps = Pick<React.ComponentPropsWithoutRef<typeof Dialog>, "open" | "onOpenChange">;
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={routes} />
+      {/* <RouterProvider router={routes} /> */}
+      <ProductForm />
     </Provider>
   </React.StrictMode>
 );
