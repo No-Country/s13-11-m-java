@@ -17,6 +17,7 @@ import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import { Doughnut, Line } from "react-chartjs-2";
+
 // import {useEmployee} from "@/hooks/useEmployee";
 
 const EmployeesPage = () => {
@@ -117,7 +118,7 @@ const EmployeesPage = () => {
         </Button>
       </div>
       <div className="grid max-w-full grid-flow-row grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-7">
-        <div className="col-span-full flex h-full max-h-[26rem] grid-flow-row flex-col rounded-2xl">
+        <div className="col-span-full flex h-full grid-flow-row flex-col rounded-2xl">
           <div className="flex flex-col py-4 max-md:gap-2 md:flex-row">
             <SelectColumns
               className="w-[180px]"
@@ -133,17 +134,19 @@ const EmployeesPage = () => {
               className="max-w-sm"
             />
           </div>
-          <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
-            <div className="flex">
-              <DataTable
-                columns={columns}
-                data={employees}
-                columnFilters={columnFilters}
-                setColumnFilters={setColumnFilters}
-              />
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+          <div className="col-span-full h-[50vh] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2 md:h-[60vh]">
+            <ScrollArea className="h-full whitespace-nowrap rounded-md border">
+              <div className="flex">
+                <DataTable
+                  columns={columns}
+                  data={employees}
+                  columnFilters={columnFilters}
+                  setColumnFilters={setColumnFilters}
+                />
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          </div>
         </div>
         <div className="rounded-2xl bg-background p-4 shadow-2xl md:col-span-2">
           <div className="max-w-48">

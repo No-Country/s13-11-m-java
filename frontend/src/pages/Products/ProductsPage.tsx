@@ -61,17 +61,19 @@ const ProductsPage = () => {
           className="max-w-sm"
         />
       </div>
-      <ScrollArea className="h-[50vh] whitespace-nowrap rounded-md border md:h-[60vh]">
-        <div className="flex">
-          <DataTable
-            columns={columns}
-            data={products}
-            columnFilters={columnFilters}
-            setColumnFilters={setColumnFilters}
-          />
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      <div className="col-span-full h-[44vh] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2 md:h-[60vh]">
+        <ScrollArea className="h-full whitespace-nowrap rounded-md border">
+          <div className="flex">
+            <DataTable
+              columns={columns}
+              data={products}
+              columnFilters={columnFilters}
+              setColumnFilters={setColumnFilters}
+            />
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
     </div>
   );
 };

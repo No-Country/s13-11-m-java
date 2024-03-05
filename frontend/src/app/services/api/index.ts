@@ -4,6 +4,8 @@ import {
   AllProductsResponse,
   CreateOrderRequest,
   CreateOrderResponse,
+  CreateProcessRequest,
+  CreateProcessResponse,
   CreateProductRequest,
   CreateProductResponse,
   DeleteOrderRequest,
@@ -11,6 +13,7 @@ import {
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
+  GetProcessResponse,
   GetProductByIdRequest,
   GetProductByIdResponse,
   GetProductByNameRequest,
@@ -119,7 +122,6 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
-
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       query: (id) => ({ url: `/v1/products/delete/${id}`, method: "DELETE" }),
     }),
@@ -134,6 +136,27 @@ export const api = createApi({
         },
       }),
       providesTags: ["Orders"],
+    }),
+    getProcess: builder.query<GetProcessResponse, void>({
+      query: () => ({
+        url: "/v1/product-orders/all",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
+    }),
+    createProcess: builder.mutation<CreateProcessResponse, CreateProcessRequest>({
+      query: ({ productId, ...process }) => ({
+        url: `/v1/products/process/${productId}`,
+        body: process,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          "Allow-Control-Allow-Origin": "*",
+        },
+      }),
     }),
     createOrder: builder.mutation<CreateOrderResponse, CreateOrderRequest>({
       query: (productOrder) => ({
@@ -164,7 +187,9 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useCreateProcessMutation,
   useGetOrdersQuery,
+  useGetProcessQuery,
   useCreateOrderMutation,
   useDeleteOrderMutation,
 } = api;
