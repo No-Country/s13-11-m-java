@@ -14,6 +14,9 @@ export type GetProductByUnicoIdResponse = Product;
 export type UpdateProductRequest = Product;
 export type UpdateProductResponse = Product;
 
+export type GetOrderByIdRequest = number;
+export type GetOrderByIdResponse = Order;
+
 export type CreateProductRequest = Pick<
   Product,
   "idUnico" | "name" | "instruction" | "description" | "timeEstimatedCompletion"
@@ -125,6 +128,17 @@ export interface Employee {
 
 export interface Order {
   id: number;
+  client: {
+    id: number;
+    commonAttribute: {
+      email: null;
+      password: null;
+      address: null;
+      phone: null;
+      name: string;
+    };
+  };
+  product: Product;
   name: string;
   entryDate: string;
   errorTime: number;
