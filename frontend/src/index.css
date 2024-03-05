@@ -82,7 +82,7 @@
 
 @layer base {
   .h-min-screen-without-header {
-    min-height: calc(100vh - 4.5rem - 4rem);
+    min-height: calc(100vh - 4.5rem);
   }
   .h-screen-without-header {
     height: calc(100vh - 4.5rem - 4rem);
