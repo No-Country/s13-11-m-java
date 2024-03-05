@@ -2,17 +2,17 @@ import { z } from "zod";
 
 const strToNumGT0 = z.coerce.number().positive();
 const strToInt = z.coerce.number().int().positive();
-const bool = z.boolean().default(false).optional();
+const bool = z.boolean().default(false);
 
 export const processSchema = z.object({
   name: z.string().min(3).max(50).trim(),
   timeReal: strToNumGT0,
   timeAverage: strToNumGT0,
   timeMargin: strToNumGT0,
-  comment: z.string().max(255).trim().optional(),
+  comment: z.string().max(255).trim().default("Sin comentarios"),
   state: bool,
   active: bool,
-  counter: strToInt.optional(),
+  counter: strToInt.default(1),
 });
 
 export const subProcessSchema = z.object({
@@ -36,7 +36,7 @@ export const productSchema = z.object({
   createDate: z.string().datetime({ offset: true }).optional(),
   description: z.string().max(255).trim(),
   state: bool,
-  timeEstimatedCompletion: z.string().datetime({ offset: true }),
+  timeEstimatedCompletion: z.string().max(255).trim(),
   productProcesses: z.array(productProcessesSchema).default([]),
   active: bool,
 });

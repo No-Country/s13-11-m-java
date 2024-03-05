@@ -4,15 +4,17 @@ import ProductForm from "@/components/ProductForm/ProductForm";
 import { Button } from "@/components/ui/button";
 
 import { MdArrowBackIos } from "react-icons/md";
-
+import { useNavigate } from "react-router-dom";
 import { Product } from "@/schemas/apiSchemas";
-
+import { useCreateProductMutation } from "@/app/services/api";
 const AddProduct = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [createProduct] = useCreateProductMutation();
 
   const handleSubmit = async (values: Product) => {
-    // await createProduct(values).unwrap();
     console.log(values);
+    await createProduct(values);
+    navigate("/products");
   };
 
   return (
