@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
+import { useToast } from "@/components/ui/use-toast";
+
 import { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
 import { LoginFormInputs } from "@/schemas/loginFormSchema";
 import { RegisterFormInputs } from "@/schemas/registerFormSchema";
@@ -22,15 +24,26 @@ const useAuth = () => {
     dispatch(logout());
   };
 
+  const { toast } = useToast();
+
   const handleSubmit = async (values: LoginFormInputs) => {
     try {
       const response = await login(values).unwrap();
       const token = response.token;
       sessionStorage.setItem("token", token);
+      toast({
+        variant: "success",
+        title: "Bienvenido",
+        description: "Sesión iniciada",
+      });
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
-      alert("Error al iniciar sesión");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Credenciales incorrectas",
+      });
     }
   };
 
