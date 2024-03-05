@@ -98,13 +98,25 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
       <div className="custom-toolbar md:items flex flex-col items-center justify-between gap-2 py-4 md:items-stretch">
         <div className="order-1 flex items-center justify-between gap-1">
           <div className="flex gap-1">
-            <Button variant="default" onClick={() => handleViewChange("month")}>
+            <Button
+              variant="default"
+              style={{ opacity: view === "month" ? 1 : 0.55 }}
+              onClick={() => handleViewChange("month")}
+            >
               Mensual
             </Button>
-            <Button variant="default" onClick={() => handleViewChange("week")}>
+            <Button
+              variant="default"
+              style={{ opacity: view === "week" ? 1 : 0.55 }}
+              onClick={() => handleViewChange("week")}
+            >
               Semanal
             </Button>
-            <Button variant="default" onClick={() => handleViewChange("day")}>
+            <Button
+              variant="default"
+              style={{ opacity: view === "day" ? 1 : 0.55 }}
+              onClick={() => handleViewChange("day")}
+            >
               Diario
             </Button>
           </div>
@@ -139,6 +151,25 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
 const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   const [view, setView] = useState<View>("month");
 
+  const eventStyleGetter = () => {
+    const newStyle = {
+      backgroundColor: "#2a576d",
+      color: "WHITE",
+      borderRadius: "10px",
+      border: "1px solid #a3a3a3",
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.20)",
+    };
+
+    return {
+      style: newStyle,
+    };
+  };
+
+  const clendarStyling = {
+    height: "700px",
+    border: "none",
+  };
+
   const handleViewChange = (newView: View) => {
     setView(newView);
   };
@@ -149,11 +180,12 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
         localizer={localizer}
         events={events}
         defaultDate={moment().toDate()}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 700 }}
+        startAccessor={(events) => events.start}
+        endAccessor={(events) => events.end}
+        style={clendarStyling}
         views={["month", "week", "day"]}
         view={view}
+        eventPropGetter={eventStyleGetter}
         onView={handleViewChange}
         messages={{
           next: "Siguiente",
