@@ -165,6 +165,11 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
     };
   };
 
+  const clendarStyling = {
+    height: "700px",
+    border: "none",
+  };
+
   const handleViewChange = (newView: View) => {
     setView(newView);
   };
@@ -175,9 +180,9 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
         localizer={localizer}
         events={events}
         defaultDate={moment().toDate()}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 700, border: "none" }}
+        startAccessor={(events) => events.start}
+        endAccessor={(events) => events.end}
+        style={clendarStyling}
         views={["month", "week", "day"]}
         view={view}
         eventPropGetter={eventStyleGetter}
