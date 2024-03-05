@@ -80,6 +80,14 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
+    id: "employee",
+    accessorKey: "employee",
+    header: (prop) => ColumnSortButton("Empleado", prop),
+    meta: {
+      headerName: "Empleado",
+    },
+  },
+  {
     id: "actions",
     meta: {
       hidden: true,

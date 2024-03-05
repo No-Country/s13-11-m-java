@@ -19,6 +19,7 @@ const OrderDetail: React.FC = () => {
     state: process.processAttributes.state,
     initialDate: moment().format("YYYY-MM-DD"),
     endDate: moment().format("YYYY-MM-DD"),
+    employee: "Juan Perez",
   }));
 
   const subprocesses = OrderData?.product.productProcesses.flatMap((process) =>
@@ -33,6 +34,7 @@ const OrderDetail: React.FC = () => {
       state: subprocess.subProcessAttributes?.state,
       initialDate: moment().format("YYYY-MM-DD"),
       endDate: moment().format("YYYY-MM-DD"),
+      employee: "Juan Perez",
     }))
   );
 

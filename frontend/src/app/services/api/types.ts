@@ -145,7 +145,6 @@ export interface Order {
     };
   };
   product: Product;
-
   name: string;
   entryDate: string;
   errorTime: number;
@@ -164,6 +163,7 @@ export interface Order {
   processes: Process[];
   company: Company;
   active: boolean;
+  subprocesses: SubProcess[]
 }
 
 export interface OrderRequest {
