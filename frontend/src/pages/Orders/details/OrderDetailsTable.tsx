@@ -2,7 +2,6 @@ import React from "react";
 
 // import { Order} from "@/app/services/api/types";
 // import useOrder from "@/hooks/useOrder";
-
 import { DataTable2 } from "@/components/ui/data-table2";
 // import { DataTable } from "@/components/ui/data-table";
 // import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -16,13 +15,11 @@ import { columns } from "./orderColumn";
 // import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 // import { zodResolver } from "@hookform/resolvers/zod";
 interface OrderDetailsTableProps {
-  orderId?: number;
-  data: Order
+  // orderId?: number;
+  // data: Order
 }
 
-const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({data}) => {
-
-
+const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ data }) => {
   return (
     <div>
       <div className="flex flex-wrap justify-between gap-4">
@@ -52,7 +49,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({data}) => {
           </ScrollArea>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 export default OrderDetailsTable;
