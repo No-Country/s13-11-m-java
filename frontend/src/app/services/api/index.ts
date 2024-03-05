@@ -6,6 +6,8 @@ import {
   CreateOrderResponse,
   CreateProductRequest,
   CreateProductResponse,
+  DeleteOrderRequest,
+  DeleteOrderResponse,
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
@@ -25,7 +27,7 @@ import { simulateLoading } from "@/utils/fakeUtils";
 
 export const api = createApi({
   reducerPath: "api",
-  tagTypes: ["Products"],
+  tagTypes: ["Products", "Orders"],
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
     prepareHeaders: (headers) => {
@@ -119,7 +121,7 @@ export const api = createApi({
     }),
 
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
-      query: (id) => `/v1/products/delete/${id}`,
+      query: (id) => ({ url: `/v1/products/delete/${id}`, method: "DELETE" }),
     }),
     // endpoints de ordenes
     getOrders: builder.query<GetOrdersResponse, void>({
@@ -131,6 +133,7 @@ export const api = createApi({
           "Allow-Control-Allow-Origin": "*",
         },
       }),
+      providesTags: ["Orders"],
     }),
     createOrder: builder.mutation<CreateOrderResponse, CreateOrderRequest>({
       query: (productOrder) => ({
@@ -138,6 +141,13 @@ export const api = createApi({
         body: productOrder,
         method: "POST",
       }),
+    }),
+    deleteOrder: builder.mutation<DeleteOrderResponse, DeleteOrderRequest>({
+      query: (orderId) => ({
+        url: `/v1/product-orders/delete/${orderId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Orders"],
     }),
   }),
 });
@@ -156,4 +166,5 @@ export const {
   useUpdateProductMutation,
   useGetOrdersQuery,
   useCreateOrderMutation,
+  useDeleteOrderMutation,
 } = api;

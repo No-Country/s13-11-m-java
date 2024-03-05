@@ -29,6 +29,9 @@ export type GetEmployeesResponse = Employee[];
 export type CreateOrderRequest = OrderRequest;
 export type CreateOrderResponse = OrderResponse;
 
+export type DeleteOrderRequest = number;
+export type DeleteOrderResponse = number;
+
 export interface User {
   id: string;
   email: string;
