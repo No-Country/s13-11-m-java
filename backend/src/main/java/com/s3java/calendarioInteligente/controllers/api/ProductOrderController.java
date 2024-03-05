@@ -2,7 +2,7 @@ package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
-import com.s3java.calendarioInteligente.exception.ProductOrderNotFoundException;
+import com.s3java.calendarioInteligente.exception.exceptions.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

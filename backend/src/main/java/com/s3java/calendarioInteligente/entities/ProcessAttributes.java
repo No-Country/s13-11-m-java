@@ -1,23 +1,40 @@
 package com.s3java.calendarioInteligente.entities;
 
-import jakarta.persistence.Embeddable;
 import com.s3java.calendarioInteligente.utils.State;
+
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 @Embeddable
 public class ProcessAttributes {
+    @NotNull (message = "name must not be null")
+    @NotEmpty (message = "name must not be empty")
     private String name;
+
 //    private Double timeReal;  // cambio el nombre del atributo
     private Double timeEstimatedCompletion;  //Tiempo Interno asignado,
-    // suma de tiempos manuales de subprocesos + tiempos de procesos    
-    private Double timeAverage;  //tiempo promedio anual, calculado desde el historico de procesos o subprocesos
-    private Double timeMargin;   //cuantos minutos por encima o por debajo es aceptable
+    // suma de tiempos manuales de subprocesos + tiempos de procesos  
+    
+    @NotNull (message = "state must not be null") 
+    @Enumerated(EnumType.STRING)
+    private State state; //cambio de boolean a ENUM    
+   
+    @NotNull (message = "timeReal must not be null")
+    private Double timeReal;
+    @NotNull (message = "timeAverage must not be null")
+    private Double timeAverage;
+    @NotNull (message = "timeMargin must not be null")
+    private Double timeMargin;
+    @NotNull (message = "comment must not be null")
+    @NotEmpty (message = "comment must not be empty")
     private String comment;
-//    private Boolean state;
-@Enumerated(EnumType.STRING)
-private State state; //cambio de boolean a ENUM    
+  
+    @NotNull (message = "active must not be null")
     private Boolean active;
+    @NotNull (message = "counter must not be null")
     private Integer counter;
 
 

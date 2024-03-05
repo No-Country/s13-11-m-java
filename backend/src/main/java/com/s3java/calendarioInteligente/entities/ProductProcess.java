@@ -3,6 +3,7 @@ package com.s3java.calendarioInteligente.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ProductProcess {
     private List<SubProcess> subProcesses = new ArrayList<>();
 
     @Embedded
+    @Valid
     private ProcessAttributes processAttributes;
 
     public ProductProcess() {

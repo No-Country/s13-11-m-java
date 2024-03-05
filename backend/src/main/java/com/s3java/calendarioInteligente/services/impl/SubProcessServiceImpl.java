@@ -3,6 +3,7 @@ package com.s3java.calendarioInteligente.services.impl;
 import com.s3java.calendarioInteligente.entities.ProcessAttributes;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
 import com.s3java.calendarioInteligente.entities.SubProcess;
+import com.s3java.calendarioInteligente.exception.exceptions.SubProcessNotFoundException;
 import com.s3java.calendarioInteligente.repositories.SubProcessRepository;
 import com.s3java.calendarioInteligente.services.data.Calculos;
 import com.s3java.calendarioInteligente.services.inter.ProcessService;
@@ -50,8 +51,7 @@ public class SubProcessServiceImpl implements SubProcessService {
 
             return new ResponseEntity<>(subProcessRepository.save(subProcessToUpdate), HttpStatus.OK);
         }
-        //TODO: Añadir mejor manejo de excepciones
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+        throw new SubProcessNotFoundException("No sub proccess found with id: " + subProcessIDToUpdate);
     }
 
     private Double calculateTimeMargin(Double timeEstimateCompletion){

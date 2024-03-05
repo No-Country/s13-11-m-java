@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.controllers.api;
 
 import com.s3java.calendarioInteligente.entities.Product;
+import com.s3java.calendarioInteligente.exception.exceptions.BindingResultException;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
 import com.s3java.calendarioInteligente.utils.State;
@@ -97,7 +98,10 @@ public class ProductController {
     }
   
    @PostMapping("/process/{productID}")
-    public ResponseEntity<?> addProcessToProduct(@Valid @RequestBody ProductProcess productProcess, @PathVariable Long productID){
+    public ResponseEntity<?> addProcessToProduct(@RequestBody @Valid ProductProcess productProcess, BindingResult bindingResult, @PathVariable Long productID){
+        if (bindingResult.hasErrors()) {
+            throw new BindingResultException(bindingResult);
+        }
         return productService.addProcessToProduct(productProcess, productID);
     }
 
