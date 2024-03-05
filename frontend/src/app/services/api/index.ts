@@ -28,6 +28,7 @@ import { simulateLoading } from "@/utils/fakeUtils";
 
 export const api = createApi({
   reducerPath: "api",
+  tagTypes: ["Products"],
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
     prepareHeaders: (headers) => {
@@ -72,7 +73,7 @@ export const api = createApi({
     }),
     // endpoints de productos
     getAllProducts: builder.query<AllProductsResponse, void>({
-      // query: () => "/v1/products/all",
+      providesTags: ["Products"],
       query: () => ({
         url: "/v1/products/all",
         method: "GET",
@@ -117,6 +118,7 @@ export const api = createApi({
         body: product,
         method: "POST",
       }),
+      invalidatesTags: ["Products"],
     }),
     deleteProduct: builder.mutation<DeleteProductResponse, DeleteProductRequest>({
       query: (id) => `/v1/products/delete/${id}`,

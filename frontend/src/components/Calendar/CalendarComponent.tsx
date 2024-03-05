@@ -37,7 +37,7 @@ interface CalendarComponentProps {
   events: Orders[];
 }
 
-const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange }) => {
+const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange, view }) => {
   const [currentDate, setCurrentDate] = useState(moment());
 
   const handleViewChange = (view: View) => {
@@ -46,11 +46,19 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
 
   const changeDate = (direction: NavigationDirection): void => {
     setCurrentDate((prevDate) => {
-      switch (direction) {
-        case NavigationDirection.PREV:
-          return prevDate.clone().subtract(1, "months");
-        case NavigationDirection.NEXT:
-          return prevDate.clone().add(1, "months");
+      switch (view) {
+        case "month":
+          return direction === NavigationDirection.PREV
+            ? prevDate.clone().subtract(1, "month")
+            : prevDate.clone().add(1, "month");
+        case "week":
+          return direction === NavigationDirection.PREV
+            ? prevDate.clone().subtract(1, "week")
+            : prevDate.clone().add(1, "week");
+        case "day":
+          return direction === NavigationDirection.PREV
+            ? prevDate.clone().subtract(1, "day")
+            : prevDate.clone().add(1, "day");
         default:
           return prevDate;
       }
@@ -58,13 +66,31 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
   };
 
   const handlePrev = () => {
-    onNavigate(NavigationDirection.PREV);
-    changeDate(NavigationDirection.PREV);
+    if (view === "month") {
+      onNavigate(NavigationDirection.PREV);
+      changeDate(NavigationDirection.PREV);
+    } else if (view === "week") {
+      setCurrentDate((prevDate) => prevDate.clone().subtract(1, "week"));
+      onNavigate(NavigationDirection.PREV);
+      changeDate(NavigationDirection.PREV);
+    } else if (view === "day") {
+      onNavigate(NavigationDirection.PREV);
+      changeDate(NavigationDirection.PREV);
+    }
   };
 
   const handleNext = () => {
-    onNavigate(NavigationDirection.NEXT);
-    changeDate(NavigationDirection.NEXT);
+    if (view === "month") {
+      onNavigate(NavigationDirection.NEXT);
+      changeDate(NavigationDirection.NEXT);
+    } else if (view === "week") {
+      setCurrentDate((prevDate) => prevDate.clone().add(1, "week"));
+      onNavigate(NavigationDirection.NEXT);
+      changeDate(NavigationDirection.NEXT);
+    } else if (view === "day") {
+      onNavigate(NavigationDirection.NEXT);
+      changeDate(NavigationDirection.NEXT);
+    }
   };
 
   return (
@@ -95,9 +121,12 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange 
           <button onClick={handlePrev} className="transition-transform hover:scale-125">
             <FaArrowLeft />
           </button>
-          <span className="text-lg font-bold" style={{ minWidth: "150px", textAlign: "center" }}>
-            {currentDate.format("MMMM YYYY")}
+          <span className="text-lg font-bold" style={{ minWidth: "220px", textAlign: "center" }}>
+            {view === "month" && currentDate.format("MMMM YYYY")}
+            {view === "week" && `Semana ${currentDate.week()}`}
+            {view === "day" && currentDate.format("dddd D [-] MMMM YYYY")}
           </span>
+
           <button onClick={handleNext} className="transition-transform hover:scale-125">
             <FaArrowRight />
           </button>
@@ -135,7 +164,7 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
           day: "Diario",
         }}
         components={{
-          toolbar: (props) => <CustomToolbar {...props} onViewChange={handleViewChange} />,
+          toolbar: (props) => <CustomToolbar {...props} view={view} onViewChange={handleViewChange} />,
         }}
       />
     </div>

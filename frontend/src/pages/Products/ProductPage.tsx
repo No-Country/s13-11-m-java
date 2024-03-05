@@ -1,20 +1,37 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import ProductForm from "@/components/ProductForm/ProductForm";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 import { MdArrowBackIos } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+
 import { Product } from "@/schemas/apiSchemas";
+
 import { useCreateProductMutation } from "@/app/services/api";
+
 const AddProduct = () => {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const [createProduct] = useCreateProductMutation();
 
   const handleSubmit = async (values: Product) => {
-    console.log(values);
-    await createProduct(values);
-    navigate("/products");
+    try {
+      await createProduct(values);
+      toast({
+        variant: "success",
+        title: "Producto Agregado",
+        description: "Se agregó un nuevo producto: " + values.name,
+      });
+      navigate("/products");
+    } catch (error) {
+      console.error("Error fetching product to Database");
+      toast({
+        variant: "destructive",
+        title: "Error al agregar el producto",
+      });
+    }
   };
 
   return (

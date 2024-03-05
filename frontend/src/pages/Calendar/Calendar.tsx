@@ -5,12 +5,14 @@ import { useGetOrdersQuery } from "@/app/services/api";
 const Calendar = () => {
   const { data: OrderData } = useGetOrdersQuery();
 
+  console.log(OrderData);
+
   const formattedOrders = OrderData
     ? OrderData.map((order) => ({
         id: order.id,
         title: order.name,
-        start: new Date(order.entryDate),
-        end: new Date(order.entryDate),
+        start: new Date(order.initialDate),
+        end: new Date(order.finishEstimatedDate),
       }))
     : [];
 
