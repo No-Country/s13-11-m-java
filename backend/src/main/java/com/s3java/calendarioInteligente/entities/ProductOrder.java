@@ -44,6 +44,10 @@ public class ProductOrder {
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String finishEstimatedDate;
 
+    @Column(name = "original_finish_est_date")
+    @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
+    private String originalFinishEstimatedDate;
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -162,6 +166,14 @@ public class ProductOrder {
 
     public void setFinishEstimatedDate(String finishEstimatedDate) {
         this.finishEstimatedDate = finishEstimatedDate;
+    }
+
+    public String getOriginalFinishEstimatedDate() {
+        return originalFinishEstimatedDate;
+    }
+
+    public void setOriginalFinishEstimatedDate(String originalFinishEstimatedDate) {
+        this.originalFinishEstimatedDate = originalFinishEstimatedDate;
     }
 
     @Override

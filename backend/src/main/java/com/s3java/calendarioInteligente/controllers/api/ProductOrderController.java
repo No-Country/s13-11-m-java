@@ -265,6 +265,10 @@ public class ProductOrderController {
         }
     }
 
+    @GetMapping("/count/{companyID}")
+    public ResponseEntity<?> getProductOrderCounts(@PathVariable Long companyID){
+        return productOrderService.getProductOrdersCounts(companyID);
+    }
 }
 
 

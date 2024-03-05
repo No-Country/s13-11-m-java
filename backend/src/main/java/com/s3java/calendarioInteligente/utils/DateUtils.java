@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -39,6 +40,12 @@ public class DateUtils {
         return LocalDateTime.parse(
                 date,
                 DateTimeFormatter.ofPattern(FORMAT_DATE_TIME));
+    }
+
+    public static Month getMonthFromStringDate(String date) throws DateTimeException {
+        return LocalDateTime.parse(
+                date,
+                DateTimeFormatter.ofPattern(FORMAT_DATE_TIME)).getMonth();
     }
 
 

@@ -1,6 +1,7 @@
 package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
+import com.s3java.calendarioInteligente.dto.response.ProductOrderDataResponse;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.entities.Company;
@@ -22,13 +23,15 @@ import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -132,6 +135,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         productOrder.setCompany(company);
         productOrder.setClient(clientSaved);
         productOrder.setProduct(product);
+
+        productOrder.setOriginalFinishEstimatedDate(productOrder.getFinishEstimatedDate());
+
         ProductOrder productOrderSaved = this.productOrderRepository.save(productOrder);
         return this.productOrderMapper.productOrderToProductOrderResponse(productOrderSaved);
     }
@@ -222,6 +228,39 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         List<ProductOrder> productOrders = this.productOrderRepository
                 .findProductOrdersByInitialDate(date, companyId);
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
+    }
+
+    @Override
+    public ResponseEntity<?> getProductOrdersCounts(Long companyId) {
+        List<ProductOrder> productOrders = productOrderRepository.findAllProductOrders(companyId);
+        ProductOrderDataResponse response = new ProductOrderDataResponse();
+        
+        Integer pendientes = 0;
+        Integer progreso = 0;
+        Integer terminado = 0;
+        Integer suspendido = 0;
+
+        for (ProductOrder productOrder : productOrders){
+            switch (productOrder.getState()){
+                case PENDIENTE   -> pendientes++;
+                case EN_PROGRESO -> progreso++;
+                case TERMINADO   -> terminado++;
+                case SUSPENDIDO  -> suspendido++;
+                default -> {
+                }
+
+            }
+        }
+
+        //Contar cuantos pedidos hay por mes si es que se puede
+
+        response.setTotalPendientes(pendientes);
+        response.setTotalProgreso(progreso);
+        response.setTotalTerminados(terminado);
+        response.setTotalSuspendidos(suspendido);
+
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     private ProductOrder createProductOrderWithEntryDateFromRequest(ProductOrderRequest productOrderRequest) {

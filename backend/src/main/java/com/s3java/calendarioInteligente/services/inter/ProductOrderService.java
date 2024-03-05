@@ -2,6 +2,7 @@ package com.s3java.calendarioInteligente.services.inter;
 
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,5 +27,7 @@ public interface ProductOrderService {
     List<ProductOrderResponse> findProductOrdersByEntry(String entryDate) throws Exception;
 
     List<ProductOrderResponse> findProductOrdersByInitialDate(String date) throws Exception;
+
+    ResponseEntity<?> getProductOrdersCounts(Long companyID);
 
 }
