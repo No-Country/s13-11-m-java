@@ -35,7 +35,20 @@ const ProductForm = () => {
             timeAverage: 25,
             timeMargin: 25,
           },
-          subProcesses: [],
+          subProcesses: [
+            {
+              subProcessAttributes: {
+                name: "SubProceso 1",
+                active: false,
+                timeReal: 25,
+                comment: "Comentario",
+                counter: 2,
+                state: false,
+                timeAverage: 25,
+                timeMargin: 25,
+              },
+            },
+          ],
         },
         {
           processAttributes: {

@@ -8,16 +8,15 @@ import { Checkbox } from "./components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./components/ui/form";
 import { Input } from "./components/ui/input";
 import { ScrollArea } from "./components/ui/scroll-area";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogProps } from "@/components/ui/dialog";
 
-import { DialogProps } from "./main";
 import { ProductProcesses, SubProcess, productProcessesSchema } from "./schemas/apiSchemas";
 import SubModal from "./sub-modal";
 
 type ModalProps = {
   onSubmit?: (data: ProductProcesses) => void;
   defaultValues?: Partial<ProductProcesses>;
-} & DialogProps;
+} & Pick<DialogProps, "open" | "onOpenChange">;
 
 function Modal({
   open,

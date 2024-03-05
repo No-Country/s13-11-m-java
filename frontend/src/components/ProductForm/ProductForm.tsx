@@ -1,184 +1,241 @@
-import { useState } from "react";
+import React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { ScrollArea } from "../ui/scroll-area";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { FaCheck, FaChevronDown } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa6";
+import { IoMdAddCircle } from "react-icons/io";
 
-import productFormSchema, { ProductFormInputs } from "@/schemas/productSchema";
+import { Product, ProductProcesses, productSchema } from "@/schemas/apiSchemas";
 
-import ProcessForm from "./ProcessForm";
+import ProcessModal from "./ProcessModal";
 import ProcessOption from "./ProcessOption";
-import SubProcessModal from "./SubProcessModal";
 import { cn } from "@/lib/utils";
-import { Process, process } from "@/mocks/process/data";
 
 export interface ProductFormProps {
-  onSubmit?: (values: ProductFormInputs) => void;
-  defaultValues?: ProductFormInputs;
+  onSubmit?: (values: Product) => void;
+  defaultValues?: Partial<Product>;
   loading?: boolean;
 }
 
-const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => {
-  const [open, setOpen] = useState(false);
-  const [openSubProcess, setOpenSubProcess] = useState(false);
-  const productForm = useForm<ProductFormInputs>({
-    resolver: zodResolver(productFormSchema),
-    defaultValues,
+const ProductForm = ({ defaultValues = {}, loading, onSubmit }: ProductFormProps) => {
+  const [open, setOpen] = React.useState(false);
+  const [productProcesses, setProductProcesses] = React.useState<Partial<ProductProcesses>>(defaultValues);
+  const form = useForm<Product>({
+    resolver: zodResolver(productSchema),
+    defaultValues: {
+      name: "Prueba",
+      idUnico: "123",
+      instruction: "Sin instrucciones",
+      description: "Sin descripción",
+      timeEstimatedCompletion: "2021-09-01T00:00:00.000Z",
+      state: false,
+      active: false,
+      productProcesses: [
+        {
+          processAttributes: {
+            name: "Proceso 1",
+            active: false,
+            timeReal: 25,
+            comment: "Comentario",
+            counter: 2,
+            state: false,
+            timeAverage: 25,
+            timeMargin: 25,
+          },
+          subProcesses: [],
+        },
+        {
+          processAttributes: {
+            name: "Proceso 2",
+            active: false,
+            timeReal: 25,
+            comment: "Comentario",
+            counter: 2,
+            state: false,
+            timeAverage: 25,
+            timeMargin: 25,
+          },
+          subProcesses: [
+            {
+              subProcessAttributes: {
+                name: "SubProceso 1",
+                active: false,
+                timeReal: 25,
+                comment: "Comentario",
+                counter: 2,
+                state: false,
+                timeAverage: 25,
+                timeMargin: 25,
+              },
+            },
+          ],
+        },
+      ],
+    },
   });
 
-  function handleSubmit(values: ProductFormInputs) {
-    onSubmit?.(values);
-  }
+  const handleSubmit = (data: Product) => {
+    onSubmit?.(data);
+  };
 
-  const [processList, setProcessList] = useState<Process[]>([]);
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
 
-  const labelStyle = "text-[#606060]";
-  const boxStyle =
-    "bg-[#F5F6FA] w-full border border-[#D5D5D5] rounded-none pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
   return (
-    <div className="flex justify-center">
-      <Form {...productForm}>
-        <form onSubmit={productForm.handleSubmit(handleSubmit)} className="w-3/4 flex-col md:flex md:w-full">
-          <div className="w-full grid-flow-col grid-rows-3 gap-4 space-y-8 md:grid">
+    <div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full flex-col md:flex">
+          <div className="w-full grid-cols-1 grid-rows-3 gap-4 space-y-8 md:grid md:grid-cols-2">
             <FormField
-              control={productForm.control}
+              control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem className="pt-8">
-                  <FormLabel className={labelStyle}>Nombre del producto</FormLabel>
+                  <FormLabel>Nombre del producto</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Ingresa un nombre para el producto" {...field} />
+                    <Input placeholder="Ingresa un nombre para el producto" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              control={productForm.control}
-              name="idUnico"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={labelStyle}>ID interno</FormLabel>
-                  <FormControl>
-                    <Input className={boxStyle} placeholder="Ingresa un Identificador para el producto" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={productForm.control}
+              control={form.control}
               name="timeEstimatedCompletion"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={labelStyle}>Cantidad de horas estimadas de producción</FormLabel>
+                  <FormLabel>Cantidad de horas estimadas de producción</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Ingresa un tiempo estimado" {...field} />
+                    <Input placeholder="Ingresa un tiempo estimado" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              control={productForm.control}
+              control={form.control}
+              name="idUnico"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ID interno</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ingresa un Identificador para el producto" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="instruction"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={labelStyle}>Instruccion</FormLabel>
+                  <FormLabel>Instruccion</FormLabel>
                   <FormControl>
-                    <Input className={boxStyle} placeholder="Instrucciones para realizar el producto" {...field} />
+                    <Input placeholder="Instrucciones para realizar el producto" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              control={productForm.control}
+              control={form.control}
               name="productProcesses"
               render={({ field }) => (
-                <FormItem className="row-span-1">
-                  <FormLabel className={labelStyle}>Procesos</FormLabel>
+                <FormItem className="col-span-full row-span-1">
+                  <FormLabel>Procesos</FormLabel>
                   <FormControl>
-                    <div className="mb-2 flex items-center">
-                      <Popover>
+                    <Popover>
+                      <div>
                         <PopoverTrigger asChild>
                           <FormControl>
-                            <Button variant="outline" role="combobox" className={`${boxStyle} w-[400px]`}>
+                            <Button variant="outline" role="combobox">
                               <p>Nombre del proceso</p>
                               <FaChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <Button type="button" onClick={() => setOpen(true)}>
-                          abrir
+                        <Button type="button" onClick={handleOpenModal} size="icon">
+                          <IoMdAddCircle className="text-xl" />
                         </Button>
-                        <PopoverContent className="w-[340px] p-0">
-                          <Command>
-                            <CommandInput placeholder="Buscar proceso..." className="h-9" />
-                            <CommandEmpty>Proceso no encontrado</CommandEmpty>
-                            <CommandGroup>
-                              {process.map((process, i) => (
+                      </div>
+                      <PopoverContent className="w-[340px] p-0">
+                        <Command>
+                          <CommandInput placeholder="Buscar proceso..." className="h-9" />
+                          <CommandEmpty>Proceso no encontrado</CommandEmpty>
+                          <CommandGroup>
+                            {
+                              /*/ aca va la lista de procesos de la API*/
+                              ([] as ProductProcesses[]).map((process, i) => (
                                 <CommandItem
-                                  value={process.name}
+                                  value={process.processAttributes.name}
                                   key={i}
                                   onSelect={() => {
-                                    setProcessList([...field.value!, process] as Process[]);
-                                    productForm.setValue("productProcesses", [...field.value!, process] as Process[]);
+                                    form.setValue("productProcesses", [...field.value!, process]);
                                   }}
                                 >
-                                  {process.name}
-                                  <FaCheck
-                                    className={cn(
-                                      "ml-auto h-4 w-4",
-                                      processList.includes(process) ? "opacity-100" : "opacity-0"
-                                    )}
-                                  />
+                                  {process.processAttributes.name}
+                                  <FaCheck className={cn("ml-auto h-4 w-4")} />
                                 </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
+                              ))
+                            }
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="row-span-2">
-              {processList?.length > 0 && (
-                <ScrollArea className="mb-4 h-60 w-[390px] rounded-md  border">
-                  <div className="p-4 pr-0">
-                    {processList.map((process, i) => (
-                      <div
-                        key={i}
-                        className="flex h-[57px] w-[355px] items-center justify-between rounded-none border border-[#D5D5D5] bg-[#F5F6FA] px-4  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                      >
-                        <p>{process.name}</p>
-                        <ProcessOption />
+            <FormField
+              control={form.control}
+              name="productProcesses"
+              render={({ field }) => (
+                <FormItem className="col-span-full row-span-1">
+                  {field.value?.length > 0 ? (
+                    <ScrollArea className="mb-4 h-60 w-[390px] rounded-md  border">
+                      <div className="p-4 pr-0">
+                        {field.value?.map((process, index) => (
+                          <div
+                            key={index}
+                            className="flex h-[57px] w-[355px] items-center justify-between rounded-none border border-[#D5D5D5] bg-[#F5F6FA] px-4  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
+                            onClick={() => {
+                              handleOpenModal();
+                              setProductProcesses(process);
+                            }}
+                          >
+                            <p>{process.processAttributes.name}</p>
+                            <ProcessOption />
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+                    </ScrollArea>
+                  ) : (
+                    <p className="text-sm text-[#BDBDBD]">No hay procesos</p>
+                  )}
+                </FormItem>
               )}
-            </div>
+            />
           </div>
           <FormField
-            control={productForm.control}
+            control={form.control}
             name="description"
             render={({ field }) => (
               <FormItem className="py-8">
-                <FormLabel className={labelStyle}>Notas</FormLabel>
+                <FormLabel>Notas</FormLabel>
                 <FormControl>
                   <Textarea
                     className="w-full resize-none rounded-sm border-2 border-primary hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
@@ -196,37 +253,24 @@ const ProductForm = ({ defaultValues, loading, onSubmit }: ProductFormProps) => 
           </Button>
         </form>
       </Form>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button className="" variant="outline">
-            Agregar un nuevo proceso
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-[955px] flex-col md:flex md:max-h-[801px]">
-          <DialogHeader>
-            <DialogTitle>Agregar un nuevo proceso</DialogTitle>
-          </DialogHeader>
-          <ProcessForm
-            onOpenModal={() => {
-              setOpenSubProcess(true);
-            }}
-          />
-          <DialogFooter>
-            <Dialog open={openSubProcess} onOpenChange={setOpenSubProcess}>
-              <DialogTrigger asChild>
-                <Button className="rounded-full">+</Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-[955px] flex-col md:flex md:max-h-[801px]">
-                <DialogHeader>
-                  <DialogTitle>Agregar un nuevo subproceso</DialogTitle>
-                </DialogHeader>
-                <SubProcessModal />
-                <DialogFooter></DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ProcessModal
+        key={productProcesses?.processAttributes?.name}
+        defaultValues={productProcesses}
+        open={open}
+        onOpenChange={setOpen}
+        onSubmit={(data) => {
+          const oldValues = [...(form.getValues().productProcesses ?? [])];
+          const index = oldValues.findIndex(
+            (process) => process.processAttributes.name === data.processAttributes.name
+          );
+          if (index !== -1) {
+            oldValues[index] = data;
+            form.setValue("productProcesses", oldValues);
+            return;
+          }
+          form.setValue("productProcesses", [...oldValues, data]);
+        }}
+      />
     </div>
   );
 };
