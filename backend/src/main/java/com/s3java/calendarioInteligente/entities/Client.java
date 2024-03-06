@@ -21,7 +21,8 @@ public class Client {
     private CommonAttribute commonAttribute;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_order_id")
     @JsonBackReference
     @JsonIgnore
     private List<ProductOrder> productOrder = new ArrayList<>();
@@ -32,12 +33,21 @@ public class Client {
     @JsonBackReference
     private Company company;
 
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public CommonAttribute getCommonAttribute() {
