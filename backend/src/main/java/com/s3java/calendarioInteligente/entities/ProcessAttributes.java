@@ -1,17 +1,29 @@
 package com.s3java.calendarioInteligente.entities;
 
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 
 @Embeddable
 public class ProcessAttributes {
+    @NotNull (message = "name must not be null")
+    @NotEmpty (message = "name must not be empty")
     private String name;
+    @NotNull (message = "timeReal must not be null")
     private Double timeReal;
+    @NotNull (message = "timeAverage must not be null")
     private Double timeAverage;
+    @NotNull (message = "timeMargin must not be null")
     private Double timeMargin;
+    @NotNull (message = "comment must not be null")
+    @NotEmpty (message = "comment must not be empty")
     private String comment;
+    @NotNull (message = "state must not be null")
     private Boolean state;
+    @NotNull (message = "active must not be null")
     private Boolean active;
+    @NotNull (message = "counter must not be null")
     private Integer counter;
 
 
