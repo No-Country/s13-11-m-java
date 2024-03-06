@@ -122,7 +122,7 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
           </div>
           <div>
             <Button asChild variant="default" className="flex items-center">
-              <Link to="/order">
+              <Link to="/orders/create">
                 <IoMdAddCircle size={20} />
                 <span className="hidden pl-3 md:block">Agregar Pedido </span>
               </Link>

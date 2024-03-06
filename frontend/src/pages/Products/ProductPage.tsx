@@ -24,7 +24,7 @@ const AddProduct = () => {
         title: "Producto Agregado",
         description: "Se agregó un nuevo producto: " + values.name,
       });
-      navigate("/products");
+      navigate("/orders");
     } catch (error) {
       console.error("Error fetching product to Database");
       toast({
@@ -35,16 +35,16 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container w-full pt-6">
+    <div>
       <div className="flex">
         <Button variant={"ghost"} size={"icon"} asChild>
-          <Link to={"/order"}>
+          <Link to={"/orders/create"}>
             <MdArrowBackIos className="h-5 w-5" />
           </Link>
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
       </div>
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-5xl">
         <ProductForm onSubmit={handleSubmit} />
       </div>
     </div>

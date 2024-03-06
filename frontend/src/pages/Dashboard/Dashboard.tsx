@@ -6,6 +6,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
+import { LuFileCheck } from "react-icons/lu";
+
 import { columns } from "../Orders/columns";
 import { data as barData, options } from "@/data/Dashboard/bar/bar.chart";
 import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
@@ -62,12 +64,16 @@ const Dashboard = () => {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>
-      <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        <div>
-          <h2 className="mb-4 mt-4 px-8 text-3xl">
-            <b>Progresos Activos</b>
+      <div className="flex flex-col justify-between rounded-2xl bg-background px-4 py-6 shadow-2xl">
+        <div className="flex items-center justify-between text-2xl">
+          <h2>
+            <b>Progresos activos</b>
           </h2>
-          <label className="m-1 mb-4 mt-4 px-8 text-3xl">{activeOrders}</label>
+          <LuFileCheck />
+        </div>
+        <label className="text-3xl">{activeOrders.toString().padStart(2, "0")}</label>
+        <div className="flex flex-col gap-2">
+          {activeOrders < totalOrders && <label className="text-sm">Completar progresos</label>}
           <Progress value={progress} />
         </div>
       </div>

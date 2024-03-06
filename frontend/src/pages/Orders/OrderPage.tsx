@@ -20,7 +20,7 @@ const OrderPage = () => {
     <div>
       <div className="flex">
         <Button variant={"ghost"} size={"icon"} asChild>
-          <Link to={"/products"}>
+          <Link to={"/orders"}>
             <MdArrowBackIos className="h-5 w-5" />
           </Link>
         </Button>

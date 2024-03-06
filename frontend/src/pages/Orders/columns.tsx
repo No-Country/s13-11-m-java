@@ -163,7 +163,7 @@ const MenuOrder = ({ id }: { id: number }) => {
         </DropdownMenuItem> */}
         <DropdownMenuItem>
           <BsFileEarmarkText className="mr-2" />
-          <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
+          <NavLink to={`/orders/${id}`}>Ver detalle</NavLink>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

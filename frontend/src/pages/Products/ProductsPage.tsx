@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import useProduct from "@/hooks/useProduct";
-
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
@@ -11,12 +9,13 @@ import SelectColumns from "@/components/ui/select-columns";
 
 import { MdAddCircle } from "react-icons/md";
 
-import { columns } from "./columns";
+import { columns } from "../Orders/columns";
+import { useListAllOrdersQuery } from "@/app/services/api/order";
 import { Product } from "@/app/services/api/types";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 
 const ProductsPage = () => {
-  const { products } = useProduct();
+  const { data } = useListAllOrdersQuery();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -38,11 +37,11 @@ const ProductsPage = () => {
   return (
     <div>
       <div className="flex flex-wrap justify-between gap-4">
-        <h2 className="text-2xl">Productos</h2>
+        <h2 className="text-2xl">Pedidos</h2>
         <Button asChild size="rounded" className="px-6">
-          <Link to={"/product"} className="flex">
+          <Link to={"/orders/create"} className="flex">
             <MdAddCircle className="mr-2 h-5 w-5" />
-            Crear producto
+            Agregar Pedido
           </Link>
         </Button>
       </div>
@@ -66,7 +65,7 @@ const ProductsPage = () => {
           <div className="flex">
             <DataTable
               columns={columns}
-              data={products}
+              data={data ?? []}
               columnFilters={columnFilters}
               setColumnFilters={setColumnFilters}
             />
