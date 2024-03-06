@@ -183,26 +183,10 @@ public class ProductOrderController {
     })
     public ResponseEntity<Object> createOrder(
             @RequestBody @Valid ProductOrderRequest productOrderDTO
-    ){
-        try {
+    ) throws Exception {
             ProductOrderResponse productOrder = productOrderService.createProductOrder(productOrderDTO);
             return new ResponseEntity<>(productOrder, HttpStatus.CREATED);
-        } catch (ProductOrderNotFoundException e) {
-            this.logger.error("Resource not found: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (BadRequestException e) {
-            this.logger.error("Bad request: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (EntityNotFoundException e){
-            this.logger.error("Resource not found: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (IllegalArgumentException e){
-            this.logger.error("Bad request " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            this.logger.error("Internal server error: " + e.getMessage());
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
     }
 
 
@@ -214,30 +198,14 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Object> editOrder(
-            @PathVariable @Valid Long orderId,
+            @PathVariable Long orderId,
             @RequestBody @Valid  ProductOrderRequest productOrderDTO
-    ){
-        try {
+    ) throws Exception {
+
             ProductOrderResponse productOrders = productOrderService
                     .updateProductOrder(orderId, productOrderDTO);
             return ResponseEntity.ok().body(productOrders);
 
-    } catch (ProductOrderNotFoundException e) {
-        this.logger.error("Resource not found: " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    } catch (BadRequestException e) {
-        this.logger.error("Bad request: " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    } catch (EntityNotFoundException e){
-        this.logger.error("Resource not found: " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    } catch (IllegalArgumentException e){
-        this.logger.error("Bad request " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    } catch (Exception e) {
-        this.logger.error("Internal server error: " + e.getMessage());
-        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
     }
 
     @DeleteMapping("/delete/{orderId}")
