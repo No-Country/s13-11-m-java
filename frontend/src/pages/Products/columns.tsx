@@ -15,7 +15,7 @@ import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical, BsTrash } from 
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
-import { Product } from "@/app/services/api/types";
+import { ProductAPI } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -27,7 +27,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<ProductAPI>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -61,8 +61,8 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
+    id: "timeEstimatedCompletion",
+    accessorKey: "timeEstimatedCompletion",
     header: (prop) => ColumnSortButton("Fecha Inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.timeEstimatedCompletion);

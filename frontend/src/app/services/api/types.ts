@@ -268,3 +268,91 @@ export type RefreshTokenRequest = {
 };
 
 export type RefreshTokenResponse = Auth;
+
+export type ProductAPI = {
+  id?: number;
+  idUnico: string;
+  name: string;
+  instruction: string;
+  createDate?: string;
+  description: string;
+  state?: boolean;
+  timeEstimatedCompletion: string;
+  productProcesses?: ProductProcessAPI[];
+  company?: CompanyAPI;
+  active?: boolean;
+};
+
+export type ProcessAttributesAPI = {
+  name: string;
+  timeReal: number;
+  timeAverage: number;
+  timeMargin: number;
+  comment: string;
+  state: boolean;
+  active: boolean;
+  counter: number;
+};
+
+export type ProductProcessAPI = {
+  id?: number;
+  // product: string;
+  subProcesses?: SubProcessAPI[];
+  processAttributes?: ProcessAttributesAPI;
+};
+
+export type SubProcessAPI = {
+  id?: number;
+  // productProcess: string;
+  processAttributes?: ProcessAttributesAPI;
+  subProcessAttributes?: ProcessAttributesAPI;
+};
+
+export type CompanyAPI = {
+  id: number;
+  commonAttribute: CommonAttributeAPI;
+  employee: UserEAPI[];
+};
+
+export type CommonAttributeAPI = {
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+  name: string;
+};
+
+export type UserEAPI = {
+  id: number;
+  roles: string[];
+  commonAttribute: CommonAttributeAPI;
+  // company: CompanyAPI;
+};
+// new response product
+export type ProductUpdateResponse = ProductAPI;
+export type ProductUpdateRequest = ProductAPI;
+
+export type ProductProcessResponse = ProductAPI;
+export type ProductProcessRequest = ProductProcessAPI & { productId: number };
+
+export type ProductCreateResponse = ProductAPI;
+export type ProductCreateRequest = ProductAPI;
+
+export type ProductNameResponse = ProductAPI;
+export type ProductNameRequest = string;
+
+export type ProductIdResponse = ProductAPI;
+export type ProductIdRequest = number;
+
+export type UniqueProductIdResponse = ProductAPI;
+export type UniqueProductIdRequest = string;
+
+export type AllProductsResponseAPI = ProductAPI[];
+
+export type DeleteProductProcessResponse = ProductAPI;
+export type DeleteProductProcessRequest = {
+  productId: number;
+  processId: number;
+};
+
+export type DeleteProductRequestAPI = number;
