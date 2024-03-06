@@ -79,17 +79,20 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div>
+        <h2 className="text-1xl text-center mt-4">Procesos finalizados</h2>
           <Bar options={options} data={barData} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataProcessPorcent} />
+        <h2 className="text-1xl text-center mt-4">Pedidos</h2>
+          <Doughnut className="max-w-48 mt-10" data={dataProcessPorcent} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataProcessQ} />
+        <h2 className="text-1xl text-center mt-4">Actividad de empleados</h2>
+          <Doughnut className="max-w-48 mt-10" data={dataEmployee} />
         </div>
       </div>
       <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-xl:order-5 xl:col-span-2 xl:row-span-2">
@@ -97,15 +100,18 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataEmployee} />
+        <h2 className="text-1xl text-center mt-4">Procesos</h2>
+          <Doughnut className="max-w-48 mt-10" data={dataProcessQ} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <Doughnut data={dataProcessQ2} />
+        <h2 className="text-1xl text-center mt-4">Procesos</h2>
+          <Doughnut className="max-w-48 mt-10" data={dataProcessQ2} />
         </div>
       </div>
     </div>
+
   );
 };
 
