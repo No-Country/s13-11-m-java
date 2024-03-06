@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 
 import { store } from "./app/store";
+import { AuthProvider } from "./context/authContext";
 import { routes } from "./routes";
 
 import "./index.css";
@@ -13,8 +14,10 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={routes} />
-      <Toaster />
+      <AuthProvider>
+        <RouterProvider router={routes} />
+        <Toaster />
+      </AuthProvider>
     </Provider>
   </React.StrictMode>
 );

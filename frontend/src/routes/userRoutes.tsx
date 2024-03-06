@@ -2,7 +2,6 @@ import React from "react";
 
 import UserLayout from "@/layouts/UserLayout";
 
-const ApiTesting = React.lazy(() => import("@/pages/API TESTING/ApiTesting"));
 const Calendar = React.lazy(() => import("@/pages/Calendar/Calendar"));
 const Dashboard = React.lazy(() => import("@/pages/Dashboard/Dashboard"));
 const EmployeesPage = React.lazy(() => import("@/pages/Employees/EmployeesPage"));
@@ -85,10 +84,6 @@ export const userRoutes = {
     {
       path: "/order/:orderId",
       element: <OrderDetails />,
-    },
-    {
-      path: "/apitest",
-      element: <ApiTesting />,
     },
   ],
 };

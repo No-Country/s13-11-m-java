@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import OrderDetailsTable from "./OrderDetailsTable";
-import { useGetOrderByIdQuery } from "@/app/services/api";
+import { useGetOrderByIdQuery } from "@/app/services/api/order";
 import moment from "moment";
 
 export interface FormatedOrder {
@@ -16,13 +16,13 @@ export interface FormatedOrder {
 }
 
 export interface FormatedProcess {
-  id: number;
-  name: string;
-  timeReal: number;
-  timeAverage: number;
-  timeMargin: number;
-  comment: string;
-  state: boolean;
+  id?: number;
+  name?: string;
+  timeReal?: number;
+  timeAverage?: number;
+  timeMargin?: number;
+  comment?: string;
+  state?: boolean;
   initialDate: string;
   endDate: string;
   employee: string;
@@ -46,34 +46,37 @@ const OrderDetail = () => {
   const { orderId } = useParams();
   const { data: OrderData } = useGetOrderByIdQuery(Number(orderId));
 
-  const mainProcesses = OrderData?.product.productProcesses.map((process) => ({
-    id: process.id,
-    name: process.processAttributes.name,
-    timeReal: process.processAttributes.timeReal,
-    timeAverage: process.processAttributes.timeAverage,
-    timeMargin: process.processAttributes.timeMargin,
-    comment: process.processAttributes.comment,
-    state: process.processAttributes.state,
-    initialDate: moment().format("YYYY-MM-DD"),
-    endDate: moment().format("YYYY-MM-DD"),
-    employee: "Juan Perez",
-  }));
-
-  const subprocesses = OrderData?.product.productProcesses.flatMap((process) =>
-    process.subProcesses.map((subprocess) => ({
-      parentId: process.id,
-      id: subprocess.id,
-      name: subprocess.subProcessAttributes?.name,
-      timeReal: subprocess.subProcessAttributes?.timeReal,
-      timeAverage: subprocess.subProcessAttributes?.timeAverage,
-      timeMargin: subprocess.subProcessAttributes?.timeMargin,
-      comment: subprocess.subProcessAttributes?.comment,
-      state: subprocess.subProcessAttributes?.state,
+  const mainProcesses: FormatedProcess[] =
+    OrderData?.product.productProcesses?.map((process) => ({
+      id: process.id,
+      name: process.processAttributes?.name,
+      timeReal: process.processAttributes?.timeReal,
+      timeAverage: process.processAttributes?.timeAverage,
+      timeMargin: process.processAttributes?.timeMargin,
+      comment: process.processAttributes?.comment,
+      state: process.processAttributes?.state,
       initialDate: moment().format("YYYY-MM-DD"),
       endDate: moment().format("YYYY-MM-DD"),
       employee: "Juan Perez",
-    }))
-  );
+    })) ?? [];
+
+  const subprocesses: FormatedSubProcess[] =
+    OrderData?.product.productProcesses?.flatMap(
+      (process) =>
+        process.subProcesses?.map((subprocess) => ({
+          parentId: process.id!,
+          id: subprocess.id,
+          name: subprocess.subProcessAttributes?.name ?? "",
+          timeReal: subprocess.subProcessAttributes?.timeReal,
+          timeAverage: subprocess.subProcessAttributes?.timeAverage,
+          timeMargin: subprocess.subProcessAttributes?.timeMargin,
+          comment: subprocess.subProcessAttributes?.comment,
+          state: subprocess.subProcessAttributes?.state,
+          initialDate: moment().format("YYYY-MM-DD"),
+          endDate: moment().format("YYYY-MM-DD"),
+          employee: "Juan Perez",
+        })) ?? []
+    ) ?? [];
 
   const formatedOrder: FormatedOrder = {
     id: OrderData?.id || 0,

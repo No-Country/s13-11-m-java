@@ -1,9 +1,9 @@
 import CalendarComponent from "@/components/Calendar/CalendarComponent";
 
-import { useGetOrdersQuery } from "@/app/services/api";
+import { useListAllOrdersQuery } from "@/app/services/api/order";
 
 const Calendar = () => {
-  const { data: OrderData } = useGetOrdersQuery();
+  const { data: OrderData } = useListAllOrdersQuery();
 
   const formattedOrders = OrderData
     ? OrderData.map((order) => ({
@@ -15,7 +15,7 @@ const Calendar = () => {
     : [];
 
   return (
-    <div className="mx-auto md:container">
+    <div>
       <CalendarComponent events={formattedOrders} />
     </div>
   );

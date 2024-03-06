@@ -4,21 +4,20 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 import { useToast } from "@/components/ui/use-toast";
 
-import { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
 import { LoginFormInputs } from "@/schemas/loginFormSchema";
 import { RegisterFormInputs } from "@/schemas/registerFormSchema";
 
-import { useForgotPasswordMutation, useLoginMutation, useRegisterMutation } from "@/app/services/api";
+import { authApi, useLoginMutation, useRegisterMutation } from "@/app/services/api/auth";
 import { logout } from "@/features/auth/authSlice";
 
 const useAuth = () => {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
-  const [forgotPassword, { isLoading: isLoadingForgotPassword }] = useForgotPasswordMutation();
   const [register, { isLoading: isLoadingRegister }] = useRegisterMutation();
   const navigate = useNavigate();
   const isLogin = user !== null;
+  const data = useAppSelector(authApi.endpoints.getUser.select());
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -27,12 +26,10 @@ const useAuth = () => {
 
   const { toast } = useToast();
 
-  const handleSubmit = async (values: LoginFormInputs) => {
+  const handleLogin = async (values: LoginFormInputs) => {
     try {
       sessionStorage.removeItem("token");
-      const response = await login(values).unwrap();
-      const token = response.token;
-      sessionStorage.setItem("token", token);
+      await login(values).unwrap();
       toast({
         variant: "success",
         title: "Bienvenido",
@@ -48,16 +45,13 @@ const useAuth = () => {
       });
     }
   };
-
-  const handleForgotPassword = async (values: ForgotPasswordFormInputs) => {
-    try {
-      const { email } = values;
-      await forgotPassword(email).unwrap();
-      navigate("/confirm-email");
-    } catch (error) {
-      console.error(error);
-      alert("Error al enviar email");
-    }
+  const handleForgotPassword = async () => {
+    toast({
+      variant: "success",
+      title: "Email enviado",
+      description: "Revisa tu correo para restablecer tu contraseña",
+    });
+    navigate("/confirm-email");
   };
 
   const handleRegister = async (values: RegisterFormInputs) => {
@@ -72,12 +66,11 @@ const useAuth = () => {
 
   return {
     isLogin,
-    isLoading,
-    isLoadingForgotPassword,
+    isLoading: isLoading || data.isUninitialized || data.isLoading,
     isLoadingRegister,
     user,
     logout: handleLogout,
-    login: handleSubmit,
+    login: handleLogin,
     forgotPassword: handleForgotPassword,
     register: handleRegister,
   } as const;

@@ -177,7 +177,7 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   };
 
   return (
-    <div className="capitalize max-md:-mx-5">
+    <div className="capitalize max-md:-mx-3">
       <Calendar
         localizer={localizer}
         events={events}

@@ -6,10 +6,10 @@ import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm/ForgotPass
 import ForgotPasswordImage from "@/assets/forgot_password.svg";
 
 const ForgotPasswordPage = () => {
-  const { isLoadingForgotPassword, forgotPassword } = useAuth();
+  const { forgotPassword } = useAuth();
   return (
     <AuthTemplate image={ForgotPasswordImage}>
-      <ForgotPasswordForm onSubmit={forgotPassword} isLoading={isLoadingForgotPassword} />
+      <ForgotPasswordForm onSubmit={forgotPassword} />
     </AuthTemplate>
   );
 };

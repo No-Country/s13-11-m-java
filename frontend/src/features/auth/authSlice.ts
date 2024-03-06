@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import type { RootState } from "../../app/store";
-import { api } from "@/app/services/api";
+import { authApi } from "@/app/services/api/auth";
 import { User } from "@/app/services/api/types";
+import { getUser, removeAuth, setAuth } from "@/utils/storage";
+import { jwtDecode } from "jwt-decode";
 
 type AuthState = {
   user: User | null;
-  token: string | null;
 };
 
 const slice = createSlice({
@@ -13,14 +15,29 @@ const slice = createSlice({
   initialState: { user: null, token: null } as AuthState,
   reducers: {
     logout: (state) => {
+      removeAuth();
       state.user = null;
-      state.token = null;
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(api.endpoints.login.matchFulfilled, (state, { payload }) => {
-      state.token = payload.token;
-      state.user = payload.user;
+    builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
+      const { sub: email } = jwtDecode<{ sub: string }>(payload.token);
+      const user: User = { id: "1", firstName: "John", lastName: "Doe", email };
+      setAuth(user, payload.token);
+      state.user = user;
+    });
+    builder.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state) => {
+      const user = getUser();
+      if (user) {
+        state.user = user;
+      } else {
+        removeAuth();
+        state.user = null;
+      }
+    });
+    builder.addMatcher(authApi.endpoints.getUser.matchRejected, (state) => {
+      removeAuth();
+      state.user = null;
     });
   },
 });
@@ -28,7 +45,5 @@ const slice = createSlice({
 export default slice.reducer;
 
 export const selectCurrentUser = (state: RootState) => state.auth.user;
-
-export const selectToken = (state: RootState) => state.auth.token;
 
 export const { logout } = slice.actions;

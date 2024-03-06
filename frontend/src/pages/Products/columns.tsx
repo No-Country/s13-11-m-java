@@ -61,8 +61,8 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "startDate",
-    accessorKey: "startDate",
+    id: "timeEstimatedCompletion",
+    accessorKey: "timeEstimatedCompletion",
     header: (prop) => ColumnSortButton("Fecha Inicio", prop),
     sortingFn: (rowA, rowB) => {
       const dateA = new Date(rowA.original.timeEstimatedCompletion);
