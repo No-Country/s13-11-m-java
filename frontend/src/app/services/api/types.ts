@@ -14,6 +14,9 @@ export type GetProductByUnicoIdResponse = Product;
 export type UpdateProductRequest = Product;
 export type UpdateProductResponse = Product;
 
+export type GetOrderByIdRequest = number;
+export type GetOrderByIdResponse = Order;
+
 export type CreateProductRequest = Pick<
   Product,
   "idUnico" | "name" | "instruction" | "description" | "timeEstimatedCompletion"
@@ -74,6 +77,7 @@ export interface Product {
   processes: Process[];
   company: Company;
   active: boolean;
+  productProcesses: Process[];
 }
 
 export interface Process {
@@ -86,6 +90,7 @@ export interface SubProcess {
   id?: number;
   process?: string;
   processAttributes?: ProcessAttributes;
+  subProcessAttributes?: ProcessAttributes;
 }
 
 export interface ProcessAttributes {
@@ -128,6 +133,18 @@ export interface Employee {
 
 export interface Order {
   id: number;
+  clientName: string;
+  client: {
+    id: number;
+    commonAttribute: {
+      email: null;
+      password: null;
+      address: null;
+      phone: null;
+      name: string;
+    };
+  };
+  product: Product;
   name: string;
   entryDate: string;
   errorTime: number;
@@ -146,6 +163,7 @@ export interface Order {
   processes: Process[];
   company: Company;
   active: boolean;
+  subprocesses: SubProcess[]
 }
 
 export interface OrderRequest {
@@ -161,6 +179,7 @@ export interface OrderRequest {
     };
   };
 }
+
 
 export interface OrderResponse {
   id: number;
@@ -181,4 +200,42 @@ export interface OrderResponse {
       name: string;
     };
   };
+}
+
+export interface mainProcesses {
+  id: number;
+  name: string;
+  timeReal: number;
+  timeAverage: number;
+  timeMargin: number;
+  comment: string;
+  state: boolean;
+  initialDate: string;
+  endDate: string;
+  employee: string;
+}
+
+export interface subprocesses {
+  parentId: number;
+  id: number;
+  name: string;
+  timeReal: number;
+  timeAverage: number;
+  timeMargin: number;
+  comment: string;
+  state: boolean;
+  initialDate: string;
+  endDate: string;
+  employee: string;
+}
+
+export interface formatedOrder {
+  id: number;
+  name: string;
+  clientName: string;
+  initialDate: string;
+  endDate: string;
+  state: string;
+  processes: mainProcesses[];
+  subprocesses: subprocesses[];
 }

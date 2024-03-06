@@ -13,6 +13,8 @@ import {
   DeleteProductRequest,
   DeleteProductResponse,
   GetOrdersResponse,
+  GetOrderByIdRequest,
+  GetOrderByIdResponse,
   GetProcessResponse,
   GetProductByIdRequest,
   GetProductByIdResponse,
@@ -100,6 +102,8 @@ export const api = createApi({
       query: (id) => `/v1/products/product-id/${id}`,
     }),
 
+  
+
     getProductByUnicoId: builder.query<GetProductByUnicoIdResponse, GetProductByUnicoIdRequest>({
       query: (idUnico) => `/v1/products/product-id-unico/${idUnico}`,
     }),
@@ -137,6 +141,11 @@ export const api = createApi({
       }),
       providesTags: ["Orders"],
     }),
+
+    getOrderById: builder.query<GetOrderByIdResponse, GetOrderByIdRequest>({
+      query: (id) => `/v1/product-orders/${id}`,
+    }),
+
     getProcess: builder.query<GetProcessResponse, void>({
       query: () => ({
         url: "/v1/product-orders/all",
@@ -192,4 +201,5 @@ export const {
   useGetProcessQuery,
   useCreateOrderMutation,
   useDeleteOrderMutation,
+  useGetOrderByIdQuery,
 } = api;
