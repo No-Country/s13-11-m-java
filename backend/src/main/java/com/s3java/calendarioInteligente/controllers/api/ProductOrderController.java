@@ -183,26 +183,10 @@ public class ProductOrderController {
     })
     public ResponseEntity<Object> createOrder(
             @RequestBody @Valid ProductOrderRequest productOrderDTO
-    ){
-        try {
+    ) throws Exception {
             ProductOrderResponse productOrder = productOrderService.createProductOrder(productOrderDTO);
             return new ResponseEntity<>(productOrder, HttpStatus.CREATED);
-        } catch (ProductOrderNotFoundException e) {
-            this.logger.error("Resource not found: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (BadRequestException e) {
-            this.logger.error("Bad request: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (EntityNotFoundException e){
-            this.logger.error("Resource not found: " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (IllegalArgumentException e){
-            this.logger.error("Bad request " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            this.logger.error("Internal server error: " + e.getMessage());
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
     }
 
 
@@ -214,34 +198,19 @@ public class ProductOrderController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Object> editOrder(
-            @PathVariable @Valid Long orderId,
+            @PathVariable Long orderId,
             @RequestBody @Valid  ProductOrderRequest productOrderDTO
-    ){
-        try {
+    ) throws Exception {
+
             ProductOrderResponse productOrders = productOrderService
                     .updateProductOrder(orderId, productOrderDTO);
             return ResponseEntity.ok().body(productOrders);
 
-    } catch (ProductOrderNotFoundException e) {
-        this.logger.error("Resource not found: " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    } catch (BadRequestException e) {
-        this.logger.error("Bad request: " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    } catch (EntityNotFoundException e){
-        this.logger.error("Resource not found: " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    } catch (IllegalArgumentException e){
-        this.logger.error("Bad request " + e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    } catch (Exception e) {
-        this.logger.error("Internal server error: " + e.getMessage());
-        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
     }
 
     @DeleteMapping("/delete/{orderId}")
-    @Operation(summary = "Get all orders by company ID", description = "Retrieve a list of product orders for a given company.")
+    @Operation(summary = "Get all orders by company ID",
+            description = "Retrieve a list of product orders for a given company.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Successfully retrieved orders"),
             @ApiResponse(responseCode = "204", description = "No content available"),
@@ -265,10 +234,40 @@ public class ProductOrderController {
         }
     }
 
+
+    //TODO revisar
+    @GetMapping("/obtain-finishEstimateDate/{initialDate}/{productId}")
+    @Operation(summary = "Get a finish estimated time by a initial date",
+            description = "Retrieve a finish estimated date using a initial date and a saved product information")
+    public ResponseEntity<?> getFinishEstimatedDate(
+            @PathVariable String initialDate,
+            @PathVariable Long productId
+            ){
+        try{
+            String finishEstimateDate = this.productOrderService.getFinishEstimatedDate(initialDate, productId);
+            return new ResponseEntity<>(finishEstimateDate, HttpStatus.OK);
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     @GetMapping("/count/{companyID}")
     public ResponseEntity<?> getProductOrderCounts(@PathVariable Long companyID){
         return productOrderService.getProductOrdersCounts(companyID);
     }
+
+    /*
+    @PutMapping("/updateStartDate/{id}")
+    public void updateStartDate(
+            @PathVariable Long id
+    ){
+        this.productOrderService.updateStartDate(id);
+
+    }*/
 }
 
 

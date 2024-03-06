@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.s3java.calendarioInteligente.utils.DateUtils;
+import com.s3java.calendarioInteligente.utils.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "PRODUCT_ORDERS")
@@ -20,7 +22,7 @@ public class ProductOrder {
     private Long id;
 
     @Column(name = "name")
-    @NotNull
+//    @NotNull
     private String name;
 
     @Column(name = "entry_date")
@@ -29,20 +31,24 @@ public class ProductOrder {
 
 
     @Column(name = "error_time")
-    @NotNull
+//    @NotNull
     private Double errorTime;
 
     @Column(name = "photo_link")
     private String photoLink;
 
     @Column(name = "initial_date")
-    @NotNull
+//    @NotNull
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String initialDate;
 
     @Column(name = "finish_est_date")
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String finishEstimatedDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private State state;   //cambio de boolean a ENUM y se copia como nuevo attributo, setters y getter generados
 
     @Column(name = "original_finish_est_date")
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
@@ -53,7 +59,7 @@ public class ProductOrder {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
-    @NotNull
+//    @NotNull
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -66,6 +72,33 @@ public class ProductOrder {
     @JsonIgnore
     private Company company;
 
+    //nuevos campos para calculo de tiempoReal de productos
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateStart;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateEnd;
+
+    public Timestamp getDateStart() {
+        return dateStart;
+    }
+    public void setDateStart(Timestamp dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public Timestamp getDateEnd() {
+        return dateEnd;
+    }
+    public void setDateEnd(Timestamp dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;

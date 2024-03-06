@@ -44,4 +44,13 @@ public class SubProcess {
     public void setSubProcessAttributes(ProcessAttributes subProcessAttributes) {
         this.subProcessAttributes = subProcessAttributes;
     }
+
+    @Override
+    public String toString() {
+        return "SubProcess{" +
+                "id=" + id +
+                ", productProcess=" + productProcess +
+                ", subProcessAttributes=" + subProcessAttributes +
+                '}';
+    }
 }

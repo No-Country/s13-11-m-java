@@ -14,12 +14,12 @@ public class CommonAttribute {
 
     @Column(name = "email", unique = true)
     @Email
-    @NotBlank
+//    @NotBlank
     @Size(max = 70)
     private String email;
 
     @Column(name = "password")
-    @NotBlank
+//    @NotBlank
     private String password;
 
     @Column(name = "address")
@@ -31,7 +31,7 @@ public class CommonAttribute {
     private String phone;
 
     @Column(name = "name")
-    @NotBlank
+//    @NotBlank
     @Size(max = 60)
     private String name;
 

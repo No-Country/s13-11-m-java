@@ -3,8 +3,8 @@ package com.s3java.calendarioInteligente.services.inter;
 import com.s3java.calendarioInteligente.dto.request.ProductOrderRequest;
 import com.s3java.calendarioInteligente.dto.response.ProductOrderResponse;
 import org.springframework.http.ResponseEntity;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -17,7 +17,8 @@ public interface ProductOrderService {
 
     ProductOrderResponse createProductOrder(ProductOrderRequest productOrder) throws Exception;
 
-    ProductOrderResponse updateProductOrder(Long productOrderId, ProductOrderRequest productOrderDTO) throws Exception;
+    ProductOrderResponse updateProductOrder(Long productOrderId,
+                                            ProductOrderRequest productOrderDTO) throws Exception;
 
     void deleteProductOrder(Long productOrderId) throws Exception;
 
@@ -30,4 +31,7 @@ public interface ProductOrderService {
 
     ResponseEntity<?> getProductOrdersCounts(Long companyID);
 
+    void updateStartDate(Long id) throws EntityNotFoundException;
+
+    String getFinishEstimatedDate(String initialDate, Long productId) throws EntityNotFoundException;
 }

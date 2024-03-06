@@ -4,6 +4,7 @@ import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.exception.exceptions.BindingResultException;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.entities.ProductProcess;
+import com.s3java.calendarioInteligente.utils.State;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,39 +64,19 @@ public class ProductController {
                     .body(Collections
                             .singletonMap("mensaje", "Ya existe un producto con ese id unico"));
         }
-        product.setState(true);
+        //product.setState(true);  //cambio de boolean a ENUM
+        product.setState(State.PENDIENTE);  
         product.setActive(true);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(product));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> edit(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id){
+    public ResponseEntity<?> edit(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id) throws Exception {
         if (result.hasErrors()) {
             return getResponseEntity(result);
         }
-        Optional<Product> productOptional = productService.byId(id);
-        if(productOptional.isPresent()){
-            Product productDb = productOptional.get();
-            if(!product.getIdUnico().isEmpty() &&
-                    !product.getIdUnico()
-                            .equalsIgnoreCase(productDb.getIdUnico())
-                                && productService.byIdUnico(product.getIdUnico()).isPresent()){
-                return ResponseEntity.badRequest()
-                        .body(Collections
-                                .singletonMap("mensaje", "Ya existe un producto con ese id Unico"));
-            }
-            productDb.setIdUnico(product.getIdUnico());
-            productDb.setName(product.getName());
-            productDb.setActive(product.getActive());
-            productDb.setDescription(product.getDescription());
-            productDb.setCompany(product.getCompany());
-            productDb.setInstruction(product.getInstruction());
-            productDb.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
-            productDb.setState(product.getState());
-            productDb.setTimeEstimatedCompletion(product.getCreateDate());
-            return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productDb));
-        }
-        return ResponseEntity.notFound().build();
+        Product productDb = this.productService.updateProduct(id, product);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.save(productDb));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -128,5 +109,6 @@ public class ProductController {
     public ResponseEntity<?> deleteProcess(@PathVariable Long productID, @PathVariable Long processID){
         return productService.deleteProcessFromProduct(productID, processID);
     }
+
 
 }

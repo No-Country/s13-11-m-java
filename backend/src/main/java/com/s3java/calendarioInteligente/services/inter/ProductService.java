@@ -17,4 +17,9 @@ public interface ProductService {
     ResponseEntity<?> addProcessToProduct(ProductProcess process, Long productID);
     ResponseEntity<?> deleteProcessFromProduct(Long productID, Long processID);
 
+    void updateTimeAverage(Long productId) throws Exception;
+
+    Product updateProduct(Long id, Product product) throws Exception;
+
+    void updateProductTimeEstimatedCompletion(Product product);
 }
