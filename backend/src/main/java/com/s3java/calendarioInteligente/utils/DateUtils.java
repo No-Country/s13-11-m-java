@@ -47,6 +47,8 @@ public class DateUtils {
                 DateTimeFormatter.ofPattern(FORMAT_DATE_TIME));
     }
 
+
+    //No se transforma bien a LocalDate, toma el timestamp como milisegundos en vez de Segundos
     public static Month getMonthFromTimestamp(Timestamp date) throws DateTimeException {
         System.out.println(date.toString());
         return date.toLocalDateTime().getMonth();
