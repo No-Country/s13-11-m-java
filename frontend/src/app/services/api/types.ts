@@ -163,7 +163,7 @@ export interface Order {
   processes: Process[];
   company: Company;
   active: boolean;
-  subprocesses: SubProcess[]
+  subprocesses: SubProcess[];
 }
 
 export interface OrderRequest {
@@ -179,7 +179,6 @@ export interface OrderRequest {
     };
   };
 }
-
 
 export interface OrderResponse {
   id: number;
@@ -239,3 +238,33 @@ export interface formatedOrder {
   processes: mainProcesses[];
   subprocesses: subprocesses[];
 }
+
+export type Auth = {
+  token: string;
+  refreshToken: string;
+};
+
+// new response auth
+export type SignUpRequest = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  phone: string;
+};
+
+export type SignUpResponse = Auth;
+
+export type SignInRequest = {
+  email: string;
+  password: string;
+};
+
+export type SignInResponse = Auth;
+
+export type RefreshTokenRequest = {
+  token: string;
+};
+
+export type RefreshTokenResponse = Auth;

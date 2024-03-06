@@ -1,41 +1,44 @@
 import { api } from "./index";
-import { LoginRequest, UserResponse } from "./types";
-import { authCredentials } from "@/constants/api";
-import { simulateLoading } from "@/utils/fakeUtils";
+import {
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  SignUpResponse,
+} from "./types";
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<UserResponse, LoginRequest>({
+    login: builder.mutation<SignInResponse, SignInRequest>({
       query: (credentials) => ({
         url: "/security/auth/signin",
         body: credentials,
         method: "POST",
       }),
     }),
-
-    register: builder.mutation<UserResponse, LoginRequest>({
+    register: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (credentials) => ({
         url: "/security/auth/signup",
         body: credentials,
         method: "POST",
       }),
     }),
-    forgotPassword: builder.mutation<void, string>({
-      queryFn: async (email) => {
-        await simulateLoading();
-        if (email === authCredentials.email) {
-          return { data: undefined };
-        } else {
-          return {
-            error: {
-              status: 404,
-              data: { message: "User not found" },
-            },
-          };
-        }
-      },
+    refreshToken: builder.mutation<RefreshTokenResponse, RefreshTokenRequest>({
+      query: (token) => ({
+        url: "/security/auth/refresh",
+        body: { token },
+        method: "POST",
+      }),
+    }),
+    getUser: builder.query<string, void>({
+      query: () => ({
+        url: "/security/user",
+        method: "GET",
+        responseHandler: "text",
+      }),
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useRefreshTokenMutation, useGetUserQuery } = authApi;

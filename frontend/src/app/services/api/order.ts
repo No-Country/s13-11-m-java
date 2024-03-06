@@ -18,7 +18,6 @@ const orderApi = api.injectEndpoints({
       }),
       providesTags: ["Orders"],
     }),
-
     getOrderById: builder.query<GetOrderByIdResponse, GetOrderByIdRequest>({
       query: (id) => `/v1/product-orders/${id}`,
     }),
