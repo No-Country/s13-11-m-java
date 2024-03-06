@@ -1,15 +1,27 @@
 package com.s3java.calendarioInteligente.entities;
 
+import com.s3java.calendarioInteligente.utils.State;
+
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 @Embeddable
 public class ProcessAttributes {
     @NotNull (message = "name must not be null")
     @NotEmpty (message = "name must not be empty")
     private String name;
+
+//    private Double timeReal;  // cambio el nombre del atributo
+    private Double timeEstimatedCompletion;  //Tiempo Interno asignado,
+    // suma de tiempos manuales de subprocesos + tiempos de procesos  
+    
+    @NotNull (message = "state must not be null") 
+    @Enumerated(EnumType.STRING)
+    private State state; //cambio de boolean a ENUM    
+   
     @NotNull (message = "timeReal must not be null")
     private Double timeReal;
     @NotNull (message = "timeAverage must not be null")
@@ -19,8 +31,7 @@ public class ProcessAttributes {
     @NotNull (message = "comment must not be null")
     @NotEmpty (message = "comment must not be empty")
     private String comment;
-    @NotNull (message = "state must not be null")
-    private Boolean state;
+  
     @NotNull (message = "active must not be null")
     private Boolean active;
     @NotNull (message = "counter must not be null")
@@ -35,12 +46,17 @@ public class ProcessAttributes {
         this.name = name;
     }
 
-    public Double getTimeReal() {
-        return timeReal;
+//    public Double getTimeReal() {
+//        return timeReal;
+//    }
+//    public void setTimeReal(Double timeReal) {
+//        this.timeReal = timeReal;
+//    }
+    public Double getTimeEstimatedCompletion() {
+        return timeEstimatedCompletion;
     }
-
-    public void setTimeReal(Double timeReal) {
-        this.timeReal = timeReal;
+    public void setTimeEstimatedCompletion(Double timeEstimatedCompletion) {
+        this.timeEstimatedCompletion = timeEstimatedCompletion;
     }
 
     public Double getTimeAverage() {
@@ -67,11 +83,16 @@ public class ProcessAttributes {
         this.comment = comment;
     }
 
-    public Boolean getState() {
+//    public Boolean getState() {
+//        return state;
+//    }
+//    public void setState(Boolean state) {
+//        this.state = state;
+//    }
+    public State getState() {
         return state;
     }
-
-    public void setState(Boolean state) {
+    public void setState(State state) {
         this.state = state;
     }
 

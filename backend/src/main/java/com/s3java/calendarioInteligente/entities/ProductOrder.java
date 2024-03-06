@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.s3java.calendarioInteligente.utils.DateUtils;
+import com.s3java.calendarioInteligente.utils.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "PRODUCT_ORDERS")
@@ -44,6 +46,10 @@ public class ProductOrder {
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String finishEstimatedDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private State state;   //cambio de boolean a ENUM y se copia como nuevo attributo, setters y getter generados
+
     @Column(name = "is_active")
     private Boolean isActive;
 
@@ -62,6 +68,33 @@ public class ProductOrder {
     @JsonIgnore
     private Company company;
 
+    //nuevos campos para calculo de tiempoReal de productos
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateStart;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateEnd;
+
+    public Timestamp getDateStart() {
+        return dateStart;
+    }
+    public void setDateStart(Timestamp dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public Timestamp getDateEnd() {
+        return dateEnd;
+    }
+    public void setDateEnd(Timestamp dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 
     public Long getId() {
         return id;
