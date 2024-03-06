@@ -6,20 +6,16 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import { Button } from "../ui/button";
 import { InputSearch } from "../ui/inputSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+import { Menubar, MenubarContent, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 
 import { FaBars, FaRegBell } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 
 import Logo from "../Logo";
-import { logItems, navItems } from "./items";
+import {
+  logItems,
+  /*navItems*/
+} from "./items";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
@@ -61,11 +57,11 @@ function Navbar() {
             <>
               <div className="flex grow justify-center">
                 <div>
-                  {navItems.map((item, index) => (
+                  {/* {navItems.map((item, index) => (
                     <Button variant="link" key={index} asChild>
                       <Link to={item.link}>{item.title}</Link>
                     </Button>
-                  ))}
+                  ))} */}
                 </div>
               </div>
               <div className="space-x-4">
@@ -84,11 +80,11 @@ function Navbar() {
                     <FaBars />
                   </MenubarTrigger>
                   <MenubarContent>
-                    {navItems.map((item, index) => (
+                    {/* {navItems.map((item, index) => (
                       <MenubarItem key={index} asChild className="cursor-pointer">
                         <Link to={item.link}>{item.title}</Link>
                       </MenubarItem>
-                    ))}
+                    ))} */}
                     <MenubarSeparator />
                     {logItems.map((item, index) => (
                       <div key={index} className="flex py-1.5">

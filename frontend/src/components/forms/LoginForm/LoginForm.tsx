@@ -58,7 +58,7 @@ const LoginForm = ({ loading, onSubmit }: LoginFormProps) => {
         <Button className="w-full" type="submit" size="rounded" disabled={loading}>
           Iniciar sesión
         </Button>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           {linkItems.map((item, index) => (
             <Button asChild variant="link" key={index}>
               <Link to={item.link}>{item.title}</Link>
