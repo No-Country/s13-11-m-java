@@ -1,11 +1,11 @@
 import { api } from "./index";
 import {
-  CreateOrderRequestAPI,
-  CreateOrderResponseAPI,
-  DeleteOrderIdRequestAPI,
-  DeleteOrderResponseAPI,
-  GetOrderByIdRequestAPI,
-  GetOrderByIdResponseAPI,
+  CreateOrderRequest,
+  CreateOrderResponse,
+  DeleteOrderIdRequest,
+  DeleteOrderResponse,
+  GetOrderByIdRequest,
+  GetOrderByIdResponse,
   GetOrdersByClientIdRequest,
   GetOrdersByClientIdResponse,
   GetOrdersByDateRequest,
@@ -17,7 +17,7 @@ import {
 
 const orderApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    createOrder: builder.mutation<CreateOrderResponseAPI, CreateOrderRequestAPI>({
+    createOrder: builder.mutation<CreateOrderResponse, CreateOrderRequest>({
       query: (orderData) => ({
         url: "/v1/product-orders/create",
         method: "POST",
@@ -31,7 +31,7 @@ const orderApi = api.injectEndpoints({
         body: order,
       }),
     }),
-    getOrderById: builder.query<GetOrderByIdResponseAPI, GetOrderByIdRequestAPI>({
+    getOrderById: builder.query<GetOrderByIdResponse, GetOrderByIdRequest>({
       query: (orderId) => `/v1/product-orders/${orderId}`,
     }),
     getOrdersByClientId: builder.query<GetOrdersByClientIdResponse, GetOrdersByClientIdRequest>({
@@ -49,7 +49,7 @@ const orderApi = api.injectEndpoints({
     getOrdersByEntryDate: builder.query<GetOrdersByDateResponse, GetOrdersByDateRequest>({
       query: (entryDate) => `/v1/product-orders/all/${entryDate}/entry_date`,
     }),
-    deleteOrder: builder.mutation<DeleteOrderResponseAPI, DeleteOrderIdRequestAPI>({
+    deleteOrder: builder.mutation<DeleteOrderResponse, DeleteOrderIdRequest>({
       query: (orderId) => ({
         url: `/v1/product-orders/delete/${orderId}`,
         method: "DELETE",

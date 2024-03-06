@@ -15,7 +15,7 @@ import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical, BsTrash } from 
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
-import { ProductAPI } from "@/app/services/api/types";
+import { Product } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -27,7 +27,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<ProductAPI>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     id: "name",
     accessorKey: "name",

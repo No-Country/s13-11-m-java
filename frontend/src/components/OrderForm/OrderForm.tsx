@@ -14,12 +14,12 @@ import { FaCamera } from "react-icons/fa6";
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
 import { useGetAllProductsQuery } from "@/app/services/api/product";
-import { CreateOrderRequestAPI } from "@/app/services/api/types";
+import { CreateOrderRequest } from "@/app/services/api/types";
 import { employees } from "@/mocks/employees/employees";
 import { clients } from "@/mocks/orderFormMocks/data";
 
 export interface OrderFormProps {
-  onSubmit?: (values: CreateOrderRequestAPI) => void;
+  onSubmit?: (values: CreateOrderRequest) => void;
   isLoading?: boolean;
 }
 

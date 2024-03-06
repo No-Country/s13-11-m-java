@@ -1,9 +1,9 @@
 import { api } from "./index";
 import {
-  AllProductsResponseAPI,
+  AllProductsResponse,
   DeleteProductProcessRequest,
   DeleteProductProcessResponse,
-  DeleteProductRequestAPI,
+  DeleteProductRequest,
   ProductCreateRequest,
   ProductCreateResponse,
   ProductIdRequest,
@@ -54,7 +54,7 @@ const productApi = api.injectEndpoints({
     getUniqueProductId: builder.query<UniqueProductIdResponse, UniqueProductIdRequest>({
       query: (idUnico) => `/v1/products/product-id-unico/${idUnico}`,
     }),
-    getAllProducts: builder.query<AllProductsResponseAPI, void>({
+    getAllProducts: builder.query<AllProductsResponse, void>({
       query: () => "/v1/products/all",
       providesTags: ["Products"],
     }),
@@ -64,7 +64,7 @@ const productApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    deleteProduct: builder.mutation<void, DeleteProductRequestAPI>({
+    deleteProduct: builder.mutation<void, DeleteProductRequest>({
       query: (id) => ({
         url: `/v1/products/delete/${id}`,
         method: "DELETE",

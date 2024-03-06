@@ -1,44 +1,3 @@
-export type AllProductsResponse = Product[];
-
-export type AllEmployeesResponse = Employee[];
-
-export type GetProductByNameRequest = string;
-export type GetProductByNameResponse = Product;
-
-export type GetProductByIdRequest = number;
-export type GetProductByIdResponse = Product;
-
-export type GetProductByUnicoIdRequest = string;
-export type GetProductByUnicoIdResponse = Product;
-
-export type UpdateProductRequest = Product;
-export type UpdateProductResponse = Product;
-
-export type GetOrderByIdRequest = number;
-export type GetOrderByIdResponse = Order;
-
-export type CreateProductRequest = Pick<
-  Product,
-  "idUnico" | "name" | "instruction" | "description" | "timeEstimatedCompletion"
->;
-export type CreateProductResponse = Product;
-
-export type CreateProcessRequest = Process & { productId: number };
-export type CreateProcessResponse = Process;
-
-export type DeleteProductRequest = number;
-export type DeleteProductResponse = number;
-
-export type GetOrdersResponse = Order[];
-export type GetEmployeesResponse = Employee[];
-
-export type GetProcessResponse = Process;
-export type CreateOrderRequest = OrderRequest;
-export type CreateOrderResponse = OrderResponse;
-
-export type DeleteOrderRequest = number;
-export type DeleteOrderResponse = number;
-
 export interface User {
   id: string;
   email: string;
@@ -46,80 +5,7 @@ export interface User {
   lastName: string;
 }
 
-export interface UserResponse {
-  user: User;
-  token: string;
-}
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  phone: string;
-}
-
-export interface Product {
-  id: number;
-  idUnico: string;
-  name: string;
-  instruction: string;
-  description: string;
-  totalProduction: number;
-  state: boolean;
-  timeEstimatedCompletion: string;
-  processes: Process[];
-  company: Company;
-  active: boolean;
-  productProcesses: Process[];
-}
-
-export interface Process {
-  id: number;
-  subProcesses: SubProcess[];
-  processAttributes: ProcessAttributes;
-}
-
-export interface SubProcess {
-  id?: number;
-  process?: string;
-  processAttributes?: ProcessAttributes;
-  subProcessAttributes?: ProcessAttributes;
-}
-
-export interface ProcessAttributes {
-  name: string;
-  timeReal: number;
-  timeAverage: number;
-  timeMargin: number;
-  comment: string;
-  state: boolean;
-  active: boolean;
-  counter: number;
-}
-
-export interface Company {
-  id: number;
-  commonAttribute: CommonAttribute;
-  products: string[];
-  employee: Employee[];
-}
-
-export interface CommonAttribute {
-  email: string;
-  password: string;
-  address: string;
-  phone: string;
-  name: string;
-}
-
-export interface Employee {
+export type Employee = {
   name: string;
   state: string;
   startdate: string;
@@ -129,119 +15,12 @@ export interface Employee {
   timeEstimatedCompletion: string;
   company: string;
   active: boolean;
-}
-
-export interface Order {
-  id: number;
-  clientName: string;
-  client: {
-    id: number;
-    commonAttribute: {
-      email: null;
-      password: null;
-      address: null;
-      phone: null;
-      name: string;
-    };
-  };
-  product: Product;
-  name: string;
-  entryDate: string;
-  errorTime: number;
-  photoLink: string;
-  initialDate: string;
-  endDate: string;
-  productId: number;
-  clientId: number;
-  idUnico: string;
-  instruction: string;
-  description: string;
-  totalProduction: number;
-  finishEstimatedDate: string;
-  state: string;
-  timeEstimatedCompletion: string;
-  processes: Process[];
-  company: Company;
-  active: boolean;
-  subprocesses: SubProcess[];
-}
-
-export interface OrderRequest {
-  name: string;
-  errorTime: number;
-  photoLink: string;
-  initialDate: string;
-  finishEstimatedDate: string;
-  productId: number;
-  client: {
-    commonAttribute: {
-      name: string;
-    };
-  };
-}
-
-export interface OrderResponse {
-  id: number;
-  name: string;
-  entryDate: Date;
-  errorTime: number;
-  photoLink: string;
-  initialDate: Date;
-  finishEstimatedDate: Date;
-  product: Product;
-  client: {
-    id: number;
-    commonAttribute: {
-      email: null;
-      password: null;
-      address: null;
-      phone: null;
-      name: string;
-    };
-  };
-}
-
-export interface mainProcesses {
-  id: number;
-  name: string;
-  timeReal: number;
-  timeAverage: number;
-  timeMargin: number;
-  comment: string;
-  state: boolean;
-  initialDate: string;
-  endDate: string;
-  employee: string;
-}
-
-export interface subprocesses {
-  parentId: number;
-  id: number;
-  name: string;
-  timeReal: number;
-  timeAverage: number;
-  timeMargin: number;
-  comment: string;
-  state: boolean;
-  initialDate: string;
-  endDate: string;
-  employee: string;
-}
-
-export interface formatedOrder {
-  id: number;
-  name: string;
-  clientName: string;
-  initialDate: string;
-  endDate: string;
-  state: string;
-  processes: mainProcesses[];
-  subprocesses: subprocesses[];
-}
+};
 
 export type Auth = {
   token: string;
   refreshToken: string;
+  user?: User;
 };
 
 // new response auth
@@ -269,7 +48,7 @@ export type RefreshTokenRequest = {
 
 export type RefreshTokenResponse = Auth;
 
-export type ProductAPI = {
+export type Product = {
   id?: number;
   idUnico: string;
   name: string;
@@ -278,12 +57,12 @@ export type ProductAPI = {
   description: string;
   state?: boolean;
   timeEstimatedCompletion: string;
-  productProcesses?: ProductProcessAPI[];
-  company?: CompanyAPI;
+  productProcesses?: ProductProcess[];
+  company?: Company;
   active?: boolean;
 };
 
-export type ProcessAttributesAPI = {
+export type ProcessAttributes = {
   name: string;
   timeReal: number;
   timeAverage: number;
@@ -294,27 +73,27 @@ export type ProcessAttributesAPI = {
   counter: number;
 };
 
-export type ProductProcessAPI = {
+export type ProductProcess = {
   id?: number;
   // product: string;
-  subProcesses?: SubProcessAPI[];
-  processAttributes?: ProcessAttributesAPI;
+  subProcesses?: SubProcess[];
+  processAttributes?: ProcessAttributes;
 };
 
-export type SubProcessAPI = {
+export type SubProcess = {
   id?: number;
   // productProcess: string;
-  processAttributes?: ProcessAttributesAPI;
-  subProcessAttributes?: ProcessAttributesAPI;
+  processAttributes?: ProcessAttributes;
+  subProcessAttributes?: ProcessAttributes;
 };
 
-export type CompanyAPI = {
+export type Company = {
   id: number;
-  commonAttribute: CommonAttributeAPI;
-  employee: UserEAPI[];
+  commonAttribute: CommonAttribute;
+  employee: UserE[];
 };
 
-export type CommonAttributeAPI = {
+export type CommonAttribute = {
   email: string;
   password: string;
   address?: string;
@@ -322,43 +101,43 @@ export type CommonAttributeAPI = {
   name: string;
 };
 
-export type UserEAPI = {
+export type UserE = {
   id: number;
   roles: string[];
-  commonAttribute: CommonAttributeAPI;
+  commonAttribute: CommonAttribute;
   // company: CompanyAPI;
 };
 // new response product
-export type ProductUpdateResponse = ProductAPI;
-export type ProductUpdateRequest = ProductAPI;
+export type ProductUpdateResponse = Product;
+export type ProductUpdateRequest = Product;
 
-export type ProductProcessResponse = ProductAPI;
-export type ProductProcessRequest = ProductProcessAPI & { productId: number };
+export type ProductProcessResponse = Product;
+export type ProductProcessRequest = ProductProcess & { productId: number };
 
-export type ProductCreateResponse = ProductAPI;
-export type ProductCreateRequest = ProductAPI;
+export type ProductCreateResponse = Product;
+export type ProductCreateRequest = Product;
 
-export type ProductNameResponse = ProductAPI;
+export type ProductNameResponse = Product;
 export type ProductNameRequest = string;
 
-export type ProductIdResponse = ProductAPI;
+export type ProductIdResponse = Product;
 export type ProductIdRequest = number;
 
-export type UniqueProductIdResponse = ProductAPI;
+export type UniqueProductIdResponse = Product;
 export type UniqueProductIdRequest = string;
 
-export type AllProductsResponseAPI = ProductAPI[];
+export type AllProductsResponse = Product[];
 
-export type DeleteProductProcessResponse = ProductAPI;
+export type DeleteProductProcessResponse = Product;
 export type DeleteProductProcessRequest = {
   productId: number;
   processId: number;
 };
 
-export type DeleteProductRequestAPI = number;
+export type DeleteProductRequest = number;
 
 // new response order
-export type ProductOrderAPI = {
+export type ProductOrder = {
   id: number;
   name: string;
   errorTime: number;
@@ -366,49 +145,49 @@ export type ProductOrderAPI = {
   initialDate: string;
   finishEstimatedDate: string;
   productId: number;
-  client: ClientAPI;
-  product: ProductAPI;
+  client: Client;
+  product: Product;
 };
 
-export type ClientAPI = {
+export type Client = {
   id: number;
-  commonAttribute: CommonAttributeAPI;
-  company: CompanyAPI;
+  commonAttribute: CommonAttribute;
+  company: Company;
 };
 
-export type CreateOrderResponseAPI = ProductOrderAPI; /* No response */
-export type CreateOrderRequestAPI = Omit<ProductOrderAPI, "id" | "product" | "client"> & {
+export type CreateOrderResponse = ProductOrder; /* No response */
+export type CreateOrderRequest = Omit<ProductOrder, "id" | "product" | "client"> & {
   client: {
-    commonAttribute: Pick<CommonAttributeAPI, "name">;
+    commonAttribute: Pick<CommonAttribute, "name">;
   };
 };
 
-export type UpdateOrderResponse = ProductOrderAPI; /* No response */
-export type UpdateOrderRequest = ProductOrderAPI & { orderId: number };
+export type UpdateOrderResponse = ProductOrder; /* No response */
+export type UpdateOrderRequest = ProductOrder & { orderId: number };
 
-export type GetOrderByIdResponseAPI = ProductOrderAPI;
-export type GetOrderByIdRequestAPI = number;
+export type GetOrderByIdResponse = ProductOrder;
+export type GetOrderByIdRequest = number;
 
-export type GetOrdersByClientIdResponse = ProductOrderAPI[];
+export type GetOrdersByClientIdResponse = ProductOrder[];
 export type GetOrdersByClientIdRequest = number;
 
-export type ListAllOrdersResponse = ProductOrderAPI[];
+export type ListAllOrdersResponse = ProductOrder[];
 
-export type GetOrdersByDateResponse = ProductOrderAPI[];
+export type GetOrdersByDateResponse = ProductOrder[];
 export type GetOrdersByDateRequest = string;
 
-export type DeleteOrderResponseAPI = void;
-export type DeleteOrderIdRequestAPI = number;
+export type DeleteOrderResponse = void;
+export type DeleteOrderIdRequest = number;
 
-export type GetProcessByIdResponse = ProductProcessAPI;
+export type GetProcessByIdResponse = ProductProcess;
 export type GetProcessByIdRequest = number;
-export type UpdateProcessResponse = ProductProcessAPI;
-export type UpdateProcessRequest = ProductProcessAPI;
+export type UpdateProcessResponse = ProductProcess;
+export type UpdateProcessRequest = ProductProcess;
 export type DeleteProcessResponse = void;
 export type DeleteProcessRequest = number;
-export type CreateSubprocessResponse = SubProcessAPI & { id: number };
-export type CreateSubprocessRequest = ProductProcessAPI;
-export type ListAllProcessesResponse = ProductProcessAPI[];
+export type CreateSubprocessResponse = SubProcess & { id: number };
+export type CreateSubprocessRequest = ProductProcess;
+export type ListAllProcessesResponse = ProductProcess[];
 export type DeleteSubprocessResponse = void;
 export type DeleteSubprocessRequest = {
   processId: number;
