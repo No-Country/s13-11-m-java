@@ -24,6 +24,6 @@ export const logItems: Item[] = [
   },
   {
     title: "Comenzar",
-    link: "#",
+    link: "/register",
   },
 ];

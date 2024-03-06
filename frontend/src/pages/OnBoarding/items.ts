@@ -37,7 +37,7 @@ export const carouselItems: CarouselItem[] = [
     alt: "Person writing on a piece of paper",
     button: {
       title: "Empezar ahora",
-      link: "#",
+      link: "/register",
     },
   },
 ];
