@@ -21,20 +21,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+//    @NotEmpty
     @Column(unique = true)
     private String idUnico;
 
-    @NotBlank
+//    @NotBlank
     private String name;
 
-    @NotBlank
+//    @NotBlank
     private String instruction;
 
     @Column(name = "CREATE_DATE")
     private String createDate;
 
-    @NotBlank
+//    @NotBlank
     private String description;
 
 
@@ -50,7 +50,7 @@ private State state;
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @NotBlank
+//    @NotBlank
     @Column(name = "time_estimated_completion")
     private Double timeEstimatedCompletion;
 //    private String timeEstimatedCompletion;

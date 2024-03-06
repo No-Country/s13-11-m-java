@@ -22,7 +22,7 @@ public class ProductOrder {
     private Long id;
 
     @Column(name = "name")
-    @NotNull
+//    @NotNull
     private String name;
 
     @Column(name = "entry_date")
@@ -31,14 +31,14 @@ public class ProductOrder {
 
 
     @Column(name = "error_time")
-    @NotNull
+//    @NotNull
     private Double errorTime;
 
     @Column(name = "photo_link")
     private String photoLink;
 
     @Column(name = "initial_date")
-    @NotNull
+//    @NotNull
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String initialDate;
 
@@ -55,7 +55,7 @@ public class ProductOrder {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
-    @NotNull
+//    @NotNull
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

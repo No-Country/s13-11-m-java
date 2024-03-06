@@ -10,31 +10,31 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 @Embeddable
 public class ProcessAttributes {
-    @NotNull (message = "name must not be null")
-    @NotEmpty (message = "name must not be empty")
+//    @NotNull (message = "name must not be null")
+//    @NotEmpty (message = "name must not be empty")
     private String name;
 
 //    private Double timeReal;  // cambio el nombre del atributo
     private Double timeEstimatedCompletion;  //Tiempo Interno asignado,
     // suma de tiempos manuales de subprocesos + tiempos de procesos  
     
-    @NotNull (message = "state must not be null") 
+//    @NotNull (message = "state must not be null")
     @Enumerated(EnumType.STRING)
     private State state; //cambio de boolean a ENUM    
    
-    @NotNull (message = "timeReal must not be null")
-    private Double timeReal;
-    @NotNull (message = "timeAverage must not be null")
+//    @NotNull (message = "timeReal must not be null")
+//    private Double timeReal;
+//    @NotNull (message = "timeAverage must not be null")
     private Double timeAverage;
-    @NotNull (message = "timeMargin must not be null")
+//    @NotNull (message = "timeMargin must not be null")
     private Double timeMargin;
-    @NotNull (message = "comment must not be null")
-    @NotEmpty (message = "comment must not be empty")
+//    @NotNull (message = "comment must not be null")
+//    @NotEmpty (message = "comment must not be empty")
     private String comment;
   
-    @NotNull (message = "active must not be null")
+//    @NotNull (message = "active must not be null")
     private Boolean active;
-    @NotNull (message = "counter must not be null")
+//    @NotNull (message = "counter must not be null")
     private Integer counter;
 
 
