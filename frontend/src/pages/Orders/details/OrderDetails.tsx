@@ -57,7 +57,7 @@ const OrderDetail = () => {
       state: process.processAttributes?.state,
       initialDate: moment().format("YYYY-MM-DD"),
       endDate: moment().format("YYYY-MM-DD"),
-      employee: "Juan Perez",
+      employee: "Pedro Pérez",
     })) ?? [];
 
   const subprocesses: FormatedSubProcess[] =
@@ -74,7 +74,7 @@ const OrderDetail = () => {
           state: subprocess.subProcessAttributes?.state,
           initialDate: moment().format("YYYY-MM-DD"),
           endDate: moment().format("YYYY-MM-DD"),
-          employee: "Juan Perez",
+          employee: "Ana Rodríguez",
         })) ?? []
     ) ?? [];
 

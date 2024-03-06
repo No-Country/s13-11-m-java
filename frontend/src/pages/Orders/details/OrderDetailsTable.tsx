@@ -11,7 +11,6 @@ interface OrderDetailsTableProps {
   orderData: FormatedOrder;
 }
 const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ orderData: data }) => {
-  console.log(data);
   return (
     <div className="container py-10">
       <div className="flex flex-wrap justify-between gap-4">

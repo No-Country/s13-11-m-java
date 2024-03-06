@@ -7,7 +7,7 @@ export interface User {
 
 export type Employee = {
   name: string;
-  state: string;
+  state: boolean;
   startdate: string;
   jornada: string;
   cantidadfinalizados: number;

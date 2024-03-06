@@ -4,14 +4,14 @@ import { MdOutlineCalendarMonth, MdOutlineDashboard, MdOutlinePeopleAlt, MdOutli
 
 export const menuItems = [
   {
-    icon: <MdOutlineCalendarMonth />,
-    label: "Calendario",
-    href: "/calendar",
-  },
-  {
     icon: <MdOutlineDashboard />,
     label: "Dashboard",
     href: "/dashboard",
+  },
+  {
+    icon: <MdOutlineCalendarMonth />,
+    label: "Calendario",
+    href: "/calendar",
   },
   {
     icon: <OrdersIcon />,
