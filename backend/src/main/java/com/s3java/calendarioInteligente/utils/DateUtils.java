@@ -4,9 +4,14 @@ package com.s3java.calendarioInteligente.utils;
 
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Formatter;
 
 /**
  * Utility class for date-related operations.
@@ -39,6 +44,11 @@ public class DateUtils {
         return LocalDateTime.parse(
                 date,
                 DateTimeFormatter.ofPattern(FORMAT_DATE_TIME));
+    }
+
+    public static Timestamp convertToTimeStampFromString(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT_DATE_TIME);
+        return Timestamp.valueOf(LocalDateTime.parse(dateString, formatter));
     }
 
 

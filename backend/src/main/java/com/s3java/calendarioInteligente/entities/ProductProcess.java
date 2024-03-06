@@ -64,5 +64,13 @@ public class ProductProcess {
         this.processAttributes = processAttributes;
     }
 
-
+    @Override
+    public String toString() {
+        return "ProductProcess{" +
+                "id=" + id +
+                ", product=" + product +
+                ", subProcesses=" + subProcesses +
+                ", processAttributes=" + processAttributes +
+                '}';
+    }
 }

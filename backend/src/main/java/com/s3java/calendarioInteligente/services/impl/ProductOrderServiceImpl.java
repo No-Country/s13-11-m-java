@@ -13,22 +13,30 @@ import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapper
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.repositories.CompanyRepository;
 import com.s3java.calendarioInteligente.repositories.ProductOrderRepository;
+import com.s3java.calendarioInteligente.services.data.Calculos;
 import com.s3java.calendarioInteligente.services.inter.ProductOrderService;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.utils.DateUtils;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
+import com.s3java.calendarioInteligente.utils.State;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static com.s3java.calendarioInteligente.utils.DateUtils.convertToTimeStampFromString;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -46,6 +54,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductOrderServiceImpl.class);
 
+    private final Calculos calculos;
+
     private LocalDateTime timeNow = LocalDateTime.now();
 
 
@@ -53,13 +63,15 @@ public class ProductOrderServiceImpl implements ProductOrderService {
                             ClientRepository clientRepository,
                             ProductService productService,
                             CompanyRepository companyRepository,
-                            ProductOrderMapper productOrderMapper
+                            ProductOrderMapper productOrderMapper,
+                            Calculos calculos
     ){
         this.productOrderRepository = productOrderRepository;
         this.clientRepository = clientRepository;
         this.productOrderMapper  = productOrderMapper;
         this.productService  = productService;
         this.companyRepository = companyRepository;
+        this.calculos = calculos;
 
 
     }
@@ -132,6 +144,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         productOrder.setCompany(company);
         productOrder.setClient(clientSaved);
         productOrder.setProduct(product);
+        productOrder.setDateStart(
+                convertToTimeStampFromString(productOrderRequest.getInitialDate())); // TODO revisar
         ProductOrder productOrderSaved = this.productOrderRepository.save(productOrder);
         return this.productOrderMapper.productOrderToProductOrderResponse(productOrderSaved);
     }
@@ -140,6 +154,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Transactional
     public ProductOrderResponse updateProductOrder(Long productOrderId,
                                                    ProductOrderRequest productOrderRequest) throws Exception {
+
 
         ProductOrder oldProductOrder = this.productOrderRepository
                 .findProductOrderById(productOrderId, this.companyId)
@@ -164,6 +179,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         String initialDateString = productOrderRequest.getInitialDate();
         String finishEstimatedDateString = productOrderRequest.getFinishEstimatedDate();
 
+        // para actualizar los timeStamp
+        this.verifyStateForSetAStartDate(productOrderId, productOrderRequest, oldProductOrder);
+
+        //-------------------------------------------------------------
+
         if (initialDateString != null) {
             LocalDateTime initialDate = LocalDateTime.parse(initialDateString);
             this.validateDateOrder(initialDate, this.timeNow, "The initial date must not be earlier than the entry date.");
@@ -183,18 +203,33 @@ public class ProductOrderServiceImpl implements ProductOrderService {
             return this.productOrderMapper.productOrderToProductOrderResponse(productOrderUpdated);
         }
 
+    private void verifyStateForSetAStartDate(Long productOrderId, ProductOrderRequest productOrderRequest,
+                           ProductOrder oldProductOrder) throws Exception {
+        if(productOrderRequest.getState() == State.EN_PROGRESO){
+            this.updateStartDate(productOrderId);
+        }
+
+        else if(productOrderRequest.getState() == State.TERMINADO){
+            this.updateEndDate(productOrderId);
+            this.productService.updateTimeAverage(oldProductOrder.getProduct().getId());
+        }
+    }
+
+    private void updateEndDate(Long productOrderId) {
+        Timestamp endDate = Timestamp.valueOf(LocalDateTime.now());
+        this.productOrderRepository.updateEndDate(productOrderId, endDate);
+    }
+
 
     @Transactional
     @Override
     public void deleteProductOrder(Long productOrderId) throws ProductNotFoundException {
-
 
         ProductOrder po = this.productOrderRepository.findById(productOrderId)
                 .orElseThrow(() ->
                         new ProductOrderNotFoundException("Product order not found with ID: " + productOrderId));
         po.setIsActive(false);
         Company company = po.getCompany();
-        //Hibernate.initialize(company.getEmployee());
         productOrderRepository.save(po);
 
     }
@@ -217,11 +252,27 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-
     public List<ProductOrderResponse> findProductOrdersByInitialDate(String date) {
         List<ProductOrder> productOrders = this.productOrderRepository
                 .findProductOrdersByInitialDate(date, companyId);
         return this.productOrderMapper.productOrdersToProductOrdersResponse(productOrders);
+    }
+
+
+    // agregado
+    @Override
+    public void updateStartDate(Long orderId) {
+        Timestamp startDate = Timestamp.valueOf(LocalDateTime.now());
+        this.productOrderRepository.updateStartDate(orderId, startDate);
+    }
+
+    //TODO revisar
+    @Override
+    public String getFinishEstimatedDate(String initialDateString, Long productId) throws EntityNotFoundException{
+        Product p = this.findProductByIdOrThrow(productId);
+        LocalDateTime initialDate = DateUtils.converFromString(initialDateString);
+        return initialDate.plusSeconds((long) p.getTimeAverage().doubleValue()).toString();
+
     }
 
     private ProductOrder createProductOrderWithEntryDateFromRequest(ProductOrderRequest productOrderRequest) {
