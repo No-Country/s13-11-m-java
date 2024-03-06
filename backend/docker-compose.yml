@@ -1,34 +1,1 @@
-version: '3.9'
-
-services:
-  java_app:
-    container_name: java_app
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-        - PROD_DB_HOST=java_db
-        - PROD_DB_PORT=5432
-        - PROD_DB_NAME=postgres
-        - PROD_DB_USERNAME=postgres
-        - PROD_DB_PASSWORD=postgres
-    depends_on:
-      - java_db
-    restart: always
-  java_db:
-    container_name: java_db
-    image: postgres:16-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - data-postgres:/var/lib/postgresql/data
-    restart: always
-volumes:
-  data-postgres:
-
-
-
+version: '3.9'services:  java_app:    container_name: java_app    build: .    ports:      - "8080:8080"    environment:        - PROD_DB_HOST=java_db        - PROD_DB_PORT=5432        - PROD_DB_NAME=postgres        - PROD_DB_USERNAME=postgres        - PROD_DB_PASSWORD=postgres    depends_on:      - java_db    restart: always  java_db:    container_name: java_db    image: postgres:16-alpine    ports:      - "5432:5432"    environment:      POSTGRES_USER: postgres      POSTGRES_PASSWORD: postgres      POSTGRES_DB: postgres    volumes:      - data-postgres:/var/lib/postgresql/data    restart: alwaysvolumes:  data-postgres:

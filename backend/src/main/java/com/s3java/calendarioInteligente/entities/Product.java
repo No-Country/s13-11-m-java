@@ -1,12 +1,16 @@
 package com.s3java.calendarioInteligente.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
+import com.s3java.calendarioInteligente.utils.State;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,76 +21,81 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+//    @NotEmpty
     @Column(unique = true)
     private String idUnico;
 
-    @NotBlank
+//    @NotBlank
     private String name;
 
-    @NotBlank
+//    @NotBlank
     private String instruction;
 
-    @NotBlank
+    @Column(name = "CREATE_DATE")
+    private String createDate;
+
+//    @NotBlank
     private String description;
 
-    @NotNull
-    @Column(name = "total_production")
-    private Integer totalProduction;
 
     //  TODO: Ver si cambiar a ENUM (activo, en pausa, finalizado, cancelado)
 
-    @NotNull
-    @Column(name = "state")
-    private Boolean state;
 
-    @NotNull
+//    @Column(name = "state")
+//    private Boolean state;
+@Enumerated(EnumType.STRING)
+@Column(name = "state")
+private State state;
+
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @NotBlank
+//    @NotBlank
     @Column(name = "time_estimated_completion")
-    private String timeEstimatedCompletion;
+    private Double timeEstimatedCompletion;
+//    private String timeEstimatedCompletion;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    private Double timeAverage;  //tiempo promedio anual, calculado desde el historico de procesos o subprocesos
+    private Double timeMargin;   //cuantos minutos por encima o por debajo es aceptable
+
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Process> processes = new ArrayList<>();
+    private List<ProductProcess> productProcesses = new ArrayList<>();
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     @JsonBackReference
-    private Company company;
+    private Company company;*/
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ProductOrder> productOrders;
+
 
     public Product() {
     }
 
-    public Product(Long id, String idUnico, String name, String instruction, String description, Integer totalProduction, Boolean state, Boolean isActive, String timeEstimatedCompletion) {
-        this.id = id;
+
+    public Product(String idUnico, String name, String instruction, String description, State state, Boolean isActive, Double timeEstimatedCompletion){
         this.idUnico = idUnico;
         this.name = name;
         this.instruction = instruction;
         this.description = description;
-        this.totalProduction = totalProduction;
-        this.state = state;
+        this.state = state; //cambio de boolean a ENUM
         this.isActive = isActive;
-        this.timeEstimatedCompletion = timeEstimatedCompletion;
+        this.timeEstimatedCompletion = timeEstimatedCompletion;  //cambio de String a Double
     }
 
-    public List<Process> getProcesses() {
-        return processes;
+    public List<ProductProcess> getProductProcesses() {
+        return productProcesses;
     }
 
-    public void setProcesses(List<Process> processes) {
-        this.processes = processes;
+    public void setProductProcesses(List<ProductProcess> productProcesses) {
+        this.productProcesses = productProcesses;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 
     public Long getId() {
         return id;
@@ -128,22 +137,29 @@ public class Product {
         this.description = description;
     }
 
-    public Integer getTotalProduction() {
-        return totalProduction;
+
+
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setTotalProduction(Integer totalProduction) {
-        this.totalProduction = totalProduction;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    public Boolean getState() {
-        return state;
-    }
-
-    public void setState(Boolean state) {
-        this.state = state;
-    }
-
+//    public Boolean getState() {
+//        return state;
+//    }
+//
+//    public void setState(Boolean state) {
+//        this.state = state;
+//    }
+public State getState() {
+    return state;
+}
+public void setState(State state) {
+    this.state = state;
+}
     public Boolean getActive() {
         return isActive;
     }
@@ -152,11 +168,56 @@ public class Product {
         isActive = active;
     }
 
-    public String getTimeEstimatedCompletion() {
+//    public String getTimeEstimatedCompletion() {
+//        return timeEstimatedCompletion;
+//    }
+//
+//    public void setTimeEstimatedCompletion(String timeEstimatedCompletion) {
+//        this.timeEstimatedCompletion = timeEstimatedCompletion;
+//    }
+    public Double getTimeEstimatedCompletion() {
         return timeEstimatedCompletion;
     }
-
-    public void setTimeEstimatedCompletion(String timeEstimatedCompletion) {
+    public void setTimeEstimatedCompletion(Double timeEstimatedCompletion) {
         this.timeEstimatedCompletion = timeEstimatedCompletion;
+    }
+    public Double getTimeAverage() {
+        return timeAverage;
+    }
+    public void setTimeAverage(Double timeAverage) {
+        this.timeAverage = timeAverage;
+    }
+    public Double getTimeMargin() {
+        return timeMargin;
+    }
+    public void setTimeMargin(Double timeMargin) {
+        this.timeMargin = timeMargin;
+    }
+
+    @JsonIgnore
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
+    }
+
+    public void setProductOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", instruction='" + instruction + '\'' +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                ", isActive=" + isActive +
+                ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
+                // ", productOrder=" + productOrder +
+                '}';
+    }
+    @PrePersist
+    public void onPrePersist() {
+        this.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 }
