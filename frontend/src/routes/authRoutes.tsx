@@ -4,7 +4,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 
 const Login = React.lazy(() => import("@/pages/Login/Login"));
 const ConfirmEmail = React.lazy(() => import("@/pages/Register/ConfirmEmail"));
-const ErrorRegister = React.lazy(() => import("@/pages/Register/ErrorRegister"));
+/* const ErrorRegister = React.lazy(() => import("@/pages/Register/ErrorRegister")); */
 const ForgotPassword = React.lazy(() => import("@/pages/Register/ForgotPassword"));
 const Register = React.lazy(() => import("@/pages/Register/Register"));
 
@@ -28,9 +28,9 @@ export const authRoutes = {
       path: "/forgot-password",
       element: <ForgotPassword />,
     },
-    {
+    /* {
       path: "/error-register",
       element: <ErrorRegister />,
-    },
+    }, */
   ],
 };
