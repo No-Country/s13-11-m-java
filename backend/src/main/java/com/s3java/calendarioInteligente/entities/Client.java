@@ -1,24 +1,36 @@
 package com.s3java.calendarioInteligente.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CLIENTS")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded
     private CommonAttribute commonAttribute;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private ProductOrder productOrder;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @JsonBackReference
+    @JsonIgnore
+    private List<ProductOrder> productOrder = new ArrayList<>();
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
+    private Company company;
 
     public Long getId() {
         return id;
@@ -36,13 +48,33 @@ public class Client {
         this.commonAttribute = commonAttribute;
     }
 
-    public ProductOrder getProductOrder() {
+    public List<ProductOrder> getProductOrder() {
         return productOrder;
     }
 
-    public void setProductOrder(ProductOrder productOrder) {
+    public void setProductOrder(List<ProductOrder> productOrder) {
         this.productOrder = productOrder;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", commonAttribute=" + commonAttribute +
+                ", productOrder=" + productOrder +
+                '}';
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(id, client.id) && Objects.equals(commonAttribute, client.commonAttribute) && Objects.equals(productOrder, client.productOrder) && Objects.equals(company, client.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, commonAttribute, productOrder, company);
+    }
 }
