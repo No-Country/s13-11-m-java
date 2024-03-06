@@ -42,7 +42,6 @@ ChartJS.register(
 const Dashboard = () => {
   const { orders } = useOrder();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-
   return (
     <div className="grid grid-flow-row grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">

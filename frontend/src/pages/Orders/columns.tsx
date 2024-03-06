@@ -121,6 +121,9 @@ export const columns: ColumnDef<ProductOrder>[] = [
     id: "client",
     accessorKey: "clientId",
     header: (prop) => ColumnSortButton("Cliente", prop),
+    cell: ({ row }) => {
+      return row.original.client.commonAttribute.name;
+    },
     meta: {
       headerName: "Cliente",
     },
