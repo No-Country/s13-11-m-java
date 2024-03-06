@@ -13,7 +13,7 @@ import { FaCamera } from "react-icons/fa6";
 
 import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
 
-import { useGetAllProductsQuery } from "@/app/services/api";
+import { useGetAllProductsQuery } from "@/app/services/api/product";
 import { OrderRequest } from "@/app/services/api/types";
 import { employees } from "@/mocks/employees/employees";
 import { clients } from "@/mocks/orderFormMocks/data";

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import OrderDetailsTable from "./OrderDetailsTable";
-import { useGetOrderByIdQuery } from "@/app/services/api";
+import { useGetOrderByIdQuery } from "@/app/services/api/order";
 import moment from "moment";
 
 export interface FormatedOrder {

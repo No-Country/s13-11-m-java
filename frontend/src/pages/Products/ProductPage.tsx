@@ -9,7 +9,7 @@ import { MdArrowBackIos } from "react-icons/md";
 
 import { Product } from "@/schemas/apiSchemas";
 
-import { useCreateProductMutation } from "@/app/services/api";
+import { useCreateProductMutation } from "@/app/services/api/product";
 
 const AddProduct = () => {
   const { toast } = useToast();

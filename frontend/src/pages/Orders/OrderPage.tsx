@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 import { MdArrowBackIos } from "react-icons/md";
 
-import { useCreateOrderMutation } from "@/app/services/api";
+import { useCreateOrderMutation } from "@/app/services/api/order";
 import { OrderRequest } from "@/app/services/api/types";
 
 const OrderPage = () => {

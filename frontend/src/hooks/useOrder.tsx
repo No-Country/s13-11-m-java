@@ -1,6 +1,6 @@
-import { useGetOrdersQuery } from "@/app/services/api";
+import { useGetOrdersQuery } from "@/app/services/api/order";
 
-const useOrder = ( ) => {
+const useOrder = () => {
   const { data, isLoading, isError } = useGetOrdersQuery();
   return { orders: data ?? [], isLoading, isError } as const;
 };

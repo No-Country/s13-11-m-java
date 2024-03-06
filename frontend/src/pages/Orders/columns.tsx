@@ -16,7 +16,7 @@ import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical } from "react-ic
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
-import { useDeleteOrderMutation } from "@/app/services/api";
+import { useDeleteOrderMutation } from "@/app/services/api/order";
 import { Order } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 

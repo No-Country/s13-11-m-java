@@ -8,7 +8,7 @@ import { ForgotPasswordFormInputs } from "@/schemas/forgotPasswordSchema";
 import { LoginFormInputs } from "@/schemas/loginFormSchema";
 import { RegisterFormInputs } from "@/schemas/registerFormSchema";
 
-import { useForgotPasswordMutation, useLoginMutation, useRegisterMutation } from "@/app/services/api";
+import { useForgotPasswordMutation, useLoginMutation, useRegisterMutation } from "@/app/services/api/auth";
 import { logout } from "@/features/auth/authSlice";
 
 const useAuth = () => {
