@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.s3java.calendarioInteligente.entities.Client;
 import com.s3java.calendarioInteligente.utils.DateUtils;
 import com.s3java.calendarioInteligente.utils.State;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class ProductOrderRequest {
@@ -24,6 +27,9 @@ public class ProductOrderRequest {
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String finishEstimatedDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateEnd;
 
     private Long productId;
 
@@ -92,6 +98,14 @@ public class ProductOrderRequest {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public Timestamp getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(Timestamp dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     @Override

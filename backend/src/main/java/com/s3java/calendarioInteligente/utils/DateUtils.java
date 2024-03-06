@@ -47,10 +47,9 @@ public class DateUtils {
                 DateTimeFormatter.ofPattern(FORMAT_DATE_TIME));
     }
 
-    public static Month getMonthFromStringDate(String date) throws DateTimeException {
-        return LocalDateTime.parse(
-                date,
-                DateTimeFormatter.ofPattern(FORMAT_DATE_TIME)).getMonth();
+    public static Month getMonthFromTimestamp(Timestamp date) throws DateTimeException {
+        System.out.println(date.toString());
+        return date.toLocalDateTime().getMonth();
     }
     public static Timestamp convertToTimeStampFromString(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT_DATE_TIME);

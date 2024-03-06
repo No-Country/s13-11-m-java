@@ -11,6 +11,7 @@ import com.s3java.calendarioInteligente.exception.exceptions.InvalidDateExceptio
 import com.s3java.calendarioInteligente.exception.exceptions.ProductNotFoundException;
 import com.s3java.calendarioInteligente.exception.exceptions.ProductOrderNotFoundException;
 import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapper;
+import com.s3java.calendarioInteligente.mappers.productOrders.ProductOrderMapperIm;
 import com.s3java.calendarioInteligente.repositories.ClientRepository;
 import com.s3java.calendarioInteligente.repositories.CompanyRepository;
 import com.s3java.calendarioInteligente.repositories.ProductOrderRepository;
@@ -50,7 +51,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private final ProductOrderRepository productOrderRepository;
     private final ClientRepository clientRepository; // TODO cambiar por respectivo servicio
-    private final ProductOrderMapper productOrderMapper;
+    private final ProductOrderMapperIm productOrderMapper;
     private final ProductService productService;
 
     private final CompanyRepository companyRepository; // TODO cambiar por respectivo servicio
@@ -66,7 +67,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
                             ClientRepository clientRepository,
                             ProductService productService,
                             CompanyRepository companyRepository,
-                            ProductOrderMapper productOrderMapper,
+                            ProductOrderMapperIm productOrderMapper,
                             Calculos calculos
     ){
         this.productOrderRepository = productOrderRepository;
@@ -275,7 +276,10 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         Integer progreso = 0;
         Integer terminado = 0;
         Integer suspendido = 0;
+        Map<Month, Integer> ordersByMonth = new HashMap<>();
 
+
+        //Registrar las cuentas y ordenes por mes
         for (ProductOrder productOrder : productOrders){
             switch (productOrder.getState()){
                 case PENDIENTE   -> pendientes++;
@@ -284,17 +288,22 @@ public class ProductOrderServiceImpl implements ProductOrderService {
                 case SUSPENDIDO  -> suspendido++;
                 default -> {
                 }
-
+            }
+            Month monthOfOrder = DateUtils.getMonthFromTimestamp(productOrder.getDateEnd());
+            if (!ordersByMonth.containsKey(monthOfOrder)){
+                ordersByMonth.put(monthOfOrder, 1);
+            } else {
+                ordersByMonth.put(monthOfOrder, ordersByMonth.get(monthOfOrder)+1);
             }
         }
 
-        //Contar cuantos pedidos hay por mes si es que se puede
-
+        //Guardar datos
         response.setTotalPendientes(pendientes);
         response.setTotalProgreso(progreso);
         response.setTotalTerminados(terminado);
         response.setTotalSuspendidos(suspendido);
-
+        response.setOrdersByMonth(ordersByMonth);
+        response.setTotalProductOrders(productOrders.size());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -316,6 +325,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrder createProductOrderWithEntryDateFromRequest(ProductOrderRequest productOrderRequest) {
         ProductOrder productOrder = this.productOrderMapper.productOrderRequestToProductOrder(productOrderRequest);
+        productOrder.setState(productOrderRequest.getState());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateUtils.FORMAT_DATE_TIME);
         String dateFormatted = formatter.format(timeNow);
         productOrder.setEntryDate(dateFormatted);

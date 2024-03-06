@@ -9,6 +9,7 @@ public class ProductOrderDataResponse {
     private Integer totalTerminados;
     private Integer totalSuspendidos;
     private Integer totalProductOrders;
+    private Map<Month, Integer> ordersByMonth;
 
     public ProductOrderDataResponse() {
     }
@@ -51,5 +52,13 @@ public class ProductOrderDataResponse {
 
     public void setTotalProductOrders(Integer totalProductOrders) {
         this.totalProductOrders = totalProductOrders;
+    }
+
+    public Map<Month, Integer> getOrdersByMonth() {
+        return ordersByMonth;
+    }
+
+    public void setOrdersByMonth(Map<Month, Integer> ordersByMonth) {
+        this.ordersByMonth = ordersByMonth;
     }
 }
