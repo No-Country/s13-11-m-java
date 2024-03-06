@@ -42,6 +42,11 @@ ChartJS.register(
 const Dashboard = () => {
   const { orders } = useOrder();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+
+  const activeOrders = orders.reduce((acc, order) => (order ? acc + 1 : acc), 0);
+  const totalOrders = orders.length;
+  const progress = (activeOrders * 100) / totalOrders;
+
   return (
     <div className="grid grid-flow-row grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
@@ -62,8 +67,8 @@ const Dashboard = () => {
           <h2 className="mb-4 mt-4 px-8 text-3xl">
             <b>Progresos Activos</b>
           </h2>
-          <label className="m-1 mb-4 mt-4 px-8 text-3xl">04</label>
-          <Progress value={33} />
+          <label className="m-1 mb-4 mt-4 px-8 text-3xl">{activeOrders}</label>
+          <Progress value={progress} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
