@@ -21,8 +21,7 @@ public class Client {
     private CommonAttribute commonAttribute;
 
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_order_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @JsonBackReference
     @JsonIgnore
     private List<ProductOrder> productOrder = new ArrayList<>();
