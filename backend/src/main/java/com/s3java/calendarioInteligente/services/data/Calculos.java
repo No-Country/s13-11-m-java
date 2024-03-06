@@ -44,14 +44,18 @@ public class Calculos {
 
     // suma de tiempos timeEstimatedCompletion de todos los subProcesos pertenecientes al id de proceso.
     public Double timeEstimatedCompletionProcess(List<SubProcess> subProcessList){ //id = id de proceso
-        Double timeEstimatedCompletion=0.00;
         if (!subProcessList.isEmpty()){
+               Double timeEstimatedCompletion = 0.00;
                 for (int i = 0; i < subProcessList.size()-1; i++) {
-                    timeEstimatedCompletion = timeEstimatedCompletion + subProcessList.get(i)
+                    Double value = subProcessList.get(i)
                             .getSubProcessAttributes().getTimeEstimatedCompletion();
+                    System.out.println(value);
+                    timeEstimatedCompletion  = value == null ? timeEstimatedCompletion + 0 :
+                            value + timeEstimatedCompletion;
                 }
+                return timeEstimatedCompletion;
             }
-        return timeEstimatedCompletion;
+        return 0.00;
     };
 
     //Calculo de timeMargin para productos, procesos y subProcesos. Es cuanto tiempo por encima o por debajo es aceptable, ej. el 3% del tiempoEstimatedCompletion del producto

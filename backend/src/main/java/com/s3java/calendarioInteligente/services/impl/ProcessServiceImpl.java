@@ -135,7 +135,7 @@ public class ProcessServiceImpl  implements ProcessService {
         return calculos.timeMargin(timeEstimateCompletion);
     }
 
-    private Double calculateEstimateTimeCompletion(ProductProcess productProcess){
+    public Double calculateEstimateTimeCompletion(ProductProcess productProcess){
         return calculos.timeEstimatedCompletionProcess(productProcess.getSubProcesses());
     }
 }
