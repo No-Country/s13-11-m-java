@@ -67,5 +67,7 @@ export const {
   useGetOrdersByFinishDateQuery,
   useGetOrdersByInitialDateQuery,
   useListAllOrdersQuery,
+  useLazyGetOrderByIdQuery,
   useLazyListAllOrdersQuery,
+  useUpdateOrderMutation,
 } = orderApi;
