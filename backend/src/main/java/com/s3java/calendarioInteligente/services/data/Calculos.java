@@ -27,29 +27,29 @@ public class Calculos {
 
     // suma de tiempos timeEstimatedCompletion de todos los procesos pertenecientes al id de producto.
     public Double timeEstimatedCompletionProduct(List<ProductProcess> productProcessesList){ //id = id de producto
-        Double timeEstimatedCompletion=0.00;
         if (!productProcessesList.isEmpty()){
+            Double timeEstimatedCompletion = 99.00;
+            for (int i = 0; i < productProcessesList.size(); i++) {
 
-            for (int i = 0; i < productProcessesList.size()-1; i++) {
-                Double value = productProcessesList.get(i)
-                        .getProcessAttributes().getTimeEstimatedCompletion();
-
-                timeEstimatedCompletion = value == null ? timeEstimatedCompletion + 0 :
-                        value + timeEstimatedCompletion;
-              }
+                    Double value = productProcessesList.get(i)
+                            .getProcessAttributes().getTimeEstimatedCompletion();
+                    System.out.println("value "+value);
+                    timeEstimatedCompletion  = value == null ? timeEstimatedCompletion + 0 :
+                            value + timeEstimatedCompletion;
             }
-
-        return timeEstimatedCompletion;
+            return timeEstimatedCompletion;
+        }
+        return 777.00;
     };
 
     // suma de tiempos timeEstimatedCompletion de todos los subProcesos pertenecientes al id de proceso.
     public Double timeEstimatedCompletionProcess(List<SubProcess> subProcessList){ //id = id de proceso
         if (!subProcessList.isEmpty()){
                Double timeEstimatedCompletion = 0.00;
-                for (int i = 0; i < subProcessList.size()-1; i++) {
+                for (int i = 0; i < subProcessList.size(); i++) {
                     Double value = subProcessList.get(i)
                             .getSubProcessAttributes().getTimeEstimatedCompletion();
-                    System.out.println(value);
+                    System.out.println("value "+value);
                     timeEstimatedCompletion  = value == null ? timeEstimatedCompletion + 0 :
                             value + timeEstimatedCompletion;
                 }

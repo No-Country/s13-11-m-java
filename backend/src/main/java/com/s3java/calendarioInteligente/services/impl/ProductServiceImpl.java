@@ -2,11 +2,9 @@ package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.entities.ProcessAttributes;
 import com.s3java.calendarioInteligente.entities.Product;
-import com.s3java.calendarioInteligente.entities.SubProcess;
 import com.s3java.calendarioInteligente.exception.exceptions.ProductNotFoundException;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
 import com.s3java.calendarioInteligente.services.data.Calculos;
-import com.s3java.calendarioInteligente.services.inter.ProcessService;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,34 +49,21 @@ public class ProductServiceImpl implements ProductService {
         processes.stream().forEach(process -> {
 
            ProcessAttributes pa = process.getProcessAttributes();
-
            pa.setTimeEstimatedCompletion(this.calculateEstimateTimeCompletionForProocess(process));
-
-           System.out.println(pa);
-
            process.setProcessAttributes(pa);
-
-
-            process.getProcessAttributes()
+           process.getProcessAttributes()
                     .setTimeAverage(
                             this.calculateTimeMargin(process.getProcessAttributes()
                                     .getTimeEstimatedCompletion()));
 
         });
 
-        System.out.println("----------- SAVE -------------");
-
-        product.getProductProcesses().stream().forEach( sub -> System.out.println(sub.getProcessAttributes()
-                .getTimeEstimatedCompletion()));
+            product.setTimeEstimatedCompletion(
+                    this.calculateEstimateTimeCompletion(product));
 
 
-       product.getProductProcesses().stream().forEach( sub -> System.out.println(sub.getProcessAttributes()
-               .getTimeEstimatedCompletion()));
+            product.setTimeAverage(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
 
-
-        product.setTimeEstimatedCompletion(
-                this.calculateEstimateTimeCompletion(product));
-        product.setTimeAverage(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
 
         product.setTimeEstimatedCompletion(
                 this.calculateEstimateTimeCompletion(product));
@@ -181,7 +166,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProductTimeEstimatedCompletion(Product product) {
             product.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
-            this.productRepository.save(product);
+            //this.productRepository.save(product);
 
     }
 
