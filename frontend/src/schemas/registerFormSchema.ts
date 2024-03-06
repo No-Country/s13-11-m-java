@@ -13,19 +13,23 @@ const registerFormSchema = z.object({
   firstName: z
     .string()
     .min(1, { message: "El nombre es requerido" })
-    .max(255, { message: "El nombre no puede tener más de 255 caracteres" }),
+    .max(255, { message: "El nombre no puede tener más de 255 caracteres" })
+    .regex(/^[a-zA-Z0-9 ]+$/, { message: "La contraseña solo puede contener caracteres alfanuméricos" }),
   lastName: z
     .string()
     .min(1, { message: "El apellido es requerido" })
-    .max(255, { message: "El apellido no puede tener más de 255 caracteres" }),
+    .max(255, { message: "El apellido no puede tener más de 255 caracteres" })
+    .regex(/^[a-zA-Z0-9 ]+$/, { message: "La contraseña solo puede contener caracteres alfanuméricos" }),
   address: z
     .string()
     .min(1, { message: "La dirección es requerida" })
-    .max(255, { message: "La dirección no puede tener más de 255 caracteres" }),
+    .max(255, { message: "La dirección no puede tener más de 255 caracteres" })
+    .regex(/^[a-zA-Z0-9 ]+$/, { message: "La contraseña solo puede contener caracteres alfanuméricos" }),
   phone: z
     .string()
     .min(1, { message: "El número de teléfono es requerido" })
-    .max(15, { message: "El número de teléfono no puede tener más de 15 caracteres" }),
+    .max(15, { message: "El número de teléfono no puede tener más de 15 caracteres" })
+    .regex(/^[0-9]+$/, { message: "El número de teléfono solo puede contener números" }),
 });
 
 export default registerFormSchema;

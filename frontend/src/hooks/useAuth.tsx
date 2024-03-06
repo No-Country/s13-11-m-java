@@ -1,3 +1,4 @@
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
@@ -57,10 +58,15 @@ const useAuth = () => {
   const handleRegister = async (values: RegisterFormInputs) => {
     try {
       await register(values).unwrap();
-      navigate("/confirm-email");
+      await login({ email: values.email, password: values.password }).unwrap();
+      navigate("/dashboard");
     } catch (error) {
-      console.error(error);
-      alert("Error al registrar usuario");
+      const { data } = error as FetchBaseQueryError;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: (data as string) ?? "Error al registrar",
+      });
     }
   };
 

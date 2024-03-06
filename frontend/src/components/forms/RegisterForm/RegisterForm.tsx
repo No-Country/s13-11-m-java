@@ -42,7 +42,7 @@ const RegisterForm = ({ loading, defaultValues, onSubmit }: RegisterFormProps) =
                 <FormControl>
                   <Input
                     className="rounded-none border-0 border-b-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent"
-                    placeholder="Ingresa tu email"
+                    placeholder={item.placeholder}
                     type={item.type}
                     {...field}
                   />

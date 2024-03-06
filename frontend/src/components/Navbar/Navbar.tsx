@@ -4,22 +4,19 @@ import useAuth from "@/hooks/useAuth";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
 import { Button } from "../ui/button";
-import { InputSearch } from "../ui/inputSearch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menubar, MenubarContent, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 
-import { FaBars, FaRegBell } from "react-icons/fa6";
-import { IoSearch } from "react-icons/io5";
+import { FaBars } from "react-icons/fa6";
 
 import Logo from "../Logo";
-import { logItems, navItems } from "./items";
+import { logItems } from "./items";
 
 function Navbar() {
   const { isLogin, user, logout } = useAuth();
@@ -35,7 +32,7 @@ function Navbar() {
           </Link>
           {isLogin ? (
             <div className="flex grow justify-end space-x-2 md:space-x-4">
-              {matches ? (
+              {/* {matches ? (
                 <div>
                   <InputSearch className="max-w-60" type="search" placeholder="Buscar" />
                 </div>
@@ -43,15 +40,12 @@ function Navbar() {
                 <Button variant="ghost" size="icon">
                   <IoSearch size={24} />
                 </Button>
-              )}
-              <Button variant="ghost" size="icon">
+              )} */}
+              {/* <Button variant="ghost" size="icon">
                 <FaRegBell size={24} />
-              </Button>
+              </Button> */}
               <div className="flex items-center">
-                <Avatar className="cursor-pointer md:mr-4" onClick={logout}>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <Dropdown onClick={logout} />
                 <h3 className="hidden md:block">
                   {user?.firstName} {user?.lastName}
                 </h3>
@@ -61,11 +55,11 @@ function Navbar() {
             <>
               <div className="flex grow justify-center">
                 <div>
-                  {navItems.map((item, index) => (
+                  {/* {navItems.map((item, index) => (
                     <Button variant="link" key={index} asChild>
                       <Link to={item.link}>{item.title}</Link>
                     </Button>
-                  ))}
+                  ))} */}
                 </div>
               </div>
               <div className="space-x-4">
@@ -84,11 +78,11 @@ function Navbar() {
                     <FaBars />
                   </MenubarTrigger>
                   <MenubarContent>
-                    {navItems.map((item, index) => (
+                    {/* {navItems.map((item, index) => (
                       <MenubarItem key={index} asChild className="cursor-pointer">
                         <Link to={item.link}>{item.title}</Link>
                       </MenubarItem>
-                    ))}
+                    ))} */}
                     <MenubarSeparator />
                     {logItems.map((item, index) => (
                       <div key={index} className="flex py-1.5">
@@ -109,3 +103,19 @@ function Navbar() {
 }
 
 export default Navbar;
+
+export function Dropdown({ onClick }: { onClick: () => void }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Avatar className="cursor-pointer md:mr-4">
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuItem onClick={onClick}>Log out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
