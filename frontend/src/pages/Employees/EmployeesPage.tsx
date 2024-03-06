@@ -14,8 +14,30 @@ import { dataComparative, optionsComparative } from "@/data/Dashboard/comparativ
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
+import {
+  ArcElement,
+  BarElement, // Legend,
+  CategoryScale,
+  Chart as ChartJS,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  CategoryScale,
+  PointElement,
+  LineElement
+);
 const EmployeesPage = () => {
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
