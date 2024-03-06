@@ -1,5 +1,6 @@
 package com.s3java.calendarioInteligente.services.impl;
 
+import com.s3java.calendarioInteligente.entities.ProcessAttributes;
 import com.s3java.calendarioInteligente.entities.Product;
 import com.s3java.calendarioInteligente.exception.exceptions.ProductNotFoundException;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
@@ -46,6 +47,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product save(Product product) {
+
+        product.getProductProcesses().stream().forEach((System.out::println));
+
+        product.setTimeEstimatedCompletion(
+                this.calculateEstimateTimeCompletion(product));
+        product.setTimeAverage(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
+
+        product.setTimeEstimatedCompletion(
+                this.calculateEstimateTimeCompletion(product));
+
+        product.setTimeAverage(Double.valueOf(0));
+        product.setTimeMargin(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
+
+
         return productRepository.save(product);
     }
 
@@ -77,6 +92,7 @@ public class ProductServiceImpl implements ProductService {
             process.setProduct(product);
 
             //TODO revisar
+
             product.setTimeEstimatedCompletion(
                     this.calculateEstimateTimeCompletion(product));
             product.setTimeAverage(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
@@ -117,34 +133,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Double calculateEstimateTimeCompletion(Product product) {
+        System.out.println("ENTRA calculateEstimateTimeCompletion");
         return calculos.timeEstimatedCompletionProduct(product.getProductProcesses());
     }
 
-    public Product updateProduct(Long id, Product product) {
+    public Product updateProduct(Long id, Product product) throws Exception {
 
         Optional<Product> productOptional = this.productRepository.findById(id);
         if (productOptional.isPresent()) {
             Product productDb = productOptional.get();
-            if (!product.getIdUnico().isEmpty() &&
-                    !product.getIdUnico()
-                            .equalsIgnoreCase(productDb.getIdUnico())
-                    && this.productRepository.findByIdUnico(product.getIdUnico()).isPresent()) {
-                throw new EntityNotFoundException("product not found");
+            try {
+                ReflectionUtil.copyNonNullProperties(product, productDb);
+                return this.productRepository.save(productDb);
+            } catch (IllegalAccessException e) {
+                throw new Exception(e);
             }
-
-
-            productDb.setIdUnico(product.getIdUnico());
-            productDb.setName(product.getName());
-            productDb.setActive(product.getActive());
-            productDb.setDescription(product.getDescription());
-            productDb.setCompany(product.getCompany());
-            productDb.setInstruction(product.getInstruction());
-            productDb.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
-            productDb.setState(product.getState());
-
-            this.productRepository.save(productDb);
         }
-        return new Product();
+        throw new ProductNotFoundException("product not found");
+
     }
 
     public void updateProductTimeEstimatedCompletion(Product product) {

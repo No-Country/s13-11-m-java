@@ -25,6 +25,7 @@ public class ApplicationExceptionHandler {
     })
     public ResponseEntity<Object> handleNotFoundBusinessException(RuntimeException exception){
         HttpStatus notFound = HttpStatus.NOT_FOUND;
+        exception.printStackTrace();
 
         ApiException apiException = new ApiException(
                 exception.getMessage(),
@@ -38,6 +39,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(value = {InvalidDateException.class})
     public ResponseEntity<Object> handleBadRequestException(RuntimeException exception){
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        exception.printStackTrace();
 
         ApiException apiException = new ApiException(
                 exception.getMessage(),
@@ -52,6 +54,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(value = BindingResultException.class)
     public ResponseEntity<Object> handleBindingResultException(BindingResultException exception){
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        exception.printStackTrace();
         List<String> errorMessages = new ArrayList<>();
         exception.getBindingResult().getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
 
@@ -67,6 +70,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleAllOtherExceptions(Exception exception){
         HttpStatus internalServerError = HttpStatus.INTERNAL_SERVER_ERROR;
+        exception.printStackTrace();
 
         ApiException apiException = new ApiException(
                 exception.getMessage(),

@@ -71,12 +71,12 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> edit(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id){
+    public ResponseEntity<?> edit(@Valid @RequestBody Product product, BindingResult result, @PathVariable Long id) throws Exception {
         if (result.hasErrors()) {
             return getResponseEntity(result);
         }
         Product productDb = this.productService.updateProduct(id, product);
-            return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productDb));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.save(productDb));
     }
 
     @DeleteMapping("/delete/{id}")

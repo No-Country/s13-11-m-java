@@ -7,6 +7,7 @@ import com.s3java.calendarioInteligente.repositories.ProcessRepository;
 import com.s3java.calendarioInteligente.services.data.Calculos;
 import com.s3java.calendarioInteligente.services.inter.ProcessService;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,7 @@ public class ProcessServiceImpl  implements ProcessService {
 
     @Override
     public ResponseEntity<?> deleteByID(Long processID) {
-        var processExists = processRepository.findById(processID);
+        Optional<ProductProcess> processExists = processRepository.findById(processID);
         if (processExists.isPresent()) {
             processRepository.deleteById(processID);
             return new ResponseEntity<>("Process Deleted", HttpStatus.OK);
@@ -61,6 +62,7 @@ public class ProcessServiceImpl  implements ProcessService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> updateByID(ProductProcess updatedProcess, Long processIDToUpdate) {
         Optional<ProductProcess> foundProcess = processRepository.findById(processIDToUpdate);
         if (foundProcess.isPresent()){
@@ -87,6 +89,7 @@ public class ProcessServiceImpl  implements ProcessService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> addSubProcessToProcess(SubProcess subProcess, Long processID) {
         Optional<ProductProcess> foundProcess =  processRepository.findById(processID);
         if (foundProcess.isPresent()) {
@@ -97,7 +100,7 @@ public class ProcessServiceImpl  implements ProcessService {
             subProcess.setProductProcess(process);
 
             //TODO revisar con lupa
-            process.getProcessAttributes()
+             process.getProcessAttributes()
                     .setTimeEstimatedCompletion(this.calculateEstimateTimeCompletion(process));
 
 

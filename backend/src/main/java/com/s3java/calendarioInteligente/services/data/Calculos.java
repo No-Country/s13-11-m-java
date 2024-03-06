@@ -29,10 +29,14 @@ public class Calculos {
     public Double timeEstimatedCompletionProduct(List<ProductProcess> productProcessesList){ //id = id de producto
         Double timeEstimatedCompletion=0.00;
         if (!productProcessesList.isEmpty()){
+
             for (int i = 0; i < productProcessesList.size()-1; i++) {
-                timeEstimatedCompletion = timeEstimatedCompletion + productProcessesList.get(i)
+                Double value = productProcessesList.get(i)
                         .getProcessAttributes().getTimeEstimatedCompletion();
-            }
+
+                timeEstimatedCompletion = value == null ? timeEstimatedCompletion + 0 :
+                        value + timeEstimatedCompletion;
+              }
             }
 
         return timeEstimatedCompletion;

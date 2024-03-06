@@ -63,10 +63,11 @@ private State state;
     @JsonManagedReference
     private List<ProductProcess> productProcesses = new ArrayList<>();
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     @JsonBackReference
-    private Company company;
+    private Company company;*/
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -95,13 +96,6 @@ private State state;
         this.productProcesses = productProcesses;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 
     public Long getId() {
         return id;
@@ -219,7 +213,6 @@ public void setState(State state) {
                 ", state=" + state +
                 ", isActive=" + isActive +
                 ", timeEstimatedCompletion='" + timeEstimatedCompletion + '\'' +
-                ", company=" + company +
                 // ", productOrder=" + productOrder +
                 '}';
     }

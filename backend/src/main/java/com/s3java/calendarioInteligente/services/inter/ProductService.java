@@ -19,7 +19,7 @@ public interface ProductService {
 
     void updateTimeAverage(Long productId) throws Exception;
 
-    Product updateProduct(Long id, Product product);
+    Product updateProduct(Long id, Product product) throws Exception;
 
     void updateProductTimeEstimatedCompletion(Product product);
 }

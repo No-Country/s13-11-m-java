@@ -225,7 +225,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public void deleteProductOrder(Long productOrderId) throws ProductNotFoundException {
 
-
         ProductOrder po = this.productOrderRepository.findById(productOrderId)
                 .orElseThrow(() ->
                         new ProductOrderNotFoundException("Product order not found with ID: " + productOrderId));
