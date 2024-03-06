@@ -1,10 +1,9 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { RxCaretSort } from "react-icons/rx";
 
-import { Order } from "@/app/services/api/types";
+import { FormatedOrder } from "./OrderDetails";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -16,7 +15,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<FormatedOrder>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -58,8 +57,7 @@ export const columns: ColumnDef<Order>[] = [
       const dateB = new Date(rowB.original.initialDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) =>
-      new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+    cell: ({ row }) => new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
     meta: {
       hidden: true,
     },
@@ -73,8 +71,7 @@ export const columns: ColumnDef<Order>[] = [
       const dateB = new Date(rowB.original.endDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) =>
-      new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    cell: ({ row }) => new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },
@@ -86,7 +83,7 @@ export const columns: ColumnDef<Order>[] = [
     },
     enableHiding: false,
     cell: () => {
-      <></>
+      <></>;
     },
   },
 ];

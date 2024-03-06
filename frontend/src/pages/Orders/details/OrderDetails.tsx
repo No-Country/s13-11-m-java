@@ -5,7 +5,45 @@ import OrderDetailsTable from "./OrderDetailsTable";
 import { useGetOrderByIdQuery } from "@/app/services/api";
 import moment from "moment";
 
-const OrderDetail: React.FC = () => {
+export interface FormatedOrder {
+  id: number;
+  name: string;
+  clientName: string;
+  initialDate: string;
+  endDate: string;
+  state: boolean;
+  processes: FormatedProcess[];
+  subprocesses: FormatedSubProcess[];
+}
+
+export interface FormatedProcess {
+  id: number;
+  name: string;
+  timeReal: number;
+  timeAverage: number;
+  timeMargin: number;
+  comment: string;
+  state: boolean;
+  initialDate: string;
+  endDate: string;
+  employee: string;
+}
+
+export interface FormatedSubProcess {
+  parentId: number;
+  id?: number;
+  name?: string;
+  timeReal?: number;
+  timeAverage?: number;
+  timeMargin?: number;
+  comment?: string;
+  state?: boolean;
+  initialDate: string;
+  endDate: string;
+  employee: string;
+}
+
+const OrderDetail = () => {
   const { orderId } = useParams();
   const { data: OrderData } = useGetOrderByIdQuery(Number(orderId));
 
@@ -38,7 +76,7 @@ const OrderDetail: React.FC = () => {
     }))
   );
 
-  const formatedOrder = {
+  const formatedOrder: FormatedOrder = {
     id: OrderData?.id || 0,
     name: OrderData?.name || "",
     clientName: OrderData?.client.commonAttribute.name || "",
@@ -49,11 +87,6 @@ const OrderDetail: React.FC = () => {
     subprocesses: subprocesses || [],
   };
 
-  return (
-    <>
-      <OrderDetailsTable orderData={formatedOrder} />
-    </>
-  );
+  return <OrderDetailsTable orderData={formatedOrder} />;
 };
-
 export default OrderDetail;
