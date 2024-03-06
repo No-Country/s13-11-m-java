@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 import { RxCaretSort } from "react-icons/rx";
 
-import { FormatedOrder } from "./OrderDetails";
+import { FormatedProcess, FormatedSubProcess } from "./OrderDetails";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -15,7 +15,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<FormatedOrder>[] = [
+export const columns: ColumnDef<FormatedProcess | FormatedSubProcess>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -74,6 +74,14 @@ export const columns: ColumnDef<FormatedOrder>[] = [
     cell: ({ row }) => new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
+    },
+  },
+  {
+    id: "employee",
+    accessorKey: "employee",
+    header: (prop) => ColumnSortButton("Empleado", prop),
+    meta: {
+      headerName: "Empleado",
     },
   },
   {

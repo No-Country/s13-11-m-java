@@ -11,7 +11,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix && prettier --write .",
     "preview": "vite preview",
-    "prepare": "cd .. && husky frontend/.husky"
+    "prepare": "husky"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [

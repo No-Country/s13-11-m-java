@@ -5,8 +5,6 @@ import { useGetOrdersQuery } from "@/app/services/api";
 const Calendar = () => {
   const { data: OrderData } = useGetOrdersQuery();
 
-  console.log(OrderData);
-
   const formattedOrders = OrderData
     ? OrderData.map((order) => ({
         id: order.id,

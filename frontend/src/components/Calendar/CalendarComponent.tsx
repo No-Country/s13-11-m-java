@@ -151,6 +151,8 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
 const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
   const [view, setView] = useState<View>("month");
 
+  console.log(events);
+
   const eventStyleGetter = () => {
     const newStyle = {
       backgroundColor: "#2a576d",
