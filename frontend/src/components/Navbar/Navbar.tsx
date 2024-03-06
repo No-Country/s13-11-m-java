@@ -114,6 +114,9 @@ export function Dropdown({ onClick }: { onClick: () => void }) {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
+        <DropdownMenuItem asChild>
+          <Link to="/dashboard">Dashboard</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={onClick}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

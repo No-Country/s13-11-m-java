@@ -22,7 +22,7 @@ export const userRoutes = {
   element: <UserLayout />,
   children: [
     {
-      path: "/products",
+      path: "/orders",
       element: <ProductsPage />,
     },
     {
@@ -32,10 +32,6 @@ export const userRoutes = {
     {
       path: "/dashboard",
       element: <Dashboard />,
-    },
-    {
-      path: "/orders",
-      element: <OrderPage />,
     },
     {
       path: "/employees",
@@ -74,15 +70,15 @@ export const userRoutes = {
       ],
     },
     {
-      path: "/product",
+      path: "/product/create",
       element: <ProductPage />,
     },
     {
-      path: "/order",
+      path: "/orders/create",
       element: <OrderPage />,
     },
     {
-      path: "/order/:orderId",
+      path: "/orders/:orderId",
       element: <OrderDetails />,
     },
   ],

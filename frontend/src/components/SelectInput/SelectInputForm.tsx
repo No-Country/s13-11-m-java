@@ -58,7 +58,7 @@ const SelectInputForm = ({
             {isProduct && (
               <div className="p-4">
                 <Button type="button" asChild variant={"outline"} className="my-2 w-full">
-                  <Link to={"/product"}>Agregar Producto</Link>
+                  <Link to={"/product/create"}>Agregar Producto</Link>
                 </Button>
               </div>
             )}

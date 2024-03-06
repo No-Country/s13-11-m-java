@@ -6,6 +6,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
+import { LuFileCheck } from "react-icons/lu";
+
 import { columns } from "../Orders/columns";
 import { data as barData, options } from "@/data/Dashboard/bar/bar.chart";
 import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
@@ -43,6 +45,10 @@ const Dashboard = () => {
   const { orders } = useOrder();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
+  const activeOrders = orders.reduce((acc, order) => (order ? acc + 1 : acc), 0);
+  const totalOrders = orders.length;
+  const progress = (activeOrders * 100) / totalOrders;
+
   return (
     <div className="grid grid-flow-row grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       <div className="col-span-full h-full max-h-[26rem] grid-flow-row rounded-2xl bg-background p-4 shadow-2xl md:col-span-3 md:row-span-2">
@@ -58,13 +64,17 @@ const Dashboard = () => {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>
-      <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        <div>
-          <h2 className="mb-4 mt-4 px-8 text-3xl">
-            <b>Progresos Activos</b>
+      <div className="flex flex-col justify-between rounded-2xl bg-background px-4 py-6 shadow-2xl">
+        <div className="flex items-center justify-between text-2xl">
+          <h2>
+            <b>Progresos activos</b>
           </h2>
-          <label className="m-1 mb-4 mt-4 px-8 text-3xl">04</label>
-          <Progress value={33} />
+          <LuFileCheck />
+        </div>
+        <label className="text-3xl">{activeOrders.toString().padStart(2, "0")}</label>
+        <div className="flex flex-col gap-2">
+          {activeOrders < totalOrders && <label className="text-sm">Completar progresos</label>}
+          <Progress value={progress} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">

@@ -16,10 +16,11 @@ import { BsTrash } from "react-icons/bs";
 type Props = {
   isLoading: boolean;
   deleteFn: (id: number) => void;
+  cancelFn?: () => void;
   idItem: number;
 };
 
-const DeleteAlert = ({ isLoading, deleteFn, idItem }: Props) => {
+const DeleteAlert = ({ isLoading, deleteFn, cancelFn, idItem }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
@@ -36,8 +37,14 @@ const DeleteAlert = ({ isLoading, deleteFn, idItem }: Props) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction disabled={isLoading} onClick={() => deleteFn(idItem)}>
+          <AlertDialogCancel onClick={cancelFn}>Cancelar</AlertDialogCancel>
+          <AlertDialogAction
+            disabled={isLoading}
+            onClick={() => {
+              cancelFn?.();
+              deleteFn(idItem);
+            }}
+          >
             Borrar este pedido
           </AlertDialogAction>
         </AlertDialogFooter>

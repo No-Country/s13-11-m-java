@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 import DeleteAlert from "@/components/DeleteAlert/DeleteAlert";
@@ -7,13 +8,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical } from "react-icons/bs";
-import { MdOutlinePostAdd } from "react-icons/md";
+import { BsFileEarmarkText, BsThreeDotsVertical } from "react-icons/bs";
 import { RxCaretSort } from "react-icons/rx";
 
 import { useDeleteOrderMutation } from "@/app/services/api/order";
@@ -57,12 +56,12 @@ export const columns: ColumnDef<ProductOrder>[] = [
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
-      const { errorTime } = row.original;
-      const variant = errorTime % 2 === 0 ? "success" : "destructive";
+      const isActive = row.original.product.active ?? false;
+      const variant = isActive ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">
           <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{errorTime % 2 === 0 ? "Activo" : "Inactivo"}</span>
+          <span className="pl-2">{isActive ? "Activo" : "Inactivo"}</span>
         </div>
       );
     },
@@ -121,6 +120,9 @@ export const columns: ColumnDef<ProductOrder>[] = [
     id: "client",
     accessorKey: "clientId",
     header: (prop) => ColumnSortButton("Cliente", prop),
+    cell: ({ row }) => {
+      return row.original.client.commonAttribute.name;
+    },
     meta: {
       headerName: "Cliente",
     },
@@ -138,9 +140,10 @@ export const columns: ColumnDef<ProductOrder>[] = [
 ];
 
 const MenuOrder = ({ id }: { id: number }) => {
+  const [open, setOpen] = React.useState(false);
   const [deleteOrder, { isLoading }] = useDeleteOrderMutation();
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={setOpen} open={open}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="group h-8 w-8 p-0">
           <span className="sr-only">Open menu</span>
@@ -148,7 +151,7 @@ const MenuOrder = ({ id }: { id: number }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Opciones</DropdownMenuLabel>
+        {/* <DropdownMenuLabel>Opciones</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <BsPencilSquare className="mr-2" />
@@ -157,10 +160,10 @@ const MenuOrder = ({ id }: { id: number }) => {
         <DropdownMenuItem>
           <MdOutlinePostAdd className="mr-2" />
           Agregar nota
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem>
           <BsFileEarmarkText className="mr-2" />
-          <NavLink to={`/order/${id}`}>Ver detalle</NavLink>
+          <NavLink to={`/orders/${id}`}>Ver detalle</NavLink>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -168,7 +171,7 @@ const MenuOrder = ({ id }: { id: number }) => {
             ev.preventDefault();
           }}
         >
-          <DeleteAlert isLoading={isLoading} deleteFn={deleteOrder} idItem={id} />
+          <DeleteAlert isLoading={isLoading} deleteFn={deleteOrder} idItem={id} cancelFn={() => setOpen(false)} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

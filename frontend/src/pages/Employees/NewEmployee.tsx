@@ -10,7 +10,7 @@ const NewEmployee = () => {
     <div className="container pt-10">
       <div className="flex">
         <Button variant={"ghost"} className="px-6">
-          <Link to={"/products"}>
+          <Link to={"/orders"}>
             <MdArrowBackIos className="mr-2 h-5 w-5" />
           </Link>
         </Button>

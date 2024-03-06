@@ -39,6 +39,7 @@ const orderApi = api.injectEndpoints({
     }),
     listAllOrders: builder.query<ListAllOrdersResponse, void>({
       query: () => "/v1/product-orders/all",
+      providesTags: ["Orders"],
     }),
     getOrdersByInitialDate: builder.query<GetOrdersByDateResponse, GetOrdersByDateRequest>({
       query: (initialDate) => `/v1/product-orders/all/${initialDate}/initial_date`,
@@ -54,6 +55,7 @@ const orderApi = api.injectEndpoints({
         url: `/v1/product-orders/delete/${orderId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Orders"],
     }),
   }),
 });
@@ -67,5 +69,7 @@ export const {
   useGetOrdersByFinishDateQuery,
   useGetOrdersByInitialDateQuery,
   useListAllOrdersQuery,
+  useLazyGetOrderByIdQuery,
   useLazyListAllOrdersQuery,
+  useUpdateOrderMutation,
 } = orderApi;
