@@ -17,7 +17,7 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
 import { useDeleteOrderMutation } from "@/app/services/api/order";
-import { Order } from "@/app/services/api/types";
+import { ProductOrderAPI } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -29,7 +29,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<ProductOrderAPI>[] = [
   {
     id: "id",
     accessorKey: "id",
@@ -102,12 +102,12 @@ export const columns: ColumnDef<Order>[] = [
     accessorKey: "endDate",
     header: "Fecha final",
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.endDate);
-      const dateB = new Date(rowB.original.endDate);
+      const dateA = new Date(rowA.original.finishEstimatedDate);
+      const dateB = new Date(rowB.original.finishEstimatedDate);
       return dateA.getTime() - dateB.getTime();
     },
     cell: ({ row }) => {
-      const datetime = new Date(row.original.endDate);
+      const datetime = new Date(row.original.finishEstimatedDate);
       const date = datetime.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
       const time = datetime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 

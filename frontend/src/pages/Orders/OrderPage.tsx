@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 import { MdArrowBackIos } from "react-icons/md";
 
 import { useCreateOrderMutation } from "@/app/services/api/order";
-import { OrderRequest } from "@/app/services/api/types";
+import { CreateOrderRequestAPI } from "@/app/services/api/types";
 
 const OrderPage = () => {
   const navigate = useNavigate();
   const [createOrder, { isLoading }] = useCreateOrderMutation();
 
-  const handleSubmit = async (values: OrderRequest) => {
+  const handleSubmit = async (values: CreateOrderRequestAPI) => {
     await createOrder(values).unwrap();
     navigate("/orders");
   };

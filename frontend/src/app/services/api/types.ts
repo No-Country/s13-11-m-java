@@ -317,8 +317,8 @@ export type CompanyAPI = {
 export type CommonAttributeAPI = {
   email: string;
   password: string;
-  address: string;
-  phone: string;
+  address?: string;
+  phone?: string;
   name: string;
 };
 
@@ -356,3 +356,61 @@ export type DeleteProductProcessRequest = {
 };
 
 export type DeleteProductRequestAPI = number;
+
+// new response order
+export type ProductOrderAPI = {
+  id: number;
+  name: string;
+  errorTime: number;
+  photoLink: string;
+  initialDate: string;
+  finishEstimatedDate: string;
+  productId: number;
+  client: ClientAPI;
+  product: ProductAPI;
+};
+
+export type ClientAPI = {
+  id: number;
+  commonAttribute: CommonAttributeAPI;
+  company: CompanyAPI;
+};
+
+export type CreateOrderResponseAPI = ProductOrderAPI; /* No response */
+export type CreateOrderRequestAPI = Omit<ProductOrderAPI, "id" | "product" | "client"> & {
+  client: {
+    commonAttribute: Pick<CommonAttributeAPI, "name">;
+  };
+};
+
+export type UpdateOrderResponse = ProductOrderAPI; /* No response */
+export type UpdateOrderRequest = ProductOrderAPI & { orderId: number };
+
+export type GetOrderByIdResponseAPI = ProductOrderAPI;
+export type GetOrderByIdRequestAPI = number;
+
+export type GetOrdersByClientIdResponse = ProductOrderAPI[];
+export type GetOrdersByClientIdRequest = number;
+
+export type ListAllOrdersResponse = ProductOrderAPI[];
+
+export type GetOrdersByDateResponse = ProductOrderAPI[];
+export type GetOrdersByDateRequest = string;
+
+export type DeleteOrderResponseAPI = void;
+export type DeleteOrderIdRequestAPI = number;
+
+export type GetProcessByIdResponse = ProductProcessAPI;
+export type GetProcessByIdRequest = number;
+export type UpdateProcessResponse = ProductProcessAPI;
+export type UpdateProcessRequest = ProductProcessAPI;
+export type DeleteProcessResponse = void;
+export type DeleteProcessRequest = number;
+export type CreateSubprocessResponse = SubProcessAPI & { id: number };
+export type CreateSubprocessRequest = ProductProcessAPI;
+export type ListAllProcessesResponse = ProductProcessAPI[];
+export type DeleteSubprocessResponse = void;
+export type DeleteSubprocessRequest = {
+  processId: number;
+  subprocessId: number;
+};

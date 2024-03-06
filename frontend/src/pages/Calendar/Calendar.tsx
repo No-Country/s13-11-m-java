@@ -1,9 +1,9 @@
 import CalendarComponent from "@/components/Calendar/CalendarComponent";
 
-import { useGetOrdersQuery } from "@/app/services/api/order";
+import { useListAllOrdersQuery } from "@/app/services/api/order";
 
 const Calendar = () => {
-  const { data: OrderData } = useGetOrdersQuery();
+  const { data: OrderData } = useListAllOrdersQuery();
 
   const formattedOrders = OrderData
     ? OrderData.map((order) => ({
