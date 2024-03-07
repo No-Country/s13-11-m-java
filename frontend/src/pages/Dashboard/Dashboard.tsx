@@ -13,7 +13,6 @@ import { State } from "@/app/services/api/types";
 import { data as barData, options } from "@/data/Dashboard/bar/bar.chart";
 import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
-import { dataProcessPorcent } from "@/data/Dashboard/donuts/procesos.data";
 import { dataProcessQ } from "@/data/Dashboard/donuts/process.dataq";
 import { dataProcessQ2 } from "@/data/Dashboard/donuts/process.dataq2";
 import { ColumnFiltersState } from "@tanstack/react-table";
@@ -28,7 +27,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { Bar, ChartProps, Doughnut, Line } from "react-chartjs-2";
 
 ChartJS.register(
   ArcElement,
@@ -46,7 +45,7 @@ const Dashboard = () => {
   const { orders } = useOrder();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const activeOrders = orders.reduce((acc, order) => (order.state === State.EN_PROGRESO ? acc + 1 : acc), 0);
+  const activeOrders = orders.reduce((acc, order) => (order.state === State.TERMINADO ? acc + 1 : acc), 0);
   const totalOrders = orders.length;
   const progress = (activeOrders * 100) / totalOrders;
 
@@ -91,7 +90,14 @@ const Dashboard = () => {
           <h2 className="mt-4 px-4 text-start text-xl font-semibold">Pedidos</h2>
           <div className="flex">
             <div>
-              <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessPorcent} />
+              <Doughnut
+                className="mt-10 max-h-40 max-w-40"
+                data={getPedidos(orders ?? [], [
+                  ["Suspendido", "rgb(239 68 68)", State.SUSPENDIDO],
+                  ["En Progreso", "rgb(249 115 22)", State.EN_PROGRESO],
+                  ["Terminado", "rgb(34 197 94)", State.TERMINADO],
+                ])}
+              />
               <div className="relative bottom-24 left-16 flex pt-1">
                 <span className="font-semibold text-green-500">35%</span>
               </div>
@@ -194,6 +200,29 @@ const Dashboard = () => {
       </div>
     </div>
   );
+};
+
+export const getPedidos = (
+  orders: { state: State }[],
+  values: [string, string, State][]
+): ChartProps<"doughnut">["data"] => {
+  const labels = values.map((value) => value[0]);
+  const colors = values.map((value) => value[1]);
+  const state = values.map((value) => value[2]);
+  const data = state.map((value) => orders.reduce((acc, order) => (order.state === value ? acc + 1 : acc), 0));
+
+  return {
+    labels,
+    datasets: [
+      {
+        data,
+        label: "Procesos",
+        backgroundColor: colors,
+        borderColor: ["rgba(247, 127, 0, 1)", "rgba(214, 40, 40, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
 };
 
 export default Dashboard;
