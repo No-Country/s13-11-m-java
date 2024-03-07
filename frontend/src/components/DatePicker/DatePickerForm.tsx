@@ -15,6 +15,8 @@ import moment from "moment";
 const TimePicker = ({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
   const handleTimeChange = (e: { target: { value: string } }) => {
     onChange(e.target.value);
+    //es la hora
+    console.log(e.target.value);
   };
 
   return (
@@ -22,7 +24,7 @@ const TimePicker = ({ value, onChange }: { value: string; onChange: (value: stri
       type="time"
       value={value}
       onChange={handleTimeChange}
-      className="block w-full rounded-md border border-gray-300 p-2"
+      className="mx-auto mt-[-20px] block rounded-md border border-gray-300 p-2 text-center text-xl"
     />
   );
 };
@@ -36,8 +38,6 @@ export function DatePickerForm({ onChangeDate }: Props) {
   const [time, setTime] = useState<string>(moment().format("HH:mm"));
 
   const handleDateChange = (selectedDate: Date) => {
-    setDate(selectedDate);
-
     if (time) {
       const combinedDateTime = moment(selectedDate)
         .set({
@@ -45,7 +45,12 @@ export function DatePickerForm({ onChangeDate }: Props) {
           minute: parseInt(time.split(":")[1]),
         })
         .toDate();
-      onChangeDate(combinedDateTime);
+      setDate(combinedDateTime);
+      //este valor se envia a form con onchange date
+      onChangeDate(moment(combinedDateTime).local().format().slice(0, -6));
+      console.log(combinedDateTime);
+    } else {
+      setDate(selectedDate);
     }
   };
 
@@ -56,7 +61,7 @@ export function DatePickerForm({ onChangeDate }: Props) {
           <FormControl>
             <Button type="button" variant={"ghost"} className={cn("", !date && "text-muted-foreground")}>
               <CalendarIcon className="ml-auto mr-2 h-4 w-4 opacity-50" />
-              {date ? format(date, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
+              {date ? format(date, "Pp", { locale: es }) : <span>Selecciona una fecha</span>}
             </Button>
           </FormControl>
         </div>

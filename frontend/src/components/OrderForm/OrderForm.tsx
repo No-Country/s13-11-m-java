@@ -59,6 +59,8 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
     });
   }
 
+  console.log(form.control._formValues);
+
   const labelStyle = "text-[#606060] flex w-full";
 
   return (
