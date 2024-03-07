@@ -161,19 +161,28 @@ public class ProductOrderServiceImpl implements ProductOrderService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("user + " + productOrderId + "does not found"));
 
+        if(productOrderRequest.getState() != null){
+            oldProductOrder.setState(productOrderRequest.getState());
+        }
 
         if (!Objects.equals(productOrderRequest.getProductId(), oldProductOrder.getProduct().getId())) {
             Product product = this.findProductByIdOrThrow(productOrderRequest.getProductId());
             oldProductOrder.setProduct(product);
         }
 
+        /*
         if (!Objects.equals(productOrderRequest.getClient(), oldProductOrder.getClient())) {
             Client client = this.clientRepository.findById(productOrderRequest.getClient().getId())
                     .orElseThrow(() -> new EntityNotFoundException("client does not found"));
             oldProductOrder.setClient(client);
-        }
+        }*/
 
-        ReflectionUtil.copyNonNullProperties(productOrderRequest, oldProductOrder);
+
+        try {
+            ReflectionUtil.copyNonNullProperties(productOrderRequest, oldProductOrder);
+        }catch(IllegalAccessException e){
+            logger.error(e.getMessage());
+        }
 
 
         String initialDateString = productOrderRequest.getInitialDate();
@@ -211,7 +220,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
         else if(productOrderRequest.getState() == State.TERMINADO){
             this.updateEndDate(productOrderId);
-            this.productService.updateTimeAverage(oldProductOrder.getProduct().getId());
+            //this.productService.updateTimeAverage(oldProductOrder.getProduct().getId());
         }
     }
 

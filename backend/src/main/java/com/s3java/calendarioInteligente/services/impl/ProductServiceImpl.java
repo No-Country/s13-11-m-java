@@ -2,19 +2,17 @@ package com.s3java.calendarioInteligente.services.impl;
 
 import com.s3java.calendarioInteligente.entities.ProcessAttributes;
 import com.s3java.calendarioInteligente.entities.Product;
+import com.s3java.calendarioInteligente.entities.SubProcess;
 import com.s3java.calendarioInteligente.exception.exceptions.ProductNotFoundException;
 import com.s3java.calendarioInteligente.repositories.ProductRepository;
 import com.s3java.calendarioInteligente.services.data.Calculos;
+import com.s3java.calendarioInteligente.services.inter.ProcessService;
 import com.s3java.calendarioInteligente.services.inter.ProductService;
 import com.s3java.calendarioInteligente.utils.ReflectionUtil;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +30,6 @@ public class ProductServiceImpl implements ProductService {
     private Calculos calculos;
 
     @Override
-
     @Transactional(readOnly = true)
     public List<Product> list() {
         return (List<Product>) productRepository.findAll();
@@ -48,7 +45,36 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Product save(Product product) {
 
-        product.getProductProcesses().stream().forEach((System.out::println));
+        List<ProductProcess> processes = product.getProductProcesses();
+
+
+        processes.stream().forEach(process -> {
+
+           ProcessAttributes pa = process.getProcessAttributes();
+
+           pa.setTimeEstimatedCompletion(this.calculateEstimateTimeCompletionForProocess(process));
+
+           System.out.println(pa);
+
+           process.setProcessAttributes(pa);
+
+
+            process.getProcessAttributes()
+                    .setTimeAverage(
+                            this.calculateTimeMargin(process.getProcessAttributes()
+                                    .getTimeEstimatedCompletion()));
+
+        });
+
+        System.out.println("----------- SAVE -------------");
+
+        product.getProductProcesses().stream().forEach( sub -> System.out.println(sub.getProcessAttributes()
+                .getTimeEstimatedCompletion()));
+
+
+       product.getProductProcesses().stream().forEach( sub -> System.out.println(sub.getProcessAttributes()
+               .getTimeEstimatedCompletion()));
+
 
         product.setTimeEstimatedCompletion(
                 this.calculateEstimateTimeCompletion(product));
@@ -59,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setTimeAverage(Double.valueOf(0));
         product.setTimeMargin(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
+
 
 
         return productRepository.save(product);
@@ -133,7 +160,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Double calculateEstimateTimeCompletion(Product product) {
-        System.out.println("ENTRA calculateEstimateTimeCompletion");
         return calculos.timeEstimatedCompletionProduct(product.getProductProcesses());
     }
 
@@ -157,6 +183,10 @@ public class ProductServiceImpl implements ProductService {
             product.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
             this.productRepository.save(product);
 
+    }
+
+    public Double calculateEstimateTimeCompletionForProocess(ProductProcess productProcess){
+        return calculos.timeEstimatedCompletionProcess(productProcess.getSubProcesses());
     }
 
 }

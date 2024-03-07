@@ -12,4 +12,6 @@ public interface ProcessService {
     ResponseEntity<?> updateByID(ProductProcess updatedProcess, Long processIDToUpdate);
     ResponseEntity<?> addSubProcessToProcess(SubProcess subProcess, Long processID);
     ResponseEntity<?> deleteSubProcessFromProcess(Long processID, Long subprocessID);
+
+    Double calculateEstimateTimeCompletion(ProductProcess productProcess);
 }
