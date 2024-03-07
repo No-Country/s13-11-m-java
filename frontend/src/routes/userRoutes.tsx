@@ -8,7 +8,8 @@ const EmployeesPage = React.lazy(() => import("@/pages/Employees/EmployeesPage")
 const OrderPage = React.lazy(() => import("@/pages/Orders/OrderPage"));
 const ProductPage = React.lazy(() => import("@/pages/Products/ProductPage"));
 const OrderDetails = React.lazy(() => import("@/pages/Orders/details/OrderDetails"));
-const ProductsPage = React.lazy(() => import("@/pages/Products/ProductsPage"));
+const OrderTablePage = React.lazy(() => import("@/pages/Orders/OrderTablePage"));
+const ProductsTablePage = React.lazy(() => import("@/pages/Products/ProductsTablePage"));
 const AccountSettings = React.lazy(() => import("@/pages/Settings/AccountSettings"));
 const CalendarSettings = React.lazy(() => import("@/pages/Settings/CalendarSettings"));
 const NotificationSettings = React.lazy(() => import("@/pages/Settings/NotificationSettings"));
@@ -23,7 +24,7 @@ export const userRoutes = {
   children: [
     {
       path: "/orders",
-      element: <ProductsPage />,
+      element: <OrderTablePage />,
     },
     {
       path: "/calendar",
@@ -72,6 +73,10 @@ export const userRoutes = {
     {
       path: "/product/create",
       element: <ProductPage />,
+    },
+    {
+      path: "/product",
+      element: <ProductsTablePage />,
     },
     {
       path: "/orders/create",

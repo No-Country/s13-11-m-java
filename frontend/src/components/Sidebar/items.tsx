@@ -21,8 +21,13 @@ export const menuItems = [
   {
     icon: <ProductsIcon />,
     label: "Productos",
-    href: "/product/create",
+    href: "/product",
   },
+  // {
+  //   icon: <ProductsIcon />,
+  //   label: "Productos",
+  //   href: "/product/create",
+  // },
   {
     icon: <MdOutlinePeopleAlt />,
     label: "Empleados",
