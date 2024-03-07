@@ -46,32 +46,27 @@ public class ProductServiceImpl implements ProductService {
         List<ProductProcess> processes = product.getProductProcesses();
 
 
-        processes.stream().forEach(process -> {
 
-           ProcessAttributes pa = process.getProcessAttributes();
-           pa.setTimeEstimatedCompletion(this.calculateEstimateTimeCompletionForProocess(process));
-           process.setProcessAttributes(pa);
-           process.getProcessAttributes()
-                    .setTimeAverage(
-                            this.calculateTimeMargin(process.getProcessAttributes()
-                                    .getTimeEstimatedCompletion()));
+            processes.stream().forEach(process -> {
+                ProcessAttributes pa = process.getProcessAttributes();
 
-        });
+                if(process.getSubProcesses().size() > 0){
 
-            product.setTimeEstimatedCompletion(
-                    this.calculateEstimateTimeCompletion(product));
+                    pa.setTimeEstimatedCompletion(this.calculateEstimateTimeCompletionForProocess(process));
+                    process.setProcessAttributes(pa);
+                    process.getProcessAttributes()
+                            .setTimeAverage(
+                                    this.calculateTimeMargin(process.getProcessAttributes()
+                                            .getTimeEstimatedCompletion()));
+                }
+            });
 
+        Double timeEstimated = this.calculateEstimateTimeCompletion(product);
 
-            product.setTimeAverage(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
-
-
-        product.setTimeEstimatedCompletion(
-                this.calculateEstimateTimeCompletion(product));
+        product.setTimeEstimatedCompletion(timeEstimated);
 
         product.setTimeAverage(Double.valueOf(0));
         product.setTimeMargin(this.calculateTimeMargin(product.getTimeEstimatedCompletion()));
-
-
 
         return productRepository.save(product);
     }
@@ -145,7 +140,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Double calculateEstimateTimeCompletion(Product product) {
+
         return calculos.timeEstimatedCompletionProduct(product.getProductProcesses());
+
     }
 
     public Product updateProduct(Long id, Product product) throws Exception {
@@ -166,12 +163,11 @@ public class ProductServiceImpl implements ProductService {
 
     public void updateProductTimeEstimatedCompletion(Product product) {
             product.setTimeEstimatedCompletion(product.getTimeEstimatedCompletion());
-            //this.productRepository.save(product);
-
+            this.productRepository.save(product);
     }
 
     public Double calculateEstimateTimeCompletionForProocess(ProductProcess productProcess){
-        return calculos.timeEstimatedCompletionProcess(productProcess.getSubProcesses());
+            return calculos.timeEstimatedCompletionProcess(productProcess.getSubProcesses());
     }
 
 }
