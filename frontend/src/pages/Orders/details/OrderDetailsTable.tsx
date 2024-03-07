@@ -5,14 +5,33 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import { columns as orderColumns } from "./orderColumn";
 import { columns as processColumns } from "./processColumn";
-import { ProductOrder } from "@/app/services/api/types";
+import { ProductOrder, State } from "@/app/services/api/types";
 
 interface OrderDetailsTableProps {
   orderData?: ProductOrder;
 }
 const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ orderData: data }) => {
-  const productProcesses = data?.product.productProcesses ?? [];
-  const subProcesses = productProcesses?.map((process) => process.subProcesses ?? []).flat() ?? [];
+  const productProcesses =
+    data?.product.productProcesses?.map((e) => ({
+      ...e!,
+      processAttributes: {
+        ...e.processAttributes!,
+        state: data.state,
+      },
+    })) ?? [];
+  const subProcesses =
+    productProcesses
+      ?.map(
+        (process) =>
+          process.subProcesses?.map((e) => ({
+            ...e!,
+            subProcessAttributes: {
+              ...e.subProcessAttributes!,
+              state: data?.state ?? State.PENDIENTE,
+            },
+          })) ?? []
+      )
+      .flat() ?? [];
 
   return (
     <div className="container py-10">
@@ -50,4 +69,5 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({ orderData: data }
     </div>
   );
 };
+
 export default OrderDetailsTable;

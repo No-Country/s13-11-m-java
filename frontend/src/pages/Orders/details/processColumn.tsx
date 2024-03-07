@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import { RxCaretSort } from "react-icons/rx";
 
-import { ProductProcess, State } from "@/app/services/api/types";
+import { ProcessAttributes, ProductProcess, State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -16,7 +16,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<ProductProcess>[] = [
+export const columns: ColumnDef<ProductProcess & { subProcessAttributes?: ProcessAttributes }>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -24,6 +24,7 @@ export const columns: ColumnDef<ProductProcess>[] = [
     meta: {
       headerName: "Nombre",
     },
+    cell: ({ row }) => row.original.processAttributes?.name ?? row.original.subProcessAttributes?.name ?? "Sin nombre",
   },
   {
     id: "state",
@@ -36,7 +37,8 @@ export const columns: ColumnDef<ProductProcess>[] = [
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const estado = row.original.processAttributes?.state ?? State.PENDIENTE;
+      const key = "processAttributes" in row.original ? "processAttributes" : "subProcessAttributes";
+      const estado = row.original[key]?.state ?? State.PENDIENTE;
       const estadoText = estado in states ? states[estado] : "Pendiente";
       return (
         <div className="inline-flex items-center">
@@ -78,6 +80,14 @@ export const columns: ColumnDef<ProductProcess>[] = [
     header: (prop) => ColumnSortButton("Empleado", prop),
     meta: {
       headerName: "Empleado",
+    },
+    cell: ({ row }) => {
+      const key = "processAttributes" in row.original ? "processAttributes" : "subProcessAttributes";
+      row.original[key]?.state === State.PENDIENTE
+        ? "Pablo Alborán"
+        : row.original[key]?.state === State.TERMINADO
+          ? "Andres Calamaro"
+          : "Antonio Banderas";
     },
   },
   {
