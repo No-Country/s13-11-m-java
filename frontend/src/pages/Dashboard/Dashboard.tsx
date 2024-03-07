@@ -85,7 +85,7 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
           <div className="flex">
             <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessPorcent} />
@@ -113,9 +113,9 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
-          <div className="flex">
-            <div className="">
+          <h2 className="absolute mt-4 px-4 text-start text-xl font-semibold">Rendimiento Empleados</h2>
+          <div className="flex pt-10">
+            <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataEmployee} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
                 <span className="font-semibold text-red-500">02</span>
@@ -141,9 +141,9 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
           <div className="flex">
-            <div className="">
+            <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
                 <span className="font-semibold text-red-500">04</span>
@@ -165,14 +165,10 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
-        {/* <div className="max-w-48">
-          <h2 className="text-1xl mt-4 text-center">Procesos</h2>
-          <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ2} />
-        </div> */}
         <div className="max-w-48">
-          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
           <div className="flex">
-            <div className="">
+            <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ2} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
                 <span className="font-semibold text-red-500">04</span>
