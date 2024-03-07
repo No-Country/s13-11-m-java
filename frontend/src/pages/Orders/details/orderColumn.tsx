@@ -2,10 +2,12 @@ import { states } from "@/components/ProductForm/ProcessModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+import { IoPlayCircle } from "react-icons/io5";
+import { IoPauseCircle } from "react-icons/io5";
 import { RxCaretSort } from "react-icons/rx";
 
-import { FormatedOrder } from "./OrderDetails";
-import { State } from "@/app/services/api/types";
+import { useUpdateOrderMutation } from "@/app/services/api/order";
+import { ProductOrder, State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -17,7 +19,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<FormatedOrder>[] = [
+export const columns: ColumnDef<ProductOrder>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -59,7 +61,40 @@ export const columns: ColumnDef<FormatedOrder>[] = [
       const dateB = new Date(rowB.original.initialDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) => new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+    cell: function Component({ row }) {
+      const [update, { isLoading }] = useUpdateOrderMutation();
+
+      const handleSubmit = () => {
+        const { client, id, state } = row.original;
+        console.log({ client, id, state });
+        return;
+        if (state === State.PENDIENTE) {
+          update({
+            orderId: id,
+            client: client,
+            state: State.EN_PROGRESO,
+          });
+        } else if (state === State.EN_PROGRESO) {
+          update({
+            orderId: id,
+            client: client,
+            state: State.PENDIENTE,
+          });
+        }
+      };
+      return (
+        <div className="inline-flex items-center">
+          {new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" })}
+          <Button variant="ghost" className="ml-2 h-8 w-8 p-1" onClick={handleSubmit} disabled={isLoading}>
+            {row.original.state === State.PENDIENTE ? (
+              <IoPlayCircle className="text-xl" />
+            ) : (
+              <IoPauseCircle className="text-xl" />
+            )}
+          </Button>
+        </div>
+      );
+    },
     meta: {
       hidden: true,
     },
@@ -69,11 +104,12 @@ export const columns: ColumnDef<FormatedOrder>[] = [
     accessorKey: "endDate",
     header: (prop) => ColumnSortButton("Fecha final", prop),
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.endDate);
-      const dateB = new Date(rowB.original.endDate);
+      const dateA = new Date(rowA.original.finishEstimatedDate);
+      const dateB = new Date(rowB.original.finishEstimatedDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) => new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    cell: ({ row }) =>
+      new Date(row.original.finishEstimatedDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },

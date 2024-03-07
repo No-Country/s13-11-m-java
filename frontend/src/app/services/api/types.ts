@@ -166,7 +166,7 @@ export type CreateOrderRequest = Omit<ProductOrder, "id" | "product" | "client">
 };
 
 export type UpdateOrderResponse = ProductOrder; /* No response */
-export type UpdateOrderRequest = ProductOrder & { orderId: number };
+export type UpdateOrderRequest = Partial<ProductOrder> & { orderId: number } & Pick<ProductOrder, "client">;
 
 export type GetOrderByIdResponse = ProductOrder;
 export type GetOrderByIdRequest = number;
