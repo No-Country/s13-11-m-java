@@ -24,7 +24,7 @@ const TimePicker = ({ value, onChange }: { value: string; onChange: (value: stri
       type="time"
       value={value}
       onChange={handleTimeChange}
-      className="mx-auto mt-[-20px] block rounded-md border border-gray-300 p-2 text-center text-xl"
+      className="text-md mx-auto mt-[-20px] block rounded-md border border-gray-300 p-2 text-center"
     />
   );
 };
