@@ -21,24 +21,32 @@ import { ProductProcesses, SubProcess, productProcessesSchema } from "@/schemas/
 
 import ProcessOption from "./ProcessOption";
 import SubProcessModal from "./SubProcessModal";
+import { State } from "@/app/services/api/types";
 
 type ModalProps = {
   onSubmit?: (data: ProductProcesses) => void;
   defaultValues?: Partial<ProductProcesses>;
 } & Pick<DialogProps, "open" | "onOpenChange">;
 
+export const states: Record<State, string> = {
+  PENDIENTE: "Pendiente",
+  EN_PROGRESO: "En progreso",
+  TERMINADO: "Terminado",
+  SUSPENDIDO: "Suspendido",
+};
+
 const ProcessModal = ({
   open,
   defaultValues = {
     processAttributes: {
       name: "",
-      timeReal: 0,
       timeAverage: 0,
       timeMargin: 0,
       comment: "",
-      state: false,
+      state: State.PENDIENTE,
       active: false,
       counter: 0,
+      timeEstimatedCompletion: 0,
     },
     subProcesses: [],
   },
@@ -106,7 +114,7 @@ const ProcessModal = ({
               />
               <FormField
                 control={form.control}
-                name="processAttributes.timeReal"
+                name="processAttributes.timeEstimatedCompletion"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel>Índice de progreso</FormLabel>
@@ -137,10 +145,10 @@ const ProcessModal = ({
                   <FormItem className="">
                     <FormLabel>Activo/Inactivo</FormLabel>
                     <Select
-                      onValueChange={(value) => {
-                        form.setValue("processAttributes.state", value === "on");
+                      onValueChange={(value: State) => {
+                        form.setValue("processAttributes.state", value in states ? value : State.PENDIENTE);
                       }}
-                      defaultValue={field.value ? "on" : ""}
+                      defaultValue={field.value in states ? field.value : State.PENDIENTE}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -148,8 +156,11 @@ const ProcessModal = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="off">Inactivo</SelectItem>
-                        <SelectItem value="on">Activo</SelectItem>
+                        {Object.entries(states).map(([key, value]) => (
+                          <SelectItem key={key} value={key}>
+                            {value}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -55,35 +55,37 @@ export type Product = {
   instruction: string;
   createDate?: string;
   description: string;
-  state?: boolean;
-  timeEstimatedCompletion: string;
+  state?: State;
+  timeEstimatedCompletion: number;
+  timeAverage: number;
+  timeMargin: number;
   productProcesses?: ProductProcess[];
-  company?: Company;
+  // company?: Company;
   active?: boolean;
 };
 
 export type ProcessAttributes = {
   name: string;
-  timeReal: number;
+  timeEstimatedCompletion: number;
   timeAverage: number;
   timeMargin: number;
   comment: string;
-  state: boolean;
+  state: State;
   active: boolean;
   counter: number;
 };
 
 export type ProductProcess = {
   id?: number;
-  // product: string;
+  product: string;
   subProcesses?: SubProcess[];
   processAttributes?: ProcessAttributes;
 };
 
 export type SubProcess = {
   id?: number;
-  // productProcess: string;
-  processAttributes?: ProcessAttributes;
+  productProcess: string;
+  // processAttributes?: ProcessAttributes;
   subProcessAttributes?: ProcessAttributes;
 };
 
@@ -142,6 +144,7 @@ export type ProductOrder = {
   name: string;
   errorTime: number;
   photoLink: string;
+  state: State;
   initialDate: string;
   finishEstimatedDate: string;
   productId: number;
@@ -193,3 +196,10 @@ export type DeleteSubprocessRequest = {
   processId: number;
   subprocessId: number;
 };
+
+export enum State {
+  PENDIENTE = "PENDIENTE",
+  EN_PROGRESO = "EN_PROGRESO",
+  TERMINADO = "TERMINADO",
+  SUSPENDIDO = "SUSPENDIDO",
+}

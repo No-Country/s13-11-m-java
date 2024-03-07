@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 import { FaCamera } from "react-icons/fa6";
 
-import orderFormSchema, { OrderFormInputs } from "@/schemas/orderSchema";
+import { OrderFormInputs, orderFormSchema } from "@/schemas/apiSchemas";
 
 import { useGetAllProductsQuery } from "@/app/services/api/product";
 import { CreateOrderRequest } from "@/app/services/api/types";
@@ -46,7 +46,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
   });
 
   function handleSubmit(values: OrderFormInputs) {
-    const { name, errorTime, photoLink, initialDate, finishEstimatedDate, client } = values;
+    const { name, errorTime, photoLink, initialDate, finishEstimatedDate, client, state } = values;
     onSubmit?.({
       name,
       errorTime,
@@ -55,6 +55,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
       finishEstimatedDate,
       productId: productIdFI,
       client: { commonAttribute: { name: client.name } },
+      state,
     });
   }
 
