@@ -141,8 +141,8 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
-          <div className="flex">
+          <h2 className="absolute mt-4 px-4 text-start text-xl font-semibold">Proceso de pedidos</h2>
+          <div className="flex pt-12">
             <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
@@ -166,8 +166,8 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
-          <div className="flex">
+          <h2 className="absolute mt-4 px-4 text-start text-xl font-semibold">Subprocesos</h2>
+          <div className="flex pt-12">
             <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ2} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
