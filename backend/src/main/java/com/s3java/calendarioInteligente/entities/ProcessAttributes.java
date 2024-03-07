@@ -111,4 +111,18 @@ public class ProcessAttributes {
     public void setCounter(Integer counter) {
         this.counter = counter;
     }
+
+    @Override
+    public String toString() {
+        return "ProcessAttributes{" +
+                "name='" + name + '\'' +
+                ", timeEstimatedCompletion=" + timeEstimatedCompletion +
+                ", state=" + state +
+                ", timeAverage=" + timeAverage +
+                ", timeMargin=" + timeMargin +
+                ", comment='" + comment + '\'' +
+                ", active=" + active +
+                ", counter=" + counter +
+                '}';
+    }
 }
