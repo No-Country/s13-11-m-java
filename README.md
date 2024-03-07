@@ -1,48 +1,68 @@
 
 # s13-11-m-java
-[comment]: <> ( Breve descripción del proyecto. )
-[comment]: <> ( Una aplicación que ayuda a gestionar procesos de trabajo SAAS. )
 
-## Content
+## :computer: Project Synopsis
 
- - [Sinopsis del proyecto](#sinopsis-del-proyecto)
- - [Stack](#stack) 
- - [Integrantes](./CONTRIBUTING.md) (Para ver lista integrantes mira `./CONTRIBUTING.md`)
+We give you a short introduction to what our project does:
 
-<br />
+### Welcome to the Smart Businees Tracker!
 
-## Sinopsis del proyecto
+<img src="./assets/img/favicon.png" align="left" width="112"/>
 
-### ¡Te damos la bienvenida al Calendario Inteligente!
+The [**Smart Businees Tracker**](https://s13-11-m-java.vercel.app/). is your ally in efficiently managing your company's work processes. With this innovative tool, you can optimize the planning, tracking, and analysis of your projects in an intuitive and effective way. 
 
-El Calendario Inteligente es tu aliado en la gestión eficiente de los procesos de trabajo de tu empresa. Con esta herramienta innovadora, podrás optimizar la planificación, seguimiento y análisis de tus proyectos de manera intuitiva y efectiva.
+With key features such as automatic feedback of real production data, you can have a clear view of your performance compared to the established objectives. Easily record the production carried out in each process, which will provide valuable information for making informed decisions.
 
-Con características clave como la retroalimentación automática de datos de producción real, podrás tener una visión clara de tu rendimiento en comparación con los objetivos establecidos. Registra fácilmente la producción realizada en cada proceso, lo que te brindará información valiosa para tomar decisiones informadas.
+### Do you need to adjust the processing times?
 
-### ¿Necesitas ajustar los tiempos de proceso? 
-¡No hay problema! Con la capacidad de modificar los tiempos estimados en función de la experiencia y las condiciones cambiantes, podrás planificar con mayor precisión y adaptarte rápidamente a las necesidades del proyecto.
+No problem! With the ability to modify estimated times based on experience and changing conditions, you will be able to plan more accurately and adapt quickly to the project's needs.
 
-Además, con la opción de agregar notas y aclaraciones, podrás comunicar de manera efectiva cualquier información relevante para tu equipo de producción. Desde problemas encontrados hasta ideas para mejorar, todo se puede documentar fácilmente para una colaboración más fluida.
+In addition, with the option to add notes and clarifications, you will be able to effectively communicate any relevant information to your production team. From problems encountered to ideas for improvement, everything can be easily documented for a more seamless collaboration.
 
+Visualize your data clearly and concisely through interactive graphics, allowing you to identify areas of opportunity and optimization in your processes. With the integration of work schedules and holidays, as well as additional options such as overtime, vacations, and leaves, the Smart Calendar adapts to the specific needs of your company.
 
-Visualiza tus datos de manera clara y concisa a través de gráficos interactivos, que te permiten identificar áreas de oportunidad y optimización en tus procesos. Con la integración de horarios de trabajo y feriados, así como opciones adicionales como horas extras, vacaciones y licencias, el Calendario Inteligente se adapta a las necesidades específicas de tu empresa.
+Simplify the management of your projects and take your production to the next level with the Smart Calendar!
 
-¡Simplifica la gestión de tus proyectos y lleva tu producción al siguiente nivel con el Calendario Inteligente!
-
+<br/>
 <div style="text-align: center;">
-  <img src="./assets/img/prev-1.png" alt="Logo" width="620vw">
-  <img src="./assets/img/prev-2.png" alt="Logo" width="620vw">
-  <img src="./assets/img/prev-3.png" alt="Logo" width="620vw">
+  <img src="./assets/img/prev-1.png" alt="Logo" width="410vw">
+  <img src="./assets/img/prev-2.png" alt="Logo" width="410vw">
+  <img src="./assets/img/prev-3.png" alt="Logo" width="410vw">
 </div>
 
-Project deploy: [**s13-11-m-java.vercel.app/**](https://s13-11-m-java.vercel.app/).
+<br/>
 
----
+## :computer: Team
 
-## Stack 
+List of participants in this project, contact and roles in which they performed the most.
 
-El lenguaje o tecnología base para el desarrollo de este proyecto es java. Categoría del proyecto `SAAS`.
+| Count | Name                                                                                   | <img src="https://static.licdn.com/aero-v1/sc/h/3loy7tajf3n0cho89wgg0fjre?raw=true" alt="Image" width="28vw"> <br /> linkedin.com/in/ | :octocat:| Github <br/> Nickname| Role <br /> (Only this project) |
+| --- |--- | --- | --- | --- | ---: |
+| 1 | Milagros Cifres  | <!-- [****](https://www.linkedin.com/in//) -->                                         | <img src="https://avatars.githubusercontent.com/u/160031815?v=4" alt="Image" width="28vw"> | [**milagroscifre**](https://github.com/milagroscifre) | 🎨 UX/UI |
+| 2 | Giuliana Tregnaghi | [**giuliana-tregnaghi/**](https://www.linkedin.com/in/giuliana-tregnaghi/)             | <img src="https://avatars.githubusercontent.com/u/159921289?v=4" alt="Image" width="28vw"> | [**Giulianatregnaghi**](https://github.com/Giulianatregnaghi) | 🎨 UX/UI |
+| 3 | Claudia Coronel | [**coronelclaudiaalicia/**](https://www.linkedin.com/in/coronelclaudiaalicia)          | <img src="https://avatars.githubusercontent.com/u/93046044?v=4" alt="Image" width="28vw"> | [**manara2021**](https://github.com/manara2021) | Tester |
+| 4 | Pedro Villasboa | <!-- [****](https://www.linkedin.com/in//) --> | <img src="https://avatars.githubusercontent.com/u/68921669?v=4" alt="Image" width="28vw"> | [**pedrovillasboa**](https://github.com/pedrovillasboa) | Tester |
+| 5 | Camila Cancino | <!-- [****](https://www.linkedin.com/in//) --> | <img src="https://avatars.githubusercontent.com/u/53883493?v=4" alt="Image" width="28vw"> | [**camcancino**](https://github.com/camcancino) | Tester |
+| 6 | Gabriela Pardo | [**gabriela-beatriz-pardo/**](https://www.linkedin.com/in/gabriela-beatriz-pardo/)     | <img src="https://avatars.githubusercontent.com/u/129235801?v=4" alt="Image" width="28vw"> | [**GBPardoGabrielaBeatriz**](https://github.com/GBPardoGabrielaBeatriz)| Tester |
+| 7 | Andrés Segura | [**andresseguradev/**](https://www.linkedin.com/in/andresseguradev/)                   | <img src="https://avatars.githubusercontent.com/u/63387323?v=4" alt="Image" width="28vw"> | [**Andr7st**](https://github.com/Andr7st) | FullStack |
+| 8 | Agustín Javier Lucentini | [**agustinlucentini/**](https://www.linkedin.com/in/agustinlucentini/)                 | <img src="https://avatars.githubusercontent.com/u/136536384?v=4" alt="Image" width="28vw"> | [**lucenstuff**](https://github.com/lucenstuff) | FullStack |
+| 9 | Santiago Ariel | [**santiagoarielv/**](https://www.linkedin.com/in/santiagoarielv/) | <img src="https://avatars.githubusercontent.com/u/143102582?v=4" alt="Image" width="28vw"> | [**santiagoarielv98**](https://github.com/santiagoarielv98) | FrontEnd | 
+| 10 | Fernando Ariel Muzaber | [**fermuzadev/**](https://www.linkedin.com/in/fermuzadev/) | <img src="https://avatars.githubusercontent.com/u/104037681?v=4" alt="Image" width="28vw"> | [**fermuzadev**](https://github.com/fermuzadev) | FrontEnd |
+| 11 | Joaquin Acosta | [**joaquinhdev/**](https://www.linkedin.com/in/joaquinhdev/) | <img src="https://avatars.githubusercontent.com/u/125093965?v=4" alt="Image" width="28vw"> | [**JoaquinHAcosta**](https://github.com/JoaquinHAcosta) | FrontEnd |
+| 12 | Juan Pablo Godoy | [**godoypablojuan/**](https://www.linkedin.com/in/godoypablojuan/) | <img src="https://avatars.githubusercontent.com/u/58797346?v=4" alt="Image" width="28vw"> | [**DocisJP**](https://github.com/DocisJP) | Backend |
+| 13 | Nestor Duque | [**nestorduqueduque/**](https://www.linkedin.com/in/nestorduqueduque/)                 | <img src="https://avatars.githubusercontent.com/u/125423425?v=4" alt="Image" width="28vw"> | [**nestorduqueduque**](https://github.com/nestorduqueduque) | Backend |
+| 14 | Leon Asturizaga | [**leon-asturizaga-94a80377/**](https://www.linkedin.com/in/leon-asturizaga-94a80377/) | <img src="https://avatars.githubusercontent.com/u/128533111?v=4" alt="Image" width="28vw"> | [**leonasturizaga**](https://github.com/leonasturizaga) | Backend |
+| 15 | Gabriel Remes | | <img src="https://avatars.githubusercontent.com/u/100946627?v=4" alt="Image" width="28vw"> | [**Gabusy07**](https://github.com/Gabusy07) | Backend |
+| 16 | Karen Diaz | | <img src="https://avatars.githubusercontent.com/u/118631005?v=4" alt="Image" width="28vw"> | [**karennn332**](https://github.com/karennn332) | Backend |
+| 17 | Lucas Von Elm | | <img src="https://avatars.githubusercontent.com/u/70777709?v=4" alt="Image" width="28vw"> | [**xlucasve**](https://github.com/xlucasve) | Backend |
 
+<br/>
+
+## :computer: Tech Stack 
+
+Tools for this project.
+
+ * **Project type:** `SAAS`
  * **QA:** `jira`.
  * **UX/UI:**  `figma`.
  * **Database:** `postgresql`.
@@ -52,13 +72,27 @@ El lenguaje o tecnología base para el desarrollo de este proyecto es java. Cate
 
 <br />
 
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
-## Agradecimientos
+## :computer: Thanks
 
 [**No Country**](https://www.nocountry.tech/)
 
 <div style="text-align: center;">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsukYB3HL90LSwYv_RIR2O2OlCV8Sbkx2eNHv8nRvOu8L16FxLQ0nPzY02wQ_BJOfQZw&usqp=CAU" align="center" width="224"/>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsukYB3HL90LSwYv_RIR2O2OlCV8Sbkx2eNHv8nRvOu8L16FxLQ0nPzY02wQ_BJOfQZw&usqp=CAU" align="center" width="324"/>
 </div>
 
 
