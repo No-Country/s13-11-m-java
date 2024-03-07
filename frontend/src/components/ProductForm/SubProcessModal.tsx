@@ -9,23 +9,25 @@ import { Input } from "@/components/ui/input";
 
 import { SubProcess, subProcessSchema } from "@/schemas/apiSchemas";
 
+import { states } from "./ProcessModal";
+import { State } from "@/app/services/api/types";
+
 type SubModalProps = {
   onSubmit?: (data: SubProcess) => void;
   defaultValues?: Partial<SubProcess>;
 } & Pick<DialogProps, "open" | "onOpenChange">;
-
 const SubProcessModal = ({
   open,
   defaultValues = {
     subProcessAttributes: {
       name: "",
-      timeReal: 1,
       timeAverage: 1,
       timeMargin: 1,
       comment: "",
-      state: false,
+      state: State.PENDIENTE,
       active: false,
       counter: 2,
+      timeEstimatedCompletion: 0,
     },
   },
   onOpenChange,
@@ -90,7 +92,7 @@ const SubProcessModal = ({
               />
               <FormField
                 control={form.control}
-                name="subProcessAttributes.timeReal"
+                name="subProcessAttributes.timeEstimatedCompletion"
                 render={({ field }) => (
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Índice de progreso</FormLabel>
@@ -121,10 +123,10 @@ const SubProcessModal = ({
                   <FormItem className="">
                     <FormLabel className={labelStyle}>Activo/Inactivo</FormLabel>
                     <Select
-                      onValueChange={(value) => {
-                        form.setValue("subProcessAttributes.state", value === "on");
+                      onValueChange={(value: State) => {
+                        form.setValue("subProcessAttributes.state", value in states ? value : State.PENDIENTE);
                       }}
-                      defaultValue={field.value ? "on" : ""}
+                      defaultValue={field.value in states ? field.value : State.PENDIENTE}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -132,8 +134,11 @@ const SubProcessModal = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="off">Inactivo</SelectItem>
-                        <SelectItem value="on">Activo</SelectItem>
+                        {Object.entries(states).map(([key, value]) => (
+                          <SelectItem key={key} value={key}>
+                            {value}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />

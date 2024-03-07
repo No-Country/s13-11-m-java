@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 
 import OrderDetailsTable from "./OrderDetailsTable";
 import { useGetOrderByIdQuery } from "@/app/services/api/order";
+import { State } from "@/app/services/api/types";
 import moment from "moment";
 
 export interface FormatedOrder {
@@ -10,7 +11,7 @@ export interface FormatedOrder {
   clientName: string;
   initialDate: string;
   endDate: string;
-  state: boolean;
+  state: State;
   processes: FormatedProcess[];
   subprocesses: FormatedSubProcess[];
 }
@@ -22,7 +23,7 @@ export interface FormatedProcess {
   timeAverage?: number;
   timeMargin?: number;
   comment?: string;
-  state?: boolean;
+  state?: State;
   initialDate: string;
   endDate: string;
   employee: string;
@@ -36,7 +37,7 @@ export interface FormatedSubProcess {
   timeAverage?: number;
   timeMargin?: number;
   comment?: string;
-  state?: boolean;
+  state?: State;
   initialDate: string;
   endDate: string;
   employee: string;
@@ -50,7 +51,6 @@ const OrderDetail = () => {
     OrderData?.product.productProcesses?.map((process) => ({
       id: process.id,
       name: process.processAttributes?.name,
-      timeReal: process.processAttributes?.timeReal,
       timeAverage: process.processAttributes?.timeAverage,
       timeMargin: process.processAttributes?.timeMargin,
       comment: process.processAttributes?.comment,
@@ -67,7 +67,6 @@ const OrderDetail = () => {
           parentId: process.id!,
           id: subprocess.id,
           name: subprocess.subProcessAttributes?.name ?? "",
-          timeReal: subprocess.subProcessAttributes?.timeReal,
           timeAverage: subprocess.subProcessAttributes?.timeAverage,
           timeMargin: subprocess.subProcessAttributes?.timeMargin,
           comment: subprocess.subProcessAttributes?.comment,
@@ -84,7 +83,7 @@ const OrderDetail = () => {
     clientName: OrderData?.client.commonAttribute.name || "",
     initialDate: OrderData?.initialDate || "",
     endDate: OrderData?.finishEstimatedDate || "",
-    state: OrderData?.product.state || true,
+    state: OrderData?.product.state ?? State.PENDIENTE,
     processes: mainProcesses || [],
     subprocesses: subprocesses || [],
   };

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 
+import { states } from "@/components/ProductForm/ProcessModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +16,7 @@ import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical, BsTrash } from 
 import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
-import { Product } from "@/app/services/api/types";
+import { Product, State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -47,12 +48,12 @@ export const columns: ColumnDef<Product>[] = [
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const { active } = row.original;
-      const variant = active ? "success" : "destructive";
+      const estado = row.original.state ?? State.PENDIENTE;
+      const estadoText = estado in states ? states[estado] : "Pendiente";
       return (
         <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{active ? "Activo" : "Inactivo"}</span>
+          <Badge className="px-1 py-1" variant={estado} />
+          <span className="pl-2">{estadoText}</span>
         </div>
       );
     },

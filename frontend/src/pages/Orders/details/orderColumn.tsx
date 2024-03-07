@@ -1,9 +1,11 @@
+import { states } from "@/components/ProductForm/ProcessModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { RxCaretSort } from "react-icons/rx";
 
 import { FormatedOrder } from "./OrderDetails";
+import { State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -35,12 +37,12 @@ export const columns: ColumnDef<FormatedOrder>[] = [
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const { state } = row.original;
-      const variant = state ? "success" : "destructive";
+      const estado = row.original.state ?? State.PENDIENTE;
+      const estadoText = estado in states ? states[estado] : "Pendiente";
       return (
         <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{state ? "Activo" : "Inactivo"}</span>
+          <Badge className="px-1 py-1" variant={estado} />
+          <span className="pl-2">{estadoText}</span>
         </div>
       );
     },
