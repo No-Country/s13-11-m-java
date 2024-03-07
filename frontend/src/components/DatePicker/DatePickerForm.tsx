@@ -12,21 +12,49 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import moment from "moment";
 
+const TimePicker = ({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
+  const handleTimeChange = (e: { target: { value: string } }) => {
+    onChange(e.target.value);
+  };
+
+  return (
+    <input
+      type="time"
+      value={value}
+      onChange={handleTimeChange}
+      className="block w-full rounded-md border border-gray-300 p-2"
+    />
+  );
+};
+
 type Props = {
   onChangeDate: (n: Date | string | undefined) => void;
 };
 
 export function DatePickerForm({ onChangeDate }: Props) {
-  //falta hacer logica para que reciba una startDate y una endDate, para limitar el rango de seleccion
-
   const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState<string>(moment().format("HH:mm"));
+
+  const handleDateChange = (selectedDate: Date) => {
+    setDate(selectedDate);
+
+    if (time) {
+      const combinedDateTime = moment(selectedDate)
+        .set({
+          hour: parseInt(time.split(":")[0]),
+          minute: parseInt(time.split(":")[1]),
+        })
+        .toDate();
+      onChangeDate(combinedDateTime);
+    }
+  };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="flex items-center justify-start rounded-none border border-[#D5D5D5] bg-[#F5F6FA]  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent">
+        <div className="flex items-center justify-start rounded-none border border-[#D5D5D5] bg-[#F5F6FA]  hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent">
           <FormControl>
-            <Button variant={"ghost"} className={cn("", !date && "text-muted-foreground")}>
+            <Button type="button" variant={"ghost"} className={cn("", !date && "text-muted-foreground")}>
               <CalendarIcon className="ml-auto mr-2 h-4 w-4 opacity-50" />
               {date ? format(date, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
             </Button>
@@ -39,11 +67,16 @@ export function DatePickerForm({ onChangeDate }: Props) {
           className="select-none capitalize"
           selected={date}
           onSelect={(value) => {
-            onChangeDate(moment(value).utc().format().slice(0, -1)), setDate(value);
+            if (value instanceof Date) {
+              handleDateChange(value);
+            }
           }}
           initialFocus
           locale={es}
         />
+        <div className="p-4">
+          <TimePicker value={time} onChange={setTime} />
+        </div>
       </PopoverContent>
     </Popover>
   );
