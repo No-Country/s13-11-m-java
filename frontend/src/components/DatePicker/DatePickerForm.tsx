@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { FormControl } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -14,6 +15,8 @@ import moment from "moment";
 const TimePicker = ({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
   const handleTimeChange = (e: { target: { value: string } }) => {
     onChange(e.target.value);
+    //es la hora
+    console.log(e.target.value);
   };
 
   return (
@@ -27,13 +30,13 @@ const TimePicker = ({ value, onChange }: { value: string; onChange: (value: stri
 };
 
 type Props = {
-  onChangeDate: (n: Date | string | undefined) => void;
+  onChangeDate?: (n: Date | string | undefined) => void;
   disabled?: boolean;
   defaultValue?: Date;
 };
 
-export function DatePickerForm({ onChangeDate, disabled, defaultValue }: Props) {
-  const [date, setDate] = useState<Date | undefined>(defaultValue);
+export function DatePickerForm({ onChangeDate }: Props) {
+  const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>(moment().format("HH:mm"));
 
   const handleTimeChange = (newTime: string) => {
@@ -46,7 +49,7 @@ export function DatePickerForm({ onChangeDate, disabled, defaultValue }: Props) 
         })
         .toDate();
       setDate(combinedDateTime);
-      onChangeDate(moment(combinedDateTime).local().format().slice(0, -6));
+      onChangeDate ? moment(combinedDateTime).local().format().slice(0, -6) : void 0;
     }
   };
 
@@ -58,30 +61,23 @@ export function DatePickerForm({ onChangeDate, disabled, defaultValue }: Props) 
       })
       .toDate();
     setDate(combinedDateTime);
-    onChangeDate(moment(combinedDateTime).local().format().slice(0, -6));
+    onChangeDate ? moment(combinedDateTime).local().format().slice(0, -6) : void 0;
   };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          type="button"
-          variant={"ghost"}
-          className={cn(
-            "flex w-full items-center justify-start rounded-none border border-[#D5D5D5]  bg-[#F5F6FA] pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent",
-            !date && "text-muted-foreground"
-          )}
-          disabled={disabled}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4 opacity-50" />
-          {date ? format(date, "Pp", { locale: es }) : <span>Selecciona una fecha</span>}
-        </Button>
+        <div className="flex items-center justify-start rounded-none border border-[#D5D5D5] bg-[#F5F6FA]  hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent">
+          <FormControl>
+            <Button type="button" variant={"ghost"} className={cn("", !date && "text-muted-foreground")}>
+              <CalendarIcon className="ml-auto mr-2 h-4 w-4 opacity-50" />
+              {date ? format(date, "Pp", { locale: es }) : <span>Selecciona una fecha</span>}
+            </Button>
+          </FormControl>
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="center">
         <Calendar
-          modifiers={{
-            disabled: { before: new Date() },
-          }}
           mode="single"
           className="select-none capitalize"
           selected={date}

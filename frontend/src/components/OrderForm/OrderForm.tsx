@@ -185,7 +185,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
             control={form.control}
             name="employeeAvailability"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="hidden">
                 <FormLabel className={labelStyle}>Fecha más cercana disponible del empleado</FormLabel>
                 <FormControl>
                   <DatePickerForm onChangeDate={field.onChange} />
