@@ -131,7 +131,11 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha estimada final</FormLabel>
                 <FormControl>
-                  <DatePickerForm key={field.value} disabled defaultValue={new Date(field.value)} />
+                  <DatePickerForm
+                    key={field.value}
+                    disabled
+                    defaultValue={field.value ? new Date(field.value) : undefined}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
