@@ -41,7 +41,6 @@ export const columns: ColumnDef<ProductOrder>[] = [
       const { id, product } = row.original;
 
       const estado = row.original.state ?? State.PENDIENTE;
-      console.log(estado);
       const [update, { isLoading }] = useUpdateOrderMutation();
 
       const handleSubmit = (value: State) => {
