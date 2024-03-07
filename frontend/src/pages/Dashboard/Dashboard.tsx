@@ -79,20 +79,61 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div>
-        <h2 className="text-1xl text-center mt-4">Procesos finalizados</h2>
+          <h2 className="text-1xl mt-4 text-center">Procesos finalizados</h2>
           <Bar options={options} data={barData} />
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-        <h2 className="text-1xl text-center mt-4">Pedidos</h2>
-          <Doughnut className="max-w-48 mt-10" data={dataProcessPorcent} />
+          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <div className="flex">
+            <div>
+              <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessPorcent} />
+              <div className="relative bottom-24 left-16 flex pt-1">
+                <span className="font-semibold text-green-500">35%</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 px-2 py-2">
+              <div className="relative top-10 flex">
+                <div className="h-5 w-5 rounded-full bg-red-500"></div>
+                <span className="px-2">Suspendido</span>
+              </div>
+              <div className="relative top-10 flex">
+                <div className="relative h-5 w-5 rounded-full bg-orange-500"></div>
+                <span className="pl-2">En</span>
+                <span className="pl-1">proceso</span>
+              </div>
+              <div className="relative top-10 flex">
+                <div className="relative h-5 w-5 rounded-full bg-green-500"></div>
+                <span className=" px-2">Terminado</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-        <h2 className="text-1xl text-center mt-4">Actividad de empleados</h2>
-          <Doughnut className="max-w-48 mt-10" data={dataEmployee} />
+          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <div className="flex">
+            <div className="">
+              <Doughnut className="mt-10 max-h-40 max-w-40" data={dataEmployee} />
+              <div className="relative bottom-24 left-14 flex pl-1 pt-1">
+                <span className="font-semibold text-red-500">02</span>
+                <span className="font-semibold">/</span>
+                <span className="font-semibold text-green-500">04</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 px-2 py-2">
+              <div className="relative top-10 flex">
+                <div className="h-5 w-5 rounded-full bg-green-500"></div>
+                <span className=" px-2">Activos</span>
+              </div>
+              <div className="relative top-10 flex">
+                <div className="relative h-5 w-5 rounded-full bg-red-500"></div>
+                <span className=" px-2">Inactivos</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-xl:order-5 xl:col-span-2 xl:row-span-2">
@@ -100,18 +141,59 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-        <h2 className="text-1xl text-center mt-4">Procesos</h2>
-          <Doughnut className="max-w-48 mt-10" data={dataProcessQ} />
+          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <div className="flex">
+            <div className="">
+              <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ} />
+              <div className="relative bottom-24 left-14 flex pl-1 pt-1">
+                <span className="font-semibold text-red-500">04</span>
+                <span className="font-semibold">/</span>
+                <span className="font-semibold text-orange-500">15</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 px-2 py-2">
+              <div className="relative top-10 flex">
+                <div className="h-5 w-5 rounded-full bg-red-500"></div>
+                <span className=" px-2">Suspendido</span>
+              </div>
+              <div className="relative top-10 flex">
+                <div className="relative h-5 w-5 rounded-full bg-orange-500"></div>
+                <span className=" px-2">En proceso</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
+        {/* <div className="max-w-48">
+          <h2 className="text-1xl mt-4 text-center">Procesos</h2>
+          <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ2} />
+        </div> */}
         <div className="max-w-48">
-        <h2 className="text-1xl text-center mt-4">Procesos</h2>
-          <Doughnut className="max-w-48 mt-10" data={dataProcessQ2} />
+          <h2 className="text-1xl mt-4 text-center">Actividad de empleados</h2>
+          <div className="flex">
+            <div className="">
+              <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ2} />
+              <div className="relative bottom-24 left-14 flex pl-1 pt-1">
+                <span className="font-semibold text-red-500">04</span>
+                <span className="font-semibold">/</span>
+                <span className="font-semibold text-green-500">20</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 px-2 py-2">
+              <div className="relative top-10 flex">
+                <div className="h-5 w-5 rounded-full bg-green-500"></div>
+                <span className=" px-2">Terminado</span>
+              </div>
+              <div className="relative top-10 flex">
+                <div className="relative h-5 w-5 rounded-full bg-red-500"></div>
+                <span className=" px-2">Suspendido</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
   );
 };
 
