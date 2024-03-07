@@ -43,7 +43,7 @@ export const columns: ColumnDef<ProductOrder>[] = [
       const estado = row.original.state ?? State.PENDIENTE;
       const [update, { isLoading }] = useUpdateOrderMutation();
 
-      const handleSubmit = (value: State) => {
+      const handleSubmit = async (value: State) => {
         update({
           orderId: id,
           productId: product.id,
