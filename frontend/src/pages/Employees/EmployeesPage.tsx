@@ -1,17 +1,16 @@
 // import React from "react";
-
 // import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 // import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
 // import SelectColumns from "@/components/ui/select-columns";
-
 // import AddEmployee from "@/components/icons/AddEmployee";
-
 import { columns } from "./columns";
 // import { Employee } from "@/app/services/api/types";
-import {optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
-import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
+import { optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
+import { dataComparativeEmployee } from "@/data/Dashboard/comparative/comparativeEmployee.chart";
+import { dataProcessE } from "@/data/Dashboard/donuts/employeedonut.data";
 // import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 import {
   ArcElement,
@@ -25,8 +24,6 @@ import {
   Tooltip,
 } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
-import { dataProcessE } from "@/data/Dashboard/donuts/employeedonut.data";
-import { dataComparativeEmployee } from "@/data/Dashboard/comparative/comparativeEmployee.chart";
 
 ChartJS.register(
   ArcElement,
@@ -45,7 +42,7 @@ const EmployeesPage = () => {
 
   const employees = [
     {
-      id : 1,
+      id: 1,
       name: "Juan García",
       state: true,
       startdate: "2015-03-15",
@@ -187,18 +184,31 @@ const EmployeesPage = () => {
         </div>
         <div className="rounded-2xl bg-background p-4 shadow-2xl md:col-span-2">
           <div className="max-w-48">
-          <h2 className="text-1xl">Rendimiento de empleados</h2>
-            <Doughnut className="max-w-48 mt-10" data={dataProcessE} />
+            <h2 className="absolute mt-4 px-4 text-start text-xl font-semibold">Rendimiento Empleados</h2>
+          </div>
+          <div className="flex pt-10">
+            <div>
+              <Doughnut className="mt-10 max-h-64 max-w-64" data={dataProcessE} />
+              <div className="relative bottom-36 left-24 flex pl-2 pt-1">
+                <span className="font-semibold text-red-500">02</span>
+                <span className="font-semibold">/</span>
+                <span className="font-semibold text-orange-500">04</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 px-2 py-2">
+              <div className="relative top-10 flex">
+                <div className="h-5 w-5 rounded-full bg-orange-500"></div>
+                <span className=" px-2">Activos</span>
+              </div>
+              <div className="relative top-10 flex">
+                <div className="relative h-5 w-5 rounded-full bg-red-500"></div>
+                <span className=" px-2">Inactivos</span>
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-span-full rounded-2xl bg-background p-4 shadow-2xl max-md:order-5 md:col-span-3">
           <Line options={optionsComparative} data={dataComparativeEmployee} height={200} />
-        </div>
-        <div className="rounded-2xl bg-background p-4 shadow-2xl md:col-span-2">
-          <div className="max-w-48">
-          <h2 className="text-1xl">Rendimiento de empleados</h2>
-            <Doughnut className="max-w-48 mt-10" data={dataEmployee} />
-          </div>
         </div>
       </div>
     </div>

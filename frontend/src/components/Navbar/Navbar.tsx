@@ -109,7 +109,7 @@ export function Dropdown({ onClick }: { onClick: () => void }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer md:mr-4">
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src="https://res.cloudinary.com/dcbmvyyes/image/upload/v1709814952/juanperezprofilephoto_lxjayn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -117,7 +117,7 @@ export function Dropdown({ onClick }: { onClick: () => void }) {
         <DropdownMenuItem asChild>
           <Link to="/dashboard">Dashboard</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onClick}>Log out</DropdownMenuItem>
+        <DropdownMenuItem onClick={onClick}>Cerrar Sesión</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

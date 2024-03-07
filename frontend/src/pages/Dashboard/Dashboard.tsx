@@ -66,16 +66,16 @@ const Dashboard = () => {
         </ScrollArea>
       </div>
       <div className="flex flex-col justify-between rounded-2xl bg-background px-4 py-6 shadow-2xl">
-        <div className="flex items-center justify-between text-2xl">
+        <div className="flex items-center justify-between text-xl">
           <h2>
             <b>Progresos activos</b>
           </h2>
           <LuFileCheck />
         </div>
-        <label className="text-3xl">
+        <label className="py-1 text-xl font-semibold">
           {activeOrders.toString().padStart(2, "0")} / {totalOrders.toString().padStart(2, "0")}
         </label>
-        <div className="flex flex-col gap-2">
+        <div className="text-md flex flex-col gap-2">
           {activeOrders < totalOrders && <label className="text-sm">Completar progresos</label>}
           <Progress value={progress} />
         </div>
@@ -88,7 +88,7 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
+          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Pedidos</h2>
           <div className="flex">
             <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessPorcent} />
@@ -144,8 +144,8 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
-          <div className="flex">
+          <h2 className="absolute mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
+          <div className="flex pt-12">
             <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
@@ -169,8 +169,8 @@ const Dashboard = () => {
       </div>
       <div className="rounded-2xl bg-background p-4 shadow-2xl">
         <div className="max-w-48">
-          <h2 className="mt-4 px-4 text-start text-xl font-semibold">Procesos</h2>
-          <div className="flex">
+          <h2 className="absolute mt-4 px-4 text-start text-xl font-semibold">Subprocesos</h2>
+          <div className="flex pt-12">
             <div>
               <Doughnut className="mt-10 max-h-40 max-w-40" data={dataProcessQ2} />
               <div className="relative bottom-24 left-14 flex pl-1 pt-1">
