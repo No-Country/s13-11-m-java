@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { RxCaretSort } from "react-icons/rx";
@@ -28,24 +28,8 @@ export const columns: ColumnDef<FormatedProcess | FormatedSubProcess>[] = [
     id: "state",
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
-    sortingFn: (rowA, rowB) => {
-      const { state: activeA } = rowA.original;
-      const { state: activeB } = rowB.original;
-
-      return activeA === activeB ? 0 : activeA ? -1 : 1;
-    },
-    cell: ({ row }) => {
-      const { state } = row.original;
-      const variant = state ? "success" : "destructive";
-      return (
-        <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{state ? "Activo" : "Inactivo"}</span>
-        </div>
-      );
-    },
     meta: {
-      hidden: true,
+      headerName: "Estado"
     },
   },
   {

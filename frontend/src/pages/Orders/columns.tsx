@@ -56,7 +56,7 @@ export const columns: ColumnDef<ProductOrder>[] = [
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
-      const isActive = row.original.product.active ?? false;
+      const isActive = row.original.errorTime ?? false;
       const variant = isActive ? "success" : "destructive";
       return (
         <div className="inline-flex items-center">

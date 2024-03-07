@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -37,27 +37,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "progress",
+    id: "state",
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
-    sortingFn: (rowA, rowB) => {
-      const { active: activeA } = rowA.original;
-      const { active: activeB } = rowB.original;
-
-      return activeA === activeB ? 0 : activeA ? -1 : 1;
-    },
-    cell: ({ row }) => {
-      const { active } = row.original;
-      const variant = active ? "success" : "destructive";
-      return (
-        <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{active ? "Activo" : "Inactivo"}</span>
-        </div>
-      );
-    },
     meta: {
-      hidden: true,
+      headerName: "Estado"
     },
   },
   {

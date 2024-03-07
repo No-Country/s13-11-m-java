@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import ProductForm from "@/components/ProductForm/ProductForm";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-
 import { MdArrowBackIos } from "react-icons/md";
-
 import { Product } from "@/schemas/apiSchemas";
 
 import { useCreateProductMutation } from "@/app/services/api/product";
