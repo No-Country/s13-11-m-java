@@ -14,9 +14,11 @@ type Option = {
   name: string;
   id?: number | string;
   idUnico?: string;
+  timeEstimatedCompletion?: number;
 };
 
 interface Props {
+  finishTime?: (timeEstimatedCompletion: number) => void;
   fieldValue: string;
   title: string;
   fieldName: string;
@@ -31,6 +33,7 @@ const boxStyle =
   " bg-[#F5F6FA] w-full border-[#D5D5D5] rounded-none  pl-2 hover:border-primary/80 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-transparent";
 
 const SelectInputForm = ({
+  finishTime,
   selectOptions,
   fieldValue,
   setValue,
@@ -72,6 +75,7 @@ const SelectInputForm = ({
                       setValue(fieldName, option.name);
                       if (pickId && typeof option.id === "number") {
                         pickId(option.id!);
+                        finishTime && finishTime(option.timeEstimatedCompletion!);
                       }
                     }}
                   >

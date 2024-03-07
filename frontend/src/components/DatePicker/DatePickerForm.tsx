@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { toast } from "../ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { FormControl } from "@/components/ui/form";
@@ -15,7 +16,6 @@ import moment from "moment";
 const TimePicker = ({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
   const handleTimeChange = (e: { target: { value: string } }) => {
     onChange(e.target.value);
-    //es la hora
     console.log(e.target.value);
   };
 
@@ -52,16 +52,35 @@ export function DatePickerForm({ onChangeDate }: Props) {
       onChangeDate ? moment(combinedDateTime).local().format().slice(0, -6) : void 0;
     }
   };
-
   const handleDateChange = (selectedDate: Date) => {
-    const combinedDateTime = moment(selectedDate)
+    const currentDate = new Date(); // Get current date
+    const selectedDateTime = moment(selectedDate)
       .set({
         hour: parseInt(time.split(":")[0]),
         minute: parseInt(time.split(":")[1]),
       })
       .toDate();
-    setDate(combinedDateTime);
-    onChangeDate ? moment(combinedDateTime).local().format().slice(0, -6) : void 0;
+
+    if (selectedDate <= currentDate) {
+      toast({
+        variant: "destructive",
+        title: "Error al seleccionar la fecha",
+        description: "Seleccionar una fecha posterior al anterior.",
+      });
+      return;
+    }
+
+    if (date && selectedDate <= date) {
+      toast({
+        variant: "destructive",
+        title: "Error al seleccionar la fecha",
+        description: "Seleccionar una fecha posterior al anterior.",
+      });
+      return;
+    }
+
+    setDate(selectedDateTime);
+    onChangeDate ? moment(selectedDateTime).local().format().slice(0, -6) : void 0;
   };
 
   return (

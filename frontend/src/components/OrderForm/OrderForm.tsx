@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { DatePickerForm } from "../DatePicker/DatePickerForm";
 import SelectInputForm from "../SelectInput/SelectInputForm";
+import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -28,6 +29,8 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
   const { data: productsData, isLoading: isLoadingProduct } = useGetAllProductsQuery();
   const [obtainFinishEstimateDate, { isLoading: obtainLoading }] = useLazyObtainFinishEstimateDateQuery();
   const [productIdFI, setProductId] = useState<number>(0);
+
+  // const [productFinishTime, setProductFinishTime] = useState<number>();
 
   const form = useForm<OrderFormInputs>({
     resolver: zodResolver(orderFormSchema),
@@ -60,7 +63,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
     });
   }
 
-  console.log(form.control._formValues);
+  console.log(form);
 
   const labelStyle = "text-[#606060] flex w-full";
 
@@ -85,6 +88,7 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
                 <div className="flex items-center">
                   <FormControl>
                     <SelectInputForm
+                      finishTime={setProductFinishTime}
                       pickId={setProductId as () => void}
                       isLoading={isLoadingProduct}
                       selectOptions={productsData}
@@ -133,11 +137,12 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha estimada final</FormLabel>
                 <FormControl>
-                  <DatePickerForm
+                  {/* <DatePickerForm
                     key={field.value}
                     disabled
                     defaultValue={field.value ? new Date(field.value) : undefined}
-                  />
+                  /> */}
+                  <Input type="date" value={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
