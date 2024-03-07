@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import DeleteAlert from "@/components/DeleteAlert/DeleteAlert";
+import { states } from "@/components/ProductForm/ProcessModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +17,7 @@ import { BsFileEarmarkText, BsThreeDotsVertical } from "react-icons/bs";
 import { RxCaretSort } from "react-icons/rx";
 
 import { useDeleteOrderMutation } from "@/app/services/api/order";
-import { ProductOrder } from "@/app/services/api/types";
+import { ProductOrder, State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -56,12 +57,13 @@ export const columns: ColumnDef<ProductOrder>[] = [
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
-      const isActive = row.original.product.active ?? false;
-      const variant = isActive ? "success" : "destructive";
+      const estado = row.original.product.state ?? State.PENDIENTE;
+      const estadoText = estado in states ? states[estado] : "Pendiente";
+
       return (
         <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={variant} />
-          <span className="pl-2">{isActive ? "Activo" : "Inactivo"}</span>
+          <Badge className="px-1 py-1" variant={estado} />
+          <span className="pl-2">{estadoText}</span>
         </div>
       );
     },

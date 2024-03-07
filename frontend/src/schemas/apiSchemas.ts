@@ -9,9 +9,9 @@ export const stateSchema = z.nativeEnum(State);
 
 export const processSchema = z.object({
   name: z.string().min(3).max(50).trim(),
-  timeEstimatedCompletion: z.number().positive(),
-  timeAverage: strToNumGT0,
-  timeMargin: strToNumGT0,
+  timeEstimatedCompletion: strToInt.default(1),
+  timeAverage: strToNumGT0.default(2),
+  timeMargin: strToNumGT0.default(1),
   comment: z.string().max(255).trim().default("Sin comentarios"),
   state: stateSchema.default(State.PENDIENTE),
   active: bool,
@@ -20,13 +20,13 @@ export const processSchema = z.object({
 
 export const subProcessSchema = z.object({
   id: strToInt.optional(),
-  productProcess: z.string().max(50).trim(),
+  productProcess: z.string().max(50).trim().optional(),
   subProcessAttributes: processSchema,
 });
 
 export const productProcessesSchema = z.object({
   id: strToInt.optional(),
-  product: z.string().max(50).trim(),
+  product: z.string().max(50).trim().optional(),
   subProcesses: z.array(subProcessSchema).default([]),
   processAttributes: processSchema,
 });
@@ -39,9 +39,9 @@ export const productSchema = z.object({
   createDate: z.string().datetime({ offset: true }).optional(),
   description: z.string().max(255).trim(),
   state: stateSchema.default(State.PENDIENTE),
-  timeEstimatedCompletion: z.number().positive(),
-  timeAverage: strToNumGT0,
-  timeMargin: strToNumGT0,
+  timeEstimatedCompletion: strToInt,
+  timeAverage: strToNumGT0.default(2),
+  timeMargin: strToNumGT0.default(1),
   productProcesses: z.array(productProcessesSchema).default([]),
   active: bool,
 });
