@@ -3,6 +3,7 @@ package com.s3java.calendarioInteligente.dto.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.s3java.calendarioInteligente.entities.*;
 import com.s3java.calendarioInteligente.utils.DateUtils;
+import com.s3java.calendarioInteligente.utils.State;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,8 @@ public class ProductOrderResponse {
 
     @JsonFormat(pattern = DateUtils.FORMAT_DATE_TIME)
     private String finishEstimatedDate;
+
+    private State state;
 
     private Product product;
 
@@ -101,6 +104,14 @@ public class ProductOrderResponse {
 
     public String getFinishEstimatedDate() {
         return finishEstimatedDate;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public void setFinishEstimatedDate(String finishEstimatedDate) {
