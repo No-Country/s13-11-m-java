@@ -30,9 +30,11 @@ const orderApi = api.injectEndpoints({
         method: "PATCH",
         body: order,
       }),
+      invalidatesTags: ["Order"],
     }),
     getOrderById: builder.query<GetOrderByIdResponse, GetOrderByIdRequest>({
       query: (orderId) => `/v1/product-orders/${orderId}`,
+      providesTags: ["Order"],
     }),
     getOrdersByClientId: builder.query<GetOrdersByClientIdResponse, GetOrdersByClientIdRequest>({
       query: (clientId) => `/v1/product-orders/orders/${clientId}`,

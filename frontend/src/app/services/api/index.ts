@@ -4,7 +4,7 @@ import { apiUrl } from "@/constants/api";
 
 export const api = createApi({
   reducerPath: "api",
-  tagTypes: ["Products", "Orders"],
+  tagTypes: ["Products", "Orders", "Order", "Product"],
   baseQuery: fetchBaseQuery({
     baseUrl: apiUrl,
     prepareHeaders: (headers) => {

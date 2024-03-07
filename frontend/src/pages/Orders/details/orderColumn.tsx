@@ -1,9 +1,8 @@
 import { states } from "@/components/ProductForm/ProcessModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-import { IoPlayCircle } from "react-icons/io5";
-import { IoPauseCircle } from "react-icons/io5";
 import { RxCaretSort } from "react-icons/rx";
 
 import { useUpdateOrderMutation } from "@/app/services/api/order";
@@ -38,14 +37,34 @@ export const columns: ColumnDef<ProductOrder>[] = [
 
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
-    cell: ({ row }) => {
+    cell: function Component({ row }) {
+      const { id, product } = row.original;
+
       const estado = row.original.state ?? State.PENDIENTE;
-      const estadoText = estado in states ? states[estado] : "Pendiente";
+      console.log(estado);
+      const [update, { isLoading }] = useUpdateOrderMutation();
+
+      const handleSubmit = (value: State) => {
+        update({
+          orderId: id,
+          productId: product.id,
+          state: value,
+        });
+      };
       return (
-        <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={estado} />
-          <span className="pl-2">{estadoText}</span>
-        </div>
+        <Select key={estado} onValueChange={handleSubmit} value={estado} disabled={isLoading}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a verified email to display" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(states).map(([key, value]) => (
+              <SelectItem key={key} value={key}>
+                <Badge className="mr-2 px-1 py-1" variant={key as State} />
+                {value}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       );
     },
     meta: {
@@ -62,38 +81,7 @@ export const columns: ColumnDef<ProductOrder>[] = [
       return dateA.getTime() - dateB.getTime();
     },
     cell: function Component({ row }) {
-      const [update, { isLoading }] = useUpdateOrderMutation();
-
-      const handleSubmit = () => {
-        const { client, id, state } = row.original;
-        console.log({ client, id, state });
-        return;
-        if (state === State.PENDIENTE) {
-          update({
-            orderId: id,
-            client: client,
-            state: State.EN_PROGRESO,
-          });
-        } else if (state === State.EN_PROGRESO) {
-          update({
-            orderId: id,
-            client: client,
-            state: State.PENDIENTE,
-          });
-        }
-      };
-      return (
-        <div className="inline-flex items-center">
-          {new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" })}
-          <Button variant="ghost" className="ml-2 h-8 w-8 p-1" onClick={handleSubmit} disabled={isLoading}>
-            {row.original.state === State.PENDIENTE ? (
-              <IoPlayCircle className="text-xl" />
-            ) : (
-              <IoPauseCircle className="text-xl" />
-            )}
-          </Button>
-        </div>
-      );
+      return new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" });
     },
     meta: {
       hidden: true,
