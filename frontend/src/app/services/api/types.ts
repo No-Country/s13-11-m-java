@@ -77,14 +77,14 @@ export type ProcessAttributes = {
 
 export type ProductProcess = {
   id?: number;
-  product: string;
+  product?: string;
   subProcesses?: SubProcess[];
   processAttributes?: ProcessAttributes;
 };
 
 export type SubProcess = {
   id?: number;
-  productProcess: string;
+  productProcess?: string;
   // processAttributes?: ProcessAttributes;
   subProcessAttributes?: ProcessAttributes;
 };
