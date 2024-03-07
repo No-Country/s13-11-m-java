@@ -3,6 +3,7 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "@/components/ui/button";
@@ -158,6 +159,7 @@ const ProcessModal = ({
                       <SelectContent>
                         {Object.entries(states).map(([key, value]) => (
                           <SelectItem key={key} value={key}>
+                            <Badge className="mr-2 px-1 py-1" variant={key as State} />
                             {value}
                           </SelectItem>
                         ))}
