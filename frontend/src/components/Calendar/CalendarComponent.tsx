@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "../ui/button";
 
@@ -149,8 +149,13 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ onNavigate, onViewChange,
 };
 
 const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
-  const [view, setView] = useState<View>("month");
+  const navigate = useNavigate();
 
+  const handleEventClick = (event: Orders) => {
+    navigate(`/orders/${event.id}`);
+  };
+
+  const [view, setView] = useState<View>("month");
 
   const eventStyleGetter = () => {
     const newStyle = {
@@ -180,6 +185,7 @@ const CalendarComponent: React.FC<CalendarComponentProps> = ({ events }) => {
       <Calendar
         localizer={localizer}
         events={events}
+        onSelectEvent={handleEventClick}
         defaultDate={moment().toDate()}
         startAccessor={(events) => events.start}
         endAccessor={(events) => events.end}
