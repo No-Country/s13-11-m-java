@@ -25,9 +25,12 @@ Simplify the management of your projects and take your production to the next le
 
 <br/>
 <div style="text-align: center;">
+  <img src="./assets/img/prev-6.png" alt="Logo" width="410vw">
   <img src="./assets/img/prev-1.png" alt="Logo" width="410vw">
   <img src="./assets/img/prev-2.png" alt="Logo" width="410vw">
   <img src="./assets/img/prev-3.png" alt="Logo" width="410vw">
+<!--   <img src="./assets/img/prev-5.png" alt="Logo" width="410vw">
+  <img src="./assets/img/prev-6.png" alt="Logo" width="410vw"> -->
 </div>
 
 <br/>
