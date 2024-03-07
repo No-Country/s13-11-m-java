@@ -37,6 +37,10 @@ export function DatePickerForm({ onChangeDate }: Props) {
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState<string>(moment().format("HH:mm"));
 
+  const handleTimeChange = (newTime: string) => {
+    setTime(newTime);
+  };
+
   const handleDateChange = (selectedDate: Date) => {
     if (time) {
       const combinedDateTime = moment(selectedDate)
@@ -46,9 +50,7 @@ export function DatePickerForm({ onChangeDate }: Props) {
         })
         .toDate();
       setDate(combinedDateTime);
-      //este valor se envia a form con onchange date
       onChangeDate(moment(combinedDateTime).local().format().slice(0, -6));
-      console.log(combinedDateTime);
     } else {
       setDate(selectedDate);
     }
@@ -80,7 +82,7 @@ export function DatePickerForm({ onChangeDate }: Props) {
           locale={es}
         />
         <div className="p-4">
-          <TimePicker value={time} onChange={setTime} />
+          <TimePicker value={time} onChange={handleTimeChange} />
         </div>
       </PopoverContent>
     </Popover>
