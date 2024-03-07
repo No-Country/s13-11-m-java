@@ -203,3 +203,5 @@ export enum State {
   TERMINADO = "TERMINADO",
   SUSPENDIDO = "SUSPENDIDO",
 }
+export type ObtainFinishEstimateDateRequest = { productId: number; initialDate: string };
+export type ObtainFinishEstimateDateResponse = string;
