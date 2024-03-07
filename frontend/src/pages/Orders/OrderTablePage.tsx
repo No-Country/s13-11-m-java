@@ -9,12 +9,12 @@ import SelectColumns from "@/components/ui/select-columns";
 
 import { MdAddCircle } from "react-icons/md";
 
-import { columns } from "../Orders/columns";
 import { useListAllOrdersQuery } from "@/app/services/api/order";
 import { Product } from "@/app/services/api/types";
+import { columns } from "@/pages/Orders/columns";
 import { AccessorKeyColumnDef, ColumnFiltersState } from "@tanstack/react-table";
 
-const ProductsPage = () => {
+const OrderTablePage = () => {
   const { data } = useListAllOrdersQuery();
   const [selectedColumn, setSelectedColumn] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -76,4 +76,4 @@ const ProductsPage = () => {
     </div>
   );
 };
-export default ProductsPage;
+export default OrderTablePage;

@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { Badge } from "../ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogProps, DialogTitle } from "@/components/ui/dialog";
@@ -136,6 +137,7 @@ const SubProcessModal = ({
                       <SelectContent>
                         {Object.entries(states).map(([key, value]) => (
                           <SelectItem key={key} value={key}>
+                            <Badge className="mr-2 px-1 py-1" variant={key as State} />
                             {value}
                           </SelectItem>
                         ))}

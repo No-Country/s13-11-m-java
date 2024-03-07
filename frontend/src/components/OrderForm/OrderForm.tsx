@@ -13,6 +13,7 @@ import { FaCamera } from "react-icons/fa6";
 
 import { OrderFormInputs, orderFormSchema } from "@/schemas/apiSchemas";
 
+import { useLazyObtainFinishEstimateDateQuery } from "@/app/services/api/order";
 import { useGetAllProductsQuery } from "@/app/services/api/product";
 import { CreateOrderRequest } from "@/app/services/api/types";
 import { employees } from "@/mocks/employees/employees";
@@ -25,7 +26,7 @@ export interface OrderFormProps {
 
 const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
   const { data: productsData, isLoading: isLoadingProduct } = useGetAllProductsQuery();
-
+  const [obtainFinishEstimateDate, { isLoading: obtainLoading }] = useLazyObtainFinishEstimateDateQuery();
   const [productIdFI, setProductId] = useState<number>(0);
 
   const form = useForm<OrderFormInputs>({
@@ -106,7 +107,20 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha Inicial</FormLabel>
                 <FormControl>
-                  <DatePickerForm onChangeDate={field.onChange} />
+                  <DatePickerForm
+                    disabled={obtainLoading || productIdFI === 0}
+                    onChangeDate={async (data) => {
+                      field.onChange(data);
+                      await obtainFinishEstimateDate({
+                        productId: productIdFI,
+                        initialDate: data instanceof Date ? data.toISOString() : (data as string),
+                      })
+                        .unwrap()
+                        .then((date) => {
+                          form.setValue("finishEstimatedDate", date);
+                        });
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,7 +133,11 @@ const OrderForm = ({ isLoading, onSubmit }: OrderFormProps) => {
               <FormItem>
                 <FormLabel className={labelStyle}>Fecha estimada final</FormLabel>
                 <FormControl>
-                  <DatePickerForm onChangeDate={field.onChange} />
+                  <DatePickerForm
+                    key={field.value}
+                    disabled
+                    defaultValue={field.value ? new Date(field.value) : undefined}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

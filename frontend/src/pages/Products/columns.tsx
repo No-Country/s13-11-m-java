@@ -1,22 +1,8 @@
-import { NavLink } from "react-router-dom";
-
-import { states } from "@/components/ProductForm/ProcessModal";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-import { BsFileEarmarkText, BsPencilSquare, BsThreeDotsVertical, BsTrash } from "react-icons/bs";
-import { MdOutlinePostAdd } from "react-icons/md";
 import { RxCaretSort } from "react-icons/rx";
 
-import { Product, State } from "@/app/services/api/types";
+import { Product } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -30,6 +16,14 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
 
 export const columns: ColumnDef<Product>[] = [
   {
+    id: "idUnico",
+    accessorKey: "idUnico",
+    header: (prop) => ColumnSortButton("ID", prop),
+    meta: {
+      headerName: "ID",
+    },
+  },
+  {
     id: "name",
     accessorKey: "name",
     header: (prop) => ColumnSortButton("Nombre", prop),
@@ -38,100 +32,11 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    id: "progress",
-    accessorKey: "state",
-    header: (prop) => ColumnSortButton("Estado", prop),
-    sortingFn: (rowA, rowB) => {
-      const { active: activeA } = rowA.original;
-      const { active: activeB } = rowB.original;
-
-      return activeA === activeB ? 0 : activeA ? -1 : 1;
-    },
-    cell: ({ row }) => {
-      const estado = row.original.state ?? State.PENDIENTE;
-      const estadoText = estado in states ? states[estado] : "Pendiente";
-      return (
-        <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={estado} />
-          <span className="pl-2">{estadoText}</span>
-        </div>
-      );
-    },
+    id: "description",
+    accessorKey: "description",
+    header: "Descripción",
     meta: {
       hidden: true,
-    },
-  },
-  {
-    id: "timeEstimatedCompletion",
-    accessorKey: "timeEstimatedCompletion",
-    header: (prop) => ColumnSortButton("Fecha Inicio", prop),
-    sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.timeEstimatedCompletion);
-      const dateB = new Date(rowB.original.timeEstimatedCompletion);
-      return dateA.getTime() - dateB.getTime();
-    },
-    cell: ({ row }) =>
-      new Date(row.original.timeEstimatedCompletion).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
-    meta: {
-      hidden: true,
-    },
-  },
-  {
-    id: "startTime",
-    accessorKey: "startTime",
-    header: "Hora",
-    cell: ({ row }) =>
-      new Date(row.original.timeEstimatedCompletion).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    meta: {
-      hidden: true,
-    },
-  },
-  {
-    id: "client",
-    accessorKey: "client",
-    header: (prop) => ColumnSortButton("Cliente", prop),
-    meta: {
-      headerName: "Cliente",
-    },
-  },
-  {
-    id: "actions",
-    meta: {
-      hidden: true,
-    },
-    enableHiding: false,
-    cell: ({ row }) => {
-      const { id } = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="group h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <BsThreeDotsVertical className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Opciones</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <BsPencilSquare className="mr-2" />
-              Modificar producto
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <MdOutlinePostAdd className="mr-2" />
-              Agregar nota
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <BsFileEarmarkText className="mr-2" />
-              <NavLink to={`/orders/${id}`}>Ver detalle</NavLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <BsTrash className="mr-2" /> Eliminar producto
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
     },
   },
 ];

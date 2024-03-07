@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import ProductForm from "@/components/ProductForm/ProductForm";
@@ -16,6 +15,9 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const [createProduct] = useCreateProductMutation();
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   const handleSubmit = async (values: Product) => {
     try {
       await createProduct(values);
@@ -37,10 +39,8 @@ const AddProduct = () => {
   return (
     <div>
       <div className="flex">
-        <Button variant={"ghost"} size={"icon"} asChild>
-          <Link to={"/orders/create"}>
-            <MdArrowBackIos className="h-5 w-5" />
-          </Link>
+        <Button variant={"ghost"} size={"icon"} asChild onClick={handleGoBack} className="cursor-pointer ">
+          <MdArrowBackIos className="h-8 w-8" />
         </Button>
         <h2 className="text-2xl">Agregar un nuevo producto</h2>
       </div>
