@@ -1,11 +1,12 @@
 import { states } from "@/components/ProductForm/ProcessModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { RxCaretSort } from "react-icons/rx";
 
-import { FormatedOrder } from "./OrderDetails";
-import { State } from "@/app/services/api/types";
+import { useUpdateOrderMutation } from "@/app/services/api/order";
+import { ProductOrder, State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -17,7 +18,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<FormatedOrder>[] = [
+export const columns: ColumnDef<ProductOrder>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -36,14 +37,34 @@ export const columns: ColumnDef<FormatedOrder>[] = [
 
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
-    cell: ({ row }) => {
+    cell: function Component({ row }) {
+      const { id, product } = row.original;
+
       const estado = row.original.state ?? State.PENDIENTE;
-      const estadoText = estado in states ? states[estado] : "Pendiente";
+      console.log(estado);
+      const [update, { isLoading }] = useUpdateOrderMutation();
+
+      const handleSubmit = (value: State) => {
+        update({
+          orderId: id,
+          productId: product.id,
+          state: value,
+        });
+      };
       return (
-        <div className="inline-flex items-center">
-          <Badge className="px-1 py-1" variant={estado} />
-          <span className="pl-2">{estadoText}</span>
-        </div>
+        <Select key={estado} onValueChange={handleSubmit} value={estado} disabled={isLoading}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a verified email to display" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(states).map(([key, value]) => (
+              <SelectItem key={key} value={key}>
+                <Badge className="mr-2 px-1 py-1" variant={key as State} />
+                {value}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       );
     },
     meta: {
@@ -59,7 +80,9 @@ export const columns: ColumnDef<FormatedOrder>[] = [
       const dateB = new Date(rowB.original.initialDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) => new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+    cell: function Component({ row }) {
+      return new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" });
+    },
     meta: {
       hidden: true,
     },
@@ -69,11 +92,12 @@ export const columns: ColumnDef<FormatedOrder>[] = [
     accessorKey: "endDate",
     header: (prop) => ColumnSortButton("Fecha final", prop),
     sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.endDate);
-      const dateB = new Date(rowB.original.endDate);
+      const dateA = new Date(rowA.original.finishEstimatedDate);
+      const dateB = new Date(rowB.original.finishEstimatedDate);
       return dateA.getTime() - dateB.getTime();
     },
-    cell: ({ row }) => new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    cell: ({ row }) =>
+      new Date(row.original.finishEstimatedDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },

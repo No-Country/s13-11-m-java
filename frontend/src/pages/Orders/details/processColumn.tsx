@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import { RxCaretSort } from "react-icons/rx";
 
-import { FormatedProcess, FormatedSubProcess } from "./OrderDetails";
-import { State } from "@/app/services/api/types";
+import { ProductProcess, State } from "@/app/services/api/types";
 import { ColumnDef, HeaderContext } from "@tanstack/react-table";
 
 function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, unknown>) {
@@ -17,7 +16,7 @@ function ColumnSortButton<Tdata>(name: string, { column }: HeaderContext<Tdata, 
   );
 }
 
-export const columns: ColumnDef<FormatedProcess | FormatedSubProcess>[] = [
+export const columns: ColumnDef<ProductProcess>[] = [
   {
     id: "name",
     accessorKey: "name",
@@ -31,13 +30,13 @@ export const columns: ColumnDef<FormatedProcess | FormatedSubProcess>[] = [
     accessorKey: "state",
     header: (prop) => ColumnSortButton("Estado", prop),
     sortingFn: (rowA, rowB) => {
-      const { state: activeA } = rowA.original;
-      const { state: activeB } = rowB.original;
+      const { state: activeA } = rowA.original.processAttributes ?? { state: State.PENDIENTE };
+      const { state: activeB } = rowB.original.processAttributes ?? { state: State.PENDIENTE };
 
       return activeA === activeB ? 0 : activeA ? -1 : 1;
     },
     cell: ({ row }) => {
-      const estado = row.original.state ?? State.PENDIENTE;
+      const estado = row.original.processAttributes?.state ?? State.PENDIENTE;
       const estadoText = estado in states ? states[estado] : "Pendiente";
       return (
         <div className="inline-flex items-center">
@@ -54,12 +53,7 @@ export const columns: ColumnDef<FormatedProcess | FormatedSubProcess>[] = [
     id: "initialDate",
     accessorKey: "initialDate",
     header: (prop) => ColumnSortButton("Fecha inicio", prop),
-    sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.initialDate);
-      const dateB = new Date(rowB.original.initialDate);
-      return dateA.getTime() - dateB.getTime();
-    },
-    cell: ({ row }) => new Date(row.original.initialDate).toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
+    cell: () => new Date().toLocaleDateString([], { month: "2-digit", day: "2-digit" }),
     meta: {
       hidden: true,
     },
@@ -68,12 +62,12 @@ export const columns: ColumnDef<FormatedProcess | FormatedSubProcess>[] = [
     id: "endDate",
     accessorKey: "endDate",
     header: (prop) => ColumnSortButton("Fecha final", prop),
-    sortingFn: (rowA, rowB) => {
-      const dateA = new Date(rowA.original.endDate);
-      const dateB = new Date(rowB.original.endDate);
-      return dateA.getTime() - dateB.getTime();
-    },
-    cell: ({ row }) => new Date(row.original.endDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    // sortingFn: (rowA, rowB) => {
+    //   const dateA = new Date(rowA.original.endDate);
+    //   const dateB = new Date(rowB.original.endDate);
+    //   return dateA.getTime() - dateB.getTime();
+    // },
+    cell: () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     meta: {
       hidden: true,
     },

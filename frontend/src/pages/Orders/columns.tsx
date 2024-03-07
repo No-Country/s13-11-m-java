@@ -57,7 +57,7 @@ export const columns: ColumnDef<ProductOrder>[] = [
     accessorKey: "errorTime",
     header: (prop) => ColumnSortButton("Estado", prop),
     cell: ({ row }) => {
-      const estado = row.original.product.state ?? State.PENDIENTE;
+      const estado = row.original.state ?? State.PENDIENTE;
       const estadoText = estado in states ? states[estado] : "Pendiente";
 
       return (
@@ -68,10 +68,10 @@ export const columns: ColumnDef<ProductOrder>[] = [
       );
     },
     sortingFn: (rowA, rowB) => {
-      const { errorTime: idA } = rowA.original;
-      const { errorTime: idB } = rowB.original;
+      const { state: activeA } = rowA.original;
+      const { state: activeB } = rowB.original;
 
-      return (idA % 2) - (idB % 2);
+      return activeA?.localeCompare(activeB) ?? 0;
     },
     meta: {
       hidden: true,

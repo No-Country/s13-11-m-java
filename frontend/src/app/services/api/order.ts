@@ -11,6 +11,8 @@ import {
   GetOrdersByDateRequest,
   GetOrdersByDateResponse,
   ListAllOrdersResponse,
+  ObtainFinishEstimateDateRequest,
+  ObtainFinishEstimateDateResponse,
   UpdateOrderRequest,
   UpdateOrderResponse,
 } from "./types";
@@ -30,9 +32,11 @@ const orderApi = api.injectEndpoints({
         method: "PATCH",
         body: order,
       }),
+      invalidatesTags: ["Order", "Orders"],
     }),
     getOrderById: builder.query<GetOrderByIdResponse, GetOrderByIdRequest>({
       query: (orderId) => `/v1/product-orders/${orderId}`,
+      providesTags: ["Order"],
     }),
     getOrdersByClientId: builder.query<GetOrdersByClientIdResponse, GetOrdersByClientIdRequest>({
       query: (clientId) => `/v1/product-orders/orders/${clientId}`,
@@ -57,6 +61,12 @@ const orderApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Orders"],
     }),
+    obtainFinishEstimateDate: builder.query<ObtainFinishEstimateDateResponse, ObtainFinishEstimateDateRequest>({
+      query: ({ initialDate, productId }) => ({
+        url: `/v1/product-orders/obtain-finishEstimateDate/${initialDate}/${productId}`,
+        responseHandler: "text",
+      }),
+    }),
   }),
 });
 
@@ -72,4 +82,5 @@ export const {
   useLazyGetOrderByIdQuery,
   useLazyListAllOrdersQuery,
   useUpdateOrderMutation,
+  useLazyObtainFinishEstimateDateQuery,
 } = orderApi;
