@@ -22,7 +22,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
       const { sub: email } = jwtDecode<{ sub: string }>(payload.token);
-      const user: User = { id: "1", firstName: "John", lastName: "Doe", email };
+      const user: User = { id: "1", firstName: "Juan", lastName: "Perez", email };
       setAuth(user, payload.token);
       state.user = user;
     });
