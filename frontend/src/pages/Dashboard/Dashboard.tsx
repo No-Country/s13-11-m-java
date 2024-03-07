@@ -9,6 +9,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { LuFileCheck } from "react-icons/lu";
 
 import { columns } from "../Orders/columns";
+import { State } from "@/app/services/api/types";
 import { data as barData, options } from "@/data/Dashboard/bar/bar.chart";
 import { dataComparative, optionsComparative } from "@/data/Dashboard/comparative/comparative.chart";
 import { dataEmployee } from "@/data/Dashboard/donuts/employee.data";
@@ -45,7 +46,7 @@ const Dashboard = () => {
   const { orders } = useOrder();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const activeOrders = orders.reduce((acc, order) => (order ? acc + 1 : acc), 0);
+  const activeOrders = orders.reduce((acc, order) => (order.state === State.EN_PROGRESO ? acc + 1 : acc), 0);
   const totalOrders = orders.length;
   const progress = (activeOrders * 100) / totalOrders;
 
@@ -71,7 +72,9 @@ const Dashboard = () => {
           </h2>
           <LuFileCheck />
         </div>
-        <label className="text-3xl">{activeOrders.toString().padStart(2, "0")}</label>
+        <label className="text-3xl">
+          {activeOrders.toString().padStart(2, "0")} / {totalOrders.toString().padStart(2, "0")}
+        </label>
         <div className="flex flex-col gap-2">
           {activeOrders < totalOrders && <label className="text-sm">Completar progresos</label>}
           <Progress value={progress} />
