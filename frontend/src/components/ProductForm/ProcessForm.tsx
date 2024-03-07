@@ -95,7 +95,7 @@ const ProcessForm = ({ onSubmit, isLoading, defaultValues, onOpenModal }: Proces
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={processForm.control}
             name="processAttributes.state"
             render={({ field }) => (
@@ -107,7 +107,7 @@ const ProcessForm = ({ onSubmit, isLoading, defaultValues, onOpenModal }: Proces
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={processForm.control}
             name="subprocess"

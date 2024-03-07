@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogProps, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -23,8 +23,8 @@ const SubProcessModal = ({
       timeAverage: 1,
       timeMargin: 1,
       comment: "",
-      state: false,
-      active: false,
+      // state: false,
+      // active: false,
       counter: 2,
     },
   },
@@ -114,7 +114,7 @@ const SubProcessModal = ({
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="subProcessAttributes.state"
                 render={({ field }) => (
@@ -139,7 +139,7 @@ const SubProcessModal = ({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
             <Button className="mx-auto mt-4 w-[282px]" type="submit" size="rounded">
               Agregar

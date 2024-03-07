@@ -55,11 +55,11 @@ export type Product = {
   instruction: string;
   createDate?: string;
   description: string;
-  state?: boolean;
+  // state?: boolean;
   timeEstimatedCompletion: string;
   productProcesses?: ProductProcess[];
   company?: Company;
-  active?: boolean;
+  // active?: boolean;
 };
 
 export type ProcessAttributes = {

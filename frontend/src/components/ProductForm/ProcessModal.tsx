@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { ScrollArea } from "../ui/scroll-area";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogProps, DialogTitle } from "@/components/ui/dialog";
@@ -36,8 +36,8 @@ const ProcessModal = ({
       timeAverage: 0,
       timeMargin: 0,
       comment: "",
-      state: false,
-      active: false,
+      // state: false,
+      // active: false,
       counter: 0,
     },
     subProcesses: [],
@@ -130,7 +130,7 @@ const ProcessModal = ({
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="processAttributes.state"
                 render={({ field }) => (
@@ -155,7 +155,7 @@ const ProcessModal = ({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <FormField
                 control={form.control}
                 name="subProcesses"
