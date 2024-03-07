@@ -39,21 +39,27 @@ export function DatePickerForm({ onChangeDate }: Props) {
 
   const handleTimeChange = (newTime: string) => {
     setTime(newTime);
-  };
-
-  const handleDateChange = (selectedDate: Date) => {
-    if (time) {
-      const combinedDateTime = moment(selectedDate)
+    if (date) {
+      const combinedDateTime = moment(date)
         .set({
-          hour: parseInt(time.split(":")[0]),
-          minute: parseInt(time.split(":")[1]),
+          hour: parseInt(newTime.split(":")[0]),
+          minute: parseInt(newTime.split(":")[1]),
         })
         .toDate();
       setDate(combinedDateTime);
       onChangeDate(moment(combinedDateTime).local().format().slice(0, -6));
-    } else {
-      setDate(selectedDate);
     }
+  };
+
+  const handleDateChange = (selectedDate: Date) => {
+    const combinedDateTime = moment(selectedDate)
+      .set({
+        hour: parseInt(time.split(":")[0]),
+        minute: parseInt(time.split(":")[1]),
+      })
+      .toDate();
+    setDate(combinedDateTime);
+    onChangeDate(moment(combinedDateTime).local().format().slice(0, -6));
   };
 
   return (
