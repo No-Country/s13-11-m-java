@@ -52,7 +52,7 @@ List of participants in this project, contact and roles in which they performed 
 | 12 | Juan Pablo Godoy | [**godoypablojuan/**](https://www.linkedin.com/in/godoypablojuan/) | <img src="https://avatars.githubusercontent.com/u/58797346?v=4" alt="Image" width="28vw"> | [**DocisJP**](https://github.com/DocisJP) | Backend |
 | 13 | Nestor Duque | [**nestorduqueduque/**](https://www.linkedin.com/in/nestorduqueduque/)                 | <img src="https://avatars.githubusercontent.com/u/125423425?v=4" alt="Image" width="28vw"> | [**nestorduqueduque**](https://github.com/nestorduqueduque) | Backend |
 | 14 | Leon Asturizaga | [**leon-asturizaga-94a80377/**](https://www.linkedin.com/in/leon-asturizaga-94a80377/) | <img src="https://avatars.githubusercontent.com/u/128533111?v=4" alt="Image" width="28vw"> | [**leonasturizaga**](https://github.com/leonasturizaga) | Backend |
-| 15 | Gabriel Remes | | <img src="https://avatars.githubusercontent.com/u/100946627?v=4" alt="Image" width="28vw"> | [**Gabusy07**](https://github.com/Gabusy07) | Backend |
+| 15 | Gabriel Remes | [**gabriel-mayantz-remes/**](https://www.linkedin.com/in/gabriel-mayantz-remes) | <img src="https://avatars.githubusercontent.com/u/100946627?v=4" alt="Image" width="28vw"> | [**Gabusy07**](https://github.com/Gabusy07) | Backend |
 | 16 | Karen Diaz | | <img src="https://avatars.githubusercontent.com/u/118631005?v=4" alt="Image" width="28vw"> | [**karennn332**](https://github.com/karennn332) | Backend |
 | 17 | Lucas Von Elm | | <img src="https://avatars.githubusercontent.com/u/70777709?v=4" alt="Image" width="28vw"> | [**xlucasve**](https://github.com/xlucasve) | Backend |
 
