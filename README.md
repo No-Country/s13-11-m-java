@@ -90,6 +90,11 @@ Tools for this project.
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
+
+## :computer: QA Documentation
+[https://drive.google.com/drive/folders/1V9Kb8z5FKeiK13v2ye-82vTDM0Q3voFO?usp=drive_link]
+
+<br/>
 ## :computer: Thanks
 
 [**No Country**](https://www.nocountry.tech/)
